@@ -1,9 +1,9 @@
 ﻿{
-	"id": "author.slugtemplate",
-	"name": "Slugcat Template",
+	"id": "olaycolay.thevinki",
+	"name": "The Vinki",
 	"version": "0.1.0",
-	"authors": "Author",
-	"description": "A template for making SlugBase mods.",
+	"authors": "OlayColay",
+	"description": "Play as an angsty teen wearing Soap shoes.",
 	"requirements": [ "slime-cubed.slugbase" ],
 	"requirements_names": [ "SlugBase" ]
 }
