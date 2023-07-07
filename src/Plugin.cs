@@ -11,6 +11,7 @@ namespace SlugTemplate
     {
         private const string MOD_ID = "olaycolay.thevinki";
         private int lastDirection = 1;
+        private Player.AnimationIndex animBeforeJump = Player.AnimationIndex.None;
 
         public static readonly PlayerFeature<float> GrindSpeed = PlayerFloat("thevinki/grind_speed");
         public static readonly PlayerFeature<float> NormalSpeed = PlayerFloat("thevinki/normal_speed");
@@ -59,7 +60,7 @@ namespace SlugTemplate
             }
 
             //Debug.Log("Jumping from state: " + self.bodyMode.ToString());
-            if (self.bodyMode == Player.BodyModeIndex.ClimbingOnBeam && self.input[0].pckp)
+            if (animBeforeJump == Player.AnimationIndex.StandOnBeam && self.input[0].pckp)
             {
                 // Get num multiplier
                 float num = Mathf.Lerp(1f, 1.15f, self.Adrenaline);
@@ -110,9 +111,20 @@ namespace SlugTemplate
             if (self.input[0].x != 0)
             {
                 lastDirection = self.input[0].x;
-            }         
+            }
+            // Save the last animation before None
+            if (self.animation != Player.AnimationIndex.None)
+            {
+                animBeforeJump = self.animation;
+            }
 
-            if (self.bodyMode == Player.BodyModeIndex.ClimbingOnBeam && self.input[0].pckp)
+            // Test animation
+            //if (self.input[0].pckp)
+            //{
+            //    Debug.Log("Grinding animation: " + self.animation);
+            //}
+
+            if (self.animation == Player.AnimationIndex.StandOnBeam && self.input[0].pckp)
             {
                 self.slugcatStats.runspeedFac = 0;
                 self.bodyChunks[0].vel.x = grindSpeed * lastDirection;
