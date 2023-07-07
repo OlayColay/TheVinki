@@ -126,12 +126,14 @@ namespace SlugTemplate
 
                 // Sparks from grinding
                 Vector2 pos = self.bodyChunks[1].pos;
+                Vector2 posB = pos - new Vector2(10f * lastXDirection, 0);
                 for (int j = 0; j < 1; j++)
                 {
                     Vector2 a = RWCustom.Custom.RNV();
                     a.x = Mathf.Abs(a.x) * -lastXDirection;
                     a.y = Mathf.Abs(a.y);
-                    self.room.AddObject(new Spark(pos, a * Mathf.Lerp(4f, 30f, UnityEngine.Random.value), sparkColor, null, 4, 6));
+                    self.room.AddObject(new Spark(pos, a * Mathf.Lerp(4f, 30f, UnityEngine.Random.value), sparkColor, null, 2, 4));
+                    self.room.AddObject(new Spark(posB, a * Mathf.Lerp(4f, 30f, UnityEngine.Random.value), sparkColor, null, 2, 4));
                 }
             }
             else
