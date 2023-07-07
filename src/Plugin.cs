@@ -163,6 +163,7 @@ namespace SlugTemplate
                 self.animation = Player.AnimationIndex.StandOnBeam;
                 self.bodyChunks[1].pos.y = self.room.MiddleOfTile(self.bodyChunks[1].pos).y + 5f;
                 self.bodyChunks[1].vel.y = 0f;
+                self.bodyChunks[0].vel.y = 0f;
             }
 
             // Stop flipping when holding pckp, falling fast, and letting go of jmp (so landing on a rail doesn't look weird)
