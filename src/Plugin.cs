@@ -134,6 +134,17 @@ namespace SlugTemplate
             {
                 self.slugcatStats.runspeedFac = normalSpeed;
             }
+
+            // Catch beam with feet if holding pckp
+            if ((self.animation == Player.AnimationIndex.None || self.animation == Player.AnimationIndex.Flip) && 
+                self.input[0].pckp && self.room.GetTile(self.bodyChunks[1].pos).horizontalBeam && !self.IsTileSolid(0, 0, -1) &&
+                self.bodyChunks[0].vel.y < 0f)
+            {
+                self.noGrabCounter = 15;
+                self.animation = Player.AnimationIndex.StandOnBeam;
+                self.bodyChunks[1].pos.y = self.room.MiddleOfTile(self.bodyChunks[1].pos).y + 5f;
+                self.bodyChunks[1].vel.y = 0f;
+            }
         }
 
         // Implement ExlodeOnDeath
