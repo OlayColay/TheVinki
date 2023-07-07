@@ -2,8 +2,11 @@
 	"id": "olaycolay.thevinki",
 	"name": "The Vinki",
 	"version": "0.1.0",
+	"hide_version": false,
 	"authors": "OlayColay",
 	"description": "Play as an angsty teen wearing Soap shoes.",
-	"requirements": [ "slime-cubed.slugbase" ],
-	"requirements_names": [ "SlugBase" ]
+	"requirements": [ "slime-cubed.slugbase", "dressmyslugcat" ],
+	"requirements_names": [ "SlugBase", "DressMySlugcat" ],
+	"checksum_override_version": false,
+	"tags": [ "Cosmetics", "Custom Slugcat" ]
 }
