@@ -12,6 +12,7 @@ namespace SlugTemplate
         private const string MOD_ID = "olaycolay.thevinki";
         private int lastXDirection = 1;
         private int lastYDirection = 1;
+        private bool grindUpPoleFlag = false;
         private Player.AnimationIndex lastAnimation = Player.AnimationIndex.None;
 
         public static readonly PlayerFeature<float> GrindXSpeed = PlayerFloat("thevinki/grind_x_speed");
@@ -63,7 +64,7 @@ namespace SlugTemplate
             }
 
             //Debug.Log("Jumping from state: " + self.bodyMode.ToString());
-            if (lastAnimation == Player.AnimationIndex.StandOnBeam && self.input[0].pckp)
+            if ((lastAnimation == Player.AnimationIndex.StandOnBeam && self.input[0].pckp) || grindUpPoleFlag)
             {
                 // Get num multiplier
                 float num = Mathf.Lerp(1f, 1.15f, self.Adrenaline);
@@ -93,6 +94,8 @@ namespace SlugTemplate
                 self.animation = Player.AnimationIndex.Flip;
                 self.room.PlaySound(SoundID.Slugcat_Flip_Jump, self.mainBodyChunk, false, 1f, 1f);
                 self.slideCounter = 0;
+
+                grindUpPoleFlag = false;
             }
         }
 
@@ -155,6 +158,28 @@ namespace SlugTemplate
                 {
                     self.animation = Player.AnimationIndex.StandOnBeam;
                 }
+            }
+
+            // If grinding up a pole and reach the top, jump up high
+            if (self.animation == Player.AnimationIndex.GetUpToBeamTip && lastAnimation == Player.AnimationIndex.ClimbOnBeam &&
+                self.input[0].pckp)
+            {
+                if (self.input[0].jmp)
+                {
+                    grindUpPoleFlag = true;
+                    self.Jump();
+                }
+                else
+                {
+                    self.bodyChunks[1].pos = self.room.MiddleOfTile(self.bodyChunks[1].pos) + new Vector2(0f, 5f);
+                    self.bodyChunks[1].vel *= 0f;
+                    self.bodyChunks[0].vel = Vector2.ClampMagnitude(self.bodyChunks[0].vel, 9f);
+                }
+                
+            }
+            else
+            {
+                grindUpPoleFlag = false;
             }
 
             // Save the last direction that Vinki was facing
