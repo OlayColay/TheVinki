@@ -10,11 +10,14 @@ namespace SlugTemplate
     class Plugin : BaseUnityPlugin
     {
         private const string MOD_ID = "olaycolay.thevinki";
-        private int lastDirection = 1;
+        private int lastXDirection = 1;
+        private int lastYDirection = 1;
         private Player.AnimationIndex lastAnimation = Player.AnimationIndex.None;
 
-        public static readonly PlayerFeature<float> GrindSpeed = PlayerFloat("thevinki/grind_speed");
-        public static readonly PlayerFeature<float> NormalSpeed = PlayerFloat("thevinki/normal_speed");
+        public static readonly PlayerFeature<float> GrindXSpeed = PlayerFloat("thevinki/grind_x_speed");
+        public static readonly PlayerFeature<float> GrindYSpeed = PlayerFloat("thevinki/grind_y_speed");
+        public static readonly PlayerFeature<float> NormalXSpeed = PlayerFloat("thevinki/normal_x_speed");
+        public static readonly PlayerFeature<float> NormalYSpeed = PlayerFloat("thevinki/normal_y_speed");
         public static readonly PlayerFeature<float> SuperJump = PlayerFloat("thevinki/super_jump");
         //public static readonly PlayerFeature<bool> ExplodeOnDeath = PlayerBool("thevinki/explode_on_death");
         //public static readonly GameFeature<float> MeanLizards = GameFloat("thevinki/mean_lizards");
@@ -98,11 +101,8 @@ namespace SlugTemplate
         {
             orig(self, eu);
 
-            if (!GrindSpeed.TryGet(self, out var grindSpeed))
-            {
-                return;
-            }
-            if (!NormalSpeed.TryGet(self, out var normalSpeed))
+            if (!GrindXSpeed.TryGet(self, out var grindXSpeed) || !NormalXSpeed.TryGet(self, out var normalXSpeed) ||
+                !GrindYSpeed.TryGet(self, out var grindYSpeed) || !NormalYSpeed.TryGet(self, out var normalYSpeed))
             {
                 return;
             }
@@ -113,15 +113,28 @@ namespace SlugTemplate
             //    Debug.Log("Grinding animation: " + self.animation);
             //}
 
+            // Grind horizontally if holding pckp on a beam
             if (self.animation == Player.AnimationIndex.StandOnBeam && self.input[0].pckp)
             {
                 self.slugcatStats.runspeedFac = 0;
-                self.bodyChunks[0].vel.x = grindSpeed * lastDirection;
-                self.bodyChunks[1].vel.x = grindSpeed * lastDirection;
+                self.bodyChunks[0].vel.x = grindXSpeed * lastXDirection;
+                self.bodyChunks[1].vel.x = grindXSpeed * lastXDirection;
             }
             else
             {
-                self.slugcatStats.runspeedFac = normalSpeed;
+                self.slugcatStats.runspeedFac = normalXSpeed;
+            }
+
+            // Grind vertically if holding pckp on a pole (vertical beam)
+            if (self.animation == Player.AnimationIndex.ClimbOnBeam && self.input[0].pckp)
+            {
+                self.slugcatStats.poleClimbSpeedFac = 0;
+                self.bodyChunks[0].vel.y = grindYSpeed * lastYDirection;
+                self.bodyChunks[1].vel.y = grindYSpeed * lastYDirection;
+            }
+            else
+            {
+                self.slugcatStats.poleClimbSpeedFac = normalYSpeed;
             }
 
             // Catch beam with feet if holding pckp
@@ -135,7 +148,7 @@ namespace SlugTemplate
                 self.bodyChunks[1].vel.y = 0f;
             }
 
-            // Stop flipping when holding pckp and falling fast (so landing on a rail doesn't look weird)
+            // Stop flipping when holding pckp, falling fast, and letting go of jmp (so landing on a rail doesn't look weird)
             if (self.animation == Player.AnimationIndex.Flip && self.input[0].pckp)
             {
                 if (self.bodyChunks[0].vel.y < -3f && !self.input[0].jmp)
@@ -147,7 +160,11 @@ namespace SlugTemplate
             // Save the last direction that Vinki was facing
             if (self.input[0].x != 0)
             {
-                lastDirection = self.input[0].x;
+                lastXDirection = self.input[0].x;
+            }
+            if (self.input[0].y != 0)
+            {
+                lastYDirection = self.input[0].y;
             }
             // Save the last animation
             if (self.animation != lastAnimation)
