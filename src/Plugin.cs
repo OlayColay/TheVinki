@@ -10,7 +10,10 @@ namespace SlugTemplate
     class Plugin : BaseUnityPlugin
     {
         private const string MOD_ID = "olaycolay.thevinki";
+        private int lastDirection = 1;
 
+        public static readonly PlayerFeature<float> GrindSpeed = PlayerFloat("thevinki/grind_speed");
+        public static readonly PlayerFeature<float> NormalSpeed = PlayerFloat("thevinki/normal_speed");
         public static readonly PlayerFeature<float> SuperJump = PlayerFloat("thevinki/super_jump");
         //public static readonly PlayerFeature<bool> ExplodeOnDeath = PlayerBool("thevinki/explode_on_death");
         //public static readonly GameFeature<float> MeanLizards = GameFloat("thevinki/mean_lizards");
@@ -23,7 +26,7 @@ namespace SlugTemplate
 
             // Put your custom hooks here!
             On.Player.Jump += Player_Jump;
-            //On.Player.MovementUpdate += Player_Move;
+            On.Player.MovementUpdate += Player_Move;
             //On.Player.Die += Player_Die;
             //On.Lizard.ctor += Lizard_ctor;
         }
@@ -50,13 +53,13 @@ namespace SlugTemplate
         {
             orig(self);
 
-            if (!SuperJump.TryGet(self, out var power))
+            if (!SuperJump.TryGet(self, out float power))
             {
                 return;
             }
 
             //Debug.Log("Jumping from state: " + self.bodyMode.ToString());
-            if (self.bodyMode == Player.BodyModeIndex.ClimbingOnBeam)
+            if (self.bodyMode == Player.BodyModeIndex.ClimbingOnBeam && self.input[0].pckp)
             {
                 // Get num multiplier
                 float num = Mathf.Lerp(1f, 1.15f, self.Adrenaline);
@@ -82,7 +85,7 @@ namespace SlugTemplate
                 bodyChunk18.vel.x = bodyChunk18.vel.x * 0.5f;
                 BodyChunk bodyChunk19 = self.bodyChunks[0];
                 bodyChunk19.vel.x = bodyChunk19.vel.x - (float)self.slideDirection * 4f * num;
-                self.jumpBoost *= 1f + power;
+                self.jumpBoost *= power;
                 self.animation = Player.AnimationIndex.Flip;
                 self.room.PlaySound(SoundID.Slugcat_Flip_Jump, self.mainBodyChunk, false, 1f, 1f);
                 self.slideCounter = 0;
@@ -90,26 +93,36 @@ namespace SlugTemplate
         }
 
         // Implement higher beam speed
-        //private void Player_Move(On.Player.orig_MovementUpdate orig, Player self, bool eu)
-        //{
-        //    orig(self, eu);
+        private void Player_Move(On.Player.orig_MovementUpdate orig, Player self, bool eu)
+        {
+            orig(self, eu);
 
-        //    if (!SuperJump.TryGet(self, out var power))
-        //    {
-        //        return;
-        //    }
+            if (!GrindSpeed.TryGet(self, out var grindSpeed))
+            {
+                return;
+            }
+            if (!NormalSpeed.TryGet(self, out var normalSpeed))
+            {
+                return;
+            }
 
-        //    if (self.bodyMode == Player.BodyModeIndex.ClimbingOnBeam)
-        //    {
-        //        self.dynamicRunSpeed[0] = 10f;
-        //        self.dynamicRunSpeed[1] = 10f;
-        //    }
-        //    else
-        //    {
-        //        self.dynamicRunSpeed[0] = 3.6f;
-        //        self.dynamicRunSpeed[1] = 3.6f;
-        //    }
-        //}
+            // Save the last direction that Vinki was facing
+            if (self.input[0].x != 0)
+            {
+                lastDirection = self.input[0].x;
+            }         
+
+            if (self.bodyMode == Player.BodyModeIndex.ClimbingOnBeam && self.input[0].pckp)
+            {
+                self.slugcatStats.runspeedFac = 0;
+                self.bodyChunks[0].vel.x = grindSpeed * lastDirection;
+                self.bodyChunks[1].vel.x = grindSpeed * lastDirection;
+            }
+            else
+            {
+                self.slugcatStats.runspeedFac = normalSpeed;
+            }
+        }
 
         // Implement ExlodeOnDeath
         //private void Player_Die(On.Player.orig_Die orig, Player self)
@@ -137,5 +150,5 @@ namespace SlugTemplate
         //        room.InGameNoise(new Noise.InGameNoise(pos, 9000f, self, 1f));
         //    }
         //}
-        }
+    }
 }

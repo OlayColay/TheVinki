@@ -3,11 +3,12 @@
 	"name": "The Vinki",
 	"description": "Play as an angsty teen wearing Soap shoes.",
   "features": {
-    "climb_speed": 5,
     "color": "de7600",
     "select_menu_scene": "Slugcat_Vinki",
     "select_menu_scene_ascended": "Ghost_Vinki",
     "start_room": "SU_A53",
-    "thevinki/super_jump": 0.5
+    "thevinki/grind_speed": 7.5,
+    "thevinki/normal_speed": 1.3,
+    "thevinki/super_jump": 1.5
   }
 }
