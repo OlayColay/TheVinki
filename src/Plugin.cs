@@ -138,7 +138,7 @@ namespace SlugTemplate
             // Stop flipping when holding pckp and falling fast (so landing on a rail doesn't look weird)
             if (self.animation == Player.AnimationIndex.Flip && self.input[0].pckp)
             {
-                if (self.bodyChunks[0].vel.y < -3f)
+                if (self.bodyChunks[0].vel.y < -3f && !self.input[0].jmp)
                 {
                     self.animation = Player.AnimationIndex.StandOnBeam;
                 }
