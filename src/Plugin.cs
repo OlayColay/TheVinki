@@ -86,11 +86,8 @@ namespace SlugTemplate
                     self.bodyChunks[0].vel.y = 9f * num;
                     self.bodyChunks[1].vel.y = 7f * num;
                 }
-                BodyChunk bodyChunk17 = self.bodyChunks[0];
-                bodyChunk17.vel.x = bodyChunk17.vel.x * 0.5f;
-                BodyChunk bodyChunk18 = self.bodyChunks[1];
-                bodyChunk18.vel.x = bodyChunk18.vel.x * 0.5f;
                 BodyChunk bodyChunk19 = self.bodyChunks[0];
+                self.slideDirection = lastXDirection;
                 bodyChunk19.vel.x = bodyChunk19.vel.x - (float)self.slideDirection * 4f * num;
                 self.jumpBoost *= power;
                 self.animation = Player.AnimationIndex.Flip;
