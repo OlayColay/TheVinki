@@ -11,7 +11,7 @@ namespace SlugTemplate
     {
         private const string MOD_ID = "olaycolay.thevinki";
         private int lastDirection = 1;
-        private Player.AnimationIndex animBeforeJump = Player.AnimationIndex.None;
+        private Player.AnimationIndex lastAnimation = Player.AnimationIndex.None;
 
         public static readonly PlayerFeature<float> GrindSpeed = PlayerFloat("thevinki/grind_speed");
         public static readonly PlayerFeature<float> NormalSpeed = PlayerFloat("thevinki/normal_speed");
@@ -60,7 +60,7 @@ namespace SlugTemplate
             }
 
             //Debug.Log("Jumping from state: " + self.bodyMode.ToString());
-            if (animBeforeJump == Player.AnimationIndex.StandOnBeam && self.input[0].pckp)
+            if (lastAnimation == Player.AnimationIndex.StandOnBeam && self.input[0].pckp)
             {
                 // Get num multiplier
                 float num = Mathf.Lerp(1f, 1.15f, self.Adrenaline);
@@ -107,17 +107,6 @@ namespace SlugTemplate
                 return;
             }
 
-            // Save the last direction that Vinki was facing
-            if (self.input[0].x != 0)
-            {
-                lastDirection = self.input[0].x;
-            }
-            // Save the last animation before None
-            if (self.animation != Player.AnimationIndex.None)
-            {
-                animBeforeJump = self.animation;
-            }
-
             // Test animation
             //if (self.input[0].pckp)
             //{
@@ -137,13 +126,33 @@ namespace SlugTemplate
 
             // Catch beam with feet if holding pckp
             if ((self.animation == Player.AnimationIndex.None || self.animation == Player.AnimationIndex.Flip) && 
-                self.input[0].pckp && self.room.GetTile(self.bodyChunks[1].pos).horizontalBeam && !self.IsTileSolid(0, 0, -1) &&
+                self.input[0].pckp && self.room.GetTile(self.bodyChunks[1].pos).horizontalBeam &&
                 self.bodyChunks[0].vel.y < 0f)
             {
                 self.noGrabCounter = 15;
                 self.animation = Player.AnimationIndex.StandOnBeam;
                 self.bodyChunks[1].pos.y = self.room.MiddleOfTile(self.bodyChunks[1].pos).y + 5f;
                 self.bodyChunks[1].vel.y = 0f;
+            }
+
+            // Stop flipping when holding pckp and falling fast (so landing on a rail doesn't look weird)
+            if (self.animation == Player.AnimationIndex.Flip && self.input[0].pckp)
+            {
+                if (self.bodyChunks[0].vel.y < -3f)
+                {
+                    self.animation = Player.AnimationIndex.StandOnBeam;
+                }
+            }
+
+            // Save the last direction that Vinki was facing
+            if (self.input[0].x != 0)
+            {
+                lastDirection = self.input[0].x;
+            }
+            // Save the last animation
+            if (self.animation != lastAnimation)
+            {
+                lastAnimation = self.animation;
             }
         }
 
