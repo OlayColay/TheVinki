@@ -21,6 +21,7 @@ namespace SlugTemplate
         public static readonly PlayerFeature<float> NormalXSpeed = PlayerFloat("thevinki/normal_x_speed");
         public static readonly PlayerFeature<float> NormalYSpeed = PlayerFloat("thevinki/normal_y_speed");
         public static readonly PlayerFeature<float> SuperJump = PlayerFloat("thevinki/super_jump");
+        public static readonly PlayerFeature<Color> SparkColor = PlayerColor("thevinki/spark_color");
         //public static readonly PlayerFeature<bool> ExplodeOnDeath = PlayerBool("thevinki/explode_on_death");
         //public static readonly GameFeature<float> MeanLizards = GameFloat("thevinki/mean_lizards");
 
@@ -104,7 +105,8 @@ namespace SlugTemplate
             orig(self, eu);
 
             if (!GrindXSpeed.TryGet(self, out var grindXSpeed) || !NormalXSpeed.TryGet(self, out var normalXSpeed) ||
-                !GrindYSpeed.TryGet(self, out var grindYSpeed) || !NormalYSpeed.TryGet(self, out var normalYSpeed))
+                !GrindYSpeed.TryGet(self, out var grindYSpeed) || !NormalYSpeed.TryGet(self, out var normalYSpeed) ||
+                !SparkColor.TryGet(self, out var sparkColor))
             {
                 return;
             }
@@ -121,6 +123,16 @@ namespace SlugTemplate
                 self.slugcatStats.runspeedFac = 0;
                 self.bodyChunks[0].vel.x = grindXSpeed * lastXDirection;
                 self.bodyChunks[1].vel.x = grindXSpeed * lastXDirection;
+
+                // Sparks from grinding
+                Vector2 pos = self.bodyChunks[1].pos;
+                for (int j = 0; j < 1; j++)
+                {
+                    Vector2 a = RWCustom.Custom.RNV();
+                    a.x = Mathf.Abs(a.x) * -lastXDirection;
+                    a.y = Mathf.Abs(a.y);
+                    self.room.AddObject(new Spark(pos, a * Mathf.Lerp(4f, 30f, UnityEngine.Random.value), sparkColor, null, 4, 6));
+                }
             }
             else
             {
@@ -144,6 +156,7 @@ namespace SlugTemplate
                 self.input[0].pckp && self.room.GetTile(self.bodyChunks[1].pos).horizontalBeam &&
                 self.bodyChunks[0].vel.y < 0f)
             {
+                self.room.PlaySound(SoundID.Spear_Bounce_Off_Creauture_Shell, self.mainBodyChunk, false, 0.75f, 1f);
                 self.noGrabCounter = 15;
                 self.animation = Player.AnimationIndex.StandOnBeam;
                 self.bodyChunks[1].pos.y = self.room.MiddleOfTile(self.bodyChunks[1].pos).y + 5f;
