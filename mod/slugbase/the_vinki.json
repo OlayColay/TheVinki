@@ -3,7 +3,6 @@
 	"name": "The Vinki",
 	"description": "Play as an angsty teen wearing Soap shoes.",
   "features": {
-    "color": "de7600",
     "select_menu_scene": "Slugcat_Vinki",
     "select_menu_scene_ascended": "Ghost_Vinki",
     "start_room": "SU_A53",
