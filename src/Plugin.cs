@@ -13,6 +13,7 @@ namespace SlugTemplate
         private int lastXDirection = 1;
         private int lastYDirection = 1;
         private bool grindUpPoleFlag = false;
+        private Player.AnimationIndex lastAnimationFrame = Player.AnimationIndex.None;
         private Player.AnimationIndex lastAnimation = Player.AnimationIndex.None;
 
         public static readonly PlayerFeature<float> GrindXSpeed = PlayerFloat("thevinki/grind_x_speed");
@@ -64,7 +65,8 @@ namespace SlugTemplate
             }
 
             //Debug.Log("Jumping from state: " + self.bodyMode.ToString());
-            if ((lastAnimation == Player.AnimationIndex.StandOnBeam && self.input[0].pckp) || grindUpPoleFlag)
+            if (((lastAnimation == Player.AnimationIndex.StandOnBeam || lastAnimationFrame == Player.AnimationIndex.StandOnBeam) && 
+                self.input[0].pckp) || grindUpPoleFlag)
             {
                 // Get num multiplier
                 float num = Mathf.Lerp(1f, 1.15f, self.Adrenaline);
@@ -161,7 +163,7 @@ namespace SlugTemplate
             }
 
             // If grinding up a pole and reach the top, jump up high
-            if (self.animation == Player.AnimationIndex.GetUpToBeamTip && lastAnimation == Player.AnimationIndex.ClimbOnBeam &&
+            if (self.animation == Player.AnimationIndex.GetUpToBeamTip && lastAnimationFrame == Player.AnimationIndex.ClimbOnBeam &&
                 self.input[0].pckp)
             {
                 if (self.input[0].jmp)
@@ -192,9 +194,10 @@ namespace SlugTemplate
                 lastYDirection = self.input[0].y;
             }
             // Save the last animation
-            if (self.animation != lastAnimation)
+            if (self.animation != lastAnimationFrame)
             {
-                lastAnimation = self.animation;
+                lastAnimation = lastAnimationFrame;
+                lastAnimationFrame = self.animation;
             }
         }
 
