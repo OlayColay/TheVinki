@@ -22,8 +22,6 @@ namespace SlugTemplate
         public static readonly PlayerFeature<float> NormalYSpeed = PlayerFloat("thevinki/normal_y_speed");
         public static readonly PlayerFeature<float> SuperJump = PlayerFloat("thevinki/super_jump");
         public static readonly PlayerFeature<Color> SparkColor = PlayerColor("thevinki/spark_color");
-        //public static readonly PlayerFeature<bool> ExplodeOnDeath = PlayerBool("thevinki/explode_on_death");
-        //public static readonly GameFeature<float> MeanLizards = GameFloat("thevinki/mean_lizards");
 
 
         // Add hooks
@@ -34,25 +32,12 @@ namespace SlugTemplate
             // Put your custom hooks here!
             On.Player.Jump += Player_Jump;
             On.Player.MovementUpdate += Player_Move;
-            //On.Player.Die += Player_Die;
-            //On.Lizard.ctor += Lizard_ctor;
         }
         
         // Load any resources, such as sprites or sounds
         private void LoadResources(RainWorld rainWorld)
         {
         }
-
-        // Implement MeanLizards
-        //private void Lizard_ctor(On.Lizard.orig_ctor orig, Lizard self, AbstractCreature abstractCreature, World world)
-        //{
-        //    orig(self, abstractCreature, world);
-
-        //    if(MeanLizards.TryGet(world.game, out float meanness))
-        //    {
-        //        self.spawnDataEvil = Mathf.Min(self.spawnDataEvil, meanness);
-        //    }
-        //}
 
 
         // Implement SuperJump
@@ -65,7 +50,7 @@ namespace SlugTemplate
                 return;
             }
 
-            //Debug.Log("Jumping from state: " + self.bodyMode.ToString());
+            // If player jumped or coyote jumped from a beam (or grinded to top of pole), then trick jump
             if (((lastAnimation == Player.AnimationIndex.StandOnBeam || lastAnimationFrame == Player.AnimationIndex.StandOnBeam) && 
                 self.input[0].pckp) || grindUpPoleFlag)
             {
@@ -110,12 +95,6 @@ namespace SlugTemplate
             {
                 return;
             }
-
-            // Test animation
-            //if (self.input[0].pckp)
-            //{
-            //    Debug.Log("Grinding animation: " + self.animation);
-            //}
 
             // Grind horizontally if holding pckp on a beam
             if (self.animation == Player.AnimationIndex.StandOnBeam && self.input[0].pckp)
@@ -213,32 +192,5 @@ namespace SlugTemplate
                 lastAnimationFrame = self.animation;
             }
         }
-
-        // Implement ExlodeOnDeath
-        //private void Player_Die(On.Player.orig_Die orig, Player self)
-        //{
-        //    bool wasDead = self.dead;
-
-        //    orig(self);
-
-        //    if(!wasDead && self.dead
-        //        && ExplodeOnDeath.TryGet(self, out bool explode)
-        //        && explode)
-        //    {
-        //        // Adapted from ScavengerBomb.Explode
-        //        var room = self.room;
-        //        var pos = self.mainBodyChunk.pos;
-        //        var color = self.ShortCutColor();
-        //        room.AddObject(new Explosion(room, self, pos, 7, 250f, 6.2f, 2f, 280f, 0.25f, self, 0.7f, 160f, 1f));
-        //        room.AddObject(new Explosion.ExplosionLight(pos, 280f, 1f, 7, color));
-        //        room.AddObject(new Explosion.ExplosionLight(pos, 230f, 1f, 3, new Color(1f, 1f, 1f)));
-        //        room.AddObject(new ExplosionSpikes(room, pos, 14, 30f, 9f, 7f, 170f, color));
-        //        room.AddObject(new ShockWave(pos, 330f, 0.045f, 5, false));
-
-        //        room.ScreenMovement(pos, default, 1.3f);
-        //        room.PlaySound(SoundID.Bomb_Explode, pos);
-        //        room.InGameNoise(new Noise.InGameNoise(pos, 9000f, self, 1f));
-        //    }
-        //}
     }
 }
