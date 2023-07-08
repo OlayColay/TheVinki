@@ -16,6 +16,7 @@ namespace SlugTemplate
         private Player.AnimationIndex lastAnimationFrame = Player.AnimationIndex.None;
         private Player.AnimationIndex lastAnimation = Player.AnimationIndex.None;
 
+        public static readonly PlayerFeature<float> CoyoteBoost = PlayerFloat("thevinki/coyote_boost");
         public static readonly PlayerFeature<float> GrindXSpeed = PlayerFloat("thevinki/grind_x_speed");
         public static readonly PlayerFeature<float> GrindYSpeed = PlayerFloat("thevinki/grind_y_speed");
         public static readonly PlayerFeature<float> NormalXSpeed = PlayerFloat("thevinki/normal_x_speed");
@@ -45,7 +46,7 @@ namespace SlugTemplate
         {
             orig(self);
 
-            if (!SuperJump.TryGet(self, out float power))
+            if (!SuperJump.TryGet(self, out float power) || !CoyoteBoost.TryGet(self, out var coyoteBoost))
             {
                 return;
             }
@@ -72,12 +73,22 @@ namespace SlugTemplate
                     self.bodyChunks[0].vel.y = 9f * num;
                     self.bodyChunks[1].vel.y = 7f * num;
                 }
-                BodyChunk bodyChunk19 = self.bodyChunks[0];
                 self.slideDirection = lastXDirection;
-                bodyChunk19.vel.x = bodyChunk19.vel.x - (float)self.slideDirection * 4f * num;
+
+                // Get risk/reward speedboost when coyote jumping
+                if (lastAnimation == Player.AnimationIndex.StandOnBeam && lastAnimationFrame != Player.AnimationIndex.StandOnBeam)
+                {
+                    Debug.Log("Coyote jump");
+                    self.mainBodyChunk.vel.x += coyoteBoost * self.slideDirection;
+                    self.room.PlaySound(SoundID.Slugcat_Flip_Jump, self.mainBodyChunk, false, 3f, 1f);
+                }
+                else
+                {
+                    self.room.PlaySound(SoundID.Slugcat_Flip_Jump, self.mainBodyChunk, false, 1f, 1f);
+                }
+                
                 self.jumpBoost *= power;
                 self.animation = Player.AnimationIndex.Flip;
-                self.room.PlaySound(SoundID.Slugcat_Flip_Jump, self.mainBodyChunk, false, 1f, 1f);
                 self.slideCounter = 0;
 
                 grindUpPoleFlag = false;
