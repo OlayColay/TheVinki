@@ -153,9 +153,9 @@ namespace SlugTemplate
                 self.slugcatStats.poleClimbSpeedFac = normalYSpeed;
             }
 
-            // Catch beam with feet if holding pckp
+            // Catch beam with feet if holding pckp, and not holding down
             if ((self.animation == Player.AnimationIndex.None || self.animation == Player.AnimationIndex.Flip) && 
-                self.input[0].pckp && self.room.GetTile(self.bodyChunks[1].pos).horizontalBeam &&
+                self.input[0].pckp && self.input[0].y >= 0 && self.room.GetTile(self.bodyChunks[1].pos).horizontalBeam &&
                 self.bodyChunks[0].vel.y < 0f)
             {
                 self.room.PlaySound(SoundID.Spear_Bounce_Off_Creauture_Shell, self.mainBodyChunk, false, 0.75f, 1f);
