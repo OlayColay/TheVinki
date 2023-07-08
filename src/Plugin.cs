@@ -109,10 +109,9 @@ namespace SlugTemplate
             }
 
             // Grind horizontally if holding pckp on a beam
-            if (self.animation == Player.AnimationIndex.StandOnBeam && self.input[0].pckp)
+            if (self.animation == Player.AnimationIndex.StandOnBeam && self.input[0].pckp && self.bodyChunks[0].vel.magnitude > 3f)
             {
                 self.slugcatStats.runspeedFac = 0;
-                self.bodyChunks[0].vel.x = grindXSpeed * lastXDirection;
                 self.bodyChunks[1].vel.x = grindXSpeed * lastXDirection;
 
                 // Sparks from grinding
@@ -140,11 +139,10 @@ namespace SlugTemplate
             }
 
             // Grind vertically if holding pckp on a pole (vertical beam)
-            if (self.animation == Player.AnimationIndex.ClimbOnBeam && self.input[0].pckp)
+            if (self.animation == Player.AnimationIndex.ClimbOnBeam && self.input[0].pckp && self.bodyChunks[1].vel.magnitude > 2f)
             {
                 self.slugcatStats.poleClimbSpeedFac = 0;
                 self.bodyChunks[0].vel.y = grindYSpeed * lastYDirection;
-                self.bodyChunks[1].vel.y = grindYSpeed * lastYDirection;
 
                 // Sparks from grinding
                 Vector2 pos = (self.graphicsModule as PlayerGraphics).hands[0].pos;
