@@ -53,7 +53,7 @@ namespace SlugTemplate
             }
 
             // If player jumped or coyote jumped from a beam (or grinded to top of pole), then trick jump
-            if (((lastAnimationFrame == Player.AnimationIndex.StandOnBeam) && 
+            if (((isCoyoteJumping(self) || lastAnimationFrame == Player.AnimationIndex.StandOnBeam) && 
                 self.input[0].pckp && self.bodyChunks[1].vel.magnitude >= 3.5f) || grindUpPoleFlag)
             {
                 // Get num multiplier
@@ -77,7 +77,7 @@ namespace SlugTemplate
                 self.slideDirection = lastXDirection;
 
                 // Get risk/reward speedboost when coyote jumping
-                if (lastAnimation == Player.AnimationIndex.StandOnBeam && lastAnimationFrame != Player.AnimationIndex.StandOnBeam)
+                if (isCoyoteJumping(self))
                 {
                     Debug.Log("Coyote jump");
                     self.mainBodyChunk.vel.x += coyoteBoost * self.slideDirection;
@@ -94,6 +94,15 @@ namespace SlugTemplate
 
                 grindUpPoleFlag = false;
             }
+        }
+
+        private bool isCoyoteJumping(Player self)
+        {
+            Debug.Log("Last Animation: " + lastAnimation + "\t This animation: " + self.animation + 
+                    "\tLast frame: " + lastAnimationFrame + "\tcanJump frames: " + self.canJump +
+                    "\tBody mode: " + self.bodyMode);
+            return (lastAnimation == Player.AnimationIndex.StandOnBeam && self.animation == Player.AnimationIndex.None &&
+                    self.bodyMode == Player.BodyModeIndex.Default);
         }
 
         // Implement higher beam speed
