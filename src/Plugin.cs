@@ -137,6 +137,18 @@ namespace SlugTemplate
                 self.slugcatStats.poleClimbSpeedFac = 0;
                 self.bodyChunks[0].vel.y = grindYSpeed * lastYDirection;
                 self.bodyChunks[1].vel.y = grindYSpeed * lastYDirection;
+
+                // Sparks from grinding
+                Vector2 pos = (self.graphicsModule as PlayerGraphics).hands[0].pos;
+                Vector2 posB = (self.graphicsModule as PlayerGraphics).hands[1].pos;
+                for (int j = 0; j < 2; j++)
+                {
+                    Vector2 a = RWCustom.Custom.RNV();
+                    a.x = Mathf.Abs(a.x) * lastXDirection;
+                    a.y = Mathf.Abs(a.y) * -lastYDirection;
+                    self.room.AddObject(new Spark(pos, a * Mathf.Lerp(4f, 30f, UnityEngine.Random.value), sparkColor, null, 2, 4));
+                    self.room.AddObject(new Spark(posB, a * Mathf.Lerp(4f, 30f, UnityEngine.Random.value), sparkColor, null, 2, 4));
+                }
             }
             else
             {
