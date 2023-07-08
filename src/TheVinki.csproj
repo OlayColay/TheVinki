@@ -13,14 +13,14 @@
     
     <Target Name="GenerateMod" AfterTargets="PostBuildEvent">
 		<ItemGroup>
-			<RemovePlugins Include="../mod/plugins/*.dll" />
+			<RemovePlugins Include="../thevinki/plugins/*.dll" />
 		</ItemGroup>
 		<ItemGroup>
 			<CopyPlugins Include="$(TargetPath)" />
 		</ItemGroup>
 		
         <Delete Files="@(RemovePlugins)" />
-        <Copy SourceFiles="@(CopyPlugins)" DestinationFolder="../mod/plugins/" />
+        <Copy SourceFiles="@(CopyPlugins)" DestinationFolder="../thevinki/plugins/" />
     </Target>
     
 </Project>

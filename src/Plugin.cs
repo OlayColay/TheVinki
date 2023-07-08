@@ -53,8 +53,8 @@ namespace SlugTemplate
             }
 
             // If player jumped or coyote jumped from a beam (or grinded to top of pole), then trick jump
-            if (((lastAnimation == Player.AnimationIndex.StandOnBeam || lastAnimationFrame == Player.AnimationIndex.StandOnBeam) && 
-                self.input[0].pckp) || grindUpPoleFlag)
+            if (((lastAnimationFrame == Player.AnimationIndex.StandOnBeam) && 
+                self.input[0].pckp && self.bodyChunks[1].vel.magnitude >= 3.5f) || grindUpPoleFlag)
             {
                 // Get num multiplier
                 float num = Mathf.Lerp(1f, 1.15f, self.Adrenaline);
@@ -87,7 +87,7 @@ namespace SlugTemplate
                 {
                     self.room.PlaySound(SoundID.Slugcat_Flip_Jump, self.mainBodyChunk, false, 1f, 1f);
                 }
-                
+
                 self.jumpBoost *= power;
                 self.animation = Player.AnimationIndex.Flip;
                 self.slideCounter = 0;
