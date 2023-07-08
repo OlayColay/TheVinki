@@ -171,7 +171,7 @@ namespace SlugTemplate
             {
                 if (self.bodyChunks[0].vel.y < -3f && !self.input[0].jmp)
                 {
-                    self.animation = Player.AnimationIndex.StandOnBeam;
+                    self.animation = Player.AnimationIndex.HangFromBeam;
                 }
             }
 
