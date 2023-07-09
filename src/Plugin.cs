@@ -202,11 +202,23 @@ namespace SlugTemplate
                 self.slugcatStats.runspeedFac = normalXSpeed;
             }
 
-            // Grind vertically if holding pckp on a pole (vertical beam)
-            if (self.animation == Player.AnimationIndex.ClimbOnBeam && self.input[0].pckp && self.bodyChunks[1].vel.magnitude > 2f)
+            // Grind if holding pckp on a pole (vertical beam or 0G beam)
+            if ((self.animation == Player.AnimationIndex.ClimbOnBeam || self.animation == Player.AnimationIndex.ZeroGPoleGrab) && 
+                self.input[0].pckp && (self.bodyChunks[1].vel.magnitude > 2f || self.EffectiveRoomGravity < 1f))
             {
+                Debug.Log("Zero G Pole direction: " + self.zeroGPoleGrabDir.x + "," + self.zeroGPoleGrabDir.y);
                 self.slugcatStats.poleClimbSpeedFac = 0;
-                self.bodyChunks[0].vel.y = grindYSpeed * lastYDirection;
+
+                // Handle 0G horizontal beam grinding
+                if (self.animation == Player.AnimationIndex.ZeroGPoleGrab && self.room.GetTile(self.mainBodyChunk.pos).horizontalBeam)
+                {
+                    self.bodyChunks[0].vel.x = grindYSpeed * lastXDirection;
+                }
+                else
+                {
+                    // This works in gravity and no gravity
+                    self.bodyChunks[0].vel.y = grindYSpeed * lastYDirection;
+                }
 
                 // Sparks from grinding
                 Vector2 pos = (self.graphicsModule as PlayerGraphics).hands[0].pos;
