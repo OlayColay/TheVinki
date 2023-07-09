@@ -3,9 +3,15 @@ using BepInEx;
 using UnityEngine;
 using SlugBase.Features;
 using static SlugBase.Features.FeatureTypes;
+using DressMySlugcat;
+using SlugBase;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SlugTemplate
 {
+    [BepInDependency("slime-cubed.slugbase")]
+    [BepInDependency("dressmyslugcat", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInPlugin(MOD_ID, "The Vinki", "0.1.0")]
     class Plugin : BaseUnityPlugin
     {
@@ -30,6 +36,7 @@ namespace SlugTemplate
         public void OnEnable()
         {
             On.RainWorld.OnModsInit += Extras.WrapInit(LoadResources);
+            On.RainWorld.PostModsInit += RainWorld_PostModsInit;
 
             // Put your custom hooks here!
             On.Player.Jump += Player_Jump;
@@ -41,6 +48,57 @@ namespace SlugTemplate
         {
         }
 
+        public static bool IsPostInit;
+        private void RainWorld_PostModsInit(On.RainWorld.orig_PostModsInit orig, RainWorld self)
+        {
+            orig(self);
+            try
+            {
+                if (IsPostInit) return;
+                IsPostInit = true;
+
+                //-- You can have the DMS sprite setup in a separate method and only call it if DMS is loaded
+                //-- With this the mod will still work even if DMS isn't installed
+                if (ModManager.ActiveMods.Any(mod => mod.id == "dressmyslugcat"))
+                {
+                    SetupDMSSprites();
+                }
+
+                Debug.Log($"Plugin dressmyslugcat.templatecat is loaded!");
+            }
+            catch (Exception ex)
+            {
+                Debug.LogException(ex);
+            }
+        }
+
+        public void SetupDMSSprites()
+        {
+            //-- The ID of the spritesheet we will be using as the default sprites for our slugcat
+            var sheetID = "olaycolay.thevinki";
+
+            //-- Each player slot (0, 1, 2, 3) can be customized individually
+            for (int i = 0; i < 4; i++)
+            {
+                SpriteDefinitions.AddSlugcatDefault(new Customization()
+                {
+                    //-- Make sure to use the same ID as the one used for our slugcat
+                    Slugcat = "TheVinki",
+                    PlayerNumber = i,
+                    CustomSprites = new List<CustomSprite>
+                    {
+                        //-- You can customize which spritesheet and color each body part will use
+                        new CustomSprite() { Sprite = "HEAD", SpriteSheetID = sheetID },
+                        new CustomSprite() { Sprite = "FACE", SpriteSheetID = sheetID },
+                        new CustomSprite() { Sprite = "BODY", SpriteSheetID = sheetID },
+                        new CustomSprite() { Sprite = "ARMS", SpriteSheetID = sheetID },
+                        new CustomSprite() { Sprite = "HIPS", SpriteSheetID = sheetID },
+                        new CustomSprite() { Sprite = "LEGS", SpriteSheetID = sheetID },
+                        new CustomSprite() { Sprite = "TAIL", SpriteSheetID = sheetID }
+                    }
+                });
+            }
+        }
 
         // Implement SuperJump
         private void Player_Jump(On.Player.orig_Jump orig, Player self)
@@ -53,7 +111,8 @@ namespace SlugTemplate
             }
 
             // If player jumped or coyote jumped from a beam (or grinded to top of pole), then trick jump
-            if (((isCoyoteJumping(self) || lastAnimationFrame == Player.AnimationIndex.StandOnBeam) && 
+            bool coyote = isCoyoteJumping(self);
+            if (((coyote || lastAnimationFrame == Player.AnimationIndex.StandOnBeam) && 
                 self.input[0].pckp && self.bodyChunks[1].vel.magnitude >= 3.5f) || grindUpPoleFlag)
             {
                 // Get num multiplier
@@ -77,9 +136,9 @@ namespace SlugTemplate
                 self.slideDirection = lastXDirection;
 
                 // Get risk/reward speedboost when coyote jumping
-                if (isCoyoteJumping(self))
+                if (coyote)
                 {
-                    Debug.Log("Coyote jump");
+                    //Debug.Log("Coyote jump");
                     self.mainBodyChunk.vel.x += coyoteBoost * self.slideDirection;
                     self.room.PlaySound(SoundID.Slugcat_Flip_Jump, self.mainBodyChunk, false, 3f, 1f);
                 }
@@ -98,9 +157,9 @@ namespace SlugTemplate
 
         private bool isCoyoteJumping(Player self)
         {
-            Debug.Log("Last Animation: " + lastAnimation + "\t This animation: " + self.animation + 
-                    "\tLast frame: " + lastAnimationFrame + "\tcanJump frames: " + self.canJump +
-                    "\tBody mode: " + self.bodyMode);
+            //Debug.Log("Last Animation: " + lastAnimation + "\t This animation: " + self.animation + 
+            //        "\tLast frame: " + lastAnimationFrame + "\tcanJump frames: " + self.canJump +
+            //        "\tBody mode: " + self.bodyMode);
             return (lastAnimation == Player.AnimationIndex.StandOnBeam && self.animation == Player.AnimationIndex.None &&
                     self.bodyMode == Player.BodyModeIndex.Default);
         }
@@ -135,12 +194,8 @@ namespace SlugTemplate
                     self.room.AddObject(new Spark(posB, a * Mathf.Lerp(4f, 30f, UnityEngine.Random.value), sparkColor, null, 2, 4));
                 }
 
-                if (grindSound == null || grindSound.currentSoundObject == null || grindSound.currentSoundObject.slatedForDeletion)
-                {
-                    grindSound = self.room.PlaySound(SoundID.Shelter_Gasket_Mover_LOOP, self.mainBodyChunk, true, 0.15f, 10f);
-                    grindSound.requireActiveUpkeep = true;
-                }
-                grindSound.alive = true;
+                // Looping grind sound
+                playGrindsound(self);
             }
             else
             {
@@ -165,12 +220,8 @@ namespace SlugTemplate
                     self.room.AddObject(new Spark(posB, a * Mathf.Lerp(4f, 30f, UnityEngine.Random.value), sparkColor, null, 2, 4));
                 }
 
-                if (grindSound == null || grindSound.currentSoundObject == null || grindSound.currentSoundObject.slatedForDeletion)
-                {
-                    grindSound = self.room.PlaySound(SoundID.Shelter_Gasket_Mover_LOOP, self.mainBodyChunk, true, 0.15f, 10f);
-                    grindSound.requireActiveUpkeep = true;
-                }
-                grindSound.alive = true;
+                // Looping grind sound
+                playGrindsound(self);
             }
             else
             {
@@ -236,6 +287,16 @@ namespace SlugTemplate
                 lastAnimation = lastAnimationFrame;
                 lastAnimationFrame = self.animation;
             }
+        }
+
+        private void playGrindsound(Player self)
+        {
+            if (grindSound == null || grindSound.currentSoundObject == null || grindSound.currentSoundObject.slatedForDeletion)
+            {
+                grindSound = self.room.PlaySound(SoundID.Shelter_Gasket_Mover_LOOP, self.mainBodyChunk, true, 0.15f, 10f);
+                grindSound.requireActiveUpkeep = true;
+            }
+            grindSound.alive = true;
         }
     }
 }
