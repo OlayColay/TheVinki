@@ -7,6 +7,7 @@
     "select_menu_scene_ascended": "Ghost_Vinki",
     "start_room": "UW_D01",
     "thevinki/coyote_boost": 5,
+    "thevinki/grind_vine_speed": 15,
     "thevinki/grind_x_speed": 7.5,
     "thevinki/grind_y_speed": 7.5,
     "thevinki/normal_x_speed": 1.3,

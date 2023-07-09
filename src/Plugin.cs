@@ -4,6 +4,7 @@ using UnityEngine;
 using SlugBase.Features;
 using static SlugBase.Features.FeatureTypes;
 using DressMySlugcat;
+using RWCustom;
 using SlugBase;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,12 +20,14 @@ namespace SlugTemplate
         private int lastXDirection = 1;
         private int lastYDirection = 1;
         private bool grindUpPoleFlag = false;
+        private Vector2 lastVineDir = Vector2.zero;
         private Player.AnimationIndex lastAnimationFrame = Player.AnimationIndex.None;
         private Player.AnimationIndex lastAnimation = Player.AnimationIndex.None;
         private ChunkSoundEmitter grindSound;
 
         public static readonly PlayerFeature<float> CoyoteBoost = PlayerFloat("thevinki/coyote_boost");
         public static readonly PlayerFeature<float> GrindXSpeed = PlayerFloat("thevinki/grind_x_speed");
+        public static readonly PlayerFeature<float> GrindVineSpeed = PlayerFloat("thevinki/grind_vine_speed");
         public static readonly PlayerFeature<float> GrindYSpeed = PlayerFloat("thevinki/grind_y_speed");
         public static readonly PlayerFeature<float> NormalXSpeed = PlayerFloat("thevinki/normal_x_speed");
         public static readonly PlayerFeature<float> NormalYSpeed = PlayerFloat("thevinki/normal_y_speed");
@@ -171,7 +174,7 @@ namespace SlugTemplate
 
             if (!GrindXSpeed.TryGet(self, out var grindXSpeed) || !NormalXSpeed.TryGet(self, out var normalXSpeed) ||
                 !GrindYSpeed.TryGet(self, out var grindYSpeed) || !NormalYSpeed.TryGet(self, out var normalYSpeed) ||
-                !SparkColor.TryGet(self, out var sparkColor))
+                !SparkColor.TryGet(self, out var sparkColor) || !GrindVineSpeed.TryGet(self, out var grindVineSpeed))
             {
                 return;
             }
@@ -203,21 +206,43 @@ namespace SlugTemplate
             }
 
             // Grind if holding pckp on a pole (vertical beam or 0G beam)
-            if ((self.animation == Player.AnimationIndex.ClimbOnBeam || self.animation == Player.AnimationIndex.ZeroGPoleGrab) && 
+            if ((self.animation == Player.AnimationIndex.ClimbOnBeam || self.animation == Player.AnimationIndex.ZeroGPoleGrab ||
+                self.animation == Player.AnimationIndex.VineGrab) && 
                 self.input[0].pckp && (self.bodyChunks[1].vel.magnitude > 2f || self.EffectiveRoomGravity < 1f))
             {
                 Debug.Log("Zero G Pole direction: " + self.zeroGPoleGrabDir.x + "," + self.zeroGPoleGrabDir.y);
                 self.slugcatStats.poleClimbSpeedFac = 0;
 
-                // Handle 0G horizontal beam grinding
-                if (self.animation == Player.AnimationIndex.ZeroGPoleGrab && self.room.GetTile(self.mainBodyChunk.pos).horizontalBeam)
+                // Handle vine grinding
+                if (self.animation == Player.AnimationIndex.VineGrab)
                 {
-                    self.bodyChunks[0].vel.x = grindYSpeed * lastXDirection;
+                    self.vineClimbCursor = grindVineSpeed * Vector2.ClampMagnitude(self.vineClimbCursor + lastVineDir * Custom.LerpMap(Vector2.Dot(lastVineDir, self.vineClimbCursor.normalized), -1f, 1f, 10f, 3f), 30f);
+                    Vector2 a6 = self.room.climbableVines.OnVinePos(self.vinePos);
+                    self.vinePos.floatPos += self.room.climbableVines.ClimbOnVineSpeed(self.vinePos, self.mainBodyChunk.pos + self.vineClimbCursor) * Mathf.Lerp(2.1f, 1.5f, self.EffectiveRoomGravity) / self.room.climbableVines.TotalLength(self.vinePos.vine);
+                    self.vinePos.floatPos = Mathf.Clamp(self.vinePos.floatPos, 0f, 1f);
+                    self.room.climbableVines.PushAtVine(self.vinePos, (a6 - self.room.climbableVines.OnVinePos(self.vinePos)) * 0.05f);
+                    if (self.vineGrabDelay == 0 && (!ModManager.MMF || !self.GrabbedByDaddyCorruption))
+                    {
+                        ClimbableVinesSystem.VinePosition vinePosition = self.room.climbableVines.VineSwitch(self.vinePos, self.mainBodyChunk.pos + self.vineClimbCursor, self.mainBodyChunk.rad);
+                        if (vinePosition != null)
+                        {
+                            self.vinePos = vinePosition;
+                            self.vineGrabDelay = 10;
+                        }
+                    }
                 }
                 else
                 {
-                    // This works in gravity and no gravity
-                    self.bodyChunks[0].vel.y = grindYSpeed * lastYDirection;
+                    // Handle 0G horizontal beam grinding
+                    if (self.animation == Player.AnimationIndex.ZeroGPoleGrab && self.room.GetTile(self.mainBodyChunk.pos).horizontalBeam)
+                    {
+                        self.bodyChunks[0].vel.x = grindYSpeed * lastXDirection;
+                    }
+                    else
+                    {
+                        // This works in gravity and no gravity
+                        self.bodyChunks[0].vel.y = grindYSpeed * lastYDirection;
+                    }
                 }
 
                 // Sparks from grinding
@@ -292,6 +317,10 @@ namespace SlugTemplate
             if (self.input[0].y != 0)
             {
                 lastYDirection = self.input[0].y;
+            }
+            if (self.SwimDir(true).magnitude > 0f)
+            {
+                lastVineDir = self.SwimDir(true);
             }
             // Save the last animation
             if (self.animation != lastAnimationFrame)
