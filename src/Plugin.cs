@@ -233,6 +233,8 @@ namespace SlugTemplate
             if (!self.input[0].pckp)
             {
                 isGrindingH = isGrindingV = isGrindingNoGrav = isGrindingVine = false;
+                self.slugcatStats.runspeedFac = normalXSpeed;
+                self.slugcatStats.poleClimbSpeedFac = normalYSpeed;
                 return;
             }
 
