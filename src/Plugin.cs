@@ -110,6 +110,12 @@ namespace SlugTemplate
         // Implement SuperJump
         private void Player_Jump(On.Player.orig_Jump orig, Player self)
         {
+            // Don't jump off a pole when we're trying to do a trick jump at the top
+            if (isGrindingV && !grindUpPoleFlag && self.input[0].x == 0f && lastYDirection > 0)
+            {
+                return;
+            }
+
             orig(self);
 
             if (!SuperJump.TryGet(self, out float power) || !CoyoteBoost.TryGet(self, out var coyoteBoost))
@@ -119,7 +125,7 @@ namespace SlugTemplate
 
             // If player jumped or coyote jumped from a beam (or grinded to top of pole), then trick jump
             bool coyote = isCoyoteJumping(self);
-            if (((coyote || isGrindingH) && self.bodyChunks[1].vel.magnitude >= 3.5f) || grindUpPoleFlag)
+            if (coyote || isGrindingH || grindUpPoleFlag)
             {
                 // Get num multiplier
                 float num = Mathf.Lerp(1f, 1.15f, self.Adrenaline);
@@ -244,7 +250,7 @@ namespace SlugTemplate
                 // Sparks from grinding
                 Vector2 pos = self.bodyChunks[1].pos;
                 Vector2 posB = pos - new Vector2(10f * lastXDirection, 0);
-                for (int j = 0; j < 1; j++)
+                for (int j = 0; j < 2; j++)
                 {
                     Vector2 a = RWCustom.Custom.RNV();
                     a.x = Mathf.Abs(a.x) * -lastXDirection;
@@ -361,7 +367,7 @@ namespace SlugTemplate
         private bool IsGrindingVertically(Player self)
         {
             return (self.animation == Player.AnimationIndex.ClimbOnBeam && 
-                ((lastYDirection > 0 && self.bodyChunks[1].vel.magnitude > 3f) ||
+                ((lastYDirection > 0 && self.bodyChunks[1].vel.magnitude > 2f) ||
                 (lastYDirection < 0 && self.bodyChunks[1].vel.magnitude > 1f)));
         }
 
