@@ -20,6 +20,10 @@ namespace SlugTemplate
         private int lastXDirection = 1;
         private int lastYDirection = 1;
         private bool grindUpPoleFlag = false;
+        private bool isGrindingH = false;
+        private bool isGrindingV = false;
+        private bool isGrindingNoGrav = false;
+        private bool isGrindingVine = false;
         private Vector2 lastVineDir = Vector2.zero;
         private Player.AnimationIndex lastAnimationFrame = Player.AnimationIndex.None;
         private Player.AnimationIndex lastAnimation = Player.AnimationIndex.None;
@@ -115,8 +119,7 @@ namespace SlugTemplate
 
             // If player jumped or coyote jumped from a beam (or grinded to top of pole), then trick jump
             bool coyote = isCoyoteJumping(self);
-            if (((coyote || lastAnimationFrame == Player.AnimationIndex.StandOnBeam) && 
-                self.input[0].pckp && self.bodyChunks[1].vel.magnitude >= 3.5f) || grindUpPoleFlag)
+            if (((coyote || isGrindingH) && self.bodyChunks[1].vel.magnitude >= 3.5f) || grindUpPoleFlag)
             {
                 // Get num multiplier
                 float num = Mathf.Lerp(1f, 1.15f, self.Adrenaline);
@@ -179,8 +182,61 @@ namespace SlugTemplate
                 return;
             }
 
+            // Save the last direction that Vinki was facing
+            if (self.input[0].x != 0)
+            {
+                lastXDirection = self.input[0].x;
+            }
+            if (self.input[0].y != 0)
+            {
+                lastYDirection = self.input[0].y;
+            }
+            if (self.SwimDir(true).magnitude > 0f)
+            {
+                lastVineDir = self.SwimDir(true);
+            }
+            // Save the last animation
+            if (self.animation != lastAnimationFrame)
+            {
+                lastAnimation = lastAnimationFrame;
+                lastAnimationFrame = self.animation;
+            }
+
+            // If grinding up a pole and reach the top, jump up high
+            if (self.animation == Player.AnimationIndex.GetUpToBeamTip && isGrindingV)
+            {
+                if (self.input[0].jmp)
+                {
+                    grindUpPoleFlag = true;
+                    self.Jump();
+                }
+                else
+                {
+                    grindUpPoleFlag = false;
+                    self.bodyChunks[1].pos = self.room.MiddleOfTile(self.bodyChunks[1].pos) + new Vector2(0f, 5f);
+                    self.bodyChunks[1].vel *= 0f;
+                    self.bodyChunks[0].vel = Vector2.ClampMagnitude(self.bodyChunks[0].vel, 9f);
+                }
+            }
+            else
+            {
+                grindUpPoleFlag = false;
+            }
+
+            // If player isn't holding pckp, no need to do other stuff
+            if (!self.input[0].pckp)
+            {
+                isGrindingH = isGrindingV = isGrindingNoGrav = isGrindingVine = false;
+                return;
+            }
+
+            isGrindingH = IsGrindingHorizontally(self);
+            isGrindingV = IsGrindingVertically(self);
+            isGrindingNoGrav = IsGrindingNoGrav(self);
+            isGrindingVine = IsGrindingVine(self);
+
             // Grind horizontally if holding pckp on a beam
-            if (self.animation == Player.AnimationIndex.StandOnBeam && self.input[0].pckp && self.bodyChunks[0].vel.magnitude > 3f)
+            if (isGrindingH)
             {
                 self.slugcatStats.runspeedFac = 0;
                 self.bodyChunks[1].vel.x = grindXSpeed * lastXDirection;
@@ -198,23 +254,21 @@ namespace SlugTemplate
                 }
 
                 // Looping grind sound
-                playGrindsound(self);
+                PlayGrindSound(self);
             }
             else
             {
                 self.slugcatStats.runspeedFac = normalXSpeed;
             }
 
-            // Grind if holding pckp on a pole (vertical beam or 0G beam)
-            if ((self.animation == Player.AnimationIndex.ClimbOnBeam || self.animation == Player.AnimationIndex.ZeroGPoleGrab ||
-                self.animation == Player.AnimationIndex.VineGrab) && 
-                self.input[0].pckp && (self.bodyChunks[1].vel.magnitude > 2f || self.EffectiveRoomGravity < 1f))
+            // Grind if holding pckp on a pole (vertical beam or 0G beam or vine)
+            if (isGrindingV || isGrindingNoGrav || isGrindingVine)
             {
                 Debug.Log("Zero G Pole direction: " + self.zeroGPoleGrabDir.x + "," + self.zeroGPoleGrabDir.y);
                 self.slugcatStats.poleClimbSpeedFac = 0;
 
                 // Handle vine grinding
-                if (self.animation == Player.AnimationIndex.VineGrab)
+                if (isGrindingVine)
                 {
                     self.vineClimbCursor = grindVineSpeed * Vector2.ClampMagnitude(self.vineClimbCursor + lastVineDir * Custom.LerpMap(Vector2.Dot(lastVineDir, self.vineClimbCursor.normalized), -1f, 1f, 10f, 3f), 30f);
                     Vector2 a6 = self.room.climbableVines.OnVinePos(self.vinePos);
@@ -234,7 +288,7 @@ namespace SlugTemplate
                 else
                 {
                     // Handle 0G horizontal beam grinding
-                    if (self.animation == Player.AnimationIndex.ZeroGPoleGrab && self.room.GetTile(self.mainBodyChunk.pos).horizontalBeam)
+                    if (isGrindingNoGrav && self.room.GetTile(self.mainBodyChunk.pos).horizontalBeam)
                     {
                         self.bodyChunks[0].vel.x = grindYSpeed * lastXDirection;
                     }
@@ -258,16 +312,16 @@ namespace SlugTemplate
                 }
 
                 // Looping grind sound
-                playGrindsound(self);
+                PlayGrindSound(self);
             }
             else
             {
                 self.slugcatStats.poleClimbSpeedFac = normalYSpeed;
             }
 
-            // Catch beam with feet if holding pckp, and not holding down
-            if ((self.animation == Player.AnimationIndex.None || self.animation == Player.AnimationIndex.Flip) && 
-                self.input[0].pckp && self.input[0].y >= 0 && self.room.GetTile(self.bodyChunks[1].pos).horizontalBeam &&
+            // Catch beam with feet if not holding down
+            if (self.bodyMode == Player.BodyModeIndex.Default && 
+                self.input[0].y >= 0 && self.room.GetTile(self.bodyChunks[1].pos).horizontalBeam &&
                 self.bodyChunks[0].vel.y < 0f)
             {
                 self.room.PlaySound(SoundID.Spear_Bounce_Off_Creauture_Shell, self.mainBodyChunk, false, 0.75f, 1f);
@@ -278,59 +332,17 @@ namespace SlugTemplate
                 self.bodyChunks[0].vel.y = 0f;
             }
 
-            // Stop flipping when holding pckp, falling fast, and letting go of jmp (so landing on a rail doesn't look weird)
-            if (self.animation == Player.AnimationIndex.Flip && self.input[0].pckp)
+            // Stop flipping when falling fast and letting go of jmp (so landing on a rail doesn't look weird)
+            if (self.animation == Player.AnimationIndex.Flip)
             {
                 if (self.bodyChunks[0].vel.y < -3f && !self.input[0].jmp)
                 {
                     self.animation = Player.AnimationIndex.HangFromBeam;
                 }
             }
-
-            // If grinding up a pole and reach the top, jump up high
-            if (self.animation == Player.AnimationIndex.GetUpToBeamTip && lastAnimationFrame == Player.AnimationIndex.ClimbOnBeam &&
-                self.input[0].pckp)
-            {
-                if (self.input[0].jmp)
-                {
-                    grindUpPoleFlag = true;
-                    self.Jump();
-                }
-                else
-                {
-                    self.bodyChunks[1].pos = self.room.MiddleOfTile(self.bodyChunks[1].pos) + new Vector2(0f, 5f);
-                    self.bodyChunks[1].vel *= 0f;
-                    self.bodyChunks[0].vel = Vector2.ClampMagnitude(self.bodyChunks[0].vel, 9f);
-                }
-                
-            }
-            else
-            {
-                grindUpPoleFlag = false;
-            }
-
-            // Save the last direction that Vinki was facing
-            if (self.input[0].x != 0)
-            {
-                lastXDirection = self.input[0].x;
-            }
-            if (self.input[0].y != 0)
-            {
-                lastYDirection = self.input[0].y;
-            }
-            if (self.SwimDir(true).magnitude > 0f)
-            {
-                lastVineDir = self.SwimDir(true);
-            }
-            // Save the last animation
-            if (self.animation != lastAnimationFrame)
-            {
-                lastAnimation = lastAnimationFrame;
-                lastAnimationFrame = self.animation;
-            }
         }
 
-        private void playGrindsound(Player self)
+        private void PlayGrindSound(Player self)
         {
             if (grindSound == null || grindSound.currentSoundObject == null || grindSound.currentSoundObject.slatedForDeletion)
             {
@@ -338,6 +350,31 @@ namespace SlugTemplate
                 grindSound.requireActiveUpkeep = true;
             }
             grindSound.alive = true;
+        }
+
+        private bool IsGrindingHorizontally(Player self)
+        {
+            return (self.animation == Player.AnimationIndex.StandOnBeam && 
+                self.bodyChunks[0].vel.magnitude > 3f);
+        }
+
+        private bool IsGrindingVertically(Player self)
+        {
+            return (self.animation == Player.AnimationIndex.ClimbOnBeam && 
+                ((lastYDirection > 0 && self.bodyChunks[1].vel.magnitude > 3f) ||
+                (lastYDirection < 0 && self.bodyChunks[1].vel.magnitude > 1f)));
+        }
+
+        private bool IsGrindingNoGrav(Player self)
+        {
+            return (self.animation == Player.AnimationIndex.ZeroGPoleGrab &&
+                self.bodyChunks[0].vel.magnitude > 1f);
+        }
+
+        private bool IsGrindingVine(Player self)
+        {
+            return (self.animation == Player.AnimationIndex.VineGrab && 
+                self.bodyChunks[0].vel.magnitude > 1f);
         }
     }
 }
