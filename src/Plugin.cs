@@ -4,11 +4,11 @@ using UnityEngine;
 using SlugBase.Features;
 using static SlugBase.Features.FeatureTypes;
 using DressMySlugcat;
-using Rewired;
 using RWCustom;
 using SlugBase;
 using System.Collections.Generic;
 using System.Linq;
+using ImprovedInput;
 
 namespace SlugTemplate
 {
@@ -25,7 +25,6 @@ namespace SlugTemplate
         private bool isGrindingV = false;
         private bool isGrindingNoGrav = false;
         private bool isGrindingVine = false;
-        private bool graffitiButton = false;
         private Vector2 lastVineDir = Vector2.zero;
         private Player.AnimationIndex lastAnimationFrame = Player.AnimationIndex.None;
         private Player.AnimationIndex lastAnimation = Player.AnimationIndex.None;
@@ -40,6 +39,7 @@ namespace SlugTemplate
         public static readonly PlayerFeature<float> SuperJump = PlayerFloat("thevinki/super_jump");
         public static readonly PlayerFeature<Color> SparkColor = PlayerColor("thevinki/spark_color");
 
+        public static readonly PlayerKeybind Graffiti = PlayerKeybind.Register("thevinki:graffiti", "The Vinki", "Graffiti Mode", KeyCode.C, KeyCode.JoystickButton4);
 
         // Add hooks
         public void OnEnable()
@@ -57,18 +57,7 @@ namespace SlugTemplate
         private void LoadResources(RainWorld rainWorld)
         {
             //Debug.Log("Player count: " + ReInput.players.AllPlayers.Count);
-            ReInput.players.AllPlayers[1].AddInputEventDelegate(OnGrafDown, UpdateLoopType.Update, InputActionEventType.ButtonJustPressed);
-            ReInput.players.AllPlayers[1].AddInputEventDelegate(OnGrafUp, UpdateLoopType.Update, InputActionEventType.ButtonJustReleased);
-        }
-
-        private void OnGrafDown(InputActionEventData data)
-        {
-            graffitiButton = true;
-        }
-
-        private void OnGrafUp(InputActionEventData data)
-        {
-            graffitiButton = false;
+            
         }
 
         public static bool IsPostInit;
@@ -405,7 +394,7 @@ namespace SlugTemplate
         {
             orig(self, eu);
 
-            if (self.input[0].pckp && !self.input[1].pckp && graffitiButton)
+            if (self.input[0].pckp && !self.input[1].pckp && self.IsPressed(Graffiti))
             {
                 Debug.Log("Place graffiti");
             }

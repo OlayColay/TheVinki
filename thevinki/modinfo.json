@@ -5,8 +5,8 @@
 	"hide_version": false,
 	"authors": "OlayColay",
 	"description": "Play as an angsty teen wearing Soap shoes.",
-	"requirements": [ "slime-cubed.slugbase", "dressmyslugcat" ],
-	"requirements_names": [ "SlugBase", "DressMySlugcat" ],
+	"requirements": [ "slime-cubed.slugbase", "dressmyslugcat", "improved-input-config" ],
+	"requirements_names": [ "SlugBase", "DressMySlugcat", "ImprovedInputConfig" ],
 	"checksum_override_version": false,
 	"tags": [ "Cosmetics", "Custom Slugcat", "Game Mechanics" ]
 }
