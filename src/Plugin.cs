@@ -4,6 +4,7 @@ using UnityEngine;
 using SlugBase.Features;
 using static SlugBase.Features.FeatureTypes;
 using DressMySlugcat;
+using Rewired;
 using RWCustom;
 using SlugBase;
 using System.Collections.Generic;
@@ -24,6 +25,7 @@ namespace SlugTemplate
         private bool isGrindingV = false;
         private bool isGrindingNoGrav = false;
         private bool isGrindingVine = false;
+        private bool graffitiButton = false;
         private Vector2 lastVineDir = Vector2.zero;
         private Player.AnimationIndex lastAnimationFrame = Player.AnimationIndex.None;
         private Player.AnimationIndex lastAnimation = Player.AnimationIndex.None;
@@ -48,11 +50,25 @@ namespace SlugTemplate
             // Put your custom hooks here!
             On.Player.Jump += Player_Jump;
             On.Player.MovementUpdate += Player_Move;
+            On.Player.Update += Player_Update;
         }
-        
+
         // Load any resources, such as sprites or sounds
         private void LoadResources(RainWorld rainWorld)
         {
+            //Debug.Log("Player count: " + ReInput.players.AllPlayers.Count);
+            ReInput.players.AllPlayers[1].AddInputEventDelegate(OnGrafDown, UpdateLoopType.Update, InputActionEventType.ButtonJustPressed);
+            ReInput.players.AllPlayers[1].AddInputEventDelegate(OnGrafUp, UpdateLoopType.Update, InputActionEventType.ButtonJustReleased);
+        }
+
+        private void OnGrafDown(InputActionEventData data)
+        {
+            graffitiButton = true;
+        }
+
+        private void OnGrafUp(InputActionEventData data)
+        {
+            graffitiButton = false;
         }
 
         public static bool IsPostInit;
@@ -383,6 +399,16 @@ namespace SlugTemplate
         {
             return (self.animation == Player.AnimationIndex.VineGrab && 
                 self.bodyChunks[0].vel.magnitude > 1f);
+        }
+
+        private void Player_Update(On.Player.orig_Update orig, Player self, bool eu)
+        {
+            orig(self, eu);
+
+            if (self.input[0].pckp && !self.input[1].pckp && graffitiButton)
+            {
+                Debug.Log("Place graffiti");
+            }
         }
     }
 }
