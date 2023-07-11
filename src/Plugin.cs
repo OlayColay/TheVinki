@@ -9,6 +9,7 @@ using SlugBase;
 using System.Collections.Generic;
 using System.Linq;
 using ImprovedInput;
+using System.IO;
 
 namespace SlugTemplate
 {
@@ -29,7 +30,9 @@ namespace SlugTemplate
         private Player.AnimationIndex lastAnimationFrame = Player.AnimationIndex.None;
         private Player.AnimationIndex lastAnimation = Player.AnimationIndex.None;
         private ChunkSoundEmitter grindSound;
+        private List<PlacedObject.CustomDecalData> graffitis = new List<PlacedObject.CustomDecalData>();
 
+        public static readonly string graffitiFolder = "RainWorld_Data/StreamingAssets/decals/VinkiGraffiti";
         public static readonly PlayerFeature<float> CoyoteBoost = PlayerFloat("thevinki/coyote_boost");
         public static readonly PlayerFeature<float> GrindXSpeed = PlayerFloat("thevinki/grind_x_speed");
         public static readonly PlayerFeature<float> GrindVineSpeed = PlayerFloat("thevinki/grind_vine_speed");
@@ -56,8 +59,15 @@ namespace SlugTemplate
         // Load any resources, such as sprites or sounds
         private void LoadResources(RainWorld rainWorld)
         {
-            //Debug.Log("Player count: " + ReInput.players.AllPlayers.Count);
-            
+            string parent = Path.GetFileNameWithoutExtension(graffitiFolder);
+
+            foreach (var image in Directory.EnumerateFiles(graffitiFolder, "*.*", SearchOption.AllDirectories)
+            .Where(s => s.EndsWith(".png")).Select(f => parent + '/' + Path.GetFileNameWithoutExtension(f)))
+            {
+                PlacedObject.CustomDecalData decal = new PlacedObject.CustomDecalData(null);
+                decal.imageName = image;
+                graffitis.Add(decal);
+            }
         }
 
         public static bool IsPostInit;
@@ -396,7 +406,13 @@ namespace SlugTemplate
 
             if (self.input[0].pckp && !self.input[1].pckp && self.IsPressed(Graffiti))
             {
-                Debug.Log("Place graffiti");
+                PlacedObject graffiti = new PlacedObject(PlacedObject.Type.CustomDecal, graffitis[0]);
+                graffiti.pos = self.mainBodyChunk.pos;
+
+                for (int i = 0; i < 5; i++)
+                {
+                    self.room.AddObject(new CustomDecal(graffiti));
+                }
             }
         }
     }
