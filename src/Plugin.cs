@@ -440,10 +440,16 @@ namespace SlugTemplate
                 smoke.colorA = UnityEngine.Color.white;
                 smoke.colorB = UnityEngine.Color.gray;
 
-                for (int i = 0; i < 9; i++)
-                {
-                    self.room.AddObject(new CustomDecal(graffiti));
-                }
+                StartCoroutine(SparyGraffiti(self, graffiti));
+            }
+        }
+
+        private IEnumerator<WaitForSeconds> SparyGraffiti(Player self, PlacedObject graffiti)
+        {
+            for (int i = 0; i < 9; i++)
+            {
+                yield return new WaitForSeconds(0.1f);
+                self.room.AddObject(new CustomDecal(graffiti));
             }
         }
 
