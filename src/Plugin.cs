@@ -440,6 +440,7 @@ namespace SlugTemplate
                 smoke.colorA = UnityEngine.Color.white;
                 smoke.colorB = UnityEngine.Color.gray;
 
+                self.room.PlaySound(SoundID.Vulture_Jet_LOOP, self.mainBodyChunk, false, 1f, 2f);
                 StartCoroutine(SparyGraffiti(self, graffiti));
             }
         }
