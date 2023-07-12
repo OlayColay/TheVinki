@@ -63,6 +63,14 @@ namespace SlugTemplate
         {
             string parent = Path.GetFileNameWithoutExtension(graffitiFolder);
 
+            // If the folder doesn't exist, copy it from the mod
+            if (!Directory.Exists(graffitiFolder))
+            {
+                string modFolder = AssetManager.ResolveDirectory("../../../../workshop/content/312520/3001275271");
+                Debug.Log("Graffiti folder doesn't exist! Copying from mod folder: " + modFolder);
+                CopyFilesRecursively(modFolder + "/VinkiGraffiti", graffitiFolder);
+            }
+
             // Go through each graffiti image and add it to the list of decals Vinki can place
             foreach (var image in Directory.EnumerateFiles(graffitiFolder, "*.*", SearchOption.AllDirectories)
             .Where(s => s.EndsWith(".png")).Select(f => parent + '/' + Path.GetFileNameWithoutExtension(f)))
@@ -491,6 +499,23 @@ namespace SlugTemplate
             int h = Mathf.RoundToInt(new_height - (w - new_width)); // adjust the rounded width with height 
 
             return new int[] { w, h };
+        }
+
+        private static void CopyFilesRecursively(string sourcePath, string targetPath)
+        {
+            Directory.CreateDirectory(targetPath);
+
+            //Now Create all of the directories
+            foreach (string dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
+            {
+                Directory.CreateDirectory(dirPath.Replace(sourcePath, targetPath));
+            }
+
+            //Copy all the files & Replaces any files with the same name
+            foreach (string newPath in Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories))
+            {
+                File.Copy(newPath, newPath.Replace(sourcePath, targetPath), true);
+            }
         }
     }
 }
