@@ -466,16 +466,19 @@ namespace SlugTemplate
                 return;
             }
 
-            int randGraffiti = UnityEngine.Random.Range(0, 3);
+            List<Menu.MenuDepthIllustration> menuGraffitis = new List<Menu.MenuDepthIllustration>();
+            foreach (var image in self.depthIllustrations.Where(f => Path.GetFileNameWithoutExtension(f.fileName).StartsWith("Graffiti - ")))
+            {
+                menuGraffitis.Add(image);
+            }
+
+            int randGraffiti = UnityEngine.Random.Range(0, menuGraffitis.Count);
             string fileName = "Graffiti - " + randGraffiti.ToString();
-            
-            foreach (var image in self.depthIllustrations)
+
+            foreach (var image in menuGraffitis)
             {
                 string imageName = Path.GetFileNameWithoutExtension(image.fileName);
-                if (imageName.StartsWith("Graffiti - "))
-                {
-                    image.alpha = (imageName == fileName) ? 1f : 0f;
-                }
+                image.alpha = (imageName == fileName) ? 1f : 0f;
             }
         }
 

@@ -3,33 +3,51 @@
 	"scene_folder": "scenes/slugcat - vinki",
 	"images": [
 		{
-			"name": "PranxBG",
-			"pos": [ 320, 300 ],
-			"depth": 3.7,
+			"name": "Flat",
+			"pos": [ 70, 130 ],
+			"depth": -1,
+			"flatmode": true
+		},
+		{
+			"name": "Background",
+			"pos": [ 70, 130 ],
+			"depth": 4.2,
 			"shader": "Basic"
 		},
 		{
 			"name": "Graffiti - 0",
-			"pos": [ 670, 500 ],
-			"depth": 3.7,
+			"pos": [ 70, 130 ],
+			"depth": 4.2,
 			"shader": "Basic"
 		},
 		{
 			"name": "Graffiti - 1",
-			"pos": [ 670, 500 ],
-			"depth": 3.7,
+			"pos": [ 70, 130 ],
+			"depth": 4.2,
 			"shader": "Basic"
 		},
 		{
 			"name": "Graffiti - 2",
-			"pos": [ 670, 500 ],
-			"depth": 3.7,
+			"pos": [ 70, 130 ],
+			"depth": 4.2,
 			"shader": "Basic"
 		},
 		{
-			"name": "PranxSlug",
-			"pos": [ 320, 300 ],
+			"name": "Vinki Closed",
+			"pos": [ 70, 130 ],
 			"depth": 2.8,
+			"shader": "Basic"
+		},
+		{
+			"name": "Sparks",
+			"pos": [ 70, 130 ],
+			"depth": 2.7,
+			"shader": "Basic"
+		},
+		{
+			"name": "Overseer",
+			"pos": [ 70, 130 ],
+			"depth": 1.8,
 			"shader": "Basic"
 		}
 	],
