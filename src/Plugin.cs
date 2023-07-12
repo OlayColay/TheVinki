@@ -32,6 +32,7 @@ namespace SlugTemplate
         private Player.AnimationIndex lastAnimation = Player.AnimationIndex.None;
         private ChunkSoundEmitter grindSound;
         private List<PlacedObject.CustomDecalData> graffitis = new List<PlacedObject.CustomDecalData>();
+        private List<Vector2> graffitiOffsets = new List<Vector2>();
 
         public static readonly string graffitiFolder = "RainWorld_Data/StreamingAssets/decals/VinkiGraffiti";
         public static readonly PlayerFeature<float> CoyoteBoost = PlayerFloat("thevinki/coyote_boost");
@@ -41,7 +42,7 @@ namespace SlugTemplate
         public static readonly PlayerFeature<float> NormalXSpeed = PlayerFloat("thevinki/normal_x_speed");
         public static readonly PlayerFeature<float> NormalYSpeed = PlayerFloat("thevinki/normal_y_speed");
         public static readonly PlayerFeature<float> SuperJump = PlayerFloat("thevinki/super_jump");
-        public static readonly PlayerFeature<Color> SparkColor = PlayerColor("thevinki/spark_color");
+        public static readonly PlayerFeature<UnityEngine.Color> SparkColor = PlayerColor("thevinki/spark_color");
 
         public static readonly PlayerKeybind Graffiti = PlayerKeybind.Register("thevinki:graffiti", "The Vinki", "Graffiti Mode", KeyCode.C, KeyCode.JoystickButton4);
 
@@ -62,12 +63,31 @@ namespace SlugTemplate
         {
             string parent = Path.GetFileNameWithoutExtension(graffitiFolder);
 
+            // Go through each graffiti image and add it to the list of decals Vinki can place
             foreach (var image in Directory.EnumerateFiles(graffitiFolder, "*.*", SearchOption.AllDirectories)
             .Where(s => s.EndsWith(".png")).Select(f => parent + '/' + Path.GetFileNameWithoutExtension(f)))
             {
+                Debug.Log(graffitiFolder + "/" + image);
                 PlacedObject.CustomDecalData decal = new PlacedObject.CustomDecalData(null);
                 decal.imageName = image;
+                decal.fromDepth = 0.2f;
+
+                // Get the image as a 2d texture so we can resize it to something manageable
+                Texture2D img = new Texture2D(2, 2);
+                byte[] tmpBytes = File.ReadAllBytes(graffitiFolder + "/" + Path.GetFileNameWithoutExtension(image) + ".png");
+                ImageConversion.LoadImage(img, tmpBytes);
+                int[] newSize = ResizeAndKeepAspectRatio(img.width, img.height, 100f * 100f);
+                img.Resize(newSize[0], newSize[1]);
+
+                decal.handles[0] = new Vector2(0f, img.height);
+                decal.handles[1] = new Vector2(img.width, img.height);
+                decal.handles[2] = new Vector2(img.width, 0f);
+
+                float halfWidth = img.width / 2f;
+                float halfHeight = img.height / 2f;
+
                 graffitis.Add(decal);
+                graffitiOffsets.Add(new Vector2(-halfWidth, -halfHeight));
             }
         }
 
@@ -411,9 +431,16 @@ namespace SlugTemplate
             if (self.input[0].pckp && !self.input[1].pckp && self.IsPressed(Graffiti))
             {
                 PlacedObject graffiti = new PlacedObject(PlacedObject.Type.CustomDecal, graffitis[0]);
-                graffiti.pos = self.mainBodyChunk.pos;
+                graffiti.pos = self.mainBodyChunk.pos + graffitiOffsets[0];
 
-                for (int i = 0; i < 5; i++)
+                var smoke = new Explosion.ExplosionSmoke(self.mainBodyChunk.pos, Vector2.zero, 4f);
+                smoke.lifeTime = 60f;
+                smoke.life = 2f;
+                self.room.AddObject(smoke);
+                smoke.colorA = UnityEngine.Color.white;
+                smoke.colorB = UnityEngine.Color.gray;
+
+                for (int i = 0; i < 9; i++)
                 {
                     self.room.AddObject(new CustomDecal(graffiti));
                 }
@@ -440,6 +467,17 @@ namespace SlugTemplate
                     image.alpha = (imageName == fileName) ? 1f : 0f;
                 }
             }
+        }
+
+        private int[] ResizeAndKeepAspectRatio(float original_width, float original_height, float target_area)
+        {
+            float new_width = Mathf.Sqrt((original_width / original_height) * target_area);
+            float new_height = target_area / new_width;
+
+            int w = Mathf.RoundToInt(new_width); // round to the nearest integer
+            int h = Mathf.RoundToInt(new_height - (w - new_width)); // adjust the rounded width with height 
+
+            return new int[] { w, h };
         }
     }
 }
