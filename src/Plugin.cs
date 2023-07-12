@@ -428,10 +428,13 @@ namespace SlugTemplate
         {
             orig(self, eu);
 
+            // Spray a random graffiti
             if (self.input[0].pckp && !self.input[1].pckp && self.IsPressed(Graffiti))
             {
-                PlacedObject graffiti = new PlacedObject(PlacedObject.Type.CustomDecal, graffitis[0]);
-                graffiti.pos = self.mainBodyChunk.pos + graffitiOffsets[0];
+                int rand = UnityEngine.Random.Range(0, graffitis.Count);
+
+                PlacedObject graffiti = new PlacedObject(PlacedObject.Type.CustomDecal, graffitis[rand]);
+                graffiti.pos = self.mainBodyChunk.pos + graffitiOffsets[rand];
 
                 var smoke = new Explosion.ExplosionSmoke(self.mainBodyChunk.pos, Vector2.zero, 4f);
                 smoke.lifeTime = 60f;
