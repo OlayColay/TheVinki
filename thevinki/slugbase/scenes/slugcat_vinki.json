@@ -2,8 +2,36 @@
 	"id": "Slugcat_Vinki",
 	"scene_folder": "scenes/slugcat - vinki",
 	"images": [
-		{ "name": "PranxBG",    "pos": [320, 300], "depth": 3.7, "shader": "Basic" },
-		{ "name": "PranxSlug",  "pos": [320, 300], "depth": 2.8, "shader": "Basic" }
+		{
+			"name": "PranxBG",
+			"pos": [ 320, 300 ],
+			"depth": 3.7,
+			"shader": "Basic"
+		},
+		{
+			"name": "Graffiti - 0",
+			"pos": [ 670, 500 ],
+			"depth": 3.7,
+			"shader": "Basic"
+		},
+		{
+			"name": "Graffiti - 1",
+			"pos": [ 670, 500 ],
+			"depth": 3.7,
+			"shader": "Basic"
+		},
+		{
+			"name": "Graffiti - 2",
+			"pos": [ 670, 500 ],
+			"depth": 3.7,
+			"shader": "Basic"
+		},
+		{
+			"name": "PranxSlug",
+			"pos": [ 320, 300 ],
+			"depth": 2.8,
+			"shader": "Basic"
+		}
 	],
 	"idle_depths": [ 2.8 ],
 	"glow_pos": [688, 484],

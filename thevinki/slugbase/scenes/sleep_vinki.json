@@ -1,0 +1,20 @@
+{
+	"id": "Sleep_Vinki",
+	"scene_folder": "scenes/sleep - vinki",
+	"images": [
+		{
+			"name": "PranxBG",
+			"pos": [ 320, 300 ],
+			"depth": 3.7,
+			"shader": "Basic"
+		},
+		{
+			"name": "PranxSlug",
+			"pos": [ 320, 300 ],
+			"depth": 2.8,
+			"shader": "Basic"
+		}
+	],
+	"idle_depths": [ 2.8 ],
+	"slugcat_depth": 2.8
+}

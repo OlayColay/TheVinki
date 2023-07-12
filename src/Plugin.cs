@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ImprovedInput;
 using System.IO;
+using SlugBase.Assets;
 
 namespace SlugTemplate
 {
@@ -87,6 +88,9 @@ namespace SlugTemplate
                 }
 
                 Debug.Log($"Plugin dressmyslugcat.templatecat is loaded!");
+
+                // Putting this hook here ensures that SlugBase's BuildScene hook goes first
+                On.Menu.MenuScene.BuildScene += MenuScene_BuildScene;
             }
             catch (Exception ex)
             {
@@ -412,6 +416,28 @@ namespace SlugTemplate
                 for (int i = 0; i < 5; i++)
                 {
                     self.room.AddObject(new CustomDecal(graffiti));
+                }
+            }
+        }
+
+        private void MenuScene_BuildScene(On.Menu.MenuScene.orig_BuildScene orig, Menu.MenuScene self)
+        {
+            orig(self);
+
+            if (self.sceneID.ToString() != "Slugcat_Vinki")
+            {
+                return;
+            }
+
+            int randGraffiti = UnityEngine.Random.Range(0, 3);
+            string fileName = "Graffiti - " + randGraffiti.ToString();
+            
+            foreach (var image in self.depthIllustrations)
+            {
+                string imageName = Path.GetFileNameWithoutExtension(image.fileName);
+                if (imageName.StartsWith("Graffiti - "))
+                {
+                    image.alpha = (imageName == fileName) ? 1f : 0f;
                 }
             }
         }
