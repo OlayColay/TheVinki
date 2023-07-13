@@ -33,6 +33,12 @@
 			"shader": "Basic"
 		},
 		{
+			"name": "Graffiti - 3",
+			"pos": [ 70, 130 ],
+			"depth": 4.2,
+			"shader": "Basic"
+		},
+		{
 			"name": "Vinki Closed",
 			"pos": [ 70, 130 ],
 			"depth": 2.8,
