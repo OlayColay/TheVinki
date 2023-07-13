@@ -33,6 +33,7 @@ namespace SlugTemplate
         private ChunkSoundEmitter grindSound;
         private List<PlacedObject.CustomDecalData> graffitis = new List<PlacedObject.CustomDecalData>();
         private List<Vector2> graffitiOffsets = new List<Vector2>();
+        private List<Color> graffitiAvgColors = new List<Color>();
 
         public static readonly string graffitiFolder = "RainWorld_Data/StreamingAssets/decals/VinkiGraffiti";
         public static readonly PlayerFeature<float> CoyoteBoost = PlayerFloat("thevinki/coyote_boost");
@@ -84,9 +85,13 @@ namespace SlugTemplate
                 Texture2D img = new Texture2D(2, 2);
                 byte[] tmpBytes = File.ReadAllBytes(graffitiFolder + "/" + Path.GetFileNameWithoutExtension(image) + ".png");
                 ImageConversion.LoadImage(img, tmpBytes);
+
+                // Get average color of image (to use for graffiti spray/smoke color)
+                graffitiAvgColors.Add(AverageColorFromTexture(img));
+
+                // Resize image to look good in game
                 int[] newSize = ResizeAndKeepAspectRatio(img.width, img.height, 100f * 100f);
                 img.Resize(newSize[0], newSize[1]);
-
                 decal.handles[0] = new Vector2(0f, img.height);
                 decal.handles[1] = new Vector2(img.width, img.height);
                 decal.handles[2] = new Vector2(img.width, 0f);
@@ -444,22 +449,25 @@ namespace SlugTemplate
                 PlacedObject graffiti = new PlacedObject(PlacedObject.Type.CustomDecal, graffitis[rand]);
                 graffiti.pos = self.mainBodyChunk.pos + graffitiOffsets[rand];
 
-                var smoke = new Explosion.ExplosionSmoke(self.mainBodyChunk.pos, Vector2.zero, 4f);
-                smoke.lifeTime = 60f;
-                smoke.life = 2f;
-                self.room.AddObject(smoke);
-                smoke.colorA = UnityEngine.Color.white;
-                smoke.colorB = UnityEngine.Color.gray;
-
                 self.room.PlaySound(SoundID.Vulture_Jet_LOOP, self.mainBodyChunk, false, 1f, 2f);
-                StartCoroutine(SparyGraffiti(self, graffiti));
+                StartCoroutine(SparyGraffiti(self, graffiti, self.mainBodyChunk.pos, graffitiOffsets[rand], graffitiAvgColors[rand]));
             }
         }
 
-        private IEnumerator<WaitForSeconds> SparyGraffiti(Player self, PlacedObject graffiti)
+        private IEnumerator<WaitForSeconds> SparyGraffiti(Player self, PlacedObject graffiti, Vector2 playerPos, Vector2 grafDimensions, Color avgColor)
         {
             for (int i = 0; i < 9; i++)
             {
+                Vector2 smokePos = new Vector2(
+                    playerPos.x + UnityEngine.Random.Range(grafDimensions.x, -grafDimensions.x),
+                    playerPos.y + UnityEngine.Random.Range(grafDimensions.y, -grafDimensions.y));
+                var smoke = new Explosion.ExplosionSmoke(smokePos, Vector2.zero, 2f);
+                smoke.lifeTime = 15f;
+                smoke.life = 2f;
+                self.room.AddObject(smoke);
+                smoke.colorA = avgColor;
+                smoke.colorB = UnityEngine.Color.gray;
+
                 yield return new WaitForSeconds(0.1f);
                 self.room.AddObject(new CustomDecal(graffiti));
             }
@@ -516,6 +524,36 @@ namespace SlugTemplate
             {
                 File.Copy(newPath, newPath.Replace(sourcePath, targetPath), true);
             }
+        }
+
+        Color AverageColorFromTexture(Texture2D tex)
+        {
+            Color[] texColors = tex.GetPixels();
+            int total = texColors.Length;
+
+            float r = 0f;
+            float g = 0f;
+            float b = 0f;
+
+            for (int i = 0; i < texColors.Length; i++)
+            {
+                if (texColors[i].a <= 0.1f)
+                {
+                    total--;
+                    continue;
+                }
+
+                r += texColors[i].r;
+                g += texColors[i].g;
+                b += texColors[i].b;
+            }
+
+            r /= total;
+            g /= total;
+            b /= total;
+
+            Debug.Log("Color: " + r + " " + g + " " + b + " " + 1f);
+            return new Color(r, g, b, 1f);
         }
     }
 }

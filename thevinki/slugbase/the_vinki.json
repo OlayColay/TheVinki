@@ -1,7 +1,7 @@
 {
-	"id": "TheVinki",
-	"name": "The Vinki",
-	"description": "Play as an angsty teen wearing Soap shoes.",
+  "id": "TheVinki",
+  "name": "The Vinki",
+  "description": "Play as an angsty teen wearing rail-grinding shoes and spraying graffiti to enact revenge on 5P.",
   "features": {
     "select_menu_scene": "Slugcat_Vinki",
     "select_menu_scene_ascended": "Ghost_Vinki",
