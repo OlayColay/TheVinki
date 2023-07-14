@@ -34,6 +34,7 @@ namespace SlugTemplate
         private List<PlacedObject.CustomDecalData> graffitis = new List<PlacedObject.CustomDecalData>();
         private List<Vector2> graffitiOffsets = new List<Vector2>();
         private List<Color> graffitiAvgColors = new List<Color>();
+        private List<string> shelterItems = new List<string>();
 
         public static readonly string graffitiFolder = "RainWorld_Data/StreamingAssets/decals/VinkiGraffiti";
         public static readonly PlayerFeature<float> CoyoteBoost = PlayerFloat("thevinki/coyote_boost");
@@ -57,6 +58,7 @@ namespace SlugTemplate
             On.Player.Jump += Player_Jump;
             On.Player.MovementUpdate += Player_Move;
             On.Player.Update += Player_Update;
+            On.ShelterDoor.Close += ShelterDoor_Close;
         }
 
         // Load any resources, such as sprites or sounds
@@ -221,9 +223,6 @@ namespace SlugTemplate
 
         private bool isCoyoteJumping(Player self)
         {
-            //Debug.Log("Last Animation: " + lastAnimation + "\t This animation: " + self.animation + 
-            //        "\tLast frame: " + lastAnimationFrame + "\tcanJump frames: " + self.canJump +
-            //        "\tBody mode: " + self.bodyMode);
             return (lastAnimation == Player.AnimationIndex.StandOnBeam && self.animation == Player.AnimationIndex.None &&
                     self.bodyMode == Player.BodyModeIndex.Default);
         }
@@ -473,28 +472,77 @@ namespace SlugTemplate
             }
         }
 
+        private void ShelterDoor_Close(On.ShelterDoor.orig_Close orig, ShelterDoor self)
+        {
+            if (self.IsClosing || self.room.PlayersInRoom.Count < 1)
+            {
+                orig(self);
+                return;
+            }
+            orig(self);
+
+            Player player = self.room.PlayersInRoom[0];
+
+            //Debug.Log("Door closed");
+            foreach(List<PhysicalObject> items in self.room.physicalObjects)
+            {
+                Debug.Log("Listing objects in shelter...");
+                foreach (PhysicalObject item in items)
+                {
+                    //Debug.Log("Item: " + item.GetType().ToString());
+
+                    if (item is Spear || item is DataPearl)
+                    {
+                        shelterItems.Add(item.GetType().ToString());
+                    }
+                }
+            }
+        }
+
         private void MenuScene_BuildScene(On.Menu.MenuScene.orig_BuildScene orig, Menu.MenuScene self)
         {
             orig(self);
 
-            if (self.sceneID.ToString() != "Slugcat_Vinki")
+            if (self.sceneID.ToString() == "Slugcat_Vinki")
             {
-                return;
+                // Find the graffiti layers of the slugcat select scene
+                List<Menu.MenuDepthIllustration> menuGraffitis = new List<Menu.MenuDepthIllustration>();
+                foreach (var image in self.depthIllustrations.Where(f => Path.GetFileNameWithoutExtension(f.fileName).StartsWith("Graffiti - ")))
+                {
+                    menuGraffitis.Add(image);
+                }
+
+                // Randomize which graffiti shows
+                int randGraffiti = UnityEngine.Random.Range(0, menuGraffitis.Count);
+                string fileName = "Graffiti - " + randGraffiti.ToString();
+
+                // Show the random graffiti and hide the rest
+                foreach (var image in menuGraffitis)
+                {
+                    string imageName = Path.GetFileNameWithoutExtension(image.fileName);
+                    image.alpha = (imageName == fileName) ? 1f : 0f;
+                }
             }
-
-            List<Menu.MenuDepthIllustration> menuGraffitis = new List<Menu.MenuDepthIllustration>();
-            foreach (var image in self.depthIllustrations.Where(f => Path.GetFileNameWithoutExtension(f.fileName).StartsWith("Graffiti - ")))
+            else if (self.sceneID.ToString() == "Sleep_Vinki")
             {
-                menuGraffitis.Add(image);
-            }
+                // Find the item layers of the slugcat select scene
+                List<Menu.MenuDepthIllustration> sleepItems = new List<Menu.MenuDepthIllustration>();
+                foreach (Menu.MenuDepthIllustration image in self.depthIllustrations.Where(f => Path.GetFileNameWithoutExtension(f.fileName).StartsWith("Item - ")))
+                {
+                    image.alpha = 0f;
+                    string imageName = Path.GetFileNameWithoutExtension(image.fileName);
 
-            int randGraffiti = UnityEngine.Random.Range(0, menuGraffitis.Count);
-            string fileName = "Graffiti - " + randGraffiti.ToString();
+                    // Show the item layers that are in the shelter
+                    foreach (string item in shelterItems)
+                    {
+                        if (imageName.EndsWith(item))
+                        {
+                            image.alpha = 1f;
+                        }
+                    }
+                }
 
-            foreach (var image in menuGraffitis)
-            {
-                string imageName = Path.GetFileNameWithoutExtension(image.fileName);
-                image.alpha = (imageName == fileName) ? 1f : 0f;
+                shelterItems.Clear();
             }
         }
 
