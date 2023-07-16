@@ -1,12 +1,12 @@
 ﻿{
 	"id": "olaycolay.thevinki",
 	"name": "The Vinki",
-	"version": "0.5.6",
+	"version": "0.5.7",
 	"hide_version": false,
 	"authors": "OlayColay",
 	"description": "Play as an angsty teen wearing rail-grinding shoes and spraying graffiti to enact revenge on 5P.",
-	"requirements": [ "slime-cubed.slugbase", "dressmyslugcat", "improved-input-config" ],
-	"requirements_names": [ "SlugBase", "DressMySlugcat", "ImprovedInputConfig" ],
+	"requirements": [ "slime-cubed.slugbase", "dressmyslugcat", "improved-input-config", "fisobs" ],
+	"requirements_names": [ "SlugBase", "DressMySlugcat", "ImprovedInputConfig", "Fisobs" ],
 	"checksum_override_version": false,
 	"tags": [ "Cosmetics", "Custom Slugcat", "Game Mechanics" ]
 }

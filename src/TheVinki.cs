@@ -11,13 +11,14 @@ using System.Linq;
 using ImprovedInput;
 using System.IO;
 using SlugBase.Assets;
+using SprayCans;
 
-namespace SlugTemplate
+namespace VinkiSlugcat
 {
     [BepInDependency("slime-cubed.slugbase")]
     [BepInDependency("dressmyslugcat", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInPlugin(MOD_ID, "The Vinki", "0.1.0")]
-    class Plugin : BaseUnityPlugin
+    class TheVinki : BaseUnityPlugin
     {
         private const string MOD_ID = "olaycolay.thevinki";
         private int lastXDirection = 1;
@@ -27,6 +28,7 @@ namespace SlugTemplate
         private bool isGrindingV = false;
         private bool isGrindingNoGrav = false;
         private bool isGrindingVine = false;
+        private bool grindToggle = false;
         private Vector2 lastVineDir = Vector2.zero;
         private Player.AnimationIndex lastAnimationFrame = Player.AnimationIndex.None;
         private Player.AnimationIndex lastAnimation = Player.AnimationIndex.None;
@@ -46,7 +48,10 @@ namespace SlugTemplate
         public static readonly PlayerFeature<float> SuperJump = PlayerFloat("thevinki/super_jump");
         public static readonly PlayerFeature<UnityEngine.Color> SparkColor = PlayerColor("thevinki/spark_color");
 
+        public static readonly PlayerKeybind Grind = PlayerKeybind.Register("thevinki:grind", "The Vinki", "Grind", KeyCode.LeftShift, KeyCode.JoystickButton2);
+        public static readonly PlayerKeybind ToggleGrind = PlayerKeybind.Register("thevinki:toggle_grind", "The Vinki", "Toggle Grind", KeyCode.A, KeyCode.JoystickButton3);
         public static readonly PlayerKeybind Graffiti = PlayerKeybind.Register("thevinki:graffiti", "The Vinki", "Graffiti Mode", KeyCode.C, KeyCode.JoystickButton4);
+        public static readonly PlayerKeybind Spray = PlayerKeybind.Register("thevinki:spray", "The Vinki", "Spray Graffiti", KeyCode.LeftShift, KeyCode.JoystickButton2);
 
         // Add hooks
         public void OnEnable()
@@ -66,8 +71,8 @@ namespace SlugTemplate
         {
             string parent = Path.GetFileNameWithoutExtension(graffitiFolder);
 
-            // If the folder doesn't exist, copy it from the mod
-            if (!Directory.Exists(graffitiFolder))
+            // If the folder doesn't exist (or is empty), copy it from the mod
+            if (!Directory.Exists(graffitiFolder) || !Directory.EnumerateFileSystemEntries(graffitiFolder).Any())
             {
                 string modFolder = AssetManager.ResolveDirectory("../../../../workshop/content/312520/3001275271");
                 Debug.Log("Graffiti folder doesn't exist! Copying from mod folder: " + modFolder);
@@ -104,6 +109,9 @@ namespace SlugTemplate
                 graffitis.Add(decal);
                 graffitiOffsets.Add(new Vector2(-halfWidth, -halfHeight));
             }
+
+            // Remix menu config
+            MachineConnector.SetRegisteredOI(Info.Metadata.GUID, new TheVinkiConfig());
         }
 
         public static bool IsPostInit;
@@ -122,7 +130,7 @@ namespace SlugTemplate
                     SetupDMSSprites();
                 }
 
-                Debug.Log($"Plugin dressmyslugcat.templatecat is loaded!");
+                Debug.Log($"TheVinki dressmyslugcat.templatecat is loaded!");
 
                 // Putting this hook here ensures that SlugBase's BuildScene hook goes first
                 On.Menu.MenuScene.BuildScene += MenuScene_BuildScene;
@@ -280,8 +288,8 @@ namespace SlugTemplate
                 grindUpPoleFlag = false;
             }
 
-            // If player isn't holding pckp, no need to do other stuff
-            if (!self.input[0].pckp)
+            // If player isn't holding Grind, no need to do other stuff
+            if (!self.IsPressed(Grind) && !grindToggle)
             {
                 isGrindingH = isGrindingV = isGrindingNoGrav = isGrindingVine = false;
                 self.slugcatStats.runspeedFac = normalXSpeed;
@@ -294,7 +302,7 @@ namespace SlugTemplate
             isGrindingNoGrav = IsGrindingNoGrav(self);
             isGrindingVine = IsGrindingVine(self);
 
-            // Grind horizontally if holding pckp on a beam
+            // Grind horizontally if holding Grind on a beam
             if (isGrindingH)
             {
                 self.slugcatStats.runspeedFac = 0;
@@ -320,7 +328,7 @@ namespace SlugTemplate
                 self.slugcatStats.runspeedFac = normalXSpeed;
             }
 
-            // Grind if holding pckp on a pole (vertical beam or 0G beam or vine)
+            // Grind if holding Grind on a pole (vertical beam or 0G beam or vine)
             if (isGrindingV || isGrindingNoGrav || isGrindingVine)
             {
                 Debug.Log("Zero G Pole direction: " + self.zeroGPoleGrabDir.x + "," + self.zeroGPoleGrabDir.y);
@@ -440,32 +448,65 @@ namespace SlugTemplate
         {
             orig(self, eu);
 
-            // Spray a random graffiti
-            if (self.input[0].pckp && !self.input[1].pckp && self.IsPressed(Graffiti))
+            // Update grindToggle if needed
+            if (self.JustPressed(ToggleGrind) && TheVinkiConfig.ToggleGrind.Value)
             {
-                int rand = UnityEngine.Random.Range(0, graffitis.Count);
+                grindToggle = !grindToggle;
+            }
 
-                PlacedObject graffiti = new PlacedObject(PlacedObject.Type.CustomDecal, graffitis[rand]);
-                graffiti.pos = self.mainBodyChunk.pos + graffitiOffsets[rand];
+            // Spray a random graffiti
+            if (self.JustPressed(Spray) && self.IsPressed(Graffiti))
+            {
+                if (!TheVinkiConfig.RequireSprayCans.Value)
+                {
+                    StartCoroutine(SparyGraffiti(self));
+                    return;
+                }
+                for (int i = 0; i < self.grasps.Length; i++)
+                {
+                    if (self.grasps[i].grabbed == null)
+                    {
+                        continue;
+                    }
 
-                self.room.PlaySound(SoundID.Vulture_Jet_LOOP, self.mainBodyChunk, false, 1f, 2f);
-                StartCoroutine(SparyGraffiti(self, graffiti, self.mainBodyChunk.pos, graffitiOffsets[rand], graffitiAvgColors[rand]));
+                    if (self.grasps[i].grabbed is SprayCan && (self.grasps[i].grabbed as SprayCan).TryUse())
+                    {
+                        StartCoroutine(SparyGraffiti(self));
+                    }
+                }
+            }
+            // Spawn SprayCan (Debug)
+            else if (self.input[0].thrw && !self.input[1].thrw && self.IsPressed(Graffiti))
+            {
+                var tilePosition = self.room.GetTilePosition(self.mainBodyChunk.pos);
+                var pos = new WorldCoordinate(self.room.abstractRoom.index, tilePosition.x, tilePosition.y, 0);
+                var abstr = new SprayCanAbstract(self.room.world, pos, self.room.game.GetNewID());
+                abstr.Realize();
+                self.room.abstractRoom.AddEntity(abstr);
             }
         }
 
-        private IEnumerator<WaitForSeconds> SparyGraffiti(Player self, PlacedObject graffiti, Vector2 playerPos, Vector2 grafDimensions, Color avgColor)
+        private IEnumerator<WaitForSeconds> SparyGraffiti(Player self)
         {
+            int rand = UnityEngine.Random.Range(0, graffitis.Count);
+
+            PlacedObject graffiti = new PlacedObject(PlacedObject.Type.CustomDecal, graffitis[rand]);
+            Vector2 playerPos = self.mainBodyChunk.pos;
+            graffiti.pos = self.mainBodyChunk.pos + graffitiOffsets[rand];
+
+            self.room.PlaySound(SoundID.Vulture_Jet_LOOP, self.mainBodyChunk, false, 1f, 2f);
+
             for (int i = 0; i < 9; i++)
             {
                 Vector2 smokePos = new Vector2(
-                    playerPos.x + UnityEngine.Random.Range(grafDimensions.x, -grafDimensions.x),
-                    playerPos.y + UnityEngine.Random.Range(grafDimensions.y, -grafDimensions.y));
+                    playerPos.x + UnityEngine.Random.Range(graffitiOffsets[rand].x, -graffitiOffsets[rand].x),
+                    playerPos.y + UnityEngine.Random.Range(graffitiOffsets[rand].y, -graffitiOffsets[rand].y));
                 var smoke = new Explosion.ExplosionSmoke(smokePos, Vector2.zero, 2f);
                 smoke.lifeTime = 15f;
                 smoke.life = 2f;
                 self.room.AddObject(smoke);
-                smoke.colorA = avgColor;
-                smoke.colorB = UnityEngine.Color.gray;
+                smoke.colorA = graffitiAvgColors[rand];
+                smoke.colorB = Color.gray;
 
                 yield return new WaitForSeconds(0.1f);
                 self.room.AddObject(new CustomDecal(graffiti));
