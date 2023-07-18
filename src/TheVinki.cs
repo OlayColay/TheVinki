@@ -12,6 +12,7 @@ using ImprovedInput;
 using System.IO;
 using SlugBase.Assets;
 using SprayCans;
+using Fisobs.Core;
 
 namespace VinkiSlugcat
 {
@@ -56,6 +57,8 @@ namespace VinkiSlugcat
         // Add hooks
         public void OnEnable()
         {
+            Content.Register(new SprayCanFisob());
+
             On.RainWorld.OnModsInit += Extras.WrapInit(LoadResources);
             On.RainWorld.PostModsInit += RainWorld_PostModsInit;
 
@@ -460,16 +463,11 @@ namespace VinkiSlugcat
                 if (!TheVinkiConfig.RequireSprayCans.Value)
                 {
                     StartCoroutine(SparyGraffiti(self));
-                    return;
                 }
-                for (int i = 0; i < self.grasps.Length; i++)
+                else
                 {
-                    if (self.grasps[i].grabbed == null)
-                    {
-                        continue;
-                    }
-
-                    if (self.grasps[i].grabbed is SprayCan && (self.grasps[i].grabbed as SprayCan).TryUse())
+                    var grasp = self.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan);
+                    if ((grasp.grabbed as SprayCan).TryUse())
                     {
                         StartCoroutine(SparyGraffiti(self));
                     }
@@ -483,6 +481,7 @@ namespace VinkiSlugcat
                 var abstr = new SprayCanAbstract(self.room.world, pos, self.room.game.GetNewID());
                 abstr.Realize();
                 self.room.abstractRoom.AddEntity(abstr);
+                self.room.AddObject(abstr.realizedObject);
             }
         }
 
@@ -532,7 +531,7 @@ namespace VinkiSlugcat
                 {
                     //Debug.Log("Item: " + item.GetType().ToString());
 
-                    if (item is Spear || item is DataPearl)
+                    if (item is DataPearl)
                     {
                         shelterItems.Add(item.GetType().ToString());
                     }

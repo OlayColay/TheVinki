@@ -24,6 +24,8 @@ sealed class SprayCan : Weapon
     {
         Abstr = abstr;
 
+        UpdateColor();
+
         bodyChunks = new[] { new BodyChunk(this, 0, pos + vel, 4 * (Abstr.scaleX + Abstr.scaleY), 0.35f) { goThroughFloors = true } };
         bodyChunks[0].lastPos = bodyChunks[0].pos;
         bodyChunks[0].vel = vel;
@@ -65,7 +67,42 @@ sealed class SprayCan : Weapon
             return false;
         }
         Abstr.uses--;
+
+        UpdateColor();
+
         return true;
+    }
+
+    private void UpdateColor()
+    {
+        switch (Abstr.uses)
+        {
+            case 0:
+                color = Color.gray;
+                Abstr.hue = 0f;
+                Abstr.saturation = 0f;
+                break;
+            case 1:
+                color = Color.red;
+                Abstr.hue = 0f;
+                Abstr.saturation = 1f;
+                break;
+            case 2:
+                color = Color.yellow;
+                Abstr.hue = 0.1533865f;
+                Abstr.saturation = 1f;
+                break;
+            case 3:
+                color = Color.green;
+                Abstr.hue = 0.3333333f;
+                Abstr.saturation = 1f;
+                break;
+            default:
+                color = Color.white;
+                Abstr.hue = 0f;
+                Abstr.saturation = 0f;
+                break;
+        }
     }
 
     private void Shatter()

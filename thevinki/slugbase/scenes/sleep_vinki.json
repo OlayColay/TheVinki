@@ -3,62 +3,51 @@
 	"scene_folder": "scenes/sleep - vinki",
 	"images": [
 		{
-			"name": "Slugcat",
-			"pos": [ 70, 130 ],
+			"name": "flat",
+			"pos": [ 700, 100 ],
 			"depth": -1,
 			"flatmode": true
 		},
 		{
-			"name": "Slugcat",
-			"pos": [ 70, 130 ],
-			"depth": 4
-		},
-		{
-			"name": "PranxBG",
-			"pos": [ 320, 300 ],
-			"depth": 3.7,
+			"name": "Background",
+			"pos": [ 700, 100 ],
+			"depth": 4,
 			"shader": "Basic"
 		},
 		{
-			"name": "PranxSlug",
-			"pos": [ 320, 300 ],
+			"name": "Grass - 0",
+			"pos": [ 700, 100 ],
+			"depth": 3.3,
+			"shader": "Basic"
+		},
+		{
+			"name": "SprayCans",
+			"pos": [ 700, 100 ],
+			"depth": 3.2,
+			"shader": "Basic"
+		},
+		{
+			"name": "VinkiSlep",
+			"pos": [ 700, 100 ],
 			"depth": 2.8,
 			"shader": "Basic"
 		},
 		{
-			"name": "5P or QT",
-			"pos": [ 620, 200 ],
-			"depth": 2,
+			"name": "Item - DataPearl",
+			"pos": [ 700, 100 ],
+			"depth": 2.5,
 			"shader": "Basic"
 		},
 		{
-			"name": "Item - Spear",
-			"pos": [ 120, 100 ],
-			"depth": 2,
+			"name": "Stuff",
+			"pos": [ 700, 100 ],
+			"depth": 2.5,
 			"shader": "Basic"
 		},
 		{
-			"name": "frankencat",
-			"pos": [ 220, 200 ],
-			"depth": 1.8,
-			"shader": "Basic"
-		},
-		{
-			"name": "frankencat",
-			"pos": [ 140, 300 ],
-			"depth": 1.5,
-			"shader": "Basic"
-		},
-		{
-			"name": "frankencat",
-			"pos": [ 420, 400 ],
-			"depth": 2,
-			"shader": "Basic"
-		},
-		{
-			"name": "frankencat",
-			"pos": [ 720, 500 ],
-			"depth": 2,
+			"name": "Grass - 1",
+			"pos": [ 700, 100 ],
+			"depth": 2.0,
 			"shader": "Basic"
 		}
 	],
