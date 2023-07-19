@@ -11,7 +11,7 @@
 		{
 			"name": "Background",
 			"pos": [ 700, 100 ],
-			"depth": 4,
+			"depth": 3.5,
 			"shader": "Basic"
 		},
 		{
@@ -23,7 +23,7 @@
 		{
 			"name": "SprayCans",
 			"pos": [ 700, 100 ],
-			"depth": 3.2,
+			"depth": 3,
 			"shader": "Basic"
 		},
 		{
