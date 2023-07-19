@@ -8,8 +8,8 @@ sealed class SprayCanAbstract : AbstractPhysicalObject
     public SprayCanAbstract(World world, WorldCoordinate pos, EntityID ID) : base(world, SprayCanFisob.SprayCan, null, pos, ID)
     {
         uses = 3;
-        scaleX = 1;
-        scaleY = 1;
+        scaleX = 0.75f;
+        scaleY = 0.75f;
         saturation = 0.5f;
         hue = 1f;
     }

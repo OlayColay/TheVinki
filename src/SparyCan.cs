@@ -1,5 +1,7 @@
-﻿using RWCustom;
+﻿using IL.Smoke;
+using RWCustom;
 using UnityEngine;
+using Smoke;
 
 namespace SprayCans;
 
@@ -12,10 +14,11 @@ sealed class SprayCan : Weapon
     public float rotVel;
     public float lastDarkness = -1f;
     public float darkness;
+    public Smoke.BombSmoke smoke;
 
     private Color blackColor;
     private Color earthColor;
-
+    private bool ignited;
     private readonly float rotationOffset;
 
     public SprayCanAbstract Abstr { get; }
@@ -105,31 +108,128 @@ sealed class SprayCan : Weapon
         }
     }
 
-    private void Shatter()
+    private void Explode(BodyChunk hitChunk)
     {
-        var num = Random.Range(6, 10);
-        for (int k = 0; k < num; k++)
+        if (base.slatedForDeletetion)
         {
-            Vector2 pos = firstChunk.pos + Custom.RNV() * 5f * Rand;
-            Vector2 vel = Custom.RNV() * 4f * (1 + Rand);
-            room.AddObject(new Spark(pos, vel, new Color(1f, 1f, 1f), null, 10, 170));
+            return;
         }
-
-        float count = 2 + 4 * (Abstr.scaleX + Abstr.scaleY);
-
-        for (int j = 0; j < count; j++)
+        Vector2 vector = Vector2.Lerp(base.firstChunk.pos, base.firstChunk.lastPos, 0.35f);
+        this.room.AddObject(new SootMark(this.room, vector, 80f, true));
+        this.room.AddObject(new Explosion(this.room, this, vector, 7, 250f, 6.2f, 0f, 100f, 0f, this.thrownBy, 0f, 20f, 1f));
+        this.room.AddObject(new Explosion.ExplosionLight(vector, 280f, 1f, 7, RandomColor()));
+        this.room.AddObject(new Explosion.ExplosionLight(vector, 230f, 1f, 3, new Color(1f, 1f, 1f)));
+        this.room.AddObject(new ExplosionSpikes(this.room, vector, 14, 30f, 9f, 7f, 170f, RandomColor()));
+        this.room.AddObject(new ShockWave(vector, 330f, 0.045f, 5, false));
+        for (int i = 0; i < 25; i++)
         {
-            Vector2 extraVel = Custom.RNV() * Random.value * (j == 0 ? 3f : 6f);
-
-            room.AddObject(new CentipedeShell(firstChunk.pos, Custom.RNV() * Rand * 15 + extraVel, Abstr.hue, Abstr.saturation, 0.25f, 0.25f));
+            Vector2 a = Custom.RNV();
+            if (this.room.GetTile(vector + a * 20f).Solid)
+            {
+                if (!this.room.GetTile(vector - a * 20f).Solid)
+                {
+                    a *= -1f;
+                }
+                else
+                {
+                    a = Custom.RNV();
+                }
+            }
+            for (int j = 0; j < 3; j++)
+            {
+                this.room.AddObject(new Spark(vector + a * Mathf.Lerp(30f, 60f, Random.value), a * Mathf.Lerp(7f, 38f, Random.value) + Custom.RNV() * 20f * Random.value, Color.Lerp(RandomColor(), new Color(1f, 1f, 1f), Random.value), null, 11, 28));
+            }
+            this.room.AddObject(new Explosion.FlashingSmoke(vector + a * 40f * Random.value, a * Mathf.Lerp(4f, 20f, Mathf.Pow(Random.value, 2f)), 1f + 0.05f * Random.value, new Color(1f, 1f, 1f), RandomColor(), Random.Range(3, 11)));
         }
-
-        room.PlaySound(SoundID.Weapon_Skid, firstChunk.pos, 0.75f, 1.25f);
-
-        AllGraspsLetGoOfThisObject(true);
-        abstractPhysicalObject.LoseAllStuckObjects();
-        Destroy();
+        if (this.smoke != null)
+        {
+            for (int k = 0; k < 8; k++)
+            {
+                this.smoke.EmitWithMyLifeTime(vector + Custom.RNV(), Custom.RNV() * Random.value * 17f);
+            }
+        }
+        for (int l = 0; l < 6; l++)
+        {
+            this.room.AddObject(new ScavengerBomb.BombFragment(vector, Custom.DegToVec(((float)l + Random.value) / 6f * 360f) * Mathf.Lerp(18f, 38f, Random.value)));
+        }
+        this.room.ScreenMovement(new Vector2?(vector), default(Vector2), 1.3f);
+        for (int m = 0; m < this.abstractPhysicalObject.stuckObjects.Count; m++)
+        {
+            this.abstractPhysicalObject.stuckObjects[m].Deactivate();
+        }
+        this.room.PlaySound(SoundID.Bomb_Explode, vector);
+        //this.room.InGameNoise(new InGameNoise(vector, 9000f, this, 1f));
+        bool flag = hitChunk != null;
+        for (int n = 0; n < 5; n++)
+        {
+            if (this.room.GetTile(vector + Custom.fourDirectionsAndZero[n].ToVector2() * 20f).Solid)
+            {
+                flag = true;
+                break;
+            }
+        }
+        if (flag)
+        {
+            if (this.smoke == null)
+            {
+                this.smoke = new Smoke.BombSmoke(this.room, vector, null, RandomColor());
+                this.room.AddObject(this.smoke);
+            }
+            if (hitChunk != null)
+            {
+                this.smoke.chunk = hitChunk;
+            }
+            else
+            {
+                this.smoke.chunk = null;
+                this.smoke.fadeIn = 1f;
+            }
+            this.smoke.pos = vector;
+            this.smoke.stationary = true;
+            this.smoke.DisconnectSmoke();
+        }
+        else if (this.smoke != null)
+        {
+            this.smoke.Destroy();
+        }
+        this.Destroy();
     }
+
+    public override void Thrown(Creature thrownBy, Vector2 thrownPos, Vector2? firstFrameTraceFromPos, IntVector2 throwDir, float frc, bool eu)
+    {
+        base.Thrown(thrownBy, thrownPos, firstFrameTraceFromPos, throwDir, frc, eu);
+        Room room = this.room;
+        if (room != null)
+        {
+            room.PlaySound(SoundID.Slugcat_Throw_Bomb, base.firstChunk);
+        }
+        this.ignited = true;
+    }
+
+    public override bool HitSomething(SharedPhysics.CollisionResult result, bool eu)
+    {
+        if (result.obj == null)
+        {
+            return false;
+        }
+        this.vibrate = 20;
+        this.ChangeMode(Weapon.Mode.Free);
+        if (result.obj is Creature)
+        {
+            (result.obj as Creature).Violence(base.firstChunk, new Vector2?(base.firstChunk.vel * base.firstChunk.mass), result.chunk, result.onAppendagePos, Creature.DamageType.Explosion, 0.2f, 85f);
+        }
+        else if (result.chunk != null)
+        {
+            result.chunk.vel += base.firstChunk.vel * base.firstChunk.mass / result.chunk.mass;
+        }
+        else if (result.onAppendagePos != null)
+        {
+            (result.obj as PhysicalObject.IHaveAppendages).ApplyForceOnAppendage(result.onAppendagePos, base.firstChunk.vel * base.firstChunk.mass);
+        }
+        this.Explode(result.chunk);
+        return true;
+    }
+
 
     public override void Update(bool eu)
     {
@@ -219,11 +319,13 @@ sealed class SprayCan : Weapon
     public override void TerrainImpact(int chunk, IntVector2 direction, float speed, bool firstContact)
     {
         base.TerrainImpact(chunk, direction, speed, firstContact);
-
-        if (speed > 10)
+        if (this.floorBounceFrames > 0 && (direction.x == 0 || this.room.GetTile(base.firstChunk.pos).Terrain == Room.Tile.TerrainType.Slope))
         {
-            room.PlaySound(SoundID.Spear_Fragment_Bounce, firstChunk.pos, 0.35f, 2f);
-            ResetVel(speed);
+            return;
+        }
+        if (this.ignited)
+        {
+            this.Explode(null);
         }
     }
 
@@ -288,6 +390,11 @@ sealed class SprayCan : Weapon
     {
         blackColor = palette.blackColor;
         earthColor = Color.Lerp(palette.fogColor, palette.blackColor, 0.5f);
+    }
+
+    private Color RandomColor()
+    {
+        return Color.HSVToRGB(Random.Range(0f, 1f), 1f, 1f);
     }
 
 #nullable enable
