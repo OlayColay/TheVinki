@@ -20,6 +20,7 @@ sealed class SprayCan : Weapon
     private Color earthColor;
     private bool ignited;
     private readonly float rotationOffset;
+    private RoomPalette roomPalette = new RoomPalette();
 
     public SprayCanAbstract Abstr { get; }
 
@@ -115,13 +116,12 @@ sealed class SprayCan : Weapon
             return;
         }
         Vector2 vector = Vector2.Lerp(base.firstChunk.pos, base.firstChunk.lastPos, 0.35f);
-        this.room.AddObject(new SootMark(this.room, vector, 80f, true));
-        this.room.AddObject(new Explosion(this.room, this, vector, 7, 250f, 6.2f, 0f, 100f, 0f, this.thrownBy, 0f, 20f, 1f));
+        this.room.AddObject(new Explosion(this.room, this, vector, 7, 250f, 2f * Abstr.uses, 0f, 100f, 0f, this.thrownBy, 0f, 20f, 1f));
         this.room.AddObject(new Explosion.ExplosionLight(vector, 280f, 1f, 7, RandomColor()));
-        this.room.AddObject(new Explosion.ExplosionLight(vector, 230f, 1f, 3, new Color(1f, 1f, 1f)));
+        this.room.AddObject(new Explosion.ExplosionLight(vector, 230f, 1f, 3, RandomColor()));
         this.room.AddObject(new ExplosionSpikes(this.room, vector, 14, 30f, 9f, 7f, 170f, RandomColor()));
         this.room.AddObject(new ShockWave(vector, 330f, 0.045f, 5, false));
-        for (int i = 0; i < 25; i++)
+        for (int i = 0; i < 8 * Abstr.uses; i++)
         {
             Vector2 a = Custom.RNV();
             if (this.room.GetTile(vector + a * 20f).Solid)
@@ -141,23 +141,16 @@ sealed class SprayCan : Weapon
             }
             this.room.AddObject(new Explosion.FlashingSmoke(vector + a * 40f * Random.value, a * Mathf.Lerp(4f, 20f, Mathf.Pow(Random.value, 2f)), 1f + 0.05f * Random.value, new Color(1f, 1f, 1f), RandomColor(), Random.Range(3, 11)));
         }
-        if (this.smoke != null)
-        {
-            for (int k = 0; k < 8; k++)
-            {
-                this.smoke.EmitWithMyLifeTime(vector + Custom.RNV(), Custom.RNV() * Random.value * 17f);
-            }
-        }
         for (int l = 0; l < 6; l++)
         {
             this.room.AddObject(new ScavengerBomb.BombFragment(vector, Custom.DegToVec(((float)l + Random.value) / 6f * 360f) * Mathf.Lerp(18f, 38f, Random.value)));
         }
-        this.room.ScreenMovement(new Vector2?(vector), default(Vector2), 1.3f);
+        this.room.ScreenMovement(new Vector2?(vector), default(Vector2), 0.3f * Abstr.uses);
         for (int m = 0; m < this.abstractPhysicalObject.stuckObjects.Count; m++)
         {
             this.abstractPhysicalObject.stuckObjects[m].Deactivate();
         }
-        this.room.PlaySound(SoundID.Bomb_Explode, vector);
+        this.room.PlaySound(SoundID.Bomb_Explode, vector, 0.3f * Abstr.uses, 1f);
         //this.room.InGameNoise(new InGameNoise(vector, 9000f, this, 1f));
         bool flag = hitChunk != null;
         for (int n = 0; n < 5; n++)
@@ -170,10 +163,16 @@ sealed class SprayCan : Weapon
         }
         if (flag)
         {
+            Color smokeColor = RandomColor();
             if (this.smoke == null)
             {
-                this.smoke = new Smoke.BombSmoke(this.room, vector, null, RandomColor());
+                this.smoke = new Smoke.BombSmoke(this.room, vector, null, smokeColor);
+                roomPalette.blackColor = roomPalette.fogColor = smokeColor;
                 this.room.AddObject(this.smoke);
+                foreach (Smoke.BombSmoke.ThickSmokeSegment particle in this.smoke.particles)
+                {
+                    particle.ApplyPalette(null, null, roomPalette);
+                }
             }
             if (hitChunk != null)
             {
