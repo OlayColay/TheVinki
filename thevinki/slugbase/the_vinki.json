@@ -3,6 +3,10 @@
   "name": "The Vinki",
   "description": "Play as an angsty teen wearing rail-grinding shoes and spraying graffiti to enact revenge on 5P.",
   "features": {
+    "custom_colors": [
+        { "name" : "Body", "story": "FFFFFF", "arena": [ "FFFFFF", "FFFFFF", "FFFFFF", "FFFFFF" ] },
+        { "name" : "Eyes", "story": "0E0202", "arena": [ "0E0202", "623109", "890A3B", "FFFFFF" ] }
+    ],
     "select_menu_scene": "Slugcat_Vinki",
     "sleep_scene": "Sleep_Vinki",
     "select_menu_scene_ascended": "Ghost_Vinki",

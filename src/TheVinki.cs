@@ -147,11 +147,12 @@ namespace VinkiSlugcat
         public void SetupDMSSprites()
         {
             //-- The ID of the spritesheet we will be using as the default sprites for our slugcat
-            var sheetID = "olaycolay.thevinki";
+            string sheetIDPre = "olaycolay.thevinki";
 
             //-- Each player slot (0, 1, 2, 3) can be customized individually
             for (int i = 0; i < 4; i++)
             {
+                string sheetID = sheetIDPre + i;
                 SpriteDefinitions.AddSlugcatDefault(new Customization()
                 {
                     //-- Make sure to use the same ID as the one used for our slugcat
@@ -583,6 +584,42 @@ namespace VinkiSlugcat
                 }
 
                 shelterItems.Clear();
+
+                // Find the graffiti layers of the slugcat select scene
+                List<Menu.MenuDepthIllustration> menuGraffitis = new List<Menu.MenuDepthIllustration>();
+                foreach (var image in self.depthIllustrations.Where(f => Path.GetFileNameWithoutExtension(f.fileName).StartsWith("Graffiti - ")))
+                {
+                    menuGraffitis.Add(image);
+                }
+
+                // Randomize which graffiti shows
+                int randGraffiti = UnityEngine.Random.Range(0, menuGraffitis.Count);
+                string fileName = "Graffiti - " + randGraffiti.ToString();
+
+                // Show the random graffiti and hide the rest
+                foreach (var image in menuGraffitis)
+                {
+                    string imageName = Path.GetFileNameWithoutExtension(image.fileName);
+                    image.alpha = (imageName == fileName) ? 1f : 0f;
+                }
+
+                // Find the doodle layers of the slugcat select scene
+                List<Menu.MenuDepthIllustration> menuDoodles = new List<Menu.MenuDepthIllustration>();
+                foreach (var image in self.depthIllustrations.Where(f => Path.GetFileNameWithoutExtension(f.fileName).StartsWith("Doodle - ")))
+                {
+                    menuGraffitis.Add(image);
+                }
+
+                // Randomize which doodle shows
+                int randDoodles = UnityEngine.Random.Range(0, menuDoodles.Count);
+                fileName = "Doodle - " + randGraffiti.ToString();
+
+                // Show the random doodle and hide the rest
+                foreach (var image in menuDoodles)
+                {
+                    string imageName = Path.GetFileNameWithoutExtension(image.fileName);
+                    image.alpha = (imageName == fileName) ? 1f : 0f;
+                }
             }
         }
 

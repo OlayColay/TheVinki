@@ -15,6 +15,18 @@
 			"shader": "Basic"
 		},
 		{
+			"name": "Empty",
+			"pos": [ 700, 100 ],
+			"depth": 3.3,
+			"shader": "Basic"
+		},
+		{
+			"name": "Graffiti - 0",
+			"pos": [ 700, 100 ],
+			"depth": 3.5,
+			"shader": "Basic"
+		},
+		{
 			"name": "Grass - 0",
 			"pos": [ 700, 100 ],
 			"depth": 3.3,
@@ -27,6 +39,12 @@
 			"shader": "Basic"
 		},
 		{
+			"name": "Doodle - 0",
+			"pos": [ 700, 100 ],
+			"depth": 2.7,
+			"shader": "Basic"
+		},
+		{
 			"name": "VinkiSlep",
 			"pos": [ 700, 100 ],
 			"depth": 2.8,
@@ -35,7 +53,7 @@
 		{
 			"name": "Item - DataPearl",
 			"pos": [ 700, 100 ],
-			"depth": 2.5,
+			"depth": 2.7,
 			"shader": "Basic"
 		},
 		{
