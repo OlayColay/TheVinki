@@ -115,6 +115,9 @@ namespace VinkiSlugcat
 
             // Remix menu config
             MachineConnector.SetRegisteredOI(Info.Metadata.GUID, new TheVinkiConfig());
+
+            // Get sprite atlas
+            Futile.atlasManager.LoadAtlas("atlases/Vinki");
         }
 
         public static bool IsPostInit;

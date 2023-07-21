@@ -46,7 +46,7 @@ sealed class SprayCan : Weapon
         rotation = Rand * 360f;
         lastRotation = rotation;
 
-        rotationOffset = Rand * 30 - 15;
+        rotationOffset = 90;
 
         ResetVel(vel.magnitude);
     }
@@ -111,7 +111,7 @@ sealed class SprayCan : Weapon
 
     private void Explode(BodyChunk hitChunk)
     {
-        if (base.slatedForDeletetion)
+        if (Abstr.uses < 1 || base.slatedForDeletetion)
         {
             return;
         }
@@ -338,9 +338,8 @@ sealed class SprayCan : Weapon
 
     public override void InitiateSprites(RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam)
     {
-        sLeaser.sprites = new FSprite[2];
-        sLeaser.sprites[0] = new FSprite("CentipedeBackShell", true);
-        sLeaser.sprites[1] = new FSprite("CentipedeBackShell", true);
+        sLeaser.sprites = new FSprite[1];
+        sLeaser.sprites[0] = new FSprite("SprayCan", true);
         AddToContainer(sLeaser, rCam, null);
     }
 
@@ -354,7 +353,7 @@ sealed class SprayCan : Weapon
         darkness = rCam.room.Darkness(pos);
         darkness *= 1f - 0.5f * rCam.room.LightSourceExposure(pos);
 
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 1; i++)
         {
             sLeaser.sprites[i].x = pos.x - camPos.x;
             sLeaser.sprites[i].y = pos.y - camPos.y;
@@ -363,9 +362,7 @@ sealed class SprayCan : Weapon
             sLeaser.sprites[i].scaleX = num2 * Abstr.scaleX;
         }
 
-        sLeaser.sprites[0].color = blackColor;
-
-        sLeaser.sprites[1].color = Color.Lerp(Custom.HSL2RGB(Abstr.hue, Abstr.saturation, 0.55f), blackColor, darkness);
+        sLeaser.sprites[0].color = Color.Lerp(Custom.HSL2RGB(Abstr.hue, Abstr.saturation, 0.55f), blackColor, darkness);
 
         if (blink > 0 && Rand < 0.5f)
         {
@@ -373,7 +370,7 @@ sealed class SprayCan : Weapon
         }
         else if (num > 0.3f)
         {
-            for (int j = 0; j < 2; j++)
+            for (int j = 0; j < 1; j++)
             {
                 sLeaser.sprites[j].color = Color.Lerp(sLeaser.sprites[j].color, earthColor, Mathf.Pow(Mathf.InverseLerp(0.3f, 1f, num), 1.6f));
             }

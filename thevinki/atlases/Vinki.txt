@@ -1,0 +1,20 @@
+{"frames": {
+
+"SprayCan.png":
+{
+	"frame": {"x":1,"y":1,"w":13,"h":23},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":13,"h":23},
+	"sourceSize": {"w":13,"h":23}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "Vinki.png",
+	"format": "RGBA8888",
+	"size": {"w":15,"h":25},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:45f58b6c2dde058079a07d9bfc26b17d:7a77c97ee406c58694f7de32f1ee5460:686eb4bf7bbc338b6a4bda323ccd4a1c$"
+}
+}
