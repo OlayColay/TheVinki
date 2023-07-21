@@ -38,6 +38,7 @@ namespace VinkiSlugcat
         private List<Vector2> graffitiOffsets = new List<Vector2>();
         private List<Color> graffitiAvgColors = new List<Color>();
         private List<string> shelterItems = new List<string>();
+        private Dictionary<AbstractPhysicalObject.AbstractObjectType, int> colorfulItems = new Dictionary<AbstractPhysicalObject.AbstractObjectType, int>();
 
         public static readonly string graffitiFolder = "RainWorld_Data/StreamingAssets/decals/VinkiGraffiti";
         public static readonly PlayerFeature<float> CoyoteBoost = PlayerFloat("thevinki/coyote_boost");
@@ -53,6 +54,7 @@ namespace VinkiSlugcat
         public static readonly PlayerKeybind ToggleGrind = PlayerKeybind.Register("thevinki:toggle_grind", "The Vinki", "Toggle Grind", KeyCode.A, KeyCode.JoystickButton3);
         public static readonly PlayerKeybind Graffiti = PlayerKeybind.Register("thevinki:graffiti", "The Vinki", "Graffiti Mode", KeyCode.C, KeyCode.JoystickButton4);
         public static readonly PlayerKeybind Spray = PlayerKeybind.Register("thevinki:spray", "The Vinki", "Spray Graffiti", KeyCode.LeftShift, KeyCode.JoystickButton2);
+        public static readonly PlayerKeybind Craft = PlayerKeybind.Register("thevinki:craft", "The Vinki", "Craft Spray Can", KeyCode.A, KeyCode.JoystickButton3);
 
         // Add hooks
         public void OnEnable()
@@ -118,6 +120,9 @@ namespace VinkiSlugcat
 
             // Get sprite atlas
             Futile.atlasManager.LoadAtlas("atlases/Vinki");
+
+            // Populate the colorfulItems List for crafting Spray Cans
+            InitColorfulItems();
         }
 
         public static bool IsPostInit;
@@ -456,7 +461,7 @@ namespace VinkiSlugcat
             orig(self, eu);
 
             // Update grindToggle if needed
-            if (self.JustPressed(ToggleGrind) && TheVinkiConfig.ToggleGrind.Value)
+            if (self.JustPressed(ToggleGrind) && TheVinkiConfig.ToggleGrind.Value && !self.IsPressed(Graffiti))
             {
                 grindToggle = !grindToggle;
             }
@@ -477,15 +482,41 @@ namespace VinkiSlugcat
                     }
                 }
             }
-            // Spawn SprayCan (Debug)
-            else if (self.input[0].thrw && !self.input[1].thrw && self.IsPressed(Graffiti))
+            // Craft SprayCan
+            else if (self.JustPressed(Craft) && self.IsPressed(Graffiti))
             {
-                var tilePosition = self.room.GetTilePosition(self.mainBodyChunk.pos);
-                var pos = new WorldCoordinate(self.room.abstractRoom.index, tilePosition.x, tilePosition.y, 0);
-                var abstr = new SprayCanAbstract(self.room.world, pos, self.room.game.GetNewID());
-                abstr.Realize();
-                self.room.abstractRoom.AddEntity(abstr);
-                self.room.AddObject(abstr.realizedObject);
+                Debug.Log("Attempting to craft!");
+                int sprayCount = CanCraftSprayCan(self.grasps[0], self.grasps[1]);
+                if (sprayCount > 0)
+                {
+                    var tilePosition = self.room.GetTilePosition(self.mainBodyChunk.pos);
+                    var pos = new WorldCoordinate(self.room.abstractRoom.index, tilePosition.x, tilePosition.y, 0);
+                    var abstr = new SprayCanAbstract(self.room.world, pos, self.room.game.GetNewID(), sprayCount);
+                    abstr.Realize();
+                    self.room.abstractRoom.AddEntity(abstr);
+                    self.room.AddObject(abstr.realizedObject);
+
+                    // Remove grabbed objects used for crafting
+                    for (int j = 0; j < self.grasps.Length; j++)
+                    {
+                        AbstractPhysicalObject apo = self.grasps[j].grabbed.abstractPhysicalObject;
+                        if (self.room.game.session is StoryGameSession)
+                        {
+                            (self.room.game.session as StoryGameSession).RemovePersistentTracker(apo);
+                        }
+                        self.ReleaseGrasp(j);
+                        for (int k = apo.stuckObjects.Count - 1; k >= 0; k--)
+                        {
+                            if (apo.stuckObjects[k] is AbstractPhysicalObject.AbstractSpearStick && apo.stuckObjects[k].A.type == AbstractPhysicalObject.AbstractObjectType.Spear && apo.stuckObjects[k].A.realizedObject != null)
+                            {
+                                (apo.stuckObjects[k].A.realizedObject as Spear).ChangeMode(Weapon.Mode.Free);
+                            }
+                        }
+                        apo.LoseAllStuckObjects();
+                        apo.realizedObject.RemoveFromRoom();
+                        self.room.abstractRoom.RemoveEntity(apo);
+                    }
+                }
             }
         }
 
@@ -514,6 +545,63 @@ namespace VinkiSlugcat
                 yield return new WaitForSeconds(0.1f);
                 self.room.AddObject(new CustomDecal(graffiti));
             }
+        }
+
+        private int CanCraftSprayCan(Creature.Grasp a, Creature.Grasp b)
+        {
+            if (a == null || b == null)
+            {
+                Debug.Log("Player does not have item in both hands!");
+                return 0;
+            }
+
+            AbstractPhysicalObject.AbstractObjectType abstractObjectType = a.grabbed.abstractPhysicalObject.type;
+            AbstractPhysicalObject.AbstractObjectType abstractObjectType2 = b.grabbed.abstractPhysicalObject.type;
+
+            if (abstractObjectType == AbstractPhysicalObject.AbstractObjectType.Rock && 
+                colorfulItems.ContainsKey(abstractObjectType2))
+            {
+                return colorfulItems[abstractObjectType2];
+            }
+            if (abstractObjectType2 == AbstractPhysicalObject.AbstractObjectType.Rock &&
+                colorfulItems.ContainsKey(abstractObjectType))
+            {
+                return colorfulItems[abstractObjectType];
+            }
+
+            // Upgrade Spray Can
+            if (abstractObjectType.ToString() == "SprayCan" && colorfulItems.ContainsKey(abstractObjectType2))
+            {
+                return Math.Min(3, (a.grabbed as SprayCan).Abstr.uses + colorfulItems[abstractObjectType2]);
+            }
+            if (abstractObjectType2.ToString() == "SprayCan" && colorfulItems.ContainsKey(abstractObjectType))
+            {
+                return Math.Min(3, (b.grabbed as SprayCan).Abstr.uses + colorfulItems[abstractObjectType]);
+            }
+            return 0;
+        }
+
+        private void InitColorfulItems()
+        {
+            colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.AttachedBee, 3);
+            colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.BlinkingFlower, 2);
+            colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.BubbleGrass, 2);
+            colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.DangleFruit, 1);
+            colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.DataPearl, 3);
+            colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.EggBugEgg, 1);
+            colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.FirecrackerPlant, 2);
+            colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.FlareBomb, 3);
+            colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.FlyLure, 2);
+            colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.KarmaFlower, 3);
+            colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.Lantern, 3);
+            colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.Mushroom, 1);
+            colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.NeedleEgg, 2);
+            colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.OverseerCarcass, 3);
+            colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.PuffBall, 1);
+            colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.ScavengerBomb, 3);
+            colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.SlimeMold, 2);
+            colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.SporePlant, 1);
+            colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.WaterNut, 2);
         }
 
         private void ShelterDoor_Close(On.ShelterDoor.orig_Close orig, ShelterDoor self)

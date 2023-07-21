@@ -10,11 +10,11 @@ namespace VinkiSlugcat
 
         public TheVinkiConfig()
         {
-            RequireSprayCans = config.Bind("requireSprayCans", false, new ConfigurableInfo("Requires a spray can to spray graffiti (Not implemented yet! Keep unchecked for now).", tags: new object[]
+            RequireSprayCans = config.Bind("requireSprayCans", true, new ConfigurableInfo("Requires a spray can to spray graffiti (Not implemented yet! Keep unchecked for now).", tags: new object[]
             {
                 "Require Spray Cans for Graffiti"
             }));
-            ToggleGrind = config.Bind("toggleGrind", true, new ConfigurableInfo("Toggle grinding when pressing the Grind button instead of having to hold down the Grind button.", tags: new object[]
+            ToggleGrind = config.Bind("toggleGrind", false, new ConfigurableInfo("Toggle grinding when pressing the Grind button instead of having to hold down the Grind button.", tags: new object[]
             {
                 "Toggle Grind"
             }));

@@ -5,9 +5,9 @@ namespace SprayCans;
 
 sealed class SprayCanAbstract : AbstractPhysicalObject
 {
-    public SprayCanAbstract(World world, WorldCoordinate pos, EntityID ID) : base(world, SprayCanFisob.SprayCan, null, pos, ID)
+    public SprayCanAbstract(World world, WorldCoordinate pos, EntityID ID, int uses = 3) : base(world, SprayCanFisob.SprayCan, null, pos, ID)
     {
-        uses = 3;
+        this.uses = uses;
         scaleX = 0.75f;
         scaleY = 0.75f;
         saturation = 0.5f;
