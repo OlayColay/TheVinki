@@ -483,12 +483,17 @@ namespace VinkiSlugcat
                 }
             }
             // Craft SprayCan
-            else if (self.JustPressed(Craft) && self.IsPressed(Graffiti))
+            else if (self.IsPressed(Craft) && self.IsPressed(Graffiti))
             {
-                Debug.Log("Attempting to craft!");
                 int sprayCount = CanCraftSprayCan(self.grasps[0], self.grasps[1]);
                 if (sprayCount > 0)
                 {
+                    for (int num13 = 0; num13 < 2; num13++)
+                    {
+                        self.bodyChunks[0].pos += Custom.DirVec(self.grasps[num13].grabbed.firstChunk.pos, self.bodyChunks[0].pos) * 2f;
+                        (self.graphicsModule as PlayerGraphics).swallowing = 20;
+                    }
+
                     var tilePosition = self.room.GetTilePosition(self.mainBodyChunk.pos);
                     var pos = new WorldCoordinate(self.room.abstractRoom.index, tilePosition.x, tilePosition.y, 0);
                     var abstr = new SprayCanAbstract(self.room.world, pos, self.room.game.GetNewID(), sprayCount);
@@ -516,6 +521,8 @@ namespace VinkiSlugcat
                         apo.realizedObject.RemoveFromRoom();
                         self.room.abstractRoom.RemoveEntity(apo);
                     }
+
+                    self.SlugcatGrab(abstr.realizedObject, self.FreeHand());
                 }
             }
         }
