@@ -24,6 +24,7 @@ namespace VinkiSlugcat
         private const string MOD_ID = "olaycolay.thevinki";
         private int lastXDirection = 1;
         private int lastYDirection = 1;
+        private int craftCounter = 0;
         private bool grindUpPoleFlag = false;
         private bool isGrindingH = false;
         private bool isGrindingV = false;
@@ -52,9 +53,9 @@ namespace VinkiSlugcat
 
         public static readonly PlayerKeybind Grind = PlayerKeybind.Register("thevinki:grind", "The Vinki", "Grind", KeyCode.LeftShift, KeyCode.JoystickButton2);
         public static readonly PlayerKeybind ToggleGrind = PlayerKeybind.Register("thevinki:toggle_grind", "The Vinki", "Toggle Grind", KeyCode.A, KeyCode.JoystickButton3);
-        public static readonly PlayerKeybind Graffiti = PlayerKeybind.Register("thevinki:graffiti", "The Vinki", "Graffiti Mode", KeyCode.C, KeyCode.JoystickButton4);
-        public static readonly PlayerKeybind Spray = PlayerKeybind.Register("thevinki:spray", "The Vinki", "Spray Graffiti", KeyCode.LeftShift, KeyCode.JoystickButton2);
-        public static readonly PlayerKeybind Craft = PlayerKeybind.Register("thevinki:craft", "The Vinki", "Craft Spray Can", KeyCode.A, KeyCode.JoystickButton3);
+        public static readonly PlayerKeybind Graffiti = PlayerKeybind.Register("thevinki:graffiti", "The Vinki", "Graffiti Mode", KeyCode.UpArrow, KeyCode.JoystickButton8);
+        public static readonly PlayerKeybind Spray = PlayerKeybind.Register("thevinki:spray", "The Vinki", "Spray Graffiti", KeyCode.LeftControl, KeyCode.JoystickButton3);
+        public static readonly PlayerKeybind Craft = PlayerKeybind.Register("thevinki:craft", "The Vinki", "Craft Spray Can", KeyCode.LeftShift, KeyCode.JoystickButton2);
 
         // Add hooks
         public void OnEnable()
@@ -68,6 +69,8 @@ namespace VinkiSlugcat
             On.Player.Jump += Player_Jump;
             On.Player.MovementUpdate += Player_Move;
             On.Player.Update += Player_Update;
+
+            On.PlayerGraphics.Update += PlayerGraphics_Update;
             On.ShelterDoor.Close += ShelterDoor_Close;
         }
 
@@ -192,7 +195,8 @@ namespace VinkiSlugcat
 
             orig(self);
 
-            if (!SuperJump.TryGet(self, out float power) || !CoyoteBoost.TryGet(self, out var coyoteBoost))
+            if (!SuperJump.TryGet(self, out float power) || !CoyoteBoost.TryGet(self, out var coyoteBoost) ||
+                self.SlugCatClass.value != "TheVinki")
             {
                 return;
             }
@@ -254,7 +258,8 @@ namespace VinkiSlugcat
 
             if (!GrindXSpeed.TryGet(self, out var grindXSpeed) || !NormalXSpeed.TryGet(self, out var normalXSpeed) ||
                 !GrindYSpeed.TryGet(self, out var grindYSpeed) || !NormalYSpeed.TryGet(self, out var normalYSpeed) ||
-                !SparkColor.TryGet(self, out var sparkColor) || !GrindVineSpeed.TryGet(self, out var grindVineSpeed))
+                !SparkColor.TryGet(self, out var sparkColor) || !GrindVineSpeed.TryGet(self, out var grindVineSpeed) ||
+                self.SlugCatClass.value != "TheVinki")
             {
                 return;
             }
@@ -460,14 +465,19 @@ namespace VinkiSlugcat
         {
             orig(self, eu);
 
+            if (self.SlugCatClass.value != "TheVinki")
+            {
+                return;
+            }
+
             // Update grindToggle if needed
-            if (self.JustPressed(ToggleGrind) && TheVinkiConfig.ToggleGrind.Value && !self.IsPressed(Graffiti))
+            if (self.JustPressed(ToggleGrind) && TheVinkiConfig.ToggleGrind.Value && !IsPressingGraffiti(self))
             {
                 grindToggle = !grindToggle;
             }
 
             // Spray a random graffiti
-            if (self.JustPressed(Spray) && self.IsPressed(Graffiti))
+            if (self.JustPressed(Spray) && IsPressingGraffiti(self))
             {
                 if (!TheVinkiConfig.RequireSprayCans.Value)
                 {
@@ -483,47 +493,61 @@ namespace VinkiSlugcat
                 }
             }
             // Craft SprayCan
-            else if (self.IsPressed(Craft) && self.IsPressed(Graffiti))
+            else if (self.IsPressed(Craft) && IsPressingGraffiti(self))
             {
                 int sprayCount = CanCraftSprayCan(self.grasps[0], self.grasps[1]);
                 if (sprayCount > 0)
                 {
-                    for (int num13 = 0; num13 < 2; num13++)
-                    {
-                        self.bodyChunks[0].pos += Custom.DirVec(self.grasps[num13].grabbed.firstChunk.pos, self.bodyChunks[0].pos) * 2f;
-                        (self.graphicsModule as PlayerGraphics).swallowing = 20;
-                    }
+                    craftCounter++; 
 
-                    var tilePosition = self.room.GetTilePosition(self.mainBodyChunk.pos);
-                    var pos = new WorldCoordinate(self.room.abstractRoom.index, tilePosition.x, tilePosition.y, 0);
-                    var abstr = new SprayCanAbstract(self.room.world, pos, self.room.game.GetNewID(), sprayCount);
-                    abstr.Realize();
-                    self.room.abstractRoom.AddEntity(abstr);
-                    self.room.AddObject(abstr.realizedObject);
-
-                    // Remove grabbed objects used for crafting
-                    for (int j = 0; j < self.grasps.Length; j++)
+                    if (craftCounter > 90)
                     {
-                        AbstractPhysicalObject apo = self.grasps[j].grabbed.abstractPhysicalObject;
-                        if (self.room.game.session is StoryGameSession)
+                        for (int num13 = 0; num13 < 2; num13++)
                         {
-                            (self.room.game.session as StoryGameSession).RemovePersistentTracker(apo);
+                            self.bodyChunks[0].pos += Custom.DirVec(self.grasps[num13].grabbed.firstChunk.pos, self.bodyChunks[0].pos) * 2f;
+                            (self.graphicsModule as PlayerGraphics).swallowing = 20;
                         }
-                        self.ReleaseGrasp(j);
-                        for (int k = apo.stuckObjects.Count - 1; k >= 0; k--)
+
+                        var tilePosition = self.room.GetTilePosition(self.mainBodyChunk.pos);
+                        var pos = new WorldCoordinate(self.room.abstractRoom.index, tilePosition.x, tilePosition.y, 0);
+                        var abstr = new SprayCanAbstract(self.room.world, pos, self.room.game.GetNewID(), sprayCount);
+                        abstr.Realize();
+                        self.room.abstractRoom.AddEntity(abstr);
+                        self.room.AddObject(abstr.realizedObject);
+
+                        // Remove grabbed objects used for crafting
+                        for (int j = 0; j < self.grasps.Length; j++)
                         {
-                            if (apo.stuckObjects[k] is AbstractPhysicalObject.AbstractSpearStick && apo.stuckObjects[k].A.type == AbstractPhysicalObject.AbstractObjectType.Spear && apo.stuckObjects[k].A.realizedObject != null)
+                            AbstractPhysicalObject apo = self.grasps[j].grabbed.abstractPhysicalObject;
+                            if (self.room.game.session is StoryGameSession)
                             {
-                                (apo.stuckObjects[k].A.realizedObject as Spear).ChangeMode(Weapon.Mode.Free);
+                                (self.room.game.session as StoryGameSession).RemovePersistentTracker(apo);
                             }
+                            self.ReleaseGrasp(j);
+                            for (int k = apo.stuckObjects.Count - 1; k >= 0; k--)
+                            {
+                                if (apo.stuckObjects[k] is AbstractPhysicalObject.AbstractSpearStick && apo.stuckObjects[k].A.type == AbstractPhysicalObject.AbstractObjectType.Spear && apo.stuckObjects[k].A.realizedObject != null)
+                                {
+                                    (apo.stuckObjects[k].A.realizedObject as Spear).ChangeMode(Weapon.Mode.Free);
+                                }
+                            }
+                            apo.LoseAllStuckObjects();
+                            apo.realizedObject.RemoveFromRoom();
+                            self.room.abstractRoom.RemoveEntity(apo);
                         }
-                        apo.LoseAllStuckObjects();
-                        apo.realizedObject.RemoveFromRoom();
-                        self.room.abstractRoom.RemoveEntity(apo);
-                    }
 
-                    self.SlugcatGrab(abstr.realizedObject, self.FreeHand());
+                        self.SlugcatGrab(abstr.realizedObject, self.FreeHand());
+                        craftCounter = 0;
+                    }
                 }
+                else if (craftCounter > 0)
+                {
+                    craftCounter--;
+                }
+            }
+            else if (craftCounter > 0)
+            {
+                craftCounter--;
             }
         }
 
@@ -588,6 +612,38 @@ namespace VinkiSlugcat
             return 0;
         }
 
+        private void PlayerGraphics_Update(On.PlayerGraphics.orig_Update orig, PlayerGraphics self)
+        {
+            orig(self);
+
+            if (self.player.SlugCatClass.value != "TheVinki")
+            {
+                return;
+            }
+
+            if (craftCounter > 0)
+            {
+                if (craftCounter > 30)
+                {
+                    self.blink = 5;
+                }
+                float num10 = Mathf.InverseLerp(0f, 110f, (float)craftCounter);
+                float num11 = (float)craftCounter / Mathf.Lerp(30f, 15f, num10);
+                if (self.player.standing)
+                {
+                    self.drawPositions[0, 0].y += Mathf.Sin(num11 * 3.1415927f * 2f) * num10 * 2f;
+                    self.drawPositions[1, 0].y += -Mathf.Sin((num11 + 0.2f) * 3.1415927f * 2f) * num10 * 3f;
+                }
+                else
+                {
+                    self.drawPositions[0, 0].y += Mathf.Sin(num11 * 3.1415927f * 2f) * num10 * 3f;
+                    self.drawPositions[0, 0].x += Mathf.Cos(num11 * 3.1415927f * 2f) * num10 * 1f;
+                    self.drawPositions[1, 0].y += Mathf.Sin((num11 + 0.2f) * 3.1415927f * 2f) * num10 * 2f;
+                    self.drawPositions[1, 0].x += -Mathf.Cos(num11 * 3.1415927f * 2f) * num10 * 3f;
+                }
+            }
+        }
+
         private void InitColorfulItems()
         {
             colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.AttachedBee, 3);
@@ -628,12 +684,7 @@ namespace VinkiSlugcat
                 Debug.Log("Listing objects in shelter...");
                 foreach (PhysicalObject item in items)
                 {
-                    //Debug.Log("Item: " + item.GetType().ToString());
-
-                    if (item is DataPearl)
-                    {
-                        shelterItems.Add(item.GetType().ToString());
-                    }
+                    shelterItems.Add(item.GetType().ToString());
                 }
             }
         }
@@ -749,7 +800,7 @@ namespace VinkiSlugcat
             }
         }
 
-        Color AverageColorFromTexture(Texture2D tex)
+        private Color AverageColorFromTexture(Texture2D tex)
         {
             Color[] texColors = tex.GetPixels();
             int total = texColors.Length;
@@ -777,6 +828,11 @@ namespace VinkiSlugcat
 
             Debug.Log("Color: " + r + " " + g + " " + b + " " + 1f);
             return new Color(r, g, b, 1f);
+        }
+
+        private bool IsPressingGraffiti(Player self)
+        {
+            return self.IsPressed(Graffiti) || (TheVinkiConfig.UpGraffiti.Value && self.input[0].y > 0f);
         }
     }
 }

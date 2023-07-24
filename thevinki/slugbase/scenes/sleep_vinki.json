@@ -33,7 +33,7 @@
 			"shader": "Basic"
 		},
 		{
-			"name": "SprayCans",
+			"name": "Item - SprayCan",
 			"pos": [ 700, 100 ],
 			"depth": 3,
 			"shader": "Basic"
