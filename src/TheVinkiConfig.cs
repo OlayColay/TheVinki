@@ -15,7 +15,7 @@ namespace VinkiSlugcat
             {
                 "Require Spray Cans for Graffiti"
             }));
-            ToggleGrind = config.Bind("toggleGrind", false, new ConfigurableInfo("Toggle grinding when pressing the Grind button instead of having to hold down the Grind button.", tags: new object[]
+            ToggleGrind = config.Bind("toggleGrind", false, new ConfigurableInfo("Toggle grinding when pressing the Toggle Grind button instead of having to hold down the Grind button.", tags: new object[]
             {
                 "Toggle Grind"
             }));

@@ -91,7 +91,6 @@ namespace VinkiSlugcat
             foreach (var image in Directory.EnumerateFiles(graffitiFolder, "*.*", SearchOption.AllDirectories)
             .Where(s => s.EndsWith(".png")).Select(f => parent + '/' + Path.GetFileNameWithoutExtension(f)))
             {
-                Debug.Log(graffitiFolder + "/" + image);
                 PlacedObject.CustomDecalData decal = new PlacedObject.CustomDecalData(null);
                 decal.imageName = image;
                 decal.fromDepth = 0.2f;
@@ -228,7 +227,6 @@ namespace VinkiSlugcat
                 // Get risk/reward speedboost when coyote jumping
                 if (coyote)
                 {
-                    //Debug.Log("Coyote jump");
                     self.mainBodyChunk.vel.x += coyoteBoost * self.slideDirection;
                     self.room.PlaySound(SoundID.Slugcat_Flip_Jump, self.mainBodyChunk, false, 3f, 1f);
                 }
@@ -348,7 +346,7 @@ namespace VinkiSlugcat
             // Grind if holding Grind on a pole (vertical beam or 0G beam or vine)
             if (isGrindingV || isGrindingNoGrav || isGrindingVine)
             {
-                Debug.Log("Zero G Pole direction: " + self.zeroGPoleGrabDir.x + "," + self.zeroGPoleGrabDir.y);
+                //Debug.Log("Zero G Pole direction: " + self.zeroGPoleGrabDir.x + "," + self.zeroGPoleGrabDir.y);
                 self.slugcatStats.poleClimbSpeedFac = 0;
 
                 // Handle vine grinding
@@ -500,7 +498,7 @@ namespace VinkiSlugcat
                 {
                     craftCounter++; 
 
-                    if (craftCounter > 90)
+                    if (craftCounter > 30)
                     {
                         for (int num13 = 0; num13 < 2; num13++)
                         {
@@ -582,7 +580,6 @@ namespace VinkiSlugcat
         {
             if (a == null || b == null)
             {
-                Debug.Log("Player does not have item in both hands!");
                 return 0;
             }
 
@@ -601,6 +598,10 @@ namespace VinkiSlugcat
             }
 
             // Upgrade Spray Can
+            if (abstractObjectType.ToString() == "SprayCan" && abstractObjectType2.ToString() == "SprayCan")
+            {
+                return Math.Min(3, (a.grabbed as SprayCan).Abstr.uses + (b.grabbed as SprayCan).Abstr.uses);
+            }
             if (abstractObjectType.ToString() == "SprayCan" && colorfulItems.ContainsKey(abstractObjectType2))
             {
                 return Math.Min(3, (a.grabbed as SprayCan).Abstr.uses + colorfulItems[abstractObjectType2]);
@@ -623,10 +624,11 @@ namespace VinkiSlugcat
 
             if (craftCounter > 0)
             {
-                if (craftCounter > 30)
+                foreach (SlugcatHand hand in self.hands)
                 {
-                    self.blink = 5;
+                    hand.pos = Vector2.Lerp(hand.pos, self.drawPositions[0, 0], (float)craftCounter / 25f);
                 }
+
                 float num10 = Mathf.InverseLerp(0f, 110f, (float)craftCounter);
                 float num11 = (float)craftCounter / Mathf.Lerp(30f, 15f, num10);
                 if (self.player.standing)
@@ -678,13 +680,24 @@ namespace VinkiSlugcat
 
             Player player = self.room.PlayersInRoom[0];
 
-            //Debug.Log("Door closed");
             foreach(List<PhysicalObject> items in self.room.physicalObjects)
             {
-                Debug.Log("Listing objects in shelter...");
                 foreach (PhysicalObject item in items)
                 {
-                    shelterItems.Add(item.GetType().ToString());
+                    if (item is PebblesPearl)
+                    {
+                        shelterItems.Add("DataPearl");
+                    }
+                    else
+                    {
+                        string itemType = item.GetType().ToString();
+                        if (itemType.Contains('.'))
+                        {
+                            itemType = itemType.Substring(itemType.IndexOf('.') + 1);
+                        }
+
+                        shelterItems.Add(itemType);
+                    }
                 }
             }
         }
@@ -826,7 +839,10 @@ namespace VinkiSlugcat
             g /= total;
             b /= total;
 
-            Debug.Log("Color: " + r + " " + g + " " + b + " " + 1f);
+            if (r + g + b < float.Epsilon)
+            {
+                return Color.white;
+            }
             return new Color(r, g, b, 1f);
         }
 

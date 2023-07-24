@@ -15,7 +15,7 @@ sealed class SprayCanIcon : Icon
 
     public override Color SpriteColor(int data)
     {
-        return RWCustom.Custom.HSL2RGB(data / 1000f, 0.65f, 0.4f);
+        return RWCustom.Custom.HSL2RGB(data / 1000f, 0f, 0.8f);
     }
 
     public override string SpriteName(int data)
