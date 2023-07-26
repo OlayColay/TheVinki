@@ -11,7 +11,7 @@ namespace VinkiSlugcat
 
         public TheVinkiConfig()
         {
-            RequireSprayCans = config.Bind("requireSprayCans", true, new ConfigurableInfo("Requires a spray can to spray graffiti (Not implemented yet! Keep unchecked for now).", tags: new object[]
+            RequireSprayCans = config.Bind("requireSprayCans", true, new ConfigurableInfo("Requires a spray can to spray graffiti (craft one with a rock and a colorful item).", tags: new object[]
             {
                 "Require Spray Cans for Graffiti"
             }));
@@ -19,9 +19,9 @@ namespace VinkiSlugcat
             {
                 "Toggle Grind"
             }));
-            UpGraffiti = config.Bind("upGraffiti", true, new ConfigurableInfo("Use a joystick's Up direction on the left stick for Graffiti Mode (in addition to the normal binding).", tags: new object[]
+            UpGraffiti = config.Bind("upGraffiti", true, new ConfigurableInfo("Use the Up direction for Graffiti Mode (in addition to the normal binding).", tags: new object[]
             {
-                "Use Joystick up as Graffiti Mode"
+                "Use Up as Graffiti Mode"
             }));
         }
 
@@ -36,10 +36,10 @@ namespace VinkiSlugcat
 
             AddDivider(593f);
             AddTitle();
-            AddDivider(500f);
-            AddCheckbox(RequireSprayCans, 460f);
-            AddCheckbox(ToggleGrind, 420f);
-            AddCheckbox(UpGraffiti, 380f);
+            AddDivider(560f);
+            AddCheckbox(RequireSprayCans, 520f);
+            AddCheckbox(ToggleGrind, 480f);
+            AddCheckbox(UpGraffiti, 440f);
         }
 
         // Combines two flipped 'LinearGradient200's together to make a fancy looking divider.
