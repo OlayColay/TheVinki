@@ -484,7 +484,7 @@ namespace VinkiSlugcat
                 else
                 {
                     var grasp = self.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan);
-                    if ((grasp.grabbed as SprayCan).TryUse())
+                    if (grasp != null && (grasp.grabbed as SprayCan).TryUse())
                     {
                         StartCoroutine(SparyGraffiti(self));
                     }
@@ -755,13 +755,14 @@ namespace VinkiSlugcat
                 }
 
                 // Randomize which graffiti shows
-                int randGraffiti = UnityEngine.Random.Range(0, menuGraffitis.Count);
+                int randGraffiti = UnityEngine.Random.Range(0, menuGraffitis.Count-1);
                 string fileName = "Graffiti - " + randGraffiti.ToString();
 
                 // Show the random graffiti and hide the rest
                 foreach (var image in menuGraffitis)
                 {
                     string imageName = Path.GetFileNameWithoutExtension(image.fileName);
+                    Debug.Log("Graffiti: Checking if " + imageName + " matches " + fileName + "\t" + (imageName == fileName));
                     image.alpha = (imageName == fileName) ? 1f : 0f;
                 }
 
@@ -769,17 +770,18 @@ namespace VinkiSlugcat
                 List<Menu.MenuDepthIllustration> menuDoodles = new List<Menu.MenuDepthIllustration>();
                 foreach (var image in self.depthIllustrations.Where(f => Path.GetFileNameWithoutExtension(f.fileName).StartsWith("Doodle - ")))
                 {
-                    menuGraffitis.Add(image);
+                    menuDoodles.Add(image);
                 }
 
                 // Randomize which doodle shows
                 int randDoodles = UnityEngine.Random.Range(0, menuDoodles.Count);
-                fileName = "Doodle - " + randGraffiti.ToString();
+                fileName = "Doodle - " + randDoodles.ToString();
 
                 // Show the random doodle and hide the rest
                 foreach (var image in menuDoodles)
                 {
                     string imageName = Path.GetFileNameWithoutExtension(image.fileName);
+                    Debug.Log("Doodle: Checking if " + imageName + " matches " + fileName);
                     image.alpha = (imageName == fileName) ? 1f : 0f;
                 }
             }

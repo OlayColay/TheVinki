@@ -21,7 +21,31 @@
 			"shader": "Basic"
 		},
 		{
+			"name": "Graffiti - -1",
+			"pos": [ 700, 100 ],
+			"depth": 3.5,
+			"shader": "Basic"
+		},
+		{
 			"name": "Graffiti - 0",
+			"pos": [ 700, 100 ],
+			"depth": 3.5,
+			"shader": "Basic"
+		},
+		{
+			"name": "Graffiti - 1",
+			"pos": [ 700, 100 ],
+			"depth": 3.5,
+			"shader": "Basic"
+		},
+		{
+			"name": "Graffiti - 2",
+			"pos": [ 700, 100 ],
+			"depth": 3.5,
+			"shader": "Basic"
+		},
+		{
+			"name": "Graffiti - 3",
 			"pos": [ 700, 100 ],
 			"depth": 3.5,
 			"shader": "Basic"
@@ -41,7 +65,19 @@
 		{
 			"name": "Doodle - 0",
 			"pos": [ 700, 100 ],
-			"depth": 2.7,
+			"depth": 3.5,
+			"shader": "Basic"
+		},
+		{
+			"name": "Doodle - 1",
+			"pos": [ 700, 100 ],
+			"depth": 3.5,
+			"shader": "Basic"
+		},
+		{
+			"name": "Doodle - 2",
+			"pos": [ 700, 100 ],
+			"depth": 3.5,
 			"shader": "Basic"
 		},
 		{
