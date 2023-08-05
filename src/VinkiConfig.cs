@@ -1,15 +1,17 @@
 ﻿using Menu.Remix.MixedUI;
+using System.Xml.Linq;
 using UnityEngine;
 
-namespace VinkiSlugcat
+namespace Vinki
 {
-    public class TheVinkiConfig : OptionInterface
+    public class VinkiConfig : OptionInterface
     {
+        public static VinkiConfig Instance { get; } = new();
         public static Configurable<bool> RequireSprayCans;
         public static Configurable<bool> ToggleGrind;
         public static Configurable<bool> UpGraffiti;
 
-        public TheVinkiConfig()
+        public VinkiConfig()
         {
             RequireSprayCans = config.Bind("requireSprayCans", true, new ConfigurableInfo("Requires a spray can to spray graffiti (craft one with a rock and a colorful item).", tags: new object[]
             {
@@ -23,6 +25,12 @@ namespace VinkiSlugcat
             {
                 "Use Up as Graffiti Mode"
             }));
+        }
+
+        public static void RegisterOI()
+        {
+            if (MachineConnector.GetRegisteredOI(Plugin.MOD_ID) != Instance)
+                MachineConnector.SetRegisteredOI(Plugin.MOD_ID, Instance);
         }
 
         // Called when the config menu is opened by the player.
