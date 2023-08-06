@@ -1,12 +1,10 @@
 ﻿using System;
 using UnityEngine;
 using RWCustom;
-using System.Collections.Generic;
 using System.Linq;
 using ImprovedInput;
 using SprayCans;
 using static Vinki.Plugin;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Vinki
@@ -60,7 +58,7 @@ namespace Vinki
             orig(self);
 
             if (!SuperJump.TryGet(self, out float power) || !CoyoteBoost.TryGet(self, out var coyoteBoost) ||
-                self.SlugCatClass.value != "TheVinki")
+                self.SlugCatClass != Enums.TheVinki)
             {
                 return;
             }
@@ -122,7 +120,7 @@ namespace Vinki
             if (!GrindXSpeed.TryGet(self, out var grindXSpeed) || !NormalXSpeed.TryGet(self, out var normalXSpeed) ||
                 !GrindYSpeed.TryGet(self, out var grindYSpeed) || !NormalYSpeed.TryGet(self, out var normalYSpeed) ||
                 !SparkColor.TryGet(self, out var sparkColor) || !GrindVineSpeed.TryGet(self, out var grindVineSpeed) ||
-                self.SlugCatClass.value != "TheVinki")
+                self.SlugCatClass != Enums.TheVinki)
             {
                 return;
             }
@@ -329,7 +327,7 @@ namespace Vinki
         {
             orig(self, eu);
 
-            if (self.SlugCatClass.value != "TheVinki")
+            if (self.SlugCatClass != Enums.TheVinki)
             {
                 return;
             }

@@ -31,7 +31,8 @@ namespace Vinki
             // Put your custom hooks here!
             ApplyPlayerHooks();
             ApplyPlayerGraphicsHooks();
-            On.ShelterDoor.Close += ShelterDoor_Close;
+            ApplyShelterDoorHooks();
+            ApplySSOracleHooks();
         }
 
         // Load any resources, such as sprites or sounds

@@ -1,11 +1,4 @@
-﻿using System;
-using UnityEngine;
-using DressMySlugcat;
-using System.Collections.Generic;
-using System.Linq;
-using System.IO;
-using SprayCans;
-using Fisobs.Core;
+﻿using UnityEngine;
 using static Vinki.Plugin;
 
 namespace Vinki
@@ -23,7 +16,7 @@ namespace Vinki
         {
             orig(self);
 
-            if (self.player.SlugCatClass.value != "TheVinki")
+            if (self.player.SlugCatClass != Enums.TheVinki)
             {
                 return;
             }

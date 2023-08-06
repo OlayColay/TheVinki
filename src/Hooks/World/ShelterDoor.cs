@@ -1,11 +1,5 @@
-﻿using System;
-using UnityEngine;
-using DressMySlugcat;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.IO;
-using SprayCans;
-using Fisobs.Core;
 using static Vinki.Plugin;
 
 namespace Vinki
