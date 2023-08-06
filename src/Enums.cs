@@ -1,6 +1,4 @@
-﻿﻿using static DataPearl.AbstractDataPearl;
-using static Menu.MenuScene;
-using static Menu.SlideShow;
+﻿using SlugBase.DataTypes;
 
 namespace Vinki;
 
@@ -18,5 +16,25 @@ public static class Enums
 		public static SSOracleBehavior.SubBehavior.SubBehavID Vinki_SSSubBehavGeneral = new(nameof(Vinki_SSSubBehavGeneral), true);
 
         public static SlugcatStats.Name VinkiPebbles = new(nameof(VinkiPebbles), true);
+    }
+
+    public static class Color
+    {
+        public static PlayerColor Body;
+        public static PlayerColor Eyes;
+        public static PlayerColor TailStripes;
+        public static PlayerColor Shoes;
+        public static PlayerColor RainPods;
+        public static PlayerColor Glasses;
+    }
+
+    public static void RegisterValues()
+    {
+        Color.Body = new PlayerColor("Body");
+        Color.Eyes = new PlayerColor("Eyes");
+        Color.TailStripes = new PlayerColor("Tail Stripes");
+        Color.Shoes = new PlayerColor("Shoes");
+        Color.RainPods = new PlayerColor("RainPods");
+        Color.Glasses = new PlayerColor("Glasses");
     }
 }

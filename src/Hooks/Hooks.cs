@@ -38,6 +38,7 @@ namespace Vinki
         // Load any resources, such as sprites or sounds
         private static void LoadResources(RainWorld rainWorld)
         {
+            Enums.RegisterValues();
             ApplyHooks();
 
             // Add the story graffitis
@@ -62,8 +63,19 @@ namespace Vinki
             // Remix menu config
             VinkiConfig.RegisterOI();
 
-            // Get sprite atlas
-            Futile.atlasManager.LoadAtlas("atlases/Vinki");
+            // Get sprite atlases
+            Futile.atlasManager.LoadAtlas("atlases/SprayCan");
+            Futile.atlasManager.LoadAtlas("atlases/glasses");
+            Futile.atlasManager.LoadAtlas("atlases/rainpods");
+            Futile.atlasManager.LoadAtlas("atlases/shoes");
+
+            TailTexture = new Texture2D(150, 75, TextureFormat.ARGB32, false);
+            var tailTextureFile = AssetManager.ResolveFilePath("textures/VinkiTail.png");
+            if (File.Exists(tailTextureFile))
+            {
+                var rawData = File.ReadAllBytes(tailTextureFile);
+                TailTexture.LoadImage(rawData);
+            }
 
             // Populate the colorfulItems List for crafting Spray Cans
             InitColorfulItems();
@@ -120,7 +132,7 @@ namespace Vinki
                 //-- With this the mod will still work even if DMS isn't installed
                 if (ModManager.ActiveMods.Any(mod => mod.id == "dressmyslugcat"))
                 {
-                    SetupDMSSprites();
+                    //SetupDMSSprites();
                 }
 
                 Debug.Log($"TheVinki dressmyslugcat.templatecat is loaded!");

@@ -6,13 +6,33 @@
     "custom_colors": [
       {
         "name": "Body",
-        "story": "FFFFFF",
-        "arena": [ "FFFFFF", "FFFFFF", "FFFFFF", "FFFFFF" ]
+        "story": "d2701d",
+        "arena": [ "FFFFFF", "ffca61", "e790a2", "403d6b" ]
       },
       {
         "name": "Eyes",
         "story": "0E0202",
-        "arena": [ "0E0202", "623109", "890A3B", "FFFFFF" ]
+        "arena": [ "272e71", "623109", "890A3B", "FFFFFF" ]
+      },
+      {
+        "name": "Tail Stripes",
+        "story": "494ed3",
+        "arena": [ "9ed5ff", "8cbf24", "cd288a", "FFFFFF" ]
+      },
+      {
+        "name": "Shoes",
+        "story": "494ed3",
+        "arena": [ "9ed5ff", "8cbf24", "cd288a", "FFFFFF" ]
+      },
+      {
+        "name": "RainPods",
+        "story": "FFFFFF",
+        "arena": [ "9ed5ff", "FFFFFF", "FFFFFF", "FFFFFF" ]
+      },
+      {
+        "name": "Glasses",
+        "story": "0E0202",
+        "arena": [ "272e71", "623109", "890A3B", "FFFFFF" ]
       }
     ],
     "select_menu_scene": "Slugcat_Vinki",

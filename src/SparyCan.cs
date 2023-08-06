@@ -168,7 +168,7 @@ sealed class SprayCan : Weapon
     {
         base.Thrown(thrownBy, thrownPos, firstFrameTraceFromPos, throwDir, frc, eu);
         Room room = this.room;
-        if (room != null)
+        if (room != null && Abstr.uses > 0)
         {
             room.PlaySound(SoundID.Slugcat_Throw_Bomb, base.firstChunk);
         }

@@ -32,6 +32,7 @@ namespace Vinki
         public static List<Color> graffitiAvgColors = new List<Color>();
         public static List<string> shelterItems = new List<string>();
         public static Dictionary<AbstractPhysicalObject.AbstractObjectType, int> colorfulItems = new Dictionary<AbstractPhysicalObject.AbstractObjectType, int>();
+        public static Texture2D TailTexture;
 
         public static readonly string graffitiFolder = "RainWorld_Data/StreamingAssets/decals/VinkiGraffiti";
         public static readonly string storyGraffitiFolder = "RainWorld_Data/StreamingAssets/decals";
@@ -55,6 +56,26 @@ namespace Vinki
         public void OnEnable()
         {
             Hooks.ApplyInit();
+        }
+
+        public static void MapTextureColor(Texture2D texture, int alpha, Color32 to, bool apply = true)
+        {
+            var colors = texture.GetPixels32();
+
+            for (var i = 0; i < colors.Length; i++)
+            {
+                if (colors[i].a == alpha)
+                {
+                    colors[i] = to;
+                }
+            }
+
+            texture.SetPixels32(colors);
+
+            if (apply)
+            {
+                texture.Apply(false);
+            }
         }
     }
 }
