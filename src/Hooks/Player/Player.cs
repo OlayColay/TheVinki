@@ -13,7 +13,17 @@ namespace Vinki
     {
         private static async Task SprayGraffiti(Player self)
         {
-            int rand = UnityEngine.Random.Range(0, graffitis.Count);
+            int rand;
+            if (self.room.abstractRoom.name == "SS_AI")
+            {
+                rand = 0;
+                // If done in 5P's room, trigger the cutscene
+                TriggerSSOracleScene();
+            }
+            else
+            {
+                rand = UnityEngine.Random.Range(storyGraffitiCount, graffitis.Count);
+            }
 
             PlacedObject graffiti = new PlacedObject(PlacedObject.Type.CustomDecal, graffitis[rand]);
             Vector2 playerPos = self.mainBodyChunk.pos;
@@ -35,12 +45,6 @@ namespace Vinki
 
                 await Task.Delay(100);
                 self.room.AddObject(new CustomDecal(graffiti));
-            }
-
-            // If done in 5P's room, trigger the cutscene
-            if (self.room.abstractRoom.name == "SS_AI")
-            {
-                TriggerSSOracleScene();
             }
         }
 

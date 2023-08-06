@@ -38,11 +38,12 @@ namespace Vinki
         // Load any resources, such as sprites or sounds
         private static void LoadResources(RainWorld rainWorld)
         {
-            string parent = Path.GetFileNameWithoutExtension(graffitiFolder);
-
             ApplyHooks();
 
-            // If the folder doesn't exist (or is empty), copy it from the mod
+            // Add the story graffitis
+            AddGraffiti("5P", true);
+
+            // If the graffiti folder doesn't exist (or is empty), copy it from the mod
             if (!Directory.Exists(graffitiFolder) || !Directory.EnumerateFileSystemEntries(graffitiFolder).Any())
             {
                 string modFolder = AssetManager.ResolveDirectory("../../../../workshop/content/312520/3001275271");
@@ -51,33 +52,11 @@ namespace Vinki
             }
 
             // Go through each graffiti image and add it to the list of decals Vinki can place
+            string parent = Path.GetFileNameWithoutExtension(graffitiFolder);
             foreach (var image in Directory.EnumerateFiles(graffitiFolder, "*.*", SearchOption.AllDirectories)
             .Where(s => s.EndsWith(".png")).Select(f => parent + '/' + Path.GetFileNameWithoutExtension(f)))
             {
-                PlacedObject.CustomDecalData decal = new PlacedObject.CustomDecalData(null);
-                decal.imageName = image;
-                decal.fromDepth = 0.2f;
-
-                // Get the image as a 2d texture so we can resize it to something manageable
-                Texture2D img = new Texture2D(2, 2);
-                byte[] tmpBytes = File.ReadAllBytes(graffitiFolder + "/" + Path.GetFileNameWithoutExtension(image) + ".png");
-                ImageConversion.LoadImage(img, tmpBytes);
-
-                // Get average color of image (to use for graffiti spray/smoke color)
-                graffitiAvgColors.Add(AverageColorFromTexture(img));
-
-                // Resize image to look good in game
-                int[] newSize = ResizeAndKeepAspectRatio(img.width, img.height, 100f * 100f);
-                img.Resize(newSize[0], newSize[1]);
-                decal.handles[0] = new Vector2(0f, img.height);
-                decal.handles[1] = new Vector2(img.width, img.height);
-                decal.handles[2] = new Vector2(img.width, 0f);
-
-                float halfWidth = img.width / 2f;
-                float halfHeight = img.height / 2f;
-
-                graffitis.Add(decal);
-                graffitiOffsets.Add(new Vector2(-halfWidth, -halfHeight));
+                AddGraffiti(image);
             }
 
             // Remix menu config
@@ -88,6 +67,45 @@ namespace Vinki
 
             // Populate the colorfulItems List for crafting Spray Cans
             InitColorfulItems();
+        }
+
+        private static void AddGraffiti(string image, bool storyGraffiti = false)
+        {
+            PlacedObject.CustomDecalData decal = new PlacedObject.CustomDecalData(null);
+            decal.imageName = image;
+            decal.fromDepth = 0.2f;
+
+            string filePath;
+            if (storyGraffiti)
+            {
+                filePath = AssetManager.ResolveFilePath("decals/5P.png");
+            }
+            else
+            {
+                filePath = graffitiFolder + "/" + Path.GetFileNameWithoutExtension(image) + ".png";
+            }
+            Debug.Log("Graffiti file path: " + filePath);
+
+            // Get the image as a 2d texture so we can resize it to something manageable
+            Texture2D img = new Texture2D(2, 2);
+            byte[] tmpBytes = File.ReadAllBytes(filePath);
+            ImageConversion.LoadImage(img, tmpBytes);
+
+            // Get average color of image (to use for graffiti spray/smoke color)
+            graffitiAvgColors.Add(AverageColorFromTexture(img));
+
+            // Resize image to look good in game
+            int[] newSize = ResizeAndKeepAspectRatio(img.width, img.height, 100f * 100f);
+            img.Resize(newSize[0], newSize[1]);
+            decal.handles[0] = new Vector2(0f, img.height);
+            decal.handles[1] = new Vector2(img.width, img.height);
+            decal.handles[2] = new Vector2(img.width, 0f);
+
+            float halfWidth = img.width / 2f;
+            float halfHeight = img.height / 2f;
+
+            graffitis.Add(decal);
+            graffitiOffsets.Add(new Vector2(-halfWidth, -halfHeight));
         }
 
         public static bool IsPostInit;
