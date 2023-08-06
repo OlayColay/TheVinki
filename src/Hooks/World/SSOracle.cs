@@ -15,7 +15,10 @@ namespace Vinki
 
         private static void TriggerSSOracleScene()
         {
-            oracleBehavior.NewAction(Enums.SSOracle.Vinki_SSActionGeneral);
+            if (oracleBehavior.oracle.room.game.GetStorySession.saveState.miscWorldSaveData.SSaiConversationsHad == 0)
+            {
+                oracleBehavior.NewAction(Enums.SSOracle.Vinki_SSActionGeneral);
+            }
         }
 
         // Add hooks
@@ -29,7 +32,8 @@ namespace Vinki
 
         private static void SSOracleBehavior_SeePlayer(On.SSOracleBehavior.orig_SeePlayer orig, SSOracleBehavior self)
         {
-            if (self.oracle.room.game.StoryCharacter == Enums.TheVinki && self.action != Enums.SSOracle.Vinki_SSActionGeneral)
+            if (self.oracle.room.game.StoryCharacter == Enums.TheVinki && self.action != Enums.SSOracle.Vinki_SSActionGeneral &&
+                self.oracle.room.game.GetStorySession.saveState.miscWorldSaveData.SSaiConversationsHad == 0)
             {
                 oracleBehavior = self;
 

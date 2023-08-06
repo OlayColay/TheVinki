@@ -78,13 +78,12 @@ namespace Vinki
             string filePath;
             if (storyGraffiti)
             {
-                filePath = AssetManager.ResolveFilePath("decals/5P.png");
+                filePath = AssetManager.ResolveFilePath("decals/" + image + ".png");
             }
             else
             {
                 filePath = graffitiFolder + "/" + Path.GetFileNameWithoutExtension(image) + ".png";
             }
-            Debug.Log("Graffiti file path: " + filePath);
 
             // Get the image as a 2d texture so we can resize it to something manageable
             Texture2D img = new Texture2D(2, 2);
