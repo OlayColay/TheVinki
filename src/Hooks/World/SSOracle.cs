@@ -11,6 +11,13 @@ namespace Vinki
 {
     public static partial class Hooks
     {
+        private static SSOracleBehavior oracleBehavior;
+
+        private static void TriggerSSOracleScene()
+        {
+            oracleBehavior.NewAction(Enums.SSOracle.Vinki_SSActionGeneral);
+        }
+
         // Add hooks
         private static void ApplySSOracleHooks()
         {
@@ -24,11 +31,12 @@ namespace Vinki
         {
             if (self.oracle.room.game.StoryCharacter == Enums.TheVinki && self.action != Enums.SSOracle.Vinki_SSActionGeneral)
             {
+                oracleBehavior = self;
+
                 if (self.timeSinceSeenPlayer < 0)
                     self.timeSinceSeenPlayer = 0;
 
                 self.SlugcatEnterRoomReaction();
-                self.NewAction(Enums.SSOracle.Vinki_SSActionGeneral);
                 return;
             }
 

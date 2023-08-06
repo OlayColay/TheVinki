@@ -36,6 +36,12 @@ namespace Vinki
                 await Task.Delay(100);
                 self.room.AddObject(new CustomDecal(graffiti));
             }
+
+            // If done in 5P's room, trigger the cutscene
+            if (self.room.abstractRoom.name == "SS_AI")
+            {
+                TriggerSSOracleScene();
+            }
         }
 
         // Add hooks
