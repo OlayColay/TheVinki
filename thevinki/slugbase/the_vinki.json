@@ -3,6 +3,7 @@
   "name": "The Vinki",
   "description": "Play as an angsty teen wearing rail-grinding shoes and spraying graffiti to enact revenge on 5P.",
   "features": {
+    "color": "d2701d",
     "custom_colors": [
       {
         "name": "Body",
@@ -15,12 +16,7 @@
         "arena": [ "272e71", "623109", "890A3B", "FFFFFF" ]
       },
       {
-        "name": "Tail Stripes",
-        "story": "494ed3",
-        "arena": [ "9ed5ff", "8cbf24", "cd288a", "FFFFFF" ]
-      },
-      {
-        "name": "Shoes",
+        "name": "Accent",
         "story": "494ed3",
         "arena": [ "9ed5ff", "8cbf24", "cd288a", "FFFFFF" ]
       },
@@ -28,6 +24,11 @@
         "name": "RainPods",
         "story": "FFFFFF",
         "arena": [ "9ed5ff", "FFFFFF", "FFFFFF", "FFFFFF" ]
+      },
+      {
+        "name": "Shoes",
+        "story": "494ed3",
+        "arena": [ "9ed5ff", "8cbf24", "cd288a", "FFFFFF" ]
       },
       {
         "name": "Glasses",

@@ -30,11 +30,12 @@ public static class Enums
 
     public static void RegisterValues()
     {
+        // Jolly Co-Op only supports setting 3 color choices, so try to streamline the options by using Face and Accent in multiple places
         Color.Body = new PlayerColor("Body");
         Color.Eyes = new PlayerColor("Eyes");
-        Color.TailStripes = new PlayerColor("Tail Stripes");
-        Color.Shoes = new PlayerColor("Shoes");
+        Color.TailStripes = new PlayerColor("Accent");
+        Color.Shoes = new PlayerColor("Accent");
         Color.RainPods = new PlayerColor("RainPods");
-        Color.Glasses = new PlayerColor("Glasses");
+        Color.Glasses = new PlayerColor("Eyes");
     }
 }

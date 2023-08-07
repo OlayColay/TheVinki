@@ -64,9 +64,9 @@ public class VinkiPlayerData
 
 public static class PlayerExtension
 {
-    private static readonly ConditionalWeakTable<Player, VinkiPlayerData> _cwt = new();
+    private static readonly ConditionalWeakTable<Player, VinkiPlayerData> cwt = new();
 
-    public static VinkiPlayerData Vinki(this Player player) => _cwt.GetValue(player, _ => new VinkiPlayerData(player));
+    public static VinkiPlayerData Vinki(this Player player) => cwt.GetValue(player, _ => new VinkiPlayerData(player));
 
     public static Color? GetColor(this PlayerGraphics pg, PlayerColor color) => color.GetColor(pg);
 
