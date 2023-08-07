@@ -172,7 +172,7 @@ namespace Vinki
                 sLeaser.sprites[vinki.shoesSprite].scaleX = sLeaser.sprites[4].scaleX;
                 sLeaser.sprites[vinki.shoesSprite].scaleY = sLeaser.sprites[4].scaleY;
                 sLeaser.sprites[vinki.shoesSprite].rotation = sLeaser.sprites[4].rotation;
-                sLeaser.sprites[vinki.shoesSprite].anchorX = sLeaser.sprites[4].anchorX - 0.05f;
+                sLeaser.sprites[vinki.shoesSprite].anchorX = sLeaser.sprites[4].anchorX;
                 sLeaser.sprites[vinki.shoesSprite].anchorY = sLeaser.sprites[4].anchorY;
                 sLeaser.sprites[vinki.shoesSprite].x = shoesPos.x;
                 sLeaser.sprites[vinki.shoesSprite].y = shoesPos.y;

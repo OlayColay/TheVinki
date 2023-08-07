@@ -2,259 +2,259 @@
 
 "ShoesA0.png":
 {
-	"frame": {"x":2,"y":2,"w":48,"h":43},
+	"frame": {"x":262,"y":17,"w":18,"h":13},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":43},
-	"sourceSize": {"w":48,"h":43}
+	"spriteSourceSize": {"x":0,"y":0,"w":18,"h":13},
+	"sourceSize": {"w":18,"h":13}
 },
 "ShoesA1.png":
 {
-	"frame": {"x":52,"y":2,"w":48,"h":43},
+	"frame": {"x":26,"y":17,"w":18,"h":13},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":43},
-	"sourceSize": {"w":48,"h":43}
+	"spriteSourceSize": {"x":0,"y":0,"w":18,"h":13},
+	"sourceSize": {"w":18,"h":13}
 },
 "ShoesA2.png":
 {
-	"frame": {"x":102,"y":2,"w":48,"h":43},
+	"frame": {"x":466,"y":17,"w":18,"h":13},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":43},
-	"sourceSize": {"w":48,"h":43}
+	"spriteSourceSize": {"x":0,"y":0,"w":18,"h":13},
+	"sourceSize": {"w":18,"h":13}
 },
 "ShoesA3.png":
 {
-	"frame": {"x":152,"y":2,"w":48,"h":43},
+	"frame": {"x":110,"y":17,"w":18,"h":13},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":43},
-	"sourceSize": {"w":48,"h":43}
+	"spriteSourceSize": {"x":0,"y":0,"w":18,"h":13},
+	"sourceSize": {"w":18,"h":13}
 },
 "ShoesA4.png":
 {
-	"frame": {"x":202,"y":2,"w":48,"h":43},
+	"frame": {"x":130,"y":17,"w":18,"h":13},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":43},
-	"sourceSize": {"w":48,"h":43}
+	"spriteSourceSize": {"x":0,"y":0,"w":18,"h":13},
+	"sourceSize": {"w":18,"h":13}
 },
 "ShoesA5.png":
 {
-	"frame": {"x":252,"y":2,"w":48,"h":43},
+	"frame": {"x":90,"y":17,"w":18,"h":13},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":43},
-	"sourceSize": {"w":48,"h":43}
+	"spriteSourceSize": {"x":0,"y":0,"w":18,"h":13},
+	"sourceSize": {"w":18,"h":13}
 },
 "ShoesA6.png":
 {
-	"frame": {"x":302,"y":2,"w":48,"h":43},
+	"frame": {"x":46,"y":17,"w":18,"h":13},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":43},
-	"sourceSize": {"w":48,"h":43}
+	"spriteSourceSize": {"x":0,"y":0,"w":18,"h":13},
+	"sourceSize": {"w":18,"h":13}
 },
 "ShoesAAir0.png":
 {
-	"frame": {"x":352,"y":2,"w":48,"h":43},
+	"frame": {"x":150,"y":17,"w":18,"h":13},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":43},
-	"sourceSize": {"w":48,"h":43}
+	"spriteSourceSize": {"x":0,"y":0,"w":18,"h":13},
+	"sourceSize": {"w":18,"h":13}
 },
 "ShoesAAir1.png":
 {
-	"frame": {"x":402,"y":2,"w":47,"h":45},
+	"frame": {"x":47,"y":34,"w":17,"h":15},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":47,"h":45},
-	"sourceSize": {"w":47,"h":45}
+	"spriteSourceSize": {"x":0,"y":0,"w":17,"h":15},
+	"sourceSize": {"w":17,"h":15}
 },
 "ShoesAClimbing0.png":
 {
-	"frame": {"x":451,"y":2,"w":62,"h":43},
+	"frame": {"x":238,"y":17,"w":22,"h":13},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":62,"h":43},
-	"sourceSize": {"w":62,"h":43}
+	"spriteSourceSize": {"x":0,"y":0,"w":22,"h":13},
+	"sourceSize": {"w":22,"h":13}
 },
 "ShoesAClimbing1.png":
 {
-	"frame": {"x":515,"y":2,"w":62,"h":43},
+	"frame": {"x":282,"y":17,"w":22,"h":13},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":62,"h":43},
-	"sourceSize": {"w":62,"h":43}
+	"spriteSourceSize": {"x":0,"y":0,"w":22,"h":13},
+	"sourceSize": {"w":22,"h":13}
 },
 "ShoesAClimbing2.png":
 {
-	"frame": {"x":579,"y":2,"w":62,"h":43},
+	"frame": {"x":214,"y":17,"w":22,"h":13},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":62,"h":43},
-	"sourceSize": {"w":62,"h":43}
+	"spriteSourceSize": {"x":0,"y":0,"w":22,"h":13},
+	"sourceSize": {"w":22,"h":13}
 },
 "ShoesAClimbing3.png":
 {
-	"frame": {"x":643,"y":2,"w":62,"h":43},
+	"frame": {"x":170,"y":17,"w":22,"h":13},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":62,"h":43},
-	"sourceSize": {"w":62,"h":43}
+	"spriteSourceSize": {"x":0,"y":0,"w":22,"h":13},
+	"sourceSize": {"w":22,"h":13}
 },
 "ShoesAClimbing4.png":
 {
-	"frame": {"x":707,"y":2,"w":62,"h":43},
+	"frame": {"x":66,"y":17,"w":22,"h":13},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":62,"h":43},
-	"sourceSize": {"w":62,"h":43}
+	"spriteSourceSize": {"x":0,"y":0,"w":22,"h":13},
+	"sourceSize": {"w":22,"h":13}
 },
 "ShoesAClimbing5.png":
 {
-	"frame": {"x":771,"y":2,"w":62,"h":43},
+	"frame": {"x":2,"y":17,"w":22,"h":13},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":62,"h":43},
-	"sourceSize": {"w":62,"h":43}
+	"spriteSourceSize": {"x":0,"y":0,"w":22,"h":13},
+	"sourceSize": {"w":22,"h":13}
 },
 "ShoesAClimbing6.png":
 {
-	"frame": {"x":835,"y":2,"w":62,"h":43},
+	"frame": {"x":996,"y":2,"w":22,"h":13},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":62,"h":43},
-	"sourceSize": {"w":62,"h":43}
+	"spriteSourceSize": {"x":0,"y":0,"w":22,"h":13},
+	"sourceSize": {"w":22,"h":13}
 },
 "ShoesACrawling0.png":
 {
-	"frame": {"x":899,"y":2,"w":68,"h":44},
+	"frame": {"x":813,"y":17,"w":28,"h":14},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":68,"h":44},
-	"sourceSize": {"w":68,"h":44}
+	"spriteSourceSize": {"x":0,"y":0,"w":28,"h":14},
+	"sourceSize": {"w":28,"h":14}
 },
 "ShoesACrawling1.png":
 {
-	"frame": {"x":969,"y":2,"w":48,"h":44},
+	"frame": {"x":873,"y":17,"w":28,"h":14},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":44},
-	"sourceSize": {"w":48,"h":44}
+	"spriteSourceSize": {"x":0,"y":0,"w":28,"h":14},
+	"sourceSize": {"w":28,"h":14}
 },
 "ShoesACrawling2.png":
 {
-	"frame": {"x":1019,"y":2,"w":68,"h":44},
+	"frame": {"x":843,"y":17,"w":28,"h":14},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":68,"h":44},
-	"sourceSize": {"w":68,"h":44}
+	"spriteSourceSize": {"x":0,"y":0,"w":28,"h":14},
+	"sourceSize": {"w":28,"h":14}
 },
 "ShoesACrawling3.png":
 {
-	"frame": {"x":1089,"y":2,"w":68,"h":44},
+	"frame": {"x":762,"y":17,"w":28,"h":14},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":68,"h":44},
-	"sourceSize": {"w":68,"h":44}
+	"spriteSourceSize": {"x":0,"y":0,"w":28,"h":14},
+	"sourceSize": {"w":28,"h":14}
 },
 "ShoesACrawling4.png":
 {
-	"frame": {"x":1159,"y":2,"w":68,"h":44},
+	"frame": {"x":732,"y":17,"w":28,"h":14},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":68,"h":44},
-	"sourceSize": {"w":68,"h":44}
+	"spriteSourceSize": {"x":0,"y":0,"w":28,"h":14},
+	"sourceSize": {"w":28,"h":14}
 },
 "ShoesACrawling5.png":
 {
-	"frame": {"x":1229,"y":2,"w":68,"h":44},
+	"frame": {"x":655,"y":17,"w":28,"h":14},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":68,"h":44},
-	"sourceSize": {"w":68,"h":44}
+	"spriteSourceSize": {"x":0,"y":0,"w":28,"h":14},
+	"sourceSize": {"w":28,"h":14}
 },
 "ShoesAOnPole0.png":
 {
-	"frame": {"x":1299,"y":2,"w":48,"h":43},
+	"frame": {"x":194,"y":17,"w":18,"h":13},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":43},
-	"sourceSize": {"w":48,"h":43}
+	"spriteSourceSize": {"x":0,"y":0,"w":18,"h":13},
+	"sourceSize": {"w":18,"h":13}
 },
 "ShoesAOnPole1.png":
 {
-	"frame": {"x":1349,"y":2,"w":48,"h":43},
+	"frame": {"x":406,"y":17,"w":18,"h":13},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":43},
-	"sourceSize": {"w":48,"h":43}
+	"spriteSourceSize": {"x":0,"y":0,"w":18,"h":13},
+	"sourceSize": {"w":18,"h":13}
 },
 "ShoesAOnPole2.png":
 {
-	"frame": {"x":1399,"y":2,"w":48,"h":43},
+	"frame": {"x":426,"y":17,"w":18,"h":13},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":43},
-	"sourceSize": {"w":48,"h":43}
+	"spriteSourceSize": {"x":0,"y":0,"w":18,"h":13},
+	"sourceSize": {"w":18,"h":13}
 },
 "ShoesAOnPole3.png":
 {
-	"frame": {"x":1449,"y":2,"w":48,"h":43},
+	"frame": {"x":446,"y":17,"w":18,"h":13},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":43},
-	"sourceSize": {"w":48,"h":43}
+	"spriteSourceSize": {"x":0,"y":0,"w":18,"h":13},
+	"sourceSize": {"w":18,"h":13}
 },
 "ShoesAOnPole4.png":
 {
-	"frame": {"x":1499,"y":2,"w":48,"h":43},
+	"frame": {"x":306,"y":17,"w":18,"h":13},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":43},
-	"sourceSize": {"w":48,"h":43}
+	"spriteSourceSize": {"x":0,"y":0,"w":18,"h":13},
+	"sourceSize": {"w":18,"h":13}
 },
 "ShoesAOnPole5.png":
 {
-	"frame": {"x":1549,"y":2,"w":48,"h":43},
+	"frame": {"x":386,"y":17,"w":18,"h":13},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":43},
-	"sourceSize": {"w":48,"h":43}
+	"spriteSourceSize": {"x":0,"y":0,"w":18,"h":13},
+	"sourceSize": {"w":18,"h":13}
 },
 "ShoesAOnPole6.png":
 {
-	"frame": {"x":1599,"y":2,"w":48,"h":43},
+	"frame": {"x":326,"y":17,"w":18,"h":13},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":43},
-	"sourceSize": {"w":48,"h":43}
+	"spriteSourceSize": {"x":0,"y":0,"w":18,"h":13},
+	"sourceSize": {"w":18,"h":13}
 },
 "ShoesAPole.png":
 {
-	"frame": {"x":1649,"y":2,"w":48,"h":43},
+	"frame": {"x":346,"y":17,"w":18,"h":13},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":43},
-	"sourceSize": {"w":48,"h":43}
+	"spriteSourceSize": {"x":0,"y":0,"w":18,"h":13},
+	"sourceSize": {"w":18,"h":13}
 },
 "ShoesAVerticalPole.png":
 {
-	"frame": {"x":1699,"y":2,"w":11,"h":40},
+	"frame": {"x":761,"y":2,"w":7,"h":10},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":11,"h":40},
-	"sourceSize": {"w":11,"h":40}
+	"spriteSourceSize": {"x":0,"y":0,"w":7,"h":10},
+	"sourceSize": {"w":7,"h":10}
 },
 "ShoesAWall.png":
 {
-	"frame": {"x":1712,"y":2,"w":48,"h":43},
+	"frame": {"x":366,"y":17,"w":18,"h":13},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":43},
-	"sourceSize": {"w":48,"h":43}
+	"spriteSourceSize": {"x":0,"y":0,"w":18,"h":13},
+	"sourceSize": {"w":18,"h":13}
 }},
 "meta": {
 	"app": "https://www.codeandweb.com/texturepacker",
