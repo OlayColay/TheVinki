@@ -96,46 +96,33 @@ namespace Vinki
                 return;
             }
 
-            if (vinki.tailStripesSprite > 0 && sLeaser.sprites.Length > vinki.tailStripesSprite + 3)
+            if (vinki.shoesSprite > 0 && sLeaser.sprites.Length > vinki.shoesSprite + 2)
             {
-                var midgroundContainer = rCam.ReturnFContainer("Midground");
-                var hud2Container = rCam.ReturnFContainer("HUD2");
-
                 // (Debug) Get indices of sprites
-                for (int i = 0; i < sLeaser.sprites.Length; i++)
-                {
-                    Debug.Log("Sprite " + i + ": " + sLeaser.sprites[i].element.name);
-                }
+                //for (int i = 0; i < sLeaser.sprites.Length; i++)
+                //{
+                //    Debug.Log("Sprite " + i + ": " + sLeaser.sprites[i].element.name);
+                //}
+
+                var midgroundContainer = rCam.ReturnFContainer("Midground");
 
                 //-- Glasses go in front of face
-                //for (var i = 0; i < 2; i++)
-                //{
-                //    for (var j = 0; j < 2; j++)
-                //    {
-                //        var sprite = sLeaser.sprites[vinki.glassesSprite(i, j)];
-                //        sprite.RemoveFromContainer();
-                //        midgroundContainer.AddChild(sprite);
-                //    }
-                //}
                 sLeaser.sprites[vinki.glassesSprite].RemoveFromContainer();
                 midgroundContainer.AddChild(sLeaser.sprites[vinki.glassesSprite]);
-
-                //-- Tail go behind hips
-                sLeaser.sprites[2].MoveBehindOtherNode(sLeaser.sprites[1]);
+                sLeaser.sprites[vinki.glassesSprite].MoveInFrontOfOtherNode(sLeaser.sprites[9]);
 
                 //-- RainPods go behind glasses
                 sLeaser.sprites[vinki.rainPodsSprite].RemoveFromContainer();
                 midgroundContainer.AddChild(sLeaser.sprites[vinki.rainPodsSprite]);
-                sLeaser.sprites[vinki.rainPodsSprite].MoveBehindOtherNode(sLeaser.sprites[2]);
+                sLeaser.sprites[vinki.rainPodsSprite].MoveBehindOtherNode(sLeaser.sprites[vinki.glassesSprite]);
 
-                // Shoes go behind hips
+                // Shoes go in front of legs
                 sLeaser.sprites[vinki.shoesSprite].RemoveFromContainer();
                 midgroundContainer.AddChild(sLeaser.sprites[vinki.shoesSprite]);
-                sLeaser.sprites[vinki.shoesSprite].MoveBehindOtherNode(sLeaser.sprites[1]);
+                sLeaser.sprites[vinki.shoesSprite].MoveInFrontOfOtherNode(sLeaser.sprites[4]);
 
-                //-- Stamina HUD
-                //sLeaser.sprites[vinki.staminaSprite].RemoveFromContainer();
-                //hud2Container.AddChild(sLeaser.sprites[vinki.staminaSprite]);
+                //-- Tail goes behind hips
+                sLeaser.sprites[2].MoveBehindOtherNode(sLeaser.sprites[1]);
             }
         }
 
@@ -148,7 +135,7 @@ namespace Vinki
                 return;
             }
 
-            Vector2 animationOffset = GetAnimationOffset(self);
+            //Vector2 animationOffset = GetAnimationOffset(self);
 
             Color glassesColor = vinki.GlassesColor;
             Color shoesColor = vinki.ShoesColor;
@@ -157,69 +144,58 @@ namespace Vinki
 
             sLeaser.sprites[2].color = Color.white;
 
-            //-- Antennae stuff
-
+            // RainPods
             var headSpriteName = sLeaser.sprites[3].element.name;
             if (!string.IsNullOrWhiteSpace(headSpriteName) && headSpriteName.Contains("HeadA"))
             {
                 var headSpriteNumber = headSpriteName.Substring(headSpriteName.LastIndexOf("HeadA", StringComparison.InvariantCultureIgnoreCase) + 5);
+                var rainPodsPos = new Vector2(sLeaser.sprites[3].x, sLeaser.sprites[3].y);
 
-                var antennaeOffsetX = 0f;
-                var antennaeOffsetY = 0f;
-                switch (headSpriteNumber)
-                {
-                    case "0":
-                    case "1":
-                    case "2":
-                    case "3":
-                        antennaeOffsetY = 2f;
-                        break;
-                    case "5":
-                    case "6":
-                        antennaeOffsetX = -1.5f * Math.Sign(sLeaser.sprites[3].scaleX);
-                        break;
-                    case "7":
-                        antennaeOffsetY = -3.5f;
-                        break;
-                }
+                sLeaser.sprites[vinki.rainPodsSprite].scaleX = sLeaser.sprites[3].scaleX;
+                sLeaser.sprites[vinki.rainPodsSprite].scaleY = sLeaser.sprites[3].scaleY;
+                sLeaser.sprites[vinki.rainPodsSprite].rotation = sLeaser.sprites[3].rotation;
+                sLeaser.sprites[vinki.rainPodsSprite].anchorX = sLeaser.sprites[3].anchorX;
+                sLeaser.sprites[vinki.rainPodsSprite].anchorY = sLeaser.sprites[3].anchorY;
+                sLeaser.sprites[vinki.rainPodsSprite].x = rainPodsPos.x;
+                sLeaser.sprites[vinki.rainPodsSprite].y = rainPodsPos.y;
+                sLeaser.sprites[vinki.rainPodsSprite].element = Futile.atlasManager.GetElementWithName("RainPodsA" + headSpriteNumber);
+                sLeaser.sprites[vinki.rainPodsSprite].color = rainPodsColor;
+            }
 
-                var antennaePos = new Vector2(sLeaser.sprites[3].x + antennaeOffsetX, sLeaser.sprites[3].y + antennaeOffsetY);
+            // Shoes
+            var legsSpriteName = sLeaser.sprites[4].element.name;
+            if (!string.IsNullOrWhiteSpace(legsSpriteName) && legsSpriteName.Contains("LegsA"))
+            {
+                var legsSpriteNumber = legsSpriteName.Substring(legsSpriteName.LastIndexOf("LegsA", StringComparison.InvariantCultureIgnoreCase) + 5);
+                var shoesPos = new Vector2(sLeaser.sprites[4].x, sLeaser.sprites[4].y);
 
-                sLeaser.sprites[vinki.shoesSprite].scaleX = sLeaser.sprites[3].scaleX * 1.3f;
-                sLeaser.sprites[vinki.shoesSprite].scaleY = 1.3f;
-                sLeaser.sprites[vinki.shoesSprite].rotation = sLeaser.sprites[3].rotation;
-                sLeaser.sprites[vinki.shoesSprite].x = antennaePos.x;
-                sLeaser.sprites[vinki.shoesSprite].y = antennaePos.y;
-                //sLeaser.sprites[vinki.shoesSprite].element = Futile.atlasManager.GetElementWithName("BeeAntennaeHeadA" + headSpriteNumber);
+                sLeaser.sprites[vinki.shoesSprite].scaleX = sLeaser.sprites[4].scaleX;
+                sLeaser.sprites[vinki.shoesSprite].scaleY = sLeaser.sprites[4].scaleY;
+                sLeaser.sprites[vinki.shoesSprite].rotation = sLeaser.sprites[4].rotation;
+                sLeaser.sprites[vinki.shoesSprite].anchorX = sLeaser.sprites[4].anchorX - 0.05f;
+                sLeaser.sprites[vinki.shoesSprite].anchorY = sLeaser.sprites[4].anchorY;
+                sLeaser.sprites[vinki.shoesSprite].x = shoesPos.x;
+                sLeaser.sprites[vinki.shoesSprite].y = shoesPos.y;
+                sLeaser.sprites[vinki.shoesSprite].element = Futile.atlasManager.GetElementWithName("ShoesA" + legsSpriteNumber);
                 sLeaser.sprites[vinki.shoesSprite].color = shoesColor;
             }
 
-            //-- Fluff stuff
-            var headToBody = (new Vector2(sLeaser.sprites[1].x, sLeaser.sprites[1].y) - new Vector2(sLeaser.sprites[3].x, sLeaser.sprites[3].y)).normalized;
-            //var floofPos = Vector2.Lerp(player.lastFloofPos, new Vector2(sLeaser.sprites[3].x + headToBody.x * 4f, sLeaser.sprites[3].y + headToBody.y * 4f), timeStacker * 2);
-            var floofPos = new Vector2(sLeaser.sprites[3].x + headToBody.x * 7.5f, sLeaser.sprites[3].y + headToBody.y * 7.5f);
-
-            //sLeaser.sprites[player.rainPodsSprite].scaleX = sLeaser.sprites[3].scaleX;
-            sLeaser.sprites[vinki.rainPodsSprite].scaleY = 0.75f;
-            sLeaser.sprites[vinki.rainPodsSprite].rotation = sLeaser.sprites[3].rotation;
-            sLeaser.sprites[vinki.rainPodsSprite].x = floofPos.x;
-            sLeaser.sprites[vinki.rainPodsSprite].y = floofPos.y;
-            sLeaser.sprites[vinki.rainPodsSprite].color = rainPodsColor;
-
-            sLeaser.sprites[vinki.glassesSprite].color = glassesColor;
-            sLeaser.sprites[vinki.tailStripesSprite].color = stripesColor;
-
-            //player.lastFloofPos = new Vector2(sLeaser.sprites[player.rainPodsSprite].x, sLeaser.sprites[player.rainPodsSprite].y);
-
-            //-- Hand stuff
-
-            for (var i = 5; i <= 8; i++)
+            // Glasses
+            var faceSpriteName = sLeaser.sprites[9].element.name;
+            if (!string.IsNullOrWhiteSpace(faceSpriteName) && faceSpriteName.Contains("Face"))
             {
-                var name = "Beecat" + sLeaser.sprites[i].element.name;
-                if (!name.StartsWith("Beecat") && Futile.atlasManager.DoesContainElementWithName(name))
-                {
-                    sLeaser.sprites[i].element = Futile.atlasManager.GetElementWithName(name);
-                }
+                var faceSpriteNumber = faceSpriteName.Substring(faceSpriteName.LastIndexOf("Face", StringComparison.InvariantCultureIgnoreCase) + 4);
+                var glassesPos = new Vector2(sLeaser.sprites[9].x, sLeaser.sprites[9].y);
+
+                sLeaser.sprites[vinki.glassesSprite].scaleX = sLeaser.sprites[9].scaleX;
+                sLeaser.sprites[vinki.glassesSprite].scaleY = sLeaser.sprites[9].scaleY;
+                sLeaser.sprites[vinki.glassesSprite].rotation = sLeaser.sprites[9].rotation;
+                sLeaser.sprites[vinki.glassesSprite].anchorX = sLeaser.sprites[9].anchorX;
+                sLeaser.sprites[vinki.glassesSprite].anchorY = sLeaser.sprites[9].anchorY;
+                sLeaser.sprites[vinki.glassesSprite].x = glassesPos.x;
+                sLeaser.sprites[vinki.glassesSprite].y = glassesPos.y;
+                sLeaser.sprites[vinki.glassesSprite].element = Futile.atlasManager.GetElementWithName("Glasses" + faceSpriteNumber);
+                sLeaser.sprites[vinki.glassesSprite].color = glassesColor;
             }
         }
 

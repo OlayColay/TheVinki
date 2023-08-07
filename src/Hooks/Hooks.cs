@@ -12,15 +12,10 @@ namespace Vinki
 {
     public static partial class Hooks
     {
-        private class CoroutineManager : MonoBehaviour { }
-        private static CoroutineManager coroutineManager;
-
         public static void ApplyInit()
         {
             On.RainWorld.OnModsInit += Extras.WrapInit(LoadResources);
             On.RainWorld.PostModsInit += RainWorld_PostModsInit;
-
-            coroutineManager = new GameObject().AddComponent<CoroutineManager>();
         }
 
         // Add hooks

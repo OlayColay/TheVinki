@@ -44,7 +44,7 @@ namespace Vinki
         public static readonly PlayerFeature<float> NormalXSpeed = PlayerFloat("thevinki/normal_x_speed");
         public static readonly PlayerFeature<float> NormalYSpeed = PlayerFloat("thevinki/normal_y_speed");
         public static readonly PlayerFeature<float> SuperJump = PlayerFloat("thevinki/super_jump");
-        public static readonly PlayerFeature<UnityEngine.Color> SparkColor = PlayerColor("thevinki/spark_color");
+        public static readonly PlayerFeature<Color> SparkColor = PlayerColor("thevinki/spark_color");
 
         public static readonly PlayerKeybind Grind = PlayerKeybind.Register("thevinki:grind", "The Vinki", "Grind", KeyCode.LeftShift, KeyCode.JoystickButton2);
         public static readonly PlayerKeybind ToggleGrind = PlayerKeybind.Register("thevinki:toggle_grind", "The Vinki", "Toggle Grind", KeyCode.A, KeyCode.JoystickButton3);
