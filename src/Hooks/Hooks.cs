@@ -28,6 +28,7 @@ namespace Vinki
             ApplyPlayerGraphicsHooks();
             ApplyShelterDoorHooks();
             ApplySSOracleHooks();
+            ApplyRoomHooks();
         }
 
         // Load any resources, such as sprites or sounds

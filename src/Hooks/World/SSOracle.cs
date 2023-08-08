@@ -126,13 +126,19 @@ namespace Vinki
         {
             public SSOracleMeetVinki(SSOracleBehavior owner) : base(owner, Enums.SSOracle.Vinki_SSSubBehavGeneral, Enums.SSOracle.Vinki_SSConvoFirstMeet)
             {
-                owner.getToWorking = 0f;
+                owner.getToWorking = 1f;
                 owner.SlugcatEnterRoomReaction();
             }
 
             public override void Update()
             {
                 base.Update();
+
+                if (base.action == null)
+                {
+                    return;
+                }
+
                 this.owner.LockShortcuts();
                 if (base.action == Enums.SSOracle.Vinki_SSActionGeneral)
                 {
