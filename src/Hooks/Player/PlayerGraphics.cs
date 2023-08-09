@@ -17,6 +17,7 @@ namespace Vinki
             On.PlayerGraphics.AddToContainer += PlayerGraphics_AddToContainer;
             On.PlayerGraphics.DrawSprites += PlayerGraphics_DrawSprites;
             On.PlayerGraphics.Update += PlayerGraphics_Update;
+            On.PlayerGraphics.JollyUniqueColorMenu += PlayerGraphics_JollyUniqueColorMenu;
         }
 
         private static void PlayerGraphics_ctor(On.PlayerGraphics.orig_ctor orig, PlayerGraphics self, PhysicalObject ow)
@@ -273,6 +274,18 @@ namespace Vinki
             }
 
             return result;
+        }
+
+        private static Color PlayerGraphics_JollyUniqueColorMenu(On.PlayerGraphics.orig_JollyUniqueColorMenu orig, SlugcatStats.Name slugName, SlugcatStats.Name reference, int playerNumber)
+        {
+            if ((Custom.rainWorld.options.jollyColorMode == Options.JollyColorMode.DEFAULT || (playerNumber == 0 && Custom.rainWorld.options.jollyColorMode == Options.JollyColorMode.AUTO)) && slugName == Enums.TheVinki)
+            {
+                return new Color(0.8235294117647058f, 0.4392156862745098f, 0.11372549019607843f);
+            }
+            else
+            {
+                return orig(slugName, reference, playerNumber);
+            }
         }
     }
 }
