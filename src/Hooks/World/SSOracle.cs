@@ -40,6 +40,8 @@ namespace Vinki
                 if (self.timeSinceSeenPlayer < 0)
                     self.timeSinceSeenPlayer = 0;
 
+                self.movementBehavior = MovementBehavior.Talk;
+
                 self.SlugcatEnterRoomReaction();
                 return;
             }
@@ -134,15 +136,14 @@ namespace Vinki
             {
                 base.Update();
 
-                if (base.action == null)
+                if (this.owner == null || oracle == null || player == null || player.room == null)
                 {
                     return;
                 }
 
-                this.owner.LockShortcuts();
                 if (base.action == Enums.SSOracle.Vinki_SSActionGeneral)
                 {
-                    base.movementBehavior = MovementBehavior.Talk;
+                    this.owner.LockShortcuts();
                     if (base.inActionCounter == 15 && (this.owner.conversation == null || this.owner.conversation.id != this.convoID))
                     {
                         this.owner.InitateConversation(this.convoID, this);

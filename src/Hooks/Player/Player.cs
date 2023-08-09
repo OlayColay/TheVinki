@@ -11,7 +11,7 @@ namespace Vinki
 {
     public static partial class Hooks
     {
-        private static async Task SprayGraffiti(Player self)
+        public static async Task SprayGraffiti(Player self, int strength = 9)
         {
             int rand;
             if (self.room.abstractRoom.name == "SS_AI")
@@ -25,14 +25,15 @@ namespace Vinki
                 rand = UnityEngine.Random.Range(storyGraffitiCount, graffitis.Count);
             }
 
-            PlacedObject graffiti = new PlacedObject(PlacedObject.Type.CustomDecal, graffitis[rand]);
             Vector2 playerPos = self.mainBodyChunk.pos;
-            graffiti.pos = self.mainBodyChunk.pos + graffitiOffsets[rand];
 
             self.room.PlaySound(SoundID.Vulture_Jet_LOOP, self.mainBodyChunk, false, 1f, 2f);
 
-            for (int i = 0; i < 9; i++)
+            for (int i = 0; i < strength; i++)
             {
+                PlacedObject graffiti = new PlacedObject(PlacedObject.Type.CustomDecal, graffitis[rand]);
+                graffiti.pos = playerPos + graffitiOffsets[rand];
+
                 Vector2 smokePos = new Vector2(
                     playerPos.x + UnityEngine.Random.Range(graffitiOffsets[rand].x, -graffitiOffsets[rand].x),
                     playerPos.y + UnityEngine.Random.Range(graffitiOffsets[rand].y, -graffitiOffsets[rand].y));
@@ -54,6 +55,21 @@ namespace Vinki
             On.Player.Jump += Player_Jump;
             On.Player.MovementUpdate += Player_Move;
             On.Player.Update += Player_Update;
+            On.Player.JollyUpdate += Player_JollyUpdate;
+        }
+
+        private static void Player_JollyUpdate(On.Player.orig_JollyUpdate orig, Player self, bool eu)
+        {
+            orig(self, eu);
+
+
+            if (intro != null && intro.phase == CutsceneVinkiIntro.Phase.Wait && intro.cutsceneTimer > 550)
+            {
+                self.input[0].y = -1;
+                self.JollyEmoteUpdate();
+                self.sleepCounter = 99;
+                self.JollyPointUpdate();
+            }
         }
 
         // Implement SuperJump
