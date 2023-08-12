@@ -1,4 +1,5 @@
 ﻿using Menu;
+using RWCustom;
 using System;
 using UnityEngine;
 
@@ -13,8 +14,42 @@ public static partial class Hooks
 	{
         On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.ctor += Vinki_Jolly_ctor;
         On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.HasUniqueSprite += Vinki_Jolly_Sprite;
-        On.JollyCoop.JollyMenu.JollyPlayerSelector.GetPupButtonOffName += Vinki_Jolly_Name;
         On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.LoadIcon += Vinki_Jolly_LoadIcon;
+
+        On.JollyCoop.JollyMenu.JollyPlayerSelector.GetPupButtonOffName += Vinki_Jolly_Name;
+        On.JollyCoop.JollyMenu.JollyPlayerSelector.Update += Vinki_Jolly_Update;
+        On.JollyCoop.JollyMenu.JollyPlayerSelector.GrafUpdate += Vinki_Jolly_GrafUpdate;
+    }
+
+    private static void Vinki_Jolly_GrafUpdate(On.JollyCoop.JollyMenu.JollyPlayerSelector.orig_GrafUpdate orig, JollyCoop.JollyMenu.JollyPlayerSelector self, float timeStacker)
+    {
+        if (self.slugName != Enums.TheVinki)
+        {
+            orig(self, timeStacker);
+            return;
+        }
+
+        Color color = self.FadePortraitSprite(Color.white, timeStacker);
+        Color color2 = self.FadePortraitSprite(new Color(0.28627450980392155f, 0.3058823529411765f, 0.8274509803921568f), timeStacker);
+        Color color3 = self.FadePortraitSprite(new Color(0.054901960784313725f, 0.00784313725490196f, 0.00784313725490196f), timeStacker);
+
+        rainPodsSymbol.sprite.color = color;
+        shoesSymbol.sprite.color = color2;
+        glassesSymbol.sprite.color = color3;
+
+        orig(self, timeStacker);
+    }
+
+    private static void Vinki_Jolly_Update(On.JollyCoop.JollyMenu.JollyPlayerSelector.orig_Update orig, JollyCoop.JollyMenu.JollyPlayerSelector self)
+    {
+        orig(self);
+
+        if ((Custom.rainWorld.options.jollyColorMode == Options.JollyColorMode.DEFAULT || (self.index == 0 && Custom.rainWorld.options.jollyColorMode == Options.JollyColorMode.AUTO)) && self.slugName == Enums.TheVinki)
+        {
+            rainPodsSymbol.sprite.color = Color.white;
+            shoesSymbol.sprite.color = new Color(0.28627450980392155f, 0.3058823529411765f, 0.8274509803921568f);
+            glassesSymbol.sprite.color = new Color(0.054901960784313725f, 0.00784313725490196f, 0.00784313725490196f);
+        }
     }
 
     private static void Vinki_Jolly_ctor(On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.orig_ctor orig, JollyCoop.JollyMenu.SymbolButtonTogglePupButton self, Menu.Menu menu, MenuObject owner, string signal, Vector2 pos, Vector2 size, string symbolNameOn, string symbolNameOff, bool isOn, string stringLabelOn, string stringLabelOff)

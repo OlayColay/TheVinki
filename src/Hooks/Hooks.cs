@@ -45,6 +45,16 @@ namespace Vinki
             if (!Directory.Exists(graffitiFolder) || !Directory.EnumerateFileSystemEntries(graffitiFolder).Any())
             {
                 string modFolder = AssetManager.ResolveDirectory("../../../../workshop/content/312520/3001275271");
+                if (!Directory.Exists(modFolder))
+                {
+                    Debug.Log("Vinki was not installed from Steam Workshop. Attempting to find locally...");
+                    modFolder = AssetManager.ResolveDirectory("./mods/thevinki");
+                    if (!Directory.Exists(modFolder))
+                    {
+                        Debug.LogError("Could not find Vinki mod in workshop files or local mods!");
+                        return;
+                    }
+                }
                 Debug.Log("Graffiti folder doesn't exist! Copying from mod folder: " + modFolder);
                 CopyFilesRecursively(modFolder + "/VinkiGraffiti", graffitiFolder);
             }

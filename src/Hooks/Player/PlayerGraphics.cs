@@ -280,7 +280,7 @@ namespace Vinki
         {
             if ((Custom.rainWorld.options.jollyColorMode == Options.JollyColorMode.DEFAULT || (playerNumber == 0 && Custom.rainWorld.options.jollyColorMode == Options.JollyColorMode.AUTO)) && slugName == Enums.TheVinki)
             {
-                return new Color(0.8235294117647058f, 0.4392156862745098f, 0.11372549019607843f);
+                return new Color(0.28627450980392155f, 0.3058823529411765f, 0.8274509803921568f);
             }
             else
             {
