@@ -3,6 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net48</TargetFramework>
         <LangVersion>11</LangVersion>
+        <BaseOutputPath>C:\Users\coles\Documents\TheVinki\thevinki\plugins</BaseOutputPath>
     </PropertyGroup>
     
     <ItemGroup>
@@ -20,7 +21,7 @@
 		</ItemGroup>
 		
         <Delete Files="@(RemovePlugins)" />
-        <Copy SourceFiles="@(CopyPlugins)" DestinationFolder="../thevinki/plugins/" />
+        <Copy SourceFiles="@(CopyPlugins)" DestinationFolder="../thevinki/plugins/Release/net48" />
     </Target>
     
 </Project>

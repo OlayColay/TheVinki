@@ -6,7 +6,7 @@
 	"authors": "OlayColay",
 	"description": "Play as an angsty teen wearing rail-grinding shoes and spraying graffiti to enact revenge on 5P.",
 	"requirements": [ "slime-cubed.slugbase", "improved-input-config", "fisobs" ],
-	"requirements_names": [ "SlugBase", "DressMySlugcat", "ImprovedInputConfig", "Fisobs" ],
+	"requirements_names": [ "SlugBase", "ImprovedInputConfig", "Fisobs" ],
 	"checksum_override_version": false,
 	"tags": [ "Cosmetics", "Custom Slugcat", "Game Mechanics", "Campaigns", "Items" ]
 }

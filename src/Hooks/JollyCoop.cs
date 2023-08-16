@@ -1,8 +1,6 @@
 ﻿using Menu;
 using RWCustom;
-using System;
 using UnityEngine;
-using SlugBase;
 
 namespace Vinki;
 
@@ -16,10 +14,60 @@ public static partial class Hooks
         On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.ctor += Vinki_Jolly_ctor;
         On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.HasUniqueSprite += Vinki_Jolly_Sprite;
         On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.LoadIcon += Vinki_Jolly_LoadIcon;
+        On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.Update += Vinki_Jolly_PupUpdate;
 
         On.JollyCoop.JollyMenu.JollyPlayerSelector.GetPupButtonOffName += Vinki_Jolly_Name;
         On.JollyCoop.JollyMenu.JollyPlayerSelector.Update += Vinki_Jolly_Update;
         On.JollyCoop.JollyMenu.JollyPlayerSelector.GrafUpdate += Vinki_Jolly_GrafUpdate;
+    }
+
+    private static void Vinki_Jolly_PupUpdate(On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.orig_Update orig, JollyCoop.JollyMenu.SymbolButtonTogglePupButton self)
+    {
+        // TODO: Make pup sprite
+        if ((self.symbolNameOff != null && !self.symbolNameOff.Contains("vinki")) || self.isToggled)
+        {
+            if (rainPodsSymbol != null)
+            {
+                rainPodsSymbol.RemoveSprites();
+                self.subObjects.Remove(rainPodsSymbol);
+                rainPodsSymbol = null;
+            }
+            if (shoesSymbol != null)
+            {
+                shoesSymbol.RemoveSprites();
+                self.subObjects.Remove(shoesSymbol);
+                shoesSymbol = null;
+            }
+            if (glassesSymbol != null)
+            {
+                glassesSymbol.RemoveSprites();
+                self.subObjects.Remove(glassesSymbol);
+                glassesSymbol = null;
+            }
+        }
+        else
+        {
+            string fileName;
+            if (rainPodsSymbol == null)
+            {
+                fileName = "rainpods_" + (self.isToggled ? self.symbolNameOn : self.symbolNameOff);
+                rainPodsSymbol = new MenuIllustration(self.menu, self, "", fileName, self.size / 2f, true, true);
+                self.subObjects.Add(rainPodsSymbol);
+            }
+            if (shoesSymbol == null)
+            {
+                fileName = "shoes_" + (self.isToggled ? self.symbolNameOn : self.symbolNameOff);
+                shoesSymbol = new MenuIllustration(self.menu, self, "", fileName, self.size / 2f, true, true);
+                self.subObjects.Add(shoesSymbol);
+            }
+            if (glassesSymbol == null)
+            {
+                fileName = "glasses_" + (self.isToggled ? self.symbolNameOn : self.symbolNameOff);
+                glassesSymbol = new MenuIllustration(self.menu, self, "", fileName, self.size / 2f, true, true);
+                self.subObjects.Add(glassesSymbol);
+            }
+        }
+        orig(self);
     }
 
     private static void Vinki_Jolly_GrafUpdate(On.JollyCoop.JollyMenu.JollyPlayerSelector.orig_GrafUpdate orig, JollyCoop.JollyMenu.JollyPlayerSelector self, float timeStacker)
@@ -43,15 +91,25 @@ public static partial class Hooks
 
     private static void Vinki_Jolly_Update(On.JollyCoop.JollyMenu.JollyPlayerSelector.orig_Update orig, JollyCoop.JollyMenu.JollyPlayerSelector self)
     {
+        orig(self);
+        // TODO: Make pup sprite
+        SlugcatStats.Name playerClass = self.JollyOptions(self.index)?.playerClass;
+        if (playerClass == null || !playerClass.value.Equals("TheVinki") || self.pupButton.isToggled || rainPodsSymbol == null)
+        {
+            orig(self);
+            return;
+        }
+        
         Color color = GetCustomVinkiColor(self.index, 3);
         Color color2 = GetCustomVinkiColor(self.index, 4);
         Color color3 = GetCustomVinkiColor(self.index, 5);
+        //Debug.Log("New shoe color: " + color2.ToString());
 
         rainPodsSymbol.sprite.color = color;
         shoesSymbol.sprite.color = color2;
         glassesSymbol.sprite.color = color3;
 
-        orig(self);
+        self.pupButton.LoadIcon();
     }
 
     private static void Vinki_Jolly_ctor(On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.orig_ctor orig, JollyCoop.JollyMenu.SymbolButtonTogglePupButton self, Menu.Menu menu, MenuObject owner, string signal, Vector2 pos, Vector2 size, string symbolNameOn, string symbolNameOff, bool isOn, string stringLabelOn, string stringLabelOff)
@@ -81,7 +139,8 @@ public static partial class Hooks
 
     private static bool Vinki_Jolly_Sprite(On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.orig_HasUniqueSprite orig, JollyCoop.JollyMenu.SymbolButtonTogglePupButton self)
     {
-        if (self.symbolNameOff.Contains("vinki")) return true;
+        // TODO: Make pup sprite
+        if (self.symbolNameOff.Contains("vinki") && !self.isToggled) return true;
         return orig(self);
     }
 
