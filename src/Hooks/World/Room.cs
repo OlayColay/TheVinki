@@ -6,6 +6,8 @@ public static partial class Hooks
     private static void ApplyRoomHooks()
     {
         On.Room.Loaded += Room_Loaded;
+
+        On.RoomSpecificScript.AddRoomSpecificScript += RoomSpecificScript_AddRoomSpecificScript;
     }
 
     private static CutsceneVinkiIntro intro = null;
@@ -17,5 +19,26 @@ public static partial class Hooks
             self.AddObject(intro);
         }
         orig(self);
+    }
+
+    private static void RoomSpecificScript_AddRoomSpecificScript(On.RoomSpecificScript.orig_AddRoomSpecificScript orig, Room self)
+    {
+        orig(self);
+
+        if (self.game.GetStorySession.saveState.saveStateNumber != Enums.TheVinki)
+        {
+            return;
+        }
+
+        if (!self.abstractRoom.firstTimeRealized)
+        {
+            return;
+        }
+
+        // Graffiti Tutorial
+        else if (self.abstractRoom?.name == "SS_E08" && self.game.GetStorySession.saveState.cycleNumber == 0)
+        {
+            self.AddObject(new GraffitiTutorial(self));
+        }
     }
 }

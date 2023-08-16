@@ -18,6 +18,17 @@ namespace Vinki
             On.PlayerGraphics.DrawSprites += PlayerGraphics_DrawSprites;
             On.PlayerGraphics.Update += PlayerGraphics_Update;
             On.PlayerGraphics.JollyUniqueColorMenu += PlayerGraphics_JollyUniqueColorMenu;
+            On.PlayerGraphics.LoadJollyColorsFromOptions += PlayerGraphics_Debug;
+        }
+
+        private static void PlayerGraphics_Debug(On.PlayerGraphics.orig_LoadJollyColorsFromOptions orig, int playerNumber)
+        {
+            orig(playerNumber);
+            Debug.Log("Called PlayerGraphics.LoadJollyColorsFromOptions. Lengths: [" + PlayerGraphics.jollyColors.Length + "][" + PlayerGraphics.jollyColors[playerNumber].Length + ']');
+            if (PlayerGraphics.jollyColors[playerNumber].Length == 6)
+            {
+                jollyColors[playerNumber] = PlayerGraphics.jollyColors[playerNumber];
+            }
         }
 
         private static void PlayerGraphics_ctor(On.PlayerGraphics.orig_ctor orig, PlayerGraphics self, PhysicalObject ow)
@@ -138,10 +149,10 @@ namespace Vinki
 
             //Vector2 animationOffset = GetAnimationOffset(self);
 
-            Color glassesColor = vinki.GlassesColor;
-            Color shoesColor = vinki.ShoesColor;
-            Color rainPodsColor = vinki.RainPodsColor;
-            Color stripesColor = vinki.StripesColor;
+            Color glassesColor = GetCustomVinkiColor(self.player.JollyOption.playerNumber, 5);
+            Color shoesColor = GetCustomVinkiColor(self.player.JollyOption.playerNumber, 4);
+            Color rainPodsColor = GetCustomVinkiColor(self.player.JollyOption.playerNumber, 3);
+            //Color stripesColor = vinki.StripesColor;
 
             sLeaser.sprites[2].color = Color.white;
 

@@ -2,6 +2,7 @@
 using RWCustom;
 using System;
 using UnityEngine;
+using SlugBase;
 
 namespace Vinki;
 
@@ -29,9 +30,9 @@ public static partial class Hooks
             return;
         }
 
-        Color color = self.FadePortraitSprite(Color.white, timeStacker);
-        Color color2 = self.FadePortraitSprite(new Color(0.28627450980392155f, 0.3058823529411765f, 0.8274509803921568f), timeStacker);
-        Color color3 = self.FadePortraitSprite(new Color(0.054901960784313725f, 0.00784313725490196f, 0.00784313725490196f), timeStacker);
+        Color color = self.FadePortraitSprite(GetCustomVinkiColor(self.index, 3), timeStacker);
+        Color color2 = self.FadePortraitSprite(GetCustomVinkiColor(self.index, 4), timeStacker);
+        Color color3 = self.FadePortraitSprite(GetCustomVinkiColor(self.index, 5), timeStacker);
 
         rainPodsSymbol.sprite.color = color;
         shoesSymbol.sprite.color = color2;
@@ -42,14 +43,15 @@ public static partial class Hooks
 
     private static void Vinki_Jolly_Update(On.JollyCoop.JollyMenu.JollyPlayerSelector.orig_Update orig, JollyCoop.JollyMenu.JollyPlayerSelector self)
     {
-        orig(self);
+        Color color = GetCustomVinkiColor(self.index, 3);
+        Color color2 = GetCustomVinkiColor(self.index, 4);
+        Color color3 = GetCustomVinkiColor(self.index, 5);
 
-        if ((Custom.rainWorld.options.jollyColorMode == Options.JollyColorMode.DEFAULT || (self.index == 0 && Custom.rainWorld.options.jollyColorMode == Options.JollyColorMode.AUTO)) && self.slugName == Enums.TheVinki)
-        {
-            rainPodsSymbol.sprite.color = Color.white;
-            shoesSymbol.sprite.color = new Color(0.28627450980392155f, 0.3058823529411765f, 0.8274509803921568f);
-            glassesSymbol.sprite.color = new Color(0.054901960784313725f, 0.00784313725490196f, 0.00784313725490196f);
-        }
+        rainPodsSymbol.sprite.color = color;
+        shoesSymbol.sprite.color = color2;
+        glassesSymbol.sprite.color = color3;
+
+        orig(self);
     }
 
     private static void Vinki_Jolly_ctor(On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.orig_ctor orig, JollyCoop.JollyMenu.SymbolButtonTogglePupButton self, Menu.Menu menu, MenuObject owner, string signal, Vector2 pos, Vector2 size, string symbolNameOn, string symbolNameOff, bool isOn, string stringLabelOn, string stringLabelOff)
@@ -106,14 +108,39 @@ public static partial class Hooks
         // RainPods
         rainPodsSymbol.fileName = "rainpods_" + self.symbol.fileName;
         rainPodsSymbol.LoadFile();
+        rainPodsSymbol.sprite.color = GetCustomVinkiColor((self.owner as JollyCoop.JollyMenu.JollyPlayerSelector).index, 3);
+        rainPodsSymbol.color = GetCustomVinkiColor((self.owner as JollyCoop.JollyMenu.JollyPlayerSelector).index, 3);
         rainPodsSymbol.sprite.SetElementByName(rainPodsSymbol.fileName);
         // Shoes
         shoesSymbol.fileName = "shoes_" + self.symbol.fileName;
         shoesSymbol.LoadFile();
+        shoesSymbol.sprite.color = GetCustomVinkiColor((self.owner as JollyCoop.JollyMenu.JollyPlayerSelector).index, 4);
+        shoesSymbol.color = GetCustomVinkiColor((self.owner as JollyCoop.JollyMenu.JollyPlayerSelector).index, 4);
         shoesSymbol.sprite.SetElementByName(shoesSymbol.fileName);
         // Glasses
         glassesSymbol.fileName = "glasses_" + self.symbol.fileName;
         glassesSymbol.LoadFile();
+        glassesSymbol.pos = new Vector2(UnityEngine.Random.Range(0, 1000), UnityEngine.Random.Range(0, 500));
+        glassesSymbol.sprite.color = GetCustomVinkiColor((self.owner as JollyCoop.JollyMenu.JollyPlayerSelector).index, 5);
+        glassesSymbol.color = GetCustomVinkiColor((self.owner as JollyCoop.JollyMenu.JollyPlayerSelector).index, 5);
         glassesSymbol.sprite.SetElementByName(glassesSymbol.fileName);
+    }
+
+    private static Color GetCustomVinkiColor(int playerNumber, int bodyPartIndex)
+    {
+        if (Custom.rainWorld.options.jollyColorMode != Options.JollyColorMode.CUSTOM)
+        {
+            switch (bodyPartIndex)
+            {
+                case 3: return Color.white;
+                case 4: return new Color(0.28627450980392155f, 0.3058823529411765f, 0.8274509803921568f);
+                case 5: return new Color(0.054901960784313725f, 0.00784313725490196f, 0.00784313725490196f);
+                default:
+                    Debug.LogError("Invalid bodyPartIndex!\n" + StackTraceUtility.ExtractStackTrace());
+                    return Color.white;
+            }
+        }
+        Debug.Log("Checking custom color for player " + playerNumber + ": " + Plugin.jollyColors[playerNumber][bodyPartIndex].GetValueOrDefault().ToString());
+        return Plugin.jollyColors[playerNumber][bodyPartIndex].GetValueOrDefault().CloneWithNewAlpha(1f);
     }
 }

@@ -33,6 +33,7 @@ namespace Vinki
         public static List<string> shelterItems = new List<string>();
         public static Dictionary<AbstractPhysicalObject.AbstractObjectType, int> colorfulItems = new Dictionary<AbstractPhysicalObject.AbstractObjectType, int>();
         public static Texture2D TailTexture;
+        public static Color?[][] jollyColors = new Color?[4][] { new Color?[6], new Color?[6], new Color?[6], new Color?[6] };
 
         public static readonly string graffitiFolder = "RainWorld_Data/StreamingAssets/decals/VinkiGraffiti";
         public static readonly string storyGraffitiFolder = "RainWorld_Data/StreamingAssets/decals";
