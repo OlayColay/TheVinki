@@ -36,7 +36,7 @@ public static partial class Hooks
         }
 
         // Graffiti Tutorial
-        else if (self.abstractRoom?.name == "SS_E08" && self.game.GetStorySession.saveState.cycleNumber == 0)
+        else if (self.abstractRoom?.name == "SS_E08")
         {
             self.AddObject(new GraffitiTutorial(self));
         }

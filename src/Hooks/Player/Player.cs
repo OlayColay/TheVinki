@@ -62,14 +62,14 @@ namespace Vinki
         {
             orig(self, eu);
 
-            if (intro != null && intro.phase == CutsceneVinkiIntro.Phase.Wait && intro.cutsceneTimer > 2000)
+            if (intro != null && intro.phase == CutsceneVinkiIntro.Phase.Wait && intro.cutsceneTimer > 2230)
             {
                 self.input[0].y = -1;
                 self.JollyEmoteUpdate();
                 self.sleepCounter = 99;
                 self.JollyPointUpdate();
 
-                if (intro.cutsceneTimer > 2030 && intro.cutsceneTimer <= 2031)
+                if (intro.cutsceneTimer == 2260)
                 {
                     sleeping = true;
                 }
