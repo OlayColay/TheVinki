@@ -141,7 +141,7 @@ namespace Vinki
 					4,
 					70,
 					4,
-					5,
+					15,
 					120
 				};
 				if (this.cutsceneTimer < 30)

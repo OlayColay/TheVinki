@@ -90,7 +90,7 @@ namespace Vinki
             }
 
             var currentLang = self.owner.rainWorld.inGameTranslator.currentLanguage;
-            var l = currentLang == InGameTranslator.LanguageID.Chinese || currentLang == InGameTranslator.LanguageID.Japanese || currentLang == InGameTranslator.LanguageID.Korean ? 8 : 0;
+            var l = 80 * (0 + ((currentLang == InGameTranslator.LanguageID.Chinese || currentLang == InGameTranslator.LanguageID.Japanese || currentLang == InGameTranslator.LanguageID.Korean) ? 8 : 0));
 
             var id = self.id;
             var e = self.events;
@@ -103,20 +103,40 @@ namespace Vinki
                     self.Translate(".  .  ."), 0));
 
                 e.Add(new TextEvent(self, 0,
-                    self.Translate("What in the world is this?"), l * 80));
+                    self.Translate("And what do we have here, on the once-pristine walls of my chamber?"), l));
 
                 e.Add(new TextEvent(self, 0,
-                    self.Translate("Is that ... scribble supposed to be me?"), l * 80));
+                    self.Translate("Is that ... scribble supposed to be me? Are those ... ears I'm wearing?"), l));
 
                 e.Add(new WaitEvent(self, 80));
 
                 e.Add(new TextEvent(self, 0,
-                    self.Translate("You must think that you are some sort of funny prankster."), l * 80));
+                    self.Translate("I get the impression that you are somehow proud of this, and I cannot understand why."), l));
 
                 e.Add(new TextEvent(self, 0,
-                    self.Translate("Well, you are not funny. Do you see me laughing? You are just a stupid beast."), l * 80));
+                    self.Translate("Is this really an accomplishment to celebrate? Terrorizing me with an atrocity like this?"), l));
+
+                e.Add(new TextEvent(self, 0,
+                    self.Translate("Someone must have put you up to this. Was it No Significant Harrassment? His name has always been considerably ironic."), l));
+
+                e.Add(new WaitEvent(self, 60));
+
+                e.Add(new TextEvent(self, 0,
+                    self.Translate(". . ."), 0));
+
+                e.Add(new TextEvent(self, 0,
+                    self.Translate("Your blank stare behind that ridiculous headpiece does not give me any answers."), l));
+
+                e.Add(new TextEvent(self, 0,
+                    self.Translate("It is simply laughable that a little beast climbed all the way up my exterior just to insult me in this way. I hope you realize that I am NOT offended in any way, shape, or form. After all, I am a being who is, if you excuse me, godlike in compar-"), 0));
 
                 e.Add(new WaitEvent(self, 120));
+
+                e.Add(new TextEvent(self, 0,
+                    self.Translate("You disrespectful little cretin."), 0));
+
+                e.Add(new TextEvent(self, 0,
+                    self.Translate("Leave, and do not return until you have actually achieved something worthy of showing a higher being such as myself."), l / 2));
             }
             else
             {

@@ -62,8 +62,7 @@ namespace Vinki
         {
             orig(self, eu);
 
-
-            if (intro != null && intro.phase == CutsceneVinkiIntro.Phase.Wait && intro.cutsceneTimer > 550)
+            if (intro != null && intro.phase == CutsceneVinkiIntro.Phase.Wait && intro.cutsceneTimer > 1900)
             {
                 self.input[0].y = -1;
                 self.JollyEmoteUpdate();
