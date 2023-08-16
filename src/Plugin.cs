@@ -9,7 +9,7 @@ namespace Vinki
 {
     [BepInDependency("slime-cubed.slugbase")]
     [BepInDependency("dressmyslugcat", BepInDependency.DependencyFlags.SoftDependency)]
-    [BepInPlugin(MOD_ID, "The Vinki", "0.7.7")]
+    [BepInPlugin(MOD_ID, "The Vinki", "0.7.8")]
     class Plugin : BaseUnityPlugin
     {
         public const string MOD_ID = "olaycolay.thevinki";
@@ -34,6 +34,7 @@ namespace Vinki
         public static Dictionary<AbstractPhysicalObject.AbstractObjectType, int> colorfulItems = new Dictionary<AbstractPhysicalObject.AbstractObjectType, int>();
         public static Texture2D TailTexture;
         public static Color?[][] jollyColors = new Color?[4][] { new Color?[6], new Color?[6], new Color?[6], new Color?[6] };
+        public static bool sleeping;
 
         public static readonly string graffitiFolder = "RainWorld_Data/StreamingAssets/decals/VinkiGraffiti";
         public static readonly string storyGraffitiFolder = "RainWorld_Data/StreamingAssets/decals";

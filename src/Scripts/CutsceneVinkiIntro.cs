@@ -194,13 +194,9 @@ namespace Vinki
                     }
                 }
 				num2 += array2[6];
-				if (this.cutsceneTimer == num2)
-				{ 
-					x = 1; 
-				}
 				if (this.cutsceneTimer >= num2)
 				{
-					thrw = true;
+					//thrw = true;
 					this.cutsceneTimer = 0;
 					this.phase = CutsceneVinkiIntro.Phase.Wait;
 				}

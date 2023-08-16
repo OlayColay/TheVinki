@@ -6,6 +6,8 @@ using static SSOracleBehavior;
 using UnityEngine;
 using MoreSlugcats;
 using RWCustom;
+using System.Diagnostics.Eventing.Reader;
+using SprayCans;
 
 namespace Vinki
 {
@@ -90,7 +92,7 @@ namespace Vinki
             }
 
             var currentLang = self.owner.rainWorld.inGameTranslator.currentLanguage;
-            var l = 80 * (0 + ((currentLang == InGameTranslator.LanguageID.Chinese || currentLang == InGameTranslator.LanguageID.Japanese || currentLang == InGameTranslator.LanguageID.Korean) ? 8 : 0));
+            var l = 20 + 80 * ((currentLang == InGameTranslator.LanguageID.Chinese || currentLang == InGameTranslator.LanguageID.Japanese || currentLang == InGameTranslator.LanguageID.Korean) ? 8 : 0);
 
             var id = self.id;
             var e = self.events;
@@ -125,18 +127,10 @@ namespace Vinki
                     self.Translate(". . ."), 0));
 
                 e.Add(new TextEvent(self, 0,
-                    self.Translate("Your blank stare behind that ridiculous headpiece does not give me any answers."), l));
+                    self.Translate("Your blank stare behind that ridiculous headpiece gives me no answers."), l));
 
                 e.Add(new TextEvent(self, 0,
-                    self.Translate("It is simply laughable that a little beast climbed all the way up my exterior just to insult me in this way. I hope you realize that I am NOT offended in any way, shape, or form. After all, I am a being who is, if you excuse me, godlike in compar-"), 0));
-
-                e.Add(new WaitEvent(self, 120));
-
-                e.Add(new TextEvent(self, 0,
-                    self.Translate("You disrespectful little cretin."), 0));
-
-                e.Add(new TextEvent(self, 0,
-                    self.Translate("Leave, and do not return until you have actually achieved something worthy of showing a higher being such as myself."), l / 2));
+                    self.Translate("It is simply laughable that a little beast climbed all the way up my exterior just to insult me in this way. I hope you realize that I am NOT<LINE>offended in any way, shape, or form. After all, I am a being who is, if you excuse me, godlike in compar-"), 0));
             }
             else
             {
@@ -161,14 +155,47 @@ namespace Vinki
                     return;
                 }
 
+                if (sleeping)
+                {
+                    this.owner.NewAction(Enums.SSOracle.Vinki_SSActionTriggered);
+                    sleeping = false;
+                }
+
                 if (base.action == Enums.SSOracle.Vinki_SSActionGeneral)
                 {
                     this.owner.LockShortcuts();
                     if (base.inActionCounter == 15 && (this.owner.conversation == null || this.owner.conversation.id != this.convoID))
                     {
+                        base.oracle.room.game.GetStorySession.saveState.miscWorldSaveData.SSaiConversationsHad = 1;
                         this.owner.InitateConversation(this.convoID, this);
                     }
-                    if (this.owner.conversation != null && this.owner.conversation.id == this.convoID && this.owner.conversation.slatedForDeletion)
+                }
+                else if (base.action == Enums.SSOracle.Vinki_SSActionTriggered)
+                {
+                    if (base.inActionCounter == 15)
+                    {
+                        this.owner.conversation.paused = true;
+                        this.owner.restartConversationAfterCurrentDialoge = false;
+
+                        base.dialogBox.Interrupt(base.Translate(". . ."), 0);
+                        base.dialogBox.NewMessage(base.Translate("You disrespectful little cretin."), 0);
+                        base.dialogBox.NewMessage(base.Translate("Leave, and do not return until you have actually achieved something worthy of showing a higher being such as myself."), 0);
+                    }
+                    if (base.inActionCounter == 150)
+                    {
+                        this.owner.getToWorking = 1f;
+                        this.owner.voice = base.oracle.room.PlaySound(SoundID.SS_AI_Talk_5, base.oracle.firstChunk);
+                        this.owner.voice.requireActiveUpkeep = true;
+                    }
+                    if (base.inActionCounter == 450)
+                    {
+                        var grasp = player.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan);
+                        if (grasp != null && (grasp.grabbed as SprayCan).TryUse())
+                        {
+                            _ = Hooks.SprayGraffiti(player, 20);
+                        }
+                    }
+                    if (base.inActionCounter > 480)
                     {
                         Debug.Log("Done with conversation.");
                         this.owner.conversation = null;
@@ -177,17 +204,10 @@ namespace Vinki
                 }
                 else if (base.action == Enums.SSOracle.Vinki_SSActionGetOut)
                 {
-                    base.oracle.room.game.GetStorySession.saveState.miscWorldSaveData.SSaiConversationsHad = 1;
                     this.owner.UnlockShortcuts();
                     if (base.inActionCounter == 100 && base.oracle.room.game.GetStorySession.saveState.deathPersistentSaveData.theMark)
                     {
-                        base.dialogBox.Interrupt(base.Translate("Get out of my sight."), 60);
-                    }
-                    this.owner.getToWorking = 1f;
-                    if (base.inActionCounter == 80)
-                    {
-                        this.owner.voice = base.oracle.room.PlaySound(SoundID.SS_AI_Talk_5, base.oracle.firstChunk);
-                        this.owner.voice.requireActiveUpkeep = true;
+                        base.dialogBox.Interrupt(base.Translate("Get out of my sight!"), 60);
                     }
                     if (base.inActionCounter == 500)
                     {
