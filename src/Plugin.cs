@@ -16,6 +16,7 @@ namespace Vinki
         public static int lastXDirection = 1;
         public static int lastYDirection = 1;
         public static int craftCounter = 0;
+        public static int storyGraffitiCount = 0;
         public static bool grindUpPoleFlag = false;
         public static bool isGrindingH = false;
         public static bool isGrindingV = false;
@@ -23,6 +24,7 @@ namespace Vinki
         public static bool isGrindingVine = false;
         public static bool isGrinding = false;
         public static bool grindToggle = false;
+        public static bool sleeping;
         public static Vector2 lastVineDir = Vector2.zero;
         public static Player.AnimationIndex lastAnimationFrame = Player.AnimationIndex.None;
         public static Player.AnimationIndex lastAnimation = Player.AnimationIndex.None;
@@ -31,14 +33,13 @@ namespace Vinki
         public static List<Vector2> graffitiOffsets = new List<Vector2>();
         public static List<Color> graffitiAvgColors = new List<Color>();
         public static List<string> shelterItems = new List<string>();
+        public static Dictionary<int, Vector2> storyGraffitiRoomPositions = new Dictionary<int, Vector2>();
         public static Dictionary<AbstractPhysicalObject.AbstractObjectType, int> colorfulItems = new Dictionary<AbstractPhysicalObject.AbstractObjectType, int>();
         public static Texture2D TailTexture;
         public static Color?[][] jollyColors = new Color?[4][] { new Color?[6], new Color?[6], new Color?[6], new Color?[6] };
-        public static bool sleeping;
 
         public static readonly string graffitiFolder = "RainWorld_Data/StreamingAssets/decals/VinkiGraffiti";
         public static readonly string storyGraffitiFolder = "RainWorld_Data/StreamingAssets/decals";
-        public static readonly int storyGraffitiCount = 1;
         public static readonly PlayerFeature<float> CoyoteBoost = PlayerFloat("thevinki/coyote_boost");
         public static readonly PlayerFeature<float> GrindXSpeed = PlayerFloat("thevinki/grind_x_speed");
         public static readonly PlayerFeature<float> GrindVineSpeed = PlayerFloat("thevinki/grind_vine_speed");

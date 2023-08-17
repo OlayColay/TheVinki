@@ -184,13 +184,15 @@ namespace Vinki
 					jmp = true;
 				}
 				num2 += array2[5];
-				if (this.cutsceneTimer >= num2 && this.cutsceneTimer < num2 + 1)
+				if (this.cutsceneTimer == num2)
 				{
 					x = -1;
                     var grasp = player.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan);
                     if (grasp != null && (grasp.grabbed as SprayCan).TryUse())
                     {
-                        _ = Hooks.SprayGraffiti(player, 20);
+                        _ = Hooks.SprayGraffiti(player, 20, 0);
+                        // Trigger the cutscene
+                        Hooks.TriggerSSOracleScene();
                     }
                 }
 				num2 += array2[6];

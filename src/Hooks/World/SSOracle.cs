@@ -15,7 +15,7 @@ namespace Vinki
     {
         private static SSOracleBehavior oracleBehavior;
 
-        private static void TriggerSSOracleScene()
+        public static void TriggerSSOracleScene()
         {
             if (oracleBehavior.oracle.room.game.GetStorySession.saveState.miscWorldSaveData.SSaiConversationsHad == 0)
             {
@@ -203,7 +203,7 @@ namespace Vinki
                         var grasp = player.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan);
                         if (grasp != null && (grasp.grabbed as SprayCan).TryUse())
                         {
-                            _ = Hooks.SprayGraffiti(player, 20);
+                            _ = Hooks.SprayGraffiti(player, 10, 1);
                         }
                     }
                     if (base.inActionCounter == 500)

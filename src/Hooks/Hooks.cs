@@ -39,7 +39,8 @@ namespace Vinki
             ApplyHooks();
 
             // Add the story graffitis
-            AddGraffiti("5P", true);
+            AddGraffiti("5P", new Vector2?(new Vector2(650, 200)));
+            AddGraffiti("5P_stretched", new Vector2?(new Vector2(570, 400)));
 
             // If the graffiti folder doesn't exist (or is empty), copy it from the mod
             if (!Directory.Exists(graffitiFolder) || !Directory.EnumerateFileSystemEntries(graffitiFolder).Any())
@@ -88,16 +89,18 @@ namespace Vinki
             InitColorfulItems();
         }
 
-        private static void AddGraffiti(string image, bool storyGraffiti = false)
+        private static void AddGraffiti(string image, Vector2? storyGraffitiRoomPos = null)
         {
             PlacedObject.CustomDecalData decal = new PlacedObject.CustomDecalData(null);
             decal.imageName = image;
             decal.fromDepth = 0.2f;
 
             string filePath;
-            if (storyGraffiti)
+            if (storyGraffitiRoomPos.HasValue)
             {
                 filePath = AssetManager.ResolveFilePath("decals/" + image + ".png");
+                storyGraffitiRoomPositions.Add(graffitis.Count, storyGraffitiRoomPos.Value);
+                storyGraffitiCount++;
             }
             else
             {
@@ -113,8 +116,12 @@ namespace Vinki
             graffitiAvgColors.Add(AverageColorFromTexture(img));
 
             // Resize image to look good in game
-            int[] newSize = ResizeAndKeepAspectRatio(img.width, img.height, 100f * 100f);
-            img.Resize(newSize[0], newSize[1]);
+            if (!storyGraffitiRoomPos.HasValue)
+            {
+                int[] newSize = ResizeAndKeepAspectRatio(img.width, img.height, 100f * 100f);
+                img.Resize(newSize[0], newSize[1]);
+            }
+
             decal.handles[0] = new Vector2(0f, img.height);
             decal.handles[1] = new Vector2(img.width, img.height);
             decal.handles[2] = new Vector2(img.width, 0f);
@@ -122,8 +129,8 @@ namespace Vinki
             float halfWidth = img.width / 2f;
             float halfHeight = img.height / 2f;
 
-            graffitis.Add(decal);
             graffitiOffsets.Add(new Vector2(-halfWidth, -halfHeight));
+            graffitis.Add(decal);
         }
 
         public static bool IsPostInit;

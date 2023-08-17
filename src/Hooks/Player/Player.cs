@@ -11,37 +11,30 @@ namespace Vinki
 {
     public static partial class Hooks
     {
-        public static async Task SprayGraffiti(Player self, int strength = 9)
+        public static async Task SprayGraffiti(Player self, int strength = 9, int gNum = -1)
         {
-            int rand;
-            if (self.room.abstractRoom.name == "SS_AI")
+            if (gNum < 0)
             {
-                rand = 0;
-                // If done in 5P's room, trigger the cutscene
-                TriggerSSOracleScene();
-            }
-            else
-            {
-                rand = UnityEngine.Random.Range(storyGraffitiCount, graffitis.Count);
+                gNum = UnityEngine.Random.Range(storyGraffitiCount, graffitis.Count);
             }
 
-            Vector2 playerPos = self.mainBodyChunk.pos;
+            Vector2 sprayPos = storyGraffitiRoomPositions.ContainsKey(gNum) ? storyGraffitiRoomPositions[gNum] : self.mainBodyChunk.pos;
 
             self.room.PlaySound(SoundID.Vulture_Jet_LOOP, self.mainBodyChunk, false, 1f, 2f);
 
             for (int i = 0; i < strength; i++)
             {
-                PlacedObject graffiti = new PlacedObject(PlacedObject.Type.CustomDecal, graffitis[rand]);
-                graffiti.pos = playerPos + graffitiOffsets[rand];
+                PlacedObject graffiti = new PlacedObject(PlacedObject.Type.CustomDecal, graffitis[gNum]);
+                graffiti.pos = sprayPos + graffitiOffsets[gNum];
 
                 Vector2 smokePos = new Vector2(
-                    playerPos.x + UnityEngine.Random.Range(graffitiOffsets[rand].x, -graffitiOffsets[rand].x),
-                    playerPos.y + UnityEngine.Random.Range(graffitiOffsets[rand].y, -graffitiOffsets[rand].y));
+                    sprayPos.x + UnityEngine.Random.Range(graffitiOffsets[gNum].x, -graffitiOffsets[gNum].x),
+                    sprayPos.y + UnityEngine.Random.Range(graffitiOffsets[gNum].y, -graffitiOffsets[gNum].y));
                 var smoke = new Explosion.ExplosionSmoke(smokePos, Vector2.zero, 2f);
                 smoke.lifeTime = 15f;
                 smoke.life = 2f;
                 self.room.AddObject(smoke);
-                smoke.colorA = graffitiAvgColors[rand];
+                smoke.colorA = graffitiAvgColors[gNum];
                 smoke.colorB = Color.gray;
 
                 await Task.Delay(100);
