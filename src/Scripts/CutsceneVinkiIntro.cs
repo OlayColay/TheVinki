@@ -190,7 +190,7 @@ namespace Vinki
                     var grasp = player.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan);
                     if (grasp != null && (grasp.grabbed as SprayCan).TryUse())
                     {
-                        _ = Hooks.SprayGraffiti(player, 20, 0);
+                        _ = Hooks.SprayGraffiti(player, 20, 0, 0.5f);
                         // Trigger the cutscene
                         Hooks.TriggerSSOracleScene();
                     }

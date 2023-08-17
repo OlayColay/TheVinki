@@ -11,7 +11,7 @@ namespace Vinki
 {
     public static partial class Hooks
     {
-        public static async Task SprayGraffiti(Player self, int strength = 9, int gNum = -1)
+        public static async Task SprayGraffiti(Player self, int smokes = 10, int gNum = -1, float alphaPerSmoke = 1f)
         {
             if (gNum < 0)
             {
@@ -22,7 +22,12 @@ namespace Vinki
 
             self.room.PlaySound(SoundID.Vulture_Jet_LOOP, self.mainBodyChunk, false, 1f, 2f);
 
-            for (int i = 0; i < strength; i++)
+            for (int j = 0; j < 4; j++)
+            {
+                graffitis[gNum].vertices[j, 0] = alphaPerSmoke;
+            }
+
+            for (int i = 0; i < smokes; i++)
             {
                 PlacedObject graffiti = new PlacedObject(PlacedObject.Type.CustomDecal, graffitis[gNum]);
                 graffiti.pos = sprayPos + graffitiOffsets[gNum];
