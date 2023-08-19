@@ -178,10 +178,8 @@ namespace Vinki
 
                         base.dialogBox.Interrupt(base.Translate(". . ."), 0);
                         base.dialogBox.NewMessage(base.Translate("You disrespectful little cretin."), 0);
-                        base.dialogBox.NewMessage(base.Translate("I do not wish to see creatures in my chamber who have nothing impressive to show me."), 0);
-                        base.dialogBox.NewMessage(base.Translate("So until you somehow have something impressive for me..."), 0);
                     }
-                    if (base.inActionCounter > 500)
+                    if (base.inActionCounter > 175)
                     {
                         Debug.Log("Done with conversation.");
                         this.owner.conversation = null;
@@ -194,7 +192,7 @@ namespace Vinki
                     this.owner.getToWorking = 1f;
                     if (base.inActionCounter == 100 && base.oracle.room.game.GetStorySession.saveState.deathPersistentSaveData.theMark)
                     {
-                        base.dialogBox.Interrupt(base.Translate("Get out of my sight!"), 60);
+                        base.dialogBox.Interrupt(base.Translate("Get out of my sight! Do not return until you have accomplished something worthwile."), 60);
                         this.owner.voice = base.oracle.room.PlaySound(SoundID.SS_AI_Talk_5, base.oracle.firstChunk);
                         this.owner.voice.requireActiveUpkeep = true;
                     }
@@ -203,7 +201,7 @@ namespace Vinki
                         var grasp = player.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan);
                         if (grasp != null && (grasp.grabbed as SprayCan).TryUse())
                         {
-                            _ = Hooks.SprayGraffiti(player, 10, 1);
+                            _ = Hooks.SprayGraffiti(player, 4, 1);
                         }
                     }
                     if (base.inActionCounter == 500)

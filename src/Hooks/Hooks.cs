@@ -6,6 +6,7 @@ using System.Linq;
 using System.IO;
 using SprayCans;
 using Fisobs.Core;
+using MoreSlugcats;
 using static Vinki.Plugin;
 
 namespace Vinki
@@ -40,7 +41,7 @@ namespace Vinki
 
             // Add the story graffitis
             AddGraffiti("5P", new Vector2?(new Vector2(650, 200)));
-            AddGraffiti("5P_stretched", new Vector2?(new Vector2(570, 400)));
+            AddGraffiti("5P_stretched", new Vector2?(new Vector2(520, 400)));
 
             // If the graffiti folder doesn't exist (or is empty), copy it from the mod
             if (!Directory.Exists(graffitiFolder) || !Directory.EnumerateFileSystemEntries(graffitiFolder).Any())
@@ -210,6 +211,20 @@ namespace Vinki
             colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.SlimeMold, 2);
             colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.SporePlant, 1);
             colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.WaterNut, 2);
+
+            if (!ModManager.MSC)
+            {
+                return;
+            }
+
+            colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.DandelionPeach, 2);
+            colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.FireEgg, 2);
+            colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.Germinator, 2);
+            colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.GlowWeed, 2);
+            colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.GooieDuck, 2);
+            colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.LillyPuck, 1);
+            colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.Seed, 1);
+            colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.SingularityBomb, 9001);
         }
 
         private static void MenuScene_BuildScene(On.Menu.MenuScene.orig_BuildScene orig, Menu.MenuScene self)
