@@ -46,16 +46,16 @@ sealed class SprayCanFisob : Fisob
         };
 
         // If this is coming from a sandbox unlock, the hue and size should depend on the data value (see SprayCanIcon below).
-        if (unlock is SandboxUnlock u)
-        {
-            result.hue = u.Data / 1000f;
+        //if (unlock is SandboxUnlock u)
+        //{
+        //    result.hue = u.Data / 1000f;
 
-            if (u.Data == 0)
-            {
-                result.scaleX += 0.2f;
-                result.scaleY += 0.2f;
-            }
-        }
+        //    if (u.Data == 0)
+        //    {
+        //        result.scaleX += 0.2f;
+        //        result.scaleY += 0.2f;
+        //    }
+        //}
 
         return result;
     }
