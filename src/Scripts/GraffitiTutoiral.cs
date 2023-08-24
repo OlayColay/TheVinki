@@ -1,6 +1,6 @@
-﻿using System.Linq;
+﻿using ImprovedInput;
+using System.Linq;
 using UnityEngine;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Vinki;
 
@@ -40,8 +40,10 @@ public class GraffitiTutorial : UpdatableAndDeletable
 
         if (Vector2.Distance(playerPos, craftTriggerPos) <= triggerReach && nextPhase == Phase.Craft)
         {
+            string graffitiMode = KeyCodeTranslator.Translate(0, PlayerKeybind.Get("thevinki:graffiti").CurrentBinding(0));
+            string craft = KeyCodeTranslator.Translate(0, PlayerKeybind.Get("thevinki:craft").CurrentBinding(0));
             game.cameras.First().hud.textPrompt.AddMessage(
-                game.manager.rainWorld.inGameTranslator.Translate("Hold (GRAFFITI MODE + CRAFT) while carrying a rock and colorful object to craft a Spray Can."),
+                game.manager.rainWorld.inGameTranslator.Translate("Hold (" + graffitiMode + " + " + craft + ") while carrying a rock and colorful object to craft a Spray Can."),
                 0, 600, false, false
             );
             game.cameras.First().hud.textPrompt.AddMessage(
@@ -52,8 +54,10 @@ public class GraffitiTutorial : UpdatableAndDeletable
         }
         else if (Vector2.Distance(playerPos, sprayTriggerPos) <= triggerReach && nextPhase == Phase.Spray)
         {
+            string graffitiMode = KeyCodeTranslator.Translate(0, PlayerKeybind.Get("thevinki:graffiti").CurrentBinding(0));
+            string spray = KeyCodeTranslator.Translate(0, PlayerKeybind.Get("thevinki:spray").CurrentBinding(0));
             game.cameras.First().hud.textPrompt.AddMessage(
-                game.manager.rainWorld.inGameTranslator.Translate("Press (GRAFFITI MODE + SPRAY) while carrying a Spray Can to spend a charge and spray graffiti."),
+                game.manager.rainWorld.inGameTranslator.Translate("Press (" + graffitiMode + " + " + spray + ") while carrying a Spray Can to spend a charge and spray graffiti."),
                 0, 600, false, false
             );
             nextPhase = Phase.Throw;
