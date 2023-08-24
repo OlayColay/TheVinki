@@ -11,7 +11,7 @@ namespace Vinki
 {
     public static partial class Hooks
     {
-        public static async Task SprayGraffiti(Player self, int smokes = 10, int gNum = -1, float alphaPerSmoke = 1f)
+        public static async Task SprayGraffiti(Player self, int smokes = 10, int gNum = -1, float alphaPerSmoke = 0.3f)
         {
             if (gNum < 0)
             {
@@ -361,7 +361,7 @@ namespace Vinki
             }
 
             // Update grindToggle if needed
-            if (self.JustPressed(ToggleGrind) && VinkiConfig.ToggleGrind.Value && !IsPressingGraffiti(self))
+            if (self.JustPressed(ToggleGrind) && !IsPressingGraffiti(self))
             {
                 grindToggle = !grindToggle;
             }

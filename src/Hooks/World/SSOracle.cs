@@ -201,7 +201,7 @@ namespace Vinki
                         var grasp = player.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan);
                         if (grasp != null && (grasp.grabbed as SprayCan).TryUse())
                         {
-                            _ = Hooks.SprayGraffiti(player, 4, 1);
+                            _ = Hooks.SprayGraffiti(player, 4, 1, 1f);
                         }
                     }
                     if (base.inActionCounter == 500)

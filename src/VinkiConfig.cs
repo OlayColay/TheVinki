@@ -8,7 +8,6 @@ namespace Vinki
     {
         public static VinkiConfig Instance { get; } = new();
         public static Configurable<bool> RequireSprayCans;
-        public static Configurable<bool> ToggleGrind;
         public static Configurable<bool> UpGraffiti;
 
         public VinkiConfig()
@@ -16,10 +15,6 @@ namespace Vinki
             RequireSprayCans = config.Bind("requireSprayCans", true, new ConfigurableInfo("Requires a spray can to spray graffiti (craft one with a rock and a colorful item).", tags: new object[]
             {
                 "Require Spray Cans for Graffiti"
-            }));
-            ToggleGrind = config.Bind("toggleGrind", false, new ConfigurableInfo("Toggle grinding when pressing the Toggle Grind button instead of having to hold down the Grind button.", tags: new object[]
-            {
-                "Toggle Grind"
             }));
             UpGraffiti = config.Bind("upGraffiti", true, new ConfigurableInfo("Use the Up direction for Graffiti Mode (in addition to the normal binding).", tags: new object[]
             {
@@ -46,8 +41,7 @@ namespace Vinki
             AddTitle();
             AddDivider(560f);
             AddCheckbox(RequireSprayCans, 520f);
-            AddCheckbox(ToggleGrind, 480f);
-            AddCheckbox(UpGraffiti, 440f);
+            AddCheckbox(UpGraffiti, 480f);
         }
 
         // Combines two flipped 'LinearGradient200's together to make a fancy looking divider.
