@@ -28,6 +28,11 @@ public static class Enums
         public static PlayerColor Glasses;
     }
 
+    public static class Sound
+    {
+        public static SoundID Grind1A = new SoundID("Vinki_Grind_LOOP", true);
+    }
+
     public static void RegisterValues()
     {
         Color.Body = new PlayerColor("Body");
@@ -36,5 +41,7 @@ public static class Enums
         Color.Shoes = new PlayerColor("Shoes");
         Color.RainPods = new PlayerColor("RainPods");
         Color.Glasses = new PlayerColor("Glasses");
+
+        Sound.Grind1A = new SoundID("Vinki_Grind_LOOP", true);
     }
 }

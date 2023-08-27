@@ -320,7 +320,7 @@ namespace Vinki
         {
             if (grindSound == null || grindSound.currentSoundObject == null || grindSound.currentSoundObject.slatedForDeletion)
             {
-                grindSound = self.room.PlaySound(SoundID.Shelter_Gasket_Mover_LOOP, self.mainBodyChunk, true, 0.15f, 10f);
+                grindSound = self.room.PlaySound(Enums.Sound.Grind1A, self.mainBodyChunk, true, 1f, 1f, true);
                 grindSound.requireActiveUpkeep = true;
             }
             grindSound.alive = true;
