@@ -19,7 +19,7 @@ public static partial class Hooks
 
         On.JollyCoop.JollyMenu.JollyPlayerSelector.GetPupButtonOffName += Vinki_Jolly_Name;
         //On.JollyCoop.JollyMenu.JollyPlayerSelector.Update += Vinki_Jolly_Update;
-        //On.JollyCoop.JollyMenu.JollyPlayerSelector.GrafUpdate += Vinki_Jolly_GrafUpdate;
+        On.JollyCoop.JollyMenu.JollyPlayerSelector.GrafUpdate += Vinki_Jolly_GrafUpdate;
     }
 
     private static void Vinki_Jolly_PupUpdate(On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.orig_Update orig, JollyCoop.JollyMenu.SymbolButtonTogglePupButton self)
@@ -75,14 +75,14 @@ public static partial class Hooks
 
     private static void Vinki_Jolly_GrafUpdate(On.JollyCoop.JollyMenu.JollyPlayerSelector.orig_GrafUpdate orig, JollyCoop.JollyMenu.JollyPlayerSelector self, float timeStacker)
     {
-        if (self.slugName != Enums.TheVinki)
+        if (self.slugName != Enums.TheVinki || rainPodsSymbol[self.index] == null)
         {
             orig(self, timeStacker);
             return;
         }
 
         Color color = self.FadePortraitSprite(GetCustomVinkiColor(self.index, 3), timeStacker);
-        Color color2 = self.FadePortraitSprite(GetCustomVinkiColor(self.index, 4), timeStacker);
+        Color color2 = self.FadePortraitSprite(GetCustomVinkiColor(self.index, 4, self.pupButton.uniqueSymbol.color), timeStacker);
         Color color3 = self.FadePortraitSprite(GetCustomVinkiColor(self.index, 5), timeStacker);
 
         rainPodsSymbol[self.index].sprite.color = color;
@@ -104,7 +104,7 @@ public static partial class Hooks
         }
         
         Color color = GetCustomVinkiColor(self.index, 3);
-        Color color2 = GetCustomVinkiColor(self.index, 4);
+        Color color2 = GetCustomVinkiColor(self.index, 4, self.pupButton.uniqueSymbol.color);
         Color color3 = GetCustomVinkiColor(self.index, 5);
         //Debug.Log("New shoe color: " + color2.ToString());
 
@@ -180,8 +180,8 @@ public static partial class Hooks
         // Shoes
         shoesSymbol[index].fileName = "shoes_" + self.symbol.fileName;
         shoesSymbol[index].LoadFile();
-        shoesSymbol[index].sprite.color = GetCustomVinkiColor((self.owner as JollyCoop.JollyMenu.JollyPlayerSelector).index, 4);
-        shoesSymbol[index].color = GetCustomVinkiColor((self.owner as JollyCoop.JollyMenu.JollyPlayerSelector).index, 4);
+        shoesSymbol[index].sprite.color = GetCustomVinkiColor((self.owner as JollyCoop.JollyMenu.JollyPlayerSelector).index, 4, self.uniqueSymbol.color);
+        shoesSymbol[index].color = GetCustomVinkiColor((self.owner as JollyCoop.JollyMenu.JollyPlayerSelector).index, 4, self.uniqueSymbol.color);
         shoesSymbol[index].sprite.SetElementByName(shoesSymbol[index].fileName);
         // Glasses
         glassesSymbol[index].fileName = "glasses_" + self.symbol.fileName;
@@ -191,14 +191,19 @@ public static partial class Hooks
         glassesSymbol[index].sprite.SetElementByName(glassesSymbol[index].fileName);
     }
 
-    private static Color GetCustomVinkiColor(int playerNumber, int bodyPartIndex)
+    private static Color GetCustomVinkiColor(int playerNumber, int bodyPartIndex, Color? tailStripeColor = null)
     {
         if (Custom.rainWorld.options.jollyColorMode != Options.JollyColorMode.CUSTOM)
         {
             switch (bodyPartIndex)
             {
                 case 3: return Color.white;
-                case 4: return new Color(0.28627450980392155f, 0.3058823529411765f, 0.8274509803921568f);
+                case 4: 
+                    if (Custom.rainWorld.options.jollyColorMode == Options.JollyColorMode.AUTO)
+                    {
+                        return tailStripeColor.GetValueOrDefault();
+                    }
+                    return new Color(0.28627450980392155f, 0.3058823529411765f, 0.8274509803921568f);
                 case 5: return new Color(0.054901960784313725f, 0.00784313725490196f, 0.00784313725490196f);
                 default:
                     Debug.LogError("Invalid bodyPartIndex!\n" + StackTraceUtility.ExtractStackTrace());
