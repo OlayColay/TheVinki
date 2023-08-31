@@ -13,6 +13,7 @@ public static partial class Hooks
     private static CutsceneVinkiIntro intro = null;
     private static void Room_Loaded(On.Room.orig_Loaded orig, Room self)
     {
+        orig(self);
         if (self.game?.GetStorySession?.saveState?.saveStateNumber != Enums.TheVinki)
         {
             return;
@@ -23,7 +24,6 @@ public static partial class Hooks
             intro = new CutsceneVinkiIntro(self);
             self.AddObject(intro);
         }
-        orig(self);
     }
 
     private static void RoomSpecificScript_AddRoomSpecificScript(On.RoomSpecificScript.orig_AddRoomSpecificScript orig, Room self)
