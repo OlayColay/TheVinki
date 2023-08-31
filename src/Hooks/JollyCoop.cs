@@ -1,4 +1,5 @@
-﻿using Menu;
+﻿using JollyCoop.JollyMenu;
+using Menu;
 using RWCustom;
 using UnityEngine;
 
@@ -6,65 +7,67 @@ namespace Vinki;
 
 public static partial class Hooks
 {
-    private static MenuIllustration rainPodsSymbol;
-    private static MenuIllustration shoesSymbol;
-    private static MenuIllustration glassesSymbol;
+    private static MenuIllustration[] rainPodsSymbol = new MenuIllustration[4];
+    private static MenuIllustration[] shoesSymbol = new MenuIllustration[4];
+    private static MenuIllustration[] glassesSymbol = new MenuIllustration[4];
     private static void ApplyJollyCoopHooks()
 	{
-        On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.ctor += Vinki_Jolly_ctor;
+        //On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.ctor += Vinki_Jolly_ctor;
         On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.HasUniqueSprite += Vinki_Jolly_Sprite;
         On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.LoadIcon += Vinki_Jolly_LoadIcon;
         On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.Update += Vinki_Jolly_PupUpdate;
 
         On.JollyCoop.JollyMenu.JollyPlayerSelector.GetPupButtonOffName += Vinki_Jolly_Name;
-        On.JollyCoop.JollyMenu.JollyPlayerSelector.Update += Vinki_Jolly_Update;
-        On.JollyCoop.JollyMenu.JollyPlayerSelector.GrafUpdate += Vinki_Jolly_GrafUpdate;
+        //On.JollyCoop.JollyMenu.JollyPlayerSelector.Update += Vinki_Jolly_Update;
+        //On.JollyCoop.JollyMenu.JollyPlayerSelector.GrafUpdate += Vinki_Jolly_GrafUpdate;
     }
 
     private static void Vinki_Jolly_PupUpdate(On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.orig_Update orig, JollyCoop.JollyMenu.SymbolButtonTogglePupButton self)
     {
+        int index = GetPlayerIndex(self);
+
         // TODO: Make pup sprite
         if ((self.symbolNameOff != null && !self.symbolNameOff.Contains("vinki")) || self.isToggled)
         {
-            if (rainPodsSymbol != null)
+            if (rainPodsSymbol[index] != null)
             {
-                rainPodsSymbol.RemoveSprites();
-                self.subObjects.Remove(rainPodsSymbol);
-                rainPodsSymbol = null;
+                rainPodsSymbol[index].RemoveSprites();
+                self.subObjects.Remove(rainPodsSymbol[index]);
+                rainPodsSymbol[index] = null;
             }
-            if (shoesSymbol != null)
+            if (shoesSymbol[index] != null)
             {
-                shoesSymbol.RemoveSprites();
-                self.subObjects.Remove(shoesSymbol);
-                shoesSymbol = null;
+                shoesSymbol[index].RemoveSprites();
+                self.subObjects.Remove(shoesSymbol[index]);
+                shoesSymbol[index] = null;
             }
-            if (glassesSymbol != null)
+            if (glassesSymbol[index] != null)
             {
-                glassesSymbol.RemoveSprites();
-                self.subObjects.Remove(glassesSymbol);
-                glassesSymbol = null;
+                glassesSymbol[index].RemoveSprites();
+                self.subObjects.Remove(glassesSymbol[index]);
+                glassesSymbol[index] = null;
             }
         }
         else
         {
             string fileName;
-            if (rainPodsSymbol == null)
+            if (rainPodsSymbol[index] == null)
             {
                 fileName = "rainpods_" + (self.isToggled ? self.symbolNameOn : self.symbolNameOff);
-                rainPodsSymbol = new MenuIllustration(self.menu, self, "", fileName, self.size / 2f, true, true);
-                self.subObjects.Add(rainPodsSymbol);
+                rainPodsSymbol[index] = new MenuIllustration(self.menu, self, "", fileName, self.size / 2f, true, true);
+                self.subObjects.Add(rainPodsSymbol[index]);
             }
-            if (shoesSymbol == null)
+            if (shoesSymbol[index] == null)
             {
                 fileName = "shoes_" + (self.isToggled ? self.symbolNameOn : self.symbolNameOff);
-                shoesSymbol = new MenuIllustration(self.menu, self, "", fileName, self.size / 2f, true, true);
-                self.subObjects.Add(shoesSymbol);
+                shoesSymbol[index] = new MenuIllustration(self.menu, self, "", fileName, self.size / 2f, true, true);
+                self.subObjects.Add(shoesSymbol[index]);
             }
-            if (glassesSymbol == null)
+            if (glassesSymbol[index] == null)
             {
                 fileName = "glasses_" + (self.isToggled ? self.symbolNameOn : self.symbolNameOff);
-                glassesSymbol = new MenuIllustration(self.menu, self, "", fileName, self.size / 2f, true, true);
-                self.subObjects.Add(glassesSymbol);
+                glassesSymbol[index] = new MenuIllustration(self.menu, self, "", fileName, self.size / 2f, true, true);
+                self.subObjects.Add(glassesSymbol[index]);
             }
         }
         orig(self);
@@ -82,9 +85,9 @@ public static partial class Hooks
         Color color2 = self.FadePortraitSprite(GetCustomVinkiColor(self.index, 4), timeStacker);
         Color color3 = self.FadePortraitSprite(GetCustomVinkiColor(self.index, 5), timeStacker);
 
-        rainPodsSymbol.sprite.color = color;
-        shoesSymbol.sprite.color = color2;
-        glassesSymbol.sprite.color = color3;
+        rainPodsSymbol[self.index].sprite.color = color;
+        shoesSymbol[self.index].sprite.color = color2;
+        glassesSymbol[self.index].sprite.color = color3;
 
         orig(self, timeStacker);
     }
@@ -105,9 +108,9 @@ public static partial class Hooks
         Color color3 = GetCustomVinkiColor(self.index, 5);
         //Debug.Log("New shoe color: " + color2.ToString());
 
-        rainPodsSymbol.sprite.color = color;
-        shoesSymbol.sprite.color = color2;
-        glassesSymbol.sprite.color = color3;
+        rainPodsSymbol[self.index].sprite.color = color;
+        shoesSymbol[self.index].sprite.color = color2;
+        glassesSymbol[self.index].sprite.color = color3;
 
         self.pupButton.LoadIcon();
     }
@@ -121,18 +124,20 @@ public static partial class Hooks
             return;
         }
 
+        int index = GetPlayerIndex(self);
+
         // RainPods
         string fileName = "rainpods_" + (isOn ? symbolNameOn : symbolNameOff);
-        rainPodsSymbol = new MenuIllustration(menu, self, "", fileName, size / 2f, true, true);
-        self.subObjects.Add(rainPodsSymbol);
+        rainPodsSymbol[index] = new MenuIllustration(menu, self, "", fileName, size / 2f, true, true);
+        self.subObjects.Add(rainPodsSymbol[index]);
         // Shoes
         fileName = "shoes_" + (isOn ? symbolNameOn : symbolNameOff);
-        shoesSymbol = new MenuIllustration(menu, self, "", fileName, size / 2f, true, true);
-        self.subObjects.Add(shoesSymbol);
+        shoesSymbol[index] = new MenuIllustration(menu, self, "", fileName, size / 2f, true, true);
+        self.subObjects.Add(shoesSymbol[index]);
         // Glasses
         fileName = "glasses_" + (isOn ? symbolNameOn : symbolNameOff);
-        glassesSymbol = new MenuIllustration(menu, self, "", fileName, size / 2f, true, true);
-        self.subObjects.Add(glassesSymbol);
+        glassesSymbol[index] = new MenuIllustration(menu, self, "", fileName, size / 2f, true, true);
+        self.subObjects.Add(glassesSymbol[index]);
 
         self.LoadIcon();
     }
@@ -158,31 +163,32 @@ public static partial class Hooks
     {
         orig(self);
 
+        int index = GetPlayerIndex(self);
+
         if (self.symbol == null || !self.symbol.fileName.Contains("vinki") || self.symbol.fileName.Contains("on") ||
-            rainPodsSymbol == null)
+            rainPodsSymbol[index] == null)
         {
             return;
         }
 
         // RainPods
-        rainPodsSymbol.fileName = "rainpods_" + self.symbol.fileName;
-        rainPodsSymbol.LoadFile();
-        rainPodsSymbol.sprite.color = GetCustomVinkiColor((self.owner as JollyCoop.JollyMenu.JollyPlayerSelector).index, 3);
-        rainPodsSymbol.color = GetCustomVinkiColor((self.owner as JollyCoop.JollyMenu.JollyPlayerSelector).index, 3);
-        rainPodsSymbol.sprite.SetElementByName(rainPodsSymbol.fileName);
+        rainPodsSymbol[index].fileName = "rainpods_" + self.symbol.fileName;
+        rainPodsSymbol[index].LoadFile();
+        rainPodsSymbol[index].sprite.color = GetCustomVinkiColor((self.owner as JollyCoop.JollyMenu.JollyPlayerSelector).index, 3);
+        rainPodsSymbol[index].color = GetCustomVinkiColor((self.owner as JollyCoop.JollyMenu.JollyPlayerSelector).index, 3);
+        rainPodsSymbol[index].sprite.SetElementByName(rainPodsSymbol[index].fileName);
         // Shoes
-        shoesSymbol.fileName = "shoes_" + self.symbol.fileName;
-        shoesSymbol.LoadFile();
-        shoesSymbol.sprite.color = GetCustomVinkiColor((self.owner as JollyCoop.JollyMenu.JollyPlayerSelector).index, 4);
-        shoesSymbol.color = GetCustomVinkiColor((self.owner as JollyCoop.JollyMenu.JollyPlayerSelector).index, 4);
-        shoesSymbol.sprite.SetElementByName(shoesSymbol.fileName);
+        shoesSymbol[index].fileName = "shoes_" + self.symbol.fileName;
+        shoesSymbol[index].LoadFile();
+        shoesSymbol[index].sprite.color = GetCustomVinkiColor((self.owner as JollyCoop.JollyMenu.JollyPlayerSelector).index, 4);
+        shoesSymbol[index].color = GetCustomVinkiColor((self.owner as JollyCoop.JollyMenu.JollyPlayerSelector).index, 4);
+        shoesSymbol[index].sprite.SetElementByName(shoesSymbol[index].fileName);
         // Glasses
-        glassesSymbol.fileName = "glasses_" + self.symbol.fileName;
-        glassesSymbol.LoadFile();
-        glassesSymbol.pos = new Vector2(UnityEngine.Random.Range(0, 1000), UnityEngine.Random.Range(0, 500));
-        glassesSymbol.sprite.color = GetCustomVinkiColor((self.owner as JollyCoop.JollyMenu.JollyPlayerSelector).index, 5);
-        glassesSymbol.color = GetCustomVinkiColor((self.owner as JollyCoop.JollyMenu.JollyPlayerSelector).index, 5);
-        glassesSymbol.sprite.SetElementByName(glassesSymbol.fileName);
+        glassesSymbol[index].fileName = "glasses_" + self.symbol.fileName;
+        glassesSymbol[index].LoadFile();
+        glassesSymbol[index].sprite.color = GetCustomVinkiColor((self.owner as JollyCoop.JollyMenu.JollyPlayerSelector).index, 5);
+        glassesSymbol[index].color = GetCustomVinkiColor((self.owner as JollyCoop.JollyMenu.JollyPlayerSelector).index, 5);
+        glassesSymbol[index].sprite.SetElementByName(glassesSymbol[index].fileName);
     }
 
     private static Color GetCustomVinkiColor(int playerNumber, int bodyPartIndex)
@@ -201,5 +207,10 @@ public static partial class Hooks
         }
         Debug.Log("Checking custom color for player " + playerNumber + ": " + Plugin.jollyColors[playerNumber][bodyPartIndex].GetValueOrDefault().ToString());
         return Plugin.jollyColors[playerNumber][bodyPartIndex].GetValueOrDefault().CloneWithNewAlpha(1f);
+    }
+
+    private static int GetPlayerIndex(JollyCoop.JollyMenu.SymbolButtonTogglePupButton pupButton)
+    {
+        return (pupButton.owner as JollyPlayerSelector).index;
     }
 }
