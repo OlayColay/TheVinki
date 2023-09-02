@@ -41,7 +41,7 @@ public static partial class Hooks
         }
 
         // Graffiti Tutorial
-        else if (self.abstractRoom?.name == "SS_E08")
+        else if (self.abstractRoom?.name == "SS_E08" && self.game.rainWorld.progression.currentSaveState.cycleNumber == 0)
         {
             self.AddObject(new GraffitiTutorial(self));
         }
