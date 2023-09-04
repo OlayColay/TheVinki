@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using static Vinki.Plugin;
 
@@ -20,6 +21,9 @@ namespace Vinki
                 return;
             }
             orig(self);
+
+            // We should have talked to Pebbles in the intro (case if died in cycle 0)
+            self.room.game.GetStorySession.saveState.miscWorldSaveData.SSaiConversationsHad = Math.Max(self.room.game.GetStorySession.saveState.miscWorldSaveData.SSaiConversationsHad, 1);
 
             Player player = self.room.PlayersInRoom[0];
 

@@ -23,26 +23,14 @@ namespace Vinki
 		public override void Update(bool eu)
 		{
 			base.Update(eu);
-			if (this.player != null && this.player.myRobot != null)
-			{
-				if (this.room.world.rainCycle.timer < 400)
-				{
-					for (int i = 0; i < 2; i++)
-					{
-						this.player.bodyChunks[i].HardSetPosition(this.room.MiddleOfTile(19, 6));
-					}
-					this.room.game.cameras[0].followAbstractCreature = this.player.abstractCreature;
-					this.player.standing = true;
-					this.room.game.GetStorySession.saveState.deathPersistentSaveData.deathTime = 30;
-					this.player.AddFood(4);
 
-                    this.room.world.rainCycle.timer = 400;
-				}
-				this.Destroy();
-				return;
-			}
 			if (this.phase == CutsceneVinkiIntro.Phase.Init)
 			{
+				if (!this.room.BeingViewed)
+				{
+					return;
+				}
+
 				if (this.player != null && !this.foodMeterInit)
 				{
 					if (this.room.game.cameras[0].hud == null)
@@ -56,7 +44,7 @@ namespace Vinki
 					this.room.game.cameras[0].hud.foodMeter.lastFade = 0f;
 					this.room.game.cameras[0].followAbstractCreature = this.player.abstractCreature;
 				}
-				if (this.player != null && !this.playerPosCorrect)
+				if (this.player != null && this.player.room != null && !this.playerPosCorrect)
 				{
 					for (int j = 0; j < 2; j++)
 					{
@@ -78,7 +66,7 @@ namespace Vinki
                     abstr.Realize();
                     player.room.abstractRoom.AddEntity(abstr);
                     player.room.AddObject(abstr.realizedObject);
-                    player.SlugcatGrab(abstr.realizedObject, player.FreeHand());
+                    player.SlugcatGrab(abstr.realizedObject, 0);
                 }
 				if (this.playerPosCorrect && this.foodMeterInit)
 				{
@@ -109,12 +97,12 @@ namespace Vinki
 				}
 				if (this.phase == CutsceneVinkiIntro.Phase.End)
 				{
-					Debug.Log("ARTIFICER CUTSCENE END!");
+					Debug.Log("VINKI CUTSCENE END!");
 					if (this.player != null)
 					{
 						this.player.controller = null;
-						this.player.myRobot = null;
                     }
+					Plugin.introPlayed = true;
 					this.Destroy();
 				}
 			}
@@ -249,9 +237,6 @@ namespace Vinki
 
 			// Token: 0x04003ED5 RID: 16085
 			public static readonly CutsceneVinkiIntro.Phase PlayerRun = new CutsceneVinkiIntro.Phase("PlayerRun", true);
-
-			// Token: 0x04003ED6 RID: 16086
-			public static readonly CutsceneVinkiIntro.Phase EatScavenger = new CutsceneVinkiIntro.Phase("EatScavenger", true);
 
 			// Token: 0x04003ED7 RID: 16087
 			public static readonly CutsceneVinkiIntro.Phase Wait = new CutsceneVinkiIntro.Phase("Wait", true);

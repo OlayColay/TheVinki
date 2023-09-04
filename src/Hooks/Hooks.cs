@@ -30,6 +30,7 @@ namespace Vinki
             ApplySSOracleHooks();
             ApplyRoomHooks();
             ApplyJollyCoopHooks();
+            ApplySaveStateHooks();
         }
 
         // Load any resources, such as sprites or sounds
