@@ -249,7 +249,7 @@ namespace Vinki
                 foreach (var image in menuGraffitis)
                 {
                     string imageName = Path.GetFileNameWithoutExtension(image.fileName);
-                    Debug.Log("Graffiti: Checking if " + imageName + " matches " + fileName + "\t" + (imageName == fileName));
+                    //Debug.Log("Graffiti: Checking if " + imageName + " matches " + fileName + "\t" + (imageName == fileName));
                     image.alpha = (imageName == fileName) ? 1f : 0f;
                 }
 
@@ -268,7 +268,7 @@ namespace Vinki
                 foreach (var image in menuDoodles)
                 {
                     string imageName = Path.GetFileNameWithoutExtension(image.fileName);
-                    Debug.Log("Doodle: Checking if " + imageName + " matches " + fileName);
+                    //Debug.Log("Doodle: Checking if " + imageName + " matches " + fileName);
                     image.alpha = (imageName == fileName) ? 1f : 0f;
                 }
             }

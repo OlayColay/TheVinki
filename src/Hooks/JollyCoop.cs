@@ -221,7 +221,7 @@ public static partial class Hooks
                     return Color.white;
             }
         }
-        Debug.Log("Checking custom color for player " + playerNumber + ": " + Plugin.jollyColors[playerNumber][bodyPartIndex].GetValueOrDefault().ToString());
+        //Debug.Log("Checking custom color for player " + playerNumber + ": " + Plugin.jollyColors[playerNumber][bodyPartIndex].GetValueOrDefault().ToString());
         return Plugin.jollyColors[playerNumber][bodyPartIndex].GetValueOrDefault().CloneWithNewAlpha(1f);
     }
 

@@ -24,7 +24,7 @@ namespace Vinki
         private static void PlayerGraphics_Debug(On.PlayerGraphics.orig_LoadJollyColorsFromOptions orig, int playerNumber)
         {
             orig(playerNumber);
-            Debug.Log("Called PlayerGraphics.LoadJollyColorsFromOptions. Lengths: [" + PlayerGraphics.jollyColors.Length + "][" + PlayerGraphics.jollyColors[playerNumber].Length + ']');
+            //Debug.Log("Called PlayerGraphics.LoadJollyColorsFromOptions. Lengths: [" + PlayerGraphics.jollyColors.Length + "][" + PlayerGraphics.jollyColors[playerNumber].Length + ']');
             if (PlayerGraphics.jollyColors[playerNumber].Length == 6)
             {
                 jollyColors[playerNumber] = PlayerGraphics.jollyColors[playerNumber];

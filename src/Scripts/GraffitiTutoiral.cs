@@ -35,7 +35,7 @@ public class GraffitiTutorial : UpdatableAndDeletable
         }
 
         playerPos = room.PlayersInRoom.First().mainBodyChunk.pos;
-        Debug.Log("Current player position: " + playerPos);
+        //Debug.Log("Current player position: " + playerPos);
         var game = room.game;
 
         if (Vector2.Distance(playerPos, craftTriggerPos) <= triggerReach && nextPhase == Phase.Craft)
