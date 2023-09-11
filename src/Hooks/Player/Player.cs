@@ -86,7 +86,7 @@ namespace Vinki
             orig(self);
 
             if (!SuperJump.TryGet(self, out float power) || !CoyoteBoost.TryGet(self, out var coyoteBoost) ||
-                self.SlugCatClass != Enums.TheVinki)
+                self.SlugCatClass != Enums.vinki)
             {
                 return;
             }
@@ -148,7 +148,7 @@ namespace Vinki
             if (!GrindXSpeed.TryGet(self, out var grindXSpeed) || !NormalXSpeed.TryGet(self, out var normalXSpeed) ||
                 !GrindYSpeed.TryGet(self, out var grindYSpeed) || !NormalYSpeed.TryGet(self, out var normalYSpeed) ||
                 !SparkColor.TryGet(self, out var sparkColor) || !GrindVineSpeed.TryGet(self, out var grindVineSpeed) ||
-                self.SlugCatClass != Enums.TheVinki)
+                self.SlugCatClass != Enums.vinki)
             {
                 return;
             }
@@ -195,7 +195,7 @@ namespace Vinki
             }
 
             // If player isn't holding Grind, no need to do other stuff
-            if (!self.IsPressed(Grind) && !grindToggle)
+            if (!self.IsPressed(Grind) && !grindToggle[self.JollyOption.playerNumber])
             {
                 isGrindingH = isGrindingV = isGrindingNoGrav = isGrindingVine = false;
                 self.slugcatStats.runspeedFac = normalXSpeed;
@@ -294,7 +294,7 @@ namespace Vinki
             }
 
             // Catch beam with feet if not holding down
-            if (self.bodyMode == Player.BodyModeIndex.Default && 
+            if (self.bodyMode == Player.BodyModeIndex.Default &&
                 self.input[0].y >= 0 && self.room.GetTile(self.bodyChunks[1].pos).horizontalBeam &&
                 self.bodyChunks[0].vel.y < 0f)
             {
@@ -328,13 +328,13 @@ namespace Vinki
 
         private static bool IsGrindingHorizontally(Player self)
         {
-            return (self.animation == Player.AnimationIndex.StandOnBeam && 
+            return (self.animation == Player.AnimationIndex.StandOnBeam &&
                 self.bodyChunks[0].vel.magnitude > 3f);
         }
 
         private static bool IsGrindingVertically(Player self)
         {
-            return (self.animation == Player.AnimationIndex.ClimbOnBeam && 
+            return (self.animation == Player.AnimationIndex.ClimbOnBeam &&
                 ((lastYDirection > 0 && self.bodyChunks[1].vel.magnitude > 2f) ||
                 (lastYDirection < 0 && self.bodyChunks[1].vel.magnitude > 1f)));
         }
@@ -347,7 +347,7 @@ namespace Vinki
 
         private static bool IsGrindingVine(Player self)
         {
-            return (self.animation == Player.AnimationIndex.VineGrab && 
+            return (self.animation == Player.AnimationIndex.VineGrab &&
                 self.bodyChunks[0].vel.magnitude > 1f);
         }
 
@@ -355,7 +355,7 @@ namespace Vinki
         {
             orig(self, eu);
 
-            if (self.SlugCatClass != Enums.TheVinki)
+            if (self.SlugCatClass != Enums.vinki)
             {
                 return;
             }
@@ -363,7 +363,7 @@ namespace Vinki
             // Update grindToggle if needed
             if (self.JustPressed(ToggleGrind) && !IsPressingGraffiti(self))
             {
-                grindToggle = !grindToggle;
+                grindToggle[self.JollyOption.playerNumber] = !grindToggle[self.JollyOption.playerNumber];
             }
 
             // Spray a random graffiti
@@ -388,7 +388,7 @@ namespace Vinki
                 int sprayCount = CanCraftSprayCan(self.grasps[0], self.grasps[1]);
                 if (sprayCount > 0)
                 {
-                    craftCounter++; 
+                    craftCounter++;
 
                     if (craftCounter > 30)
                     {
@@ -452,7 +452,7 @@ namespace Vinki
             AbstractPhysicalObject.AbstractObjectType abstractObjectType = a.grabbed.abstractPhysicalObject.type;
             AbstractPhysicalObject.AbstractObjectType abstractObjectType2 = b.grabbed.abstractPhysicalObject.type;
 
-            if (abstractObjectType == AbstractPhysicalObject.AbstractObjectType.Rock && 
+            if (abstractObjectType == AbstractPhysicalObject.AbstractObjectType.Rock &&
                 colorfulItems.ContainsKey(abstractObjectType2))
             {
                 return colorfulItems[abstractObjectType2];

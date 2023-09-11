@@ -34,7 +34,7 @@ namespace Vinki
 
         private static void SSOracleBehavior_SeePlayer(On.SSOracleBehavior.orig_SeePlayer orig, SSOracleBehavior self)
         {
-            if (self.oracle.room.game.StoryCharacter == Enums.TheVinki && self.action != Enums.SSOracle.Vinki_SSActionGeneral &&
+            if (self.oracle.room.game.StoryCharacter == Enums.vinki && self.action != Enums.SSOracle.Vinki_SSActionGeneral &&
                 self.oracle.room.game.GetStorySession.saveState.miscWorldSaveData.SSaiConversationsHad == 0)
             {
                 oracleBehavior = self;
@@ -61,7 +61,7 @@ namespace Vinki
                 self.action.ToString(),
                 ")"
             }));
-            if (self.oracle.room.game.StoryCharacter == Enums.TheVinki && self.action != Enums.SSOracle.Vinki_SSActionGeneral && nextAction == Enums.SSOracle.Vinki_SSActionGeneral)
+            if (self.oracle.room.game.StoryCharacter == Enums.vinki && self.action != Enums.SSOracle.Vinki_SSActionGeneral && nextAction == Enums.SSOracle.Vinki_SSActionGeneral)
             {
                 if (self.currSubBehavior.ID == Enums.SSOracle.Vinki_SSSubBehavGeneral) return;
 
@@ -85,7 +85,7 @@ namespace Vinki
 
         private static void PebblesConversation_AddEvents(On.SSOracleBehavior.PebblesConversation.orig_AddEvents orig, PebblesConversation self)
         {
-            if (self.owner.oracle.room.game.StoryCharacter != Enums.TheVinki)
+            if (self.owner.oracle.room.game.StoryCharacter != Enums.vinki)
             {
                 orig(self);
                 return;
@@ -118,7 +118,7 @@ namespace Vinki
                     self.Translate("Is this really an accomplishment to celebrate? Terrorizing me with an atrocity like this?"), l));
 
                 e.Add(new TextEvent(self, 0,
-                    self.Translate("Someone must have put you up to this. Was it No Significant Harrassment? His name has always been considerably ironic."), l));
+                    self.Translate("Someone must have put you up to this. Was it No Significant Harassment? His name has always been considerably ironic."), l));
 
                 e.Add(new WaitEvent(self, 60));
 
@@ -192,7 +192,7 @@ namespace Vinki
                     this.owner.getToWorking = 1f;
                     if (base.inActionCounter == 100 && base.oracle.room.game.GetStorySession.saveState.deathPersistentSaveData.theMark)
                     {
-                        base.dialogBox.Interrupt(base.Translate("Get out of my sight! Do not return until you have accomplished something worthwile."), 60);
+                        base.dialogBox.Interrupt(base.Translate("Get out of my sight! Do not return until you have accomplished something worthwhile."), 60);
                         this.owner.voice = base.oracle.room.PlaySound(SoundID.SS_AI_Talk_5, base.oracle.firstChunk);
                         this.owner.voice.requireActiveUpkeep = true;
                     }

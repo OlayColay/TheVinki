@@ -215,7 +215,7 @@ namespace Vinki
         {
             orig(self);
 
-            if (self.player.SlugCatClass != Enums.TheVinki)
+            if (self.player.SlugCatClass != Enums.vinki)
             {
                 return;
             }
@@ -289,7 +289,7 @@ namespace Vinki
 
         private static Color PlayerGraphics_JollyUniqueColorMenu(On.PlayerGraphics.orig_JollyUniqueColorMenu orig, SlugcatStats.Name slugName, SlugcatStats.Name reference, int playerNumber)
         {
-            if ((Custom.rainWorld.options.jollyColorMode == Options.JollyColorMode.DEFAULT || (playerNumber == 0 && Custom.rainWorld.options.jollyColorMode == Options.JollyColorMode.AUTO)) && slugName == Enums.TheVinki)
+            if ((Custom.rainWorld.options.jollyColorMode == Options.JollyColorMode.DEFAULT || (playerNumber == 0 && Custom.rainWorld.options.jollyColorMode == Options.JollyColorMode.AUTO)) && slugName == Enums.vinki)
             {
                 return new Color(0.28627450980392155f, 0.3058823529411765f, 0.8274509803921568f);
             }

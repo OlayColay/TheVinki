@@ -11,7 +11,7 @@ public static partial class Hooks
     private static MenuIllustration[] shoesSymbol = new MenuIllustration[4];
     private static MenuIllustration[] glassesSymbol = new MenuIllustration[4];
     private static void ApplyJollyCoopHooks()
-	{
+    {
         On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.ctor += Vinki_Jolly_ctor;
         On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.HasUniqueSprite += Vinki_Jolly_Sprite;
         On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.LoadIcon += Vinki_Jolly_LoadIcon;
@@ -32,7 +32,7 @@ public static partial class Hooks
         int index = GetPlayerIndex(self);
 
         // TODO: Make pup sprite
-        if ((self.symbolNameOff != null && !self.symbolNameOff.Contains("vinki")) || self.isToggled)
+        if ((self.symbolNameOff != null && !self.symbolNameOff.Contains(Enums.vinkiStr)) || self.isToggled)
         {
             if (rainPodsSymbol[index] != null)
             {
@@ -80,7 +80,7 @@ public static partial class Hooks
 
     private static void Vinki_Jolly_GrafUpdate(On.JollyCoop.JollyMenu.JollyPlayerSelector.orig_GrafUpdate orig, JollyCoop.JollyMenu.JollyPlayerSelector self, float timeStacker)
     {
-        if (self.slugName != Enums.TheVinki || rainPodsSymbol[self.index] == null)
+        if (self.slugName != Enums.vinki || rainPodsSymbol[self.index] == null)
         {
             orig(self, timeStacker);
             return;
@@ -102,12 +102,12 @@ public static partial class Hooks
         orig(self);
         // TODO: Make pup sprite
         SlugcatStats.Name playerClass = self.JollyOptions(self.index)?.playerClass;
-        if (playerClass == null || !playerClass.value.Equals("TheVinki") || self.pupButton.isToggled || rainPodsSymbol == null)
+        if (playerClass == null || !playerClass.value.Equals(Enums.vinki) || self.pupButton.isToggled || rainPodsSymbol == null)
         {
             orig(self);
             return;
         }
-        
+
         Color color = GetCustomVinkiColor(self.index, 3);
         Color color2 = GetCustomVinkiColor(self.index, 4);
         Color color3 = GetCustomVinkiColor(self.index, 5);
@@ -124,7 +124,7 @@ public static partial class Hooks
     {
         orig(self, menu, owner, signal, pos, size, symbolNameOn, symbolNameOff, isOn, stringLabelOn, stringLabelOff);
 
-        if (!symbolNameOff.Contains("vinki"))
+        if (!symbolNameOff.Contains(Enums.vinkiStr))
         {
             return;
         }
@@ -150,14 +150,14 @@ public static partial class Hooks
     private static bool Vinki_Jolly_Sprite(On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.orig_HasUniqueSprite orig, JollyCoop.JollyMenu.SymbolButtonTogglePupButton self)
     {
         // TODO: Make pup sprite
-        if (self.symbolNameOff.Contains("vinki") && !self.isToggled) return true;
+        if (self.symbolNameOff.Contains(Enums.vinkiStr) && !self.isToggled) return true;
         return orig(self);
     }
 
     private static string Vinki_Jolly_Name(On.JollyCoop.JollyMenu.JollyPlayerSelector.orig_GetPupButtonOffName orig, JollyCoop.JollyMenu.JollyPlayerSelector self)
     {
         SlugcatStats.Name playerClass = self.JollyOptions(self.index).playerClass;
-        if (playerClass != null && playerClass.value.Equals("TheVinki"))
+        if (playerClass != null && playerClass.value.Equals(Enums.vinki))
         {
             return "vinki_pup_off";
         }
@@ -170,7 +170,7 @@ public static partial class Hooks
 
         int index = GetPlayerIndex(self);
 
-        if (self.symbol == null || !self.symbol.fileName.Contains("vinki") || self.symbol.fileName.Contains("on") ||
+        if (self.symbol == null || !self.symbol.fileName.Contains(Enums.vinkiStr) || self.symbol.fileName.Contains("on") ||
             rainPodsSymbol[index] == null)
         {
             return;

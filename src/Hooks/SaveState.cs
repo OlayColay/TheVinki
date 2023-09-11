@@ -11,8 +11,8 @@ public static partial class Hooks
     }
 
     private static string SaveState_GetStoryDenPosition(On.SaveState.orig_GetStoryDenPosition orig, SlugcatStats.Name slugcat, out bool isVanilla)
-	{
-        if (slugcat != Enums.TheVinki)
+    {
+        if (slugcat != Enums.vinki)
         {
             return orig(slugcat, out isVanilla);
         }

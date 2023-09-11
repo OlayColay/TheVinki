@@ -27,7 +27,7 @@ public class VinkiPlayerData
 
     public VinkiPlayerData(Player player)
     {
-        IsVinki = player.slugcatStats.name == Enums.TheVinki;
+        IsVinki = player.slugcatStats.name == Enums.vinki;
 
         playerRef = new WeakReference<Player>(player);
 
@@ -36,7 +36,7 @@ public class VinkiPlayerData
             return;
         }
     }
-    
+
     public void LoadTailAtlas()
     {
         var tailTexture = new Texture2D(Plugin.TailTexture.width, Plugin.TailTexture.height, TextureFormat.ARGB32, false);

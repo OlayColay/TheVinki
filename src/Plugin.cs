@@ -9,7 +9,7 @@ namespace Vinki
 {
     [BepInDependency("slime-cubed.slugbase")]
     [BepInDependency("dressmyslugcat", BepInDependency.DependencyFlags.SoftDependency)]
-    [BepInPlugin(MOD_ID, "The Vinki", "0.8.2")]
+    [BepInPlugin(MOD_ID, "The Vinki", "0.8.3")]
     class Plugin : BaseUnityPlugin
     {
         public const string MOD_ID = "olaycolay.thevinki";
@@ -23,7 +23,7 @@ namespace Vinki
         public static bool isGrindingNoGrav = false;
         public static bool isGrindingVine = false;
         public static bool isGrinding = false;
-        public static bool grindToggle = false;
+        public static bool[] grindToggle = {false, false, false, false};
         public static bool sleeping;
         public static bool introPlayed = false;
         public static Vector2 lastVineDir = Vector2.zero;

@@ -1,4 +1,5 @@
 ﻿using Fisobs.Core;
+using IL.RWCustom;
 using UnityEngine;
 
 namespace SprayCans;
@@ -18,7 +19,7 @@ sealed class SprayCanAbstract : AbstractPhysicalObject
     {
         base.Realize();
         if (realizedObject == null)
-            realizedObject = new SprayCan(this, Room.realizedRoom.MiddleOfTile(pos.Tile), Vector2.zero);
+            realizedObject = new SprayCan(this, Room.realizedRoom.MiddleOfTile((pos != null) ? pos.Tile : new RWCustom.IntVector2(0,0)), Vector2.zero);
     }
 
     public float hue;

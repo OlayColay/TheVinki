@@ -14,7 +14,7 @@ public static partial class Hooks
     private static void Room_Loaded(On.Room.orig_Loaded orig, Room self)
     {
         orig(self);
-        if (self.game?.GetStorySession?.saveState?.saveStateNumber != Enums.TheVinki)
+        if (self.game?.GetStorySession?.saveState?.saveStateNumber != Enums.vinki)
         {
             return;
         }
@@ -30,7 +30,7 @@ public static partial class Hooks
     {
         orig(self);
 
-        if (self.game.GetStorySession.saveState.saveStateNumber != Enums.TheVinki)
+        if (self.game.GetStorySession.saveState.saveStateNumber != Enums.vinki)
         {
             return;
         }
