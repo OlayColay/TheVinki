@@ -157,7 +157,7 @@ public static partial class Hooks
     private static string Vinki_Jolly_Name(On.JollyCoop.JollyMenu.JollyPlayerSelector.orig_GetPupButtonOffName orig, JollyCoop.JollyMenu.JollyPlayerSelector self)
     {
         SlugcatStats.Name playerClass = self.JollyOptions(self.index).playerClass;
-        if (playerClass != null && playerClass.value.Equals(Enums.vinki))
+        if (playerClass != null && playerClass == Enums.vinki)
         {
             return "vinki_pup_off";
         }
