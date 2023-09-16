@@ -4,12 +4,13 @@ using SlugBase.Features;
 using static SlugBase.Features.FeatureTypes;
 using System.Collections.Generic;
 using ImprovedInput;
+using IL.Menu.Remix;
 
 namespace Vinki
 {
     [BepInDependency("slime-cubed.slugbase")]
     [BepInDependency("dressmyslugcat", BepInDependency.DependencyFlags.SoftDependency)]
-    [BepInPlugin(MOD_ID, "The Vinki", "0.8.3")]
+    [BepInPlugin(MOD_ID, "The Vinki", "0.8.4")]
     class Plugin : BaseUnityPlugin
     {
         public const string MOD_ID = "olaycolay.thevinki";
@@ -17,16 +18,18 @@ namespace Vinki
         public static int lastYDirection = 1;
         public static int craftCounter = 0;
         public static int storyGraffitiCount = 0;
+        public static int[] vineGrindDelay = { 0, 0, 0, 0 };
         public static bool grindUpPoleFlag = false;
         public static bool isGrindingH = false;
         public static bool isGrindingV = false;
         public static bool isGrindingNoGrav = false;
         public static bool isGrindingVine = false;
         public static bool isGrinding = false;
-        public static bool[] grindToggle = {false, false, false, false};
+        public static bool[] grindToggle = { false, false, false, false };
         public static bool sleeping;
         public static bool introPlayed = false;
         public static Vector2 lastVineDir = Vector2.zero;
+        public static ClimbableVinesSystem.VinePosition[] vineAtFeet = { null, null, null, null };
         public static Player.AnimationIndex lastAnimationFrame = Player.AnimationIndex.None;
         public static Player.AnimationIndex lastAnimation = Player.AnimationIndex.None;
         public static ChunkSoundEmitter grindSound;

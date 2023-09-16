@@ -30,7 +30,7 @@ public static partial class Hooks
     {
         orig(self);
 
-        if (self.game.GetStorySession.saveState.saveStateNumber != Enums.vinki)
+        if (!self.game.IsStorySession || self.game.GetStorySession.saveState.saveStateNumber != Enums.vinki)
         {
             return;
         }

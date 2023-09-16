@@ -1,0 +1,7 @@
+Template: NONE
+DangerType: None
+Grime: 0
+Palette: 24
+Effects: ZeroG-1-20-21, SSSwarmers-0.1521739-284-18, Bloom-0.8586956-273-74, SunBlock-1-19-128, ZeroGSpecks-0.4347826-11-82, 
+PlacedObjects: WallMycelia><496.5018><72.80002><1~118, WallMycelia><176.5509><308.7306><143~61, WallMycelia><516.8119><618.1902><45~-111, WallMycelia><867.7974><118.6943><-39~120, WallMycelia><873.9399><333.1875><-128~5, CoralNeuron><766.5529><210.6929><-140~295, CoralNeuron><520.2958><195.4447><-205~191, SpotLight><136.1351><122.3525><27~494~757~401~720~-13, LightSource><162.0676><258.918><0.3695652~Environment~141~-15~-79~102.6025~1~0~None~0~0, LightSource><485.8431><341.177><0.173913~Environment~-696~-378~-314~192.6025~1~0~None~0~0, LightSource><902.3105><391.1861><0.2391304~Environment~-125~89~-291~-99.39746~1~0~None~0~0, LightSource><599.5887><65.36829><0.25~Environment~27~199~50~86.60254~1~0~None~0~0, LightSource><153.1986><626.5568><0.4565217~Environment~70~-112~252~-150.3975~1~0~None~0~0, LightSource><873.5813><579.1073><0.4673913~Environment~-160~-82~-264~-212.3975~1~0~None~0~0, 
+AmbientSounds: OMNI><SO_SFX-Data4.ogg><821.7682><620.5508><0.3586957><1, OMNI><SO_SFX-Drowning.ogg><649.9415><620.5577><0.5><1, 

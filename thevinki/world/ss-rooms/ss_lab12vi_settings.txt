@@ -1,0 +1,12 @@
+Template: NONE
+DangerType: None
+WaveSpeed: 0.5
+WaveLength: 0.75
+WaveAmplitude: 0.03729067
+SecondWaveLength: 0.1666667
+SecondWaveAmplitude: 0
+Grime: 0
+Palette: 24
+Effects: ZeroG-1-15-19, Bloom-0.7282609-287-75, SSSwarmers-0.3586957-273-19, SunBlock-1-15-132, ZeroGSpecks-0.3478261-9-75, 
+PlacedObjects: CoralStem><605.1102><104.1069><-302~377, CoralNeuron><73.57651><347.9005><366~212, CoralNeuron><849.4745><114.5516><-168~196, WallMycelia><410.9431><601.4417><8~-140, WallMycelia><87.40021><562.1733><127~-83, WallMycelia><419.851><92.88342><38~128, WallMycelia><846.5319><564.0526><-55~-155, CoralStemWithNeurons><945.053><462.7159><-156~-55, SpotLight><188.63><104.59><-3~575~807~458~654~-14, LightSource><65.58249><294.3907><0.2391307~Environment~199~67~50~86.60254~1~0~None~0~0, LightSource><560.2466><338.3><0.3369561~Environment~-762~-388~50~86.60254~1~0~None~0~0, LightSource><447.1944><65.29694><0.1956522~Environment~-49~179~-368~-139.3975~1~0~None~0~0, LightSource><896.4441><68.7984><0.2717391~Environment~-207~71~50~86.60254~1~0~None~0~0, LightSource><954.6001><425.3824><0.3586957~Environment~-150~-87~50~86.60254~1~0~None~0~0, LightSource><542.4296><633.588><0.2826087~Environment~-1~-173~130~-186.3975~1~0~None~0~0, WallMycelia><84.89813><201.9221><190~59, 
+AmbientSounds: OMNI><SO_SFX-Drowning.ogg><827.6947><662.7958><0.5><1, OMNI><SO_SFX-Heartbeat1.ogg><830.1964><592.2123><0.5760869><1.019565, 

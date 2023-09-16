@@ -6,6 +6,7 @@ using ImprovedInput;
 using SprayCans;
 using static Vinki.Plugin;
 using System.Threading.Tasks;
+using DevInterface;
 
 namespace Vinki
 {
@@ -43,7 +44,7 @@ namespace Vinki
                 smoke.colorB = Color.gray;
 
                 await Task.Delay(100);
-                self.room.AddObject(new CustomDecal(graffiti));
+                self.room.AddObject(new GraffitiObject(graffiti, self.room.game.GetStorySession.saveState.cycleNumber));
             }
         }
 
@@ -93,8 +94,12 @@ namespace Vinki
 
             // If player jumped or coyote jumped from a beam (or grinded to top of pole), then trick jump
             bool coyote = isCoyoteJumping(self);
-            if (coyote || isGrindingH || grindUpPoleFlag)
+            if (coyote || isGrindingH || grindUpPoleFlag || vineAtFeet[self.JollyOption.playerNumber] != null)
             {
+                // Separate from vine
+                vineAtFeet[self.JollyOption.playerNumber] = null;
+                vineGrindDelay[self.JollyOption.playerNumber] = 10;
+
                 // Get num multiplier
                 float num = Mathf.Lerp(1f, 1.15f, self.Adrenaline);
                 if (self.grasps[0] != null && self.HeavyCarry(self.grasps[0].grabbed) && !(self.grasps[0].grabbed is Cicada))
@@ -194,10 +199,13 @@ namespace Vinki
                 grindUpPoleFlag = false;
             }
 
+            vineGrindDelay[self.JollyOption.playerNumber] = Math.Max(0, vineGrindDelay[self.JollyOption.playerNumber] - 1);
+
             // If player isn't holding Grind, no need to do other stuff
             if (!self.IsPressed(Grind) && !grindToggle[self.JollyOption.playerNumber])
             {
                 isGrindingH = isGrindingV = isGrindingNoGrav = isGrindingVine = false;
+                Plugin.vineAtFeet[self.JollyOption.playerNumber] = null;
                 self.slugcatStats.runspeedFac = normalXSpeed;
                 self.slugcatStats.poleClimbSpeedFac = normalYSpeed;
                 return;
@@ -206,15 +214,80 @@ namespace Vinki
             isGrindingH = IsGrindingHorizontally(self);
             isGrindingV = IsGrindingVertically(self);
             isGrindingNoGrav = IsGrindingNoGrav(self);
-            isGrindingVine = IsGrindingVine(self);
+            //isGrindingVine = IsGrindingVine(self);
             isGrinding = isGrindingH || isGrindingV || isGrindingNoGrav || isGrindingVine;
 
+            ClimbableVinesSystem.VinePosition vineAtFeet = Plugin.vineAtFeet[self.JollyOption.playerNumber];
+            bool isGrindingAtopVine = vineAtFeet != null;
+            bool goodVineState = (vineGrindDelay[self.JollyOption.playerNumber] == 0 &&
+                self.animation != Player.AnimationIndex.ClimbOnBeam && self.animation != Player.AnimationIndex.HangFromBeam &&
+                self.animation != Player.AnimationIndex.StandOnBeam && self.animation != Player.AnimationIndex.ClimbOnBeam &&
+                self.animation != Player.AnimationIndex.HangUnderVerticalBeam && self.animation != Player.AnimationIndex.VineGrab && 
+                (self.bodyMode == Player.BodyModeIndex.Default || self.bodyMode == Player.BodyModeIndex.Stand) &&
+                self.bodyChunks[1].vel.y < 0f
+            );
+            if (!isGrindingAtopVine && goodVineState)
+            {
+                vineAtFeet = self.room.climbableVines != null ? self.room.climbableVines.VineOverlap(self.bodyChunks[1].pos, self.bodyChunks[1].rad + 5f) : null;
+                isGrindingAtopVine = (vineAtFeet != null);
+
+                // First frame of grinding on vine
+                if (isGrindingAtopVine)
+                {
+                    self.room.PlaySound(SoundID.Spear_Bounce_Off_Creauture_Shell, self.mainBodyChunk, false, 0.75f, 1f);
+                    self.noGrabCounter = 15;
+                }
+            }
+
             // Grind horizontally if holding Grind on a beam
-            if (isGrindingH)
+            if (isGrindingH || (isGrindingAtopVine && goodVineState))
             {
                 self.slugcatStats.runspeedFac = 0;
-                self.bodyChunks[1].vel.x = grindXSpeed * lastXDirection;
+                if (isGrindingAtopVine)
+                {
+                    self.standing = true;
+                    self.animation = Player.AnimationIndex.None;
+                    self.canJump = 5;
+                    self.vineGrabDelay = 3;
+                    self.room.climbableVines.VineBeingClimbedOn(vineAtFeet, self);
+                    self.room.climbableVines.ConnectChunkToVine(self.bodyChunks[1], vineAtFeet, self.room.climbableVines.VineRad(vineAtFeet));
 
+                    // Move feet
+                    self.feetStuckPos = self.bodyChunks[1].pos;
+
+                    Vector2 oldPos = self.room.climbableVines.OnVinePos(vineAtFeet);
+
+                    // vines can "face" either direction, so we need to take that into account
+                    Vector2 vineDir = self.room.climbableVines.VineDir(vineAtFeet);
+                    float dot = vineDir.normalized.x * lastXDirection;
+                    if (dot > 0f)
+                    {
+                        vineAtFeet.floatPos += grindVineSpeed / self.room.climbableVines.TotalLength(vineAtFeet.vine);
+                    }
+                    else
+                    {
+                        vineAtFeet.floatPos -= grindVineSpeed / self.room.climbableVines.TotalLength(vineAtFeet.vine);
+                    }
+
+                    // Fall off the vine if reached the end
+                    if (vineAtFeet.floatPos <= 0f || vineAtFeet.floatPos >= 1f)
+                    {
+                        vineGrindDelay[self.JollyOption.playerNumber] = 10;
+                        Plugin.vineAtFeet[self.JollyOption.playerNumber] = null;
+                    }
+                    else
+                    {
+                        Plugin.vineAtFeet[self.JollyOption.playerNumber] = vineAtFeet;
+                        Vector2 grindDir = (self.room.climbableVines.OnVinePos(vineAtFeet) - self.bodyChunks[1].pos).normalized;
+                        self.room.climbableVines.PushAtVine(vineAtFeet, (oldPos - self.room.climbableVines.OnVinePos(vineAtFeet)) * 0.05f);
+                    }
+                }
+                else
+                {
+                    self.bodyChunks[1].vel.x = grindXSpeed * lastXDirection;
+                }
+                self.bodyMode = Player.BodyModeIndex.Stand;
+                
                 // Sparks from grinding
                 Vector2 pos = self.bodyChunks[1].pos;
                 Vector2 posB = pos - new Vector2(10f * lastXDirection, 0);
