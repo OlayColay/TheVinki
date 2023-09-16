@@ -39,7 +39,6 @@
     "select_menu_scene": "Slugcat_Vinki",
     "sleep_scene": "Sleep_Vinki",
     "select_menu_scene_ascended": "Ghost_Vinki",
-    "timeline_before": "Spear",
     "the_mark": true,
     "thevinki/coyote_boost": 5,
     "thevinki/grind_vine_speed": 6.25,
@@ -49,7 +48,6 @@
     "thevinki/normal_y_speed": 1.3,
     "thevinki/spark_color": "d1faff",
     "thevinki/super_jump": 1.25,
-    "throw_skill": 0,
-    "world_state": [ "Spear", "Red" ]
+    "throw_skill": 0
   }
 }
