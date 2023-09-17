@@ -1,4 +1,5 @@
 ﻿using Menu.Remix.MixedUI;
+using System;
 using System.Xml.Linq;
 using UnityEngine;
 
@@ -9,6 +10,8 @@ namespace Vinki
         public static VinkiConfig Instance { get; } = new();
         public static Configurable<bool> RequireSprayCans;
         public static Configurable<bool> UpGraffiti;
+        public static Configurable<int> GraffitiFadeTime;
+        public static Configurable<bool> DeleteGraffiti;
 
         public VinkiConfig()
         {
@@ -19,6 +22,14 @@ namespace Vinki
             UpGraffiti = config.Bind("upGraffiti", true, new ConfigurableInfo("Use the Up direction for Graffiti Mode (in addition to the normal binding).", tags: new object[]
             {
                 "Use Up as Graffiti Mode"
+            }));
+            GraffitiFadeTime = config.Bind("graffitiFadeTime", 5, new ConfigurableInfo("How many cycles sprayed graffiti should last (excludes story-related graffiti). Use -1 for infinite cycles.", new ConfigAcceptableRange<int>(-1, 999), tags: new object[]
+            {
+                "Graffiti Display Cycles"
+            }));
+            DeleteGraffiti = config.Bind("deleteGraffiti", false, new ConfigurableInfo("Delete Graffiti permanently when running out of display cycles. Will help with loading times if you've sprayed a lot of graffiti.", tags: new object[]
+            {
+                "Delete Graffiti Permanently After Display Cycles"
             }));
         }
 
@@ -39,9 +50,11 @@ namespace Vinki
 
             AddDivider(593f);
             AddTitle();
-            AddDivider(560f);
+            AddDivider(557f);
             AddCheckbox(RequireSprayCans, 520f);
             AddCheckbox(UpGraffiti, 480f);
+            AddIntBox(GraffitiFadeTime, 440f);
+            AddCheckbox(DeleteGraffiti, 400f);
         }
 
         // Combines two flipped 'LinearGradient200's together to make a fancy looking divider.
@@ -90,6 +103,31 @@ namespace Vinki
             {
                 checkbox,
                 checkboxLabel
+            });
+        }
+
+        private void AddIntBox(Configurable<int> optionText, float y)
+        {
+            OpUpdown opUpdown = new OpUpdown(optionText, new Vector2(100f, y - 4f), 75f);
+            opUpdown.description = Translate(optionText.info.description);
+            //if (uifocusable != null)
+            //{
+            //    UIfocusable.MutualVerticalFocusableBind(uifocusable, opUpdown);
+            //}
+            opUpdown.SetNextFocusable(UIfocusable.NextDirection.Left, FocusMenuPointer.GetPointer(FocusMenuPointer.MenuUI.CurrentTabButton));
+            opUpdown.SetNextFocusable(UIfocusable.NextDirection.Right, opUpdown);
+            Tabs[0].AddItems(new UIelement[]
+            {
+                opUpdown
+            });
+            //uifocusable = opUpdown;
+            Tabs[0].AddItems(new UIelement[]
+            {
+                new OpLabel(190f, y + 0f, Translate(optionText.info.Tags[0] as string), false)
+                {
+                    bumpBehav = opUpdown.bumpBehav,
+                    description = opUpdown.description
+                }
             });
         }
     }

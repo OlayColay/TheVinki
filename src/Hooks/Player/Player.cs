@@ -20,8 +20,9 @@ namespace Vinki
             }
 
             Vector2 sprayPos = storyGraffitiRoomPositions.ContainsKey(gNum) ? storyGraffitiRoomPositions[gNum] : self.mainBodyChunk.pos;
+            Room room = self.room;
 
-            self.room.PlaySound(SoundID.Vulture_Jet_LOOP, self.mainBodyChunk, false, 1f, 2f);
+            room.PlaySound(SoundID.Vulture_Jet_LOOP, self.mainBodyChunk, false, 1f, 2f);
 
             for (int j = 0; j < 4; j++)
             {
@@ -39,12 +40,12 @@ namespace Vinki
                 var smoke = new Explosion.ExplosionSmoke(smokePos, Vector2.zero, 2f);
                 smoke.lifeTime = 15f;
                 smoke.life = 2f;
-                self.room.AddObject(smoke);
+                room.AddObject(smoke);
                 smoke.colorA = graffitiAvgColors[gNum];
                 smoke.colorB = Color.gray;
 
                 await Task.Delay(100);
-                self.room.AddObject(new GraffitiObject(graffiti, self.room.game.GetStorySession.saveState.cycleNumber));
+                room.AddObject(new GraffitiObject(graffiti, room.game.GetStorySession.saveState, gNum, room.abstractRoom.name));
             }
         }
 
