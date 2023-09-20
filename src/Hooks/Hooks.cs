@@ -193,6 +193,11 @@ namespace Vinki
         {
             orig(self);
 
+            if (self.sceneID == null)
+            {
+                return;
+            }
+
             if (self.sceneID.ToString() == "Slugcat_Vinki")
             {
                 // Find the graffiti layers of the slugcat select scene
