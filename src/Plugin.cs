@@ -10,7 +10,7 @@ namespace Vinki
 {
     [BepInDependency("slime-cubed.slugbase")]
     [BepInDependency("dressmyslugcat", BepInDependency.DependencyFlags.SoftDependency)]
-    [BepInPlugin(MOD_ID, "The Vinki", "0.8.4")]
+    [BepInPlugin(MOD_ID, "The Vinki", "0.8.6")]
     class Plugin : BaseUnityPlugin
     {
         public const string MOD_ID = "olaycolay.thevinki";
@@ -30,8 +30,8 @@ namespace Vinki
         public static bool introPlayed = false;
         public static Vector2 lastVineDir = Vector2.zero;
         public static ClimbableVinesSystem.VinePosition[] vineAtFeet = { null, null, null, null };
-        public static Player.AnimationIndex lastAnimationFrame = Player.AnimationIndex.None;
-        public static Player.AnimationIndex lastAnimation = Player.AnimationIndex.None;
+        public static Player.AnimationIndex[] lastAnimationFrame = { Player.AnimationIndex.None, Player.AnimationIndex.None, Player.AnimationIndex.None, Player.AnimationIndex.None };
+        public static Player.AnimationIndex[] lastAnimation = { Player.AnimationIndex.None, Player.AnimationIndex.None, Player.AnimationIndex.None, Player.AnimationIndex.None };
         public static ChunkSoundEmitter grindSound;
         public static List<PlacedObject.CustomDecalData> graffitis = new List<PlacedObject.CustomDecalData>();
         public static List<Vector2> graffitiOffsets = new List<Vector2>();

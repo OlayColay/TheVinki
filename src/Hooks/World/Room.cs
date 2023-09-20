@@ -19,10 +19,14 @@ public static partial class Hooks
     {
         orig(self, world, game);
 
-        SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(world.game.GetStorySession.saveState.miscWorldSaveData);
         Dictionary<string, List<GraffitiObject.SerializableGraffiti>> placedGraffitis;
-        if (game.GetStorySession.saveStateNumber != Enums.vinki || !miscSave.TryGet("PlacedGraffitis", out placedGraffitis) || 
-            !placedGraffitis.ContainsKey(self.name))
+        if (game.GetStorySession == null || game.GetStorySession.saveStateNumber != Enums.vinki)
+        {
+            return;
+        }
+
+        SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(world.game.GetStorySession.saveState.miscWorldSaveData);
+        if (!miscSave.TryGet("PlacedGraffitis", out placedGraffitis) || !placedGraffitis.ContainsKey(self.name))
         {
             return;
         }

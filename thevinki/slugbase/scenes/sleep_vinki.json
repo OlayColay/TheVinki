@@ -83,7 +83,7 @@
 		{
 			"name": "VinkiSlep",
 			"pos": [ 700, 100 ],
-			"depth": 2.8,
+			"depth": 3.5,
 			"shader": "Basic"
 		},
 		{

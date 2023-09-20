@@ -98,7 +98,7 @@ namespace Vinki
             if (coyote || isGrindingH || grindUpPoleFlag || vineAtFeet[self.JollyOption.playerNumber] != null)
             {
                 // Separate from vine
-                vineAtFeet[self.JollyOption.playerNumber] = null;
+                Plugin.vineAtFeet[self.JollyOption.playerNumber] = null;
                 vineGrindDelay[self.JollyOption.playerNumber] = 10;
 
                 // Get num multiplier
@@ -142,8 +142,8 @@ namespace Vinki
 
         private static bool isCoyoteJumping(Player self)
         {
-            return (lastAnimation == Player.AnimationIndex.StandOnBeam && self.animation == Player.AnimationIndex.None &&
-                    self.bodyMode == Player.BodyModeIndex.Default);
+            return (lastAnimation[self.JollyOption.playerNumber] == Player.AnimationIndex.StandOnBeam && self.animation == Player.AnimationIndex.None &&
+                    self.bodyMode == Player.BodyModeIndex.Default && self.canJump > 0);
         }
 
         // Implement higher beam speed
@@ -173,10 +173,10 @@ namespace Vinki
                 lastVineDir = self.SwimDir(true);
             }
             // Save the last animation
-            if (self.animation != lastAnimationFrame)
+            if (self.animation != lastAnimationFrame[self.JollyOption.playerNumber])
             {
-                lastAnimation = lastAnimationFrame;
-                lastAnimationFrame = self.animation;
+                lastAnimation[self.JollyOption.playerNumber] = lastAnimationFrame[self.JollyOption.playerNumber];
+                lastAnimationFrame[self.JollyOption.playerNumber] = self.animation;
             }
 
             // If grinding up a pole and reach the top, jump up high
@@ -215,7 +215,7 @@ namespace Vinki
             isGrindingH = IsGrindingHorizontally(self);
             isGrindingV = IsGrindingVertically(self);
             isGrindingNoGrav = IsGrindingNoGrav(self);
-            //isGrindingVine = IsGrindingVine(self);
+            isGrindingVine = IsGrindingVineNoGrav(self);
             isGrinding = isGrindingH || isGrindingV || isGrindingNoGrav || isGrindingVine;
 
             ClimbableVinesSystem.VinePosition vineAtFeet = Plugin.vineAtFeet[self.JollyOption.playerNumber];
@@ -235,8 +235,10 @@ namespace Vinki
                 // First frame of grinding on vine
                 if (isGrindingAtopVine)
                 {
+                    //Debug.Log("Animation before getting on vine: " + self.animation.ToString() + "\t prev animation: " + lastAnimation.ToString());
                     self.room.PlaySound(SoundID.Spear_Bounce_Off_Creauture_Shell, self.mainBodyChunk, false, 0.75f, 1f);
                     self.noGrabCounter = 15;
+                    self.animation = Player.AnimationIndex.StandOnBeam;
                 }
             }
 
@@ -247,7 +249,6 @@ namespace Vinki
                 if (isGrindingAtopVine)
                 {
                     self.standing = true;
-                    self.animation = Player.AnimationIndex.None;
                     self.canJump = 5;
                     self.vineGrabDelay = 3;
                     self.room.climbableVines.VineBeingClimbedOn(vineAtFeet, self);
@@ -419,10 +420,11 @@ namespace Vinki
                 self.bodyChunks[0].vel.magnitude > 1f);
         }
 
-        private static bool IsGrindingVine(Player self)
+        private static bool IsGrindingVineNoGrav(Player self)
         {
             return (self.animation == Player.AnimationIndex.VineGrab &&
-                self.bodyChunks[0].vel.magnitude > 1f);
+                self.bodyChunks[0].vel.magnitude > 1f &&
+                self.room.gravity <= 0.1f);
         }
 
         private static void Player_Update(On.Player.orig_Update orig, Player self, bool eu)
