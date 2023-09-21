@@ -17,6 +17,7 @@ namespace Vinki
             On.PlayerGraphics.AddToContainer += PlayerGraphics_AddToContainer;
             On.PlayerGraphics.DrawSprites += PlayerGraphics_DrawSprites;
             On.PlayerGraphics.Update += PlayerGraphics_Update;
+            On.PlayerGraphics.JollyBodyColorMenu += PlayerGraphics_JollyBodyColorMenu;
             On.PlayerGraphics.JollyUniqueColorMenu += PlayerGraphics_JollyUniqueColorMenu;
             On.PlayerGraphics.LoadJollyColorsFromOptions += PlayerGraphics_Debug;
         }
@@ -287,8 +288,26 @@ namespace Vinki
             return result;
         }
 
+        private static Color PlayerGraphics_JollyBodyColorMenu(On.PlayerGraphics.orig_JollyBodyColorMenu orig, SlugcatStats.Name slugName, SlugcatStats.Name reference)
+        {
+            // Rider OC for AUTO player 2
+            if (slugName.value == "JollyPlayer2" && Custom.rainWorld.options.jollyColorMode == Options.JollyColorMode.AUTO && reference == Enums.vinki)
+            {
+                return new Color(0.298f, 0.459f, 1f);
+            }
+            else
+            {
+                return orig(slugName, reference);
+            }
+        }
+
         private static Color PlayerGraphics_JollyUniqueColorMenu(On.PlayerGraphics.orig_JollyUniqueColorMenu orig, SlugcatStats.Name slugName, SlugcatStats.Name reference, int playerNumber)
         {
+            // Rider OC for AUTO player 2
+            if (playerNumber == 1 && Custom.rainWorld.options.jollyColorMode == Options.JollyColorMode.AUTO && slugName == Enums.vinki)
+            {
+                return new Color(1f, 0.541f, 0.039f);
+            }
             if ((Custom.rainWorld.options.jollyColorMode == Options.JollyColorMode.DEFAULT || (playerNumber == 0 && Custom.rainWorld.options.jollyColorMode == Options.JollyColorMode.AUTO)) && slugName == Enums.vinki)
             {
                 return new Color(0.28627450980392155f, 0.3058823529411765f, 0.8274509803921568f);

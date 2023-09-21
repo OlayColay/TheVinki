@@ -200,6 +200,12 @@ public static partial class Hooks
     {
         if (Custom.rainWorld.options.jollyColorMode != Options.JollyColorMode.CUSTOM)
         {
+            // Rider OC for AUTO player 2
+            if (playerNumber == 1 && Custom.rainWorld.options.jollyColorMode != Options.JollyColorMode.CUSTOM && bodyPartIndex < 5)
+            {
+                return new Color(1f, 0.541f, 0.039f);
+            }
+
             switch (bodyPartIndex)
             {
                 case 3: return Color.white;
