@@ -290,7 +290,7 @@ namespace Vinki
             return new int[] { w, h };
         }
 
-        private static void CopyFilesRecursively(string sourcePath, string targetPath)
+        public static void CopyFilesRecursively(string sourcePath, string targetPath)
         {
             Directory.CreateDirectory(targetPath);
 

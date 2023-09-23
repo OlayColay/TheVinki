@@ -1,5 +1,8 @@
-﻿using Menu.Remix.MixedUI;
+﻿using Menu;
+using Menu.Remix.MixedUI;
 using System;
+using System.IO;
+using System.Runtime.InteropServices;
 using System.Xml.Linq;
 using UnityEngine;
 
@@ -55,6 +58,22 @@ namespace Vinki
             AddCheckbox(UpGraffiti, 480f);
             AddIntBox(GraffitiFadeTime, 440f);
             AddCheckbox(DeleteGraffiti, 400f);
+            AddHoldButton(
+                "Restore Default Graffiti",
+                "Restore the default graffiti that came with The Vinki. Useful for after installing an update that includes new default graffiti.",
+                RestoreDefaultGraffiti,
+                360f,
+                200f,
+                40f
+            );
+            AddHoldButton(
+                "Reset Graffiti Folder to Default",
+                "Revert Graffiti Folder to default. This will remove any custom files you've added to it!",
+                ResetGraffitiFolder,
+                320f,
+                200f,
+                color: Color.red
+            );
         }
 
         // Combines two flipped 'LinearGradient200's together to make a fancy looking divider.
@@ -129,6 +148,44 @@ namespace Vinki
                     description = opUpdown.description
                 }
             });
+        }
+
+        private void AddHoldButton(string displayName, string description, OnSignalHandler action, float y, float width, float fillTime = 80f, Color? color = null)
+        {
+            OpHoldButton holdButton = new OpHoldButton(new Vector2(150f, y), new Vector2(width, 30f), Translate(displayName), fillTime)
+            {
+                description = Translate(description),
+                colorEdge = color ?? MenuColorEffect.rgbMediumGrey
+            };
+            holdButton.OnPressDone += action;
+
+            Tabs[0].AddItems(new UIelement[]
+            {
+                holdButton
+            });
+        }
+
+        private void RestoreDefaultGraffiti(UIfocusable trigger)
+        {
+            string modFolder = AssetManager.ResolveDirectory("../../../../workshop/content/312520/3001275271");
+            if (!Directory.Exists(modFolder))
+            {
+                Debug.Log("Vinki was not installed from Steam Workshop. Attempting to find locally...");
+                modFolder = AssetManager.ResolveDirectory("./mods/thevinki");
+                if (!Directory.Exists(modFolder))
+                {
+                    Debug.LogError("Could not find Vinki mod in workshop files or local mods!");
+                    return;
+                }
+            }
+            Debug.Log("Graffiti folder doesn't exist! Copying from mod folder: " + modFolder);
+            Hooks.CopyFilesRecursively(modFolder + "/VinkiGraffiti", Plugin.graffitiFolder);
+        }
+
+        private void ResetGraffitiFolder(UIfocusable trigger)
+        {
+            Directory.Delete(Plugin.graffitiFolder, true);
+            RestoreDefaultGraffiti(trigger);
         }
     }
 }
