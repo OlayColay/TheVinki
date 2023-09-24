@@ -15,6 +15,7 @@ namespace Vinki
         public static Configurable<bool> UpGraffiti;
         public static Configurable<int> GraffitiFadeTime;
         public static Configurable<bool> DeleteGraffiti;
+        public static Configurable<bool> RestoreGraffitiOnUpdate;
 
         public VinkiConfig()
         {
@@ -33,6 +34,10 @@ namespace Vinki
             DeleteGraffiti = config.Bind("deleteGraffiti", false, new ConfigurableInfo("Delete Graffiti permanently when running out of display cycles. Will help with loading times if you've sprayed a lot of graffiti.", tags: new object[]
             {
                 "Delete Graffiti Permanently After Display Cycles"
+            }));
+            RestoreGraffitiOnUpdate = config.Bind("restoreGraffitiOnUpdate", true, new ConfigurableInfo("Restore default graffiti when the mod updates to a new version. Helpful to automatically add any new graffiti from updates.", tags: new object[]
+            {
+                "Restore Default Graffiti when Mod Updates"
             }));
         }
 
@@ -58,11 +63,12 @@ namespace Vinki
             AddCheckbox(UpGraffiti, 480f);
             AddIntBox(GraffitiFadeTime, 440f);
             AddCheckbox(DeleteGraffiti, 400f);
+            AddCheckbox(RestoreGraffitiOnUpdate, 360f);
             AddHoldButton(
                 "Restore Default Graffiti",
                 "Restore the default graffiti that came with The Vinki. Useful for after installing an update that includes new default graffiti.",
                 RestoreDefaultGraffiti,
-                360f,
+                320f,
                 200f,
                 40f
             );
@@ -70,7 +76,7 @@ namespace Vinki
                 "Reset Graffiti Folder to Default",
                 "Revert Graffiti Folder to default. This will remove any custom files you've added to it!",
                 ResetGraffitiFolder,
-                320f,
+                280f,
                 200f,
                 color: Color.red
             );
@@ -180,6 +186,8 @@ namespace Vinki
             }
             Debug.Log("Graffiti folder doesn't exist! Copying from mod folder: " + modFolder);
             Hooks.CopyFilesRecursively(modFolder + "/VinkiGraffiti", Plugin.graffitiFolder);
+
+            Hooks.LoadGraffiti();
         }
 
         private void ResetGraffitiFolder(UIfocusable trigger)

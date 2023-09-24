@@ -14,29 +14,32 @@ namespace Vinki
     {
         public static async Task SprayGraffiti(Player self, int smokes = 10, int gNum = -1, float alphaPerSmoke = 0.3f)
         {
+            string slugcat = graffitis.ContainsKey(self.slugcatStats.name.value) ? self.slugcatStats.name.value : SlugcatStats.Name.White.value;
             if (gNum < 0)
             {
-                gNum = UnityEngine.Random.Range(storyGraffitiCount, graffitis.Count);
+                gNum = UnityEngine.Random.Range(slugcat == Enums.vinki.value ? storyGraffitiCount : 0, graffitis[slugcat].Count);
             }
 
-            Vector2 sprayPos = storyGraffitiRoomPositions.ContainsKey(gNum) ? storyGraffitiRoomPositions[gNum] : self.mainBodyChunk.pos;
+            Vector2 sprayPos = (slugcat == Enums.vinki.value && storyGraffitiRoomPositions.ContainsKey(gNum)) ? storyGraffitiRoomPositions[gNum] : self.mainBodyChunk.pos;
             Room room = self.room;
 
             room.PlaySound(SoundID.Vulture_Jet_LOOP, self.mainBodyChunk, false, 1f, 2f);
 
             for (int j = 0; j < 4; j++)
             {
-                graffitis[gNum].vertices[j, 0] = alphaPerSmoke;
+                graffitis[slugcat][gNum].vertices[j, 0] = alphaPerSmoke;
             }
 
             for (int i = 0; i < smokes; i++)
             {
-                PlacedObject graffiti = new PlacedObject(PlacedObject.Type.CustomDecal, graffitis[gNum]);
-                graffiti.pos = sprayPos + graffitiOffsets[gNum];
+                PlacedObject graffiti = new PlacedObject(PlacedObject.Type.CustomDecal, graffitis[slugcat][gNum])
+                {
+                    pos = sprayPos + graffitiOffsets[slugcat][gNum]
+                };
 
                 Vector2 smokePos = new Vector2(
-                    sprayPos.x + UnityEngine.Random.Range(graffitiOffsets[gNum].x, -graffitiOffsets[gNum].x),
-                    sprayPos.y + UnityEngine.Random.Range(graffitiOffsets[gNum].y, -graffitiOffsets[gNum].y));
+                    sprayPos.x + UnityEngine.Random.Range(graffitiOffsets[slugcat][gNum].x, -graffitiOffsets[slugcat][gNum].x),
+                    sprayPos.y + UnityEngine.Random.Range(graffitiOffsets[slugcat][gNum].y, -graffitiOffsets[slugcat][gNum].y));
                 var smoke = new Explosion.ExplosionSmoke(smokePos, Vector2.zero, 2f);
                 smoke.lifeTime = 15f;
                 smoke.life = 2f;
@@ -124,6 +127,7 @@ namespace Vinki
                 // Get risk/reward speedboost when coyote jumping
                 if (coyote)
                 {
+                    Debug.Log("Coyote jump!");
                     self.mainBodyChunk.vel.x += coyoteBoost * self.slideDirection;
                     self.room.PlaySound(SoundID.Slugcat_Flip_Jump, self.mainBodyChunk, false, 3f, 1f);
                 }
@@ -142,6 +146,9 @@ namespace Vinki
 
         private static bool isCoyoteJumping(Player self)
         {
+            Debug.Log("Last animation: " + lastAnimation[self.JollyOption.playerNumber].ToString() +
+                "\t This animation: " + self.animation.ToString() + "\t Body mode: " + self.bodyMode.ToString() +
+                "\t Can jump: " + self.canJump);
             return (lastAnimation[self.JollyOption.playerNumber] == Player.AnimationIndex.StandOnBeam && self.animation == Player.AnimationIndex.None &&
                     self.bodyMode == Player.BodyModeIndex.Default && self.canJump > 0);
         }
@@ -248,7 +255,6 @@ namespace Vinki
                 self.slugcatStats.runspeedFac = 0;
                 if (isGrindingAtopVine)
                 {
-                    self.standing = true;
                     self.canJump = 5;
                     self.vineGrabDelay = 3;
                     self.room.climbableVines.VineBeingClimbedOn(vineAtFeet, self);
@@ -288,7 +294,6 @@ namespace Vinki
                 {
                     self.bodyChunks[1].vel.x = grindXSpeed * lastXDirection;
                 }
-                self.bodyMode = Player.BodyModeIndex.Stand;
                 
                 // Sparks from grinding
                 Vector2 pos = self.bodyChunks[1].pos;
@@ -431,17 +436,6 @@ namespace Vinki
         {
             orig(self, eu);
 
-            if (self.SlugCatClass != Enums.vinki)
-            {
-                return;
-            }
-
-            // Update grindToggle if needed
-            if (self.JustPressed(ToggleGrind) && !IsPressingGraffiti(self))
-            {
-                grindToggle[self.JollyOption.playerNumber] = !grindToggle[self.JollyOption.playerNumber];
-            }
-
             // Spray a random graffiti
             if (self.JustPressed(Spray) && IsPressingGraffiti(self))
             {
@@ -458,6 +452,18 @@ namespace Vinki
                     }
                 }
             }
+
+            if (self.SlugCatClass != Enums.vinki)
+            {
+                return;
+            }
+
+            // Update grindToggle if needed
+            if (self.JustPressed(ToggleGrind) && !IsPressingGraffiti(self))
+            {
+                grindToggle[self.JollyOption.playerNumber] = !grindToggle[self.JollyOption.playerNumber];
+            }
+
             // Craft SprayCan
             else if (self.IsPressed(Craft) && IsPressingGraffiti(self))
             {

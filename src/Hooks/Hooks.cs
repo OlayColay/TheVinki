@@ -7,6 +7,7 @@ using SprayCans;
 using Fisobs.Core;
 using MoreSlugcats;
 using static Vinki.Plugin;
+using MonoMod.Utils;
 
 namespace Vinki
 {
@@ -40,11 +41,35 @@ namespace Vinki
             ApplyHooks();
 
             // Add the story graffitis
-            AddGraffiti("5P", new Vector2?(new Vector2(650, 200)));
-            AddGraffiti("5P_stretched", new Vector2?(new Vector2(520, 400)));
+            AddGraffiti("5P", Enums.vinki.value, new Vector2?(new Vector2(650, 200)));
+            AddGraffiti("5P_stretched", Enums.vinki.value, new Vector2?(new Vector2(520, 400)));
+
+            bool modChanged = false;
+            if (rainWorld.options.modLoadOrder.TryGetValue("olaycolay.thevinki", out _) && VinkiConfig.RestoreGraffitiOnUpdate.Value)
+            {
+                ModManager.Mod vinkiMod = ModManager.InstalledMods.Where(mod => mod.id == "olaycolay.thevinki").FirstOrDefault();
+                var saveData = SlugBase.SaveData.SaveDataExtension.GetSlugBaseData(rainWorld.progression.miscProgressionData);
+                if (saveData.TryGet("VinkiVersion", out string modVersion))
+                {
+                    Debug.Log("Vinki mod version changed!");
+                    modChanged = vinkiMod.version != modVersion;
+                }
+                else
+                {
+                    Debug.Log("Didn't find saved vinki mod version");
+                    modChanged = true;
+                }
+                Debug.Log("Setting vinki version to " + vinkiMod.version);
+                saveData.Set("VinkiVersion", vinkiMod.version);
+                rainWorld.progression.SaveProgression(false, true);
+            }
+            else
+            {
+                Debug.Log("Can't find vinki mod ID");
+            }
 
             // If the graffiti folder doesn't exist (or is empty), copy it from the mod
-            if (!Directory.Exists(graffitiFolder) || !Directory.EnumerateFileSystemEntries(graffitiFolder).Any())
+            if (!Directory.Exists(graffitiFolder) || !Directory.EnumerateFileSystemEntries(graffitiFolder).Any() || modChanged)
             {
                 string modFolder = AssetManager.ResolveDirectory("../../../../workshop/content/312520/3001275271");
                 if (!Directory.Exists(modFolder))
@@ -62,12 +87,7 @@ namespace Vinki
             }
 
             // Go through each graffiti image and add it to the list of decals Vinki can place
-            string parent = Path.GetFileNameWithoutExtension(graffitiFolder);
-            foreach (var image in Directory.EnumerateFiles(graffitiFolder, "*.*", SearchOption.AllDirectories)
-            .Where(s => s.EndsWith(".png")).Select(f => parent + '/' + Path.GetFileNameWithoutExtension(f)))
-            {
-                AddGraffiti(image);
-            }
+            LoadGraffiti();
 
             // Remix menu config
             VinkiConfig.RegisterOI();
@@ -90,22 +110,43 @@ namespace Vinki
             InitColorfulItems();
         }
 
-        private static void AddGraffiti(string image, Vector2? storyGraffitiRoomPos = null)
+        public static void LoadGraffiti()
+        {
+            graffitiOffsets.Clear();
+            graffitis.Clear();
+
+            foreach (string parent in Directory.EnumerateDirectories(graffitiFolder))
+            {
+                foreach (var image in Directory.EnumerateFiles(parent, "*.*", SearchOption.AllDirectories)
+                    .Where(s => s.EndsWith(".png")))
+                {
+                    AddGraffiti(image, new DirectoryInfo(parent).Name);
+                }
+            }
+        }
+
+        private static void AddGraffiti(string image, string slugcat, Vector2? storyGraffitiRoomPos = null)
         {
             PlacedObject.CustomDecalData decal = new PlacedObject.CustomDecalData(null);
-            decal.imageName = image;
+            decal.imageName = "VinkiGraffiti/" + slugcat + "/" + Path.GetFileNameWithoutExtension(image);
             decal.fromDepth = 0.2f;
+
+            if (!graffitis.ContainsKey(slugcat))
+            {
+                graffitiOffsets[slugcat] = new();
+                graffitis[slugcat] = new();
+            }
 
             string filePath;
             if (storyGraffitiRoomPos.HasValue)
             {
-                filePath = AssetManager.ResolveFilePath("decals/" + image + ".png");
-                storyGraffitiRoomPositions.Add(graffitis.Count, storyGraffitiRoomPos.Value);
+                filePath = AssetManager.ResolveFilePath("decals/" + Path.GetFileNameWithoutExtension(image) + ".png");
+                storyGraffitiRoomPositions.Add(graffitis[Enums.vinki.value].Count, storyGraffitiRoomPos.Value);
                 storyGraffitiCount++;
             }
             else
             {
-                filePath = graffitiFolder + "/" + Path.GetFileNameWithoutExtension(image) + ".png";
+                filePath = graffitiFolder + "/" + slugcat + "/" + Path.GetFileNameWithoutExtension(image) + ".png";
             }
 
             // Get the image as a 2d texture so we can resize it to something manageable
@@ -129,9 +170,8 @@ namespace Vinki
 
             float halfWidth = img.width / 2f;
             float halfHeight = img.height / 2f;
-
-            graffitiOffsets.Add(new Vector2(-halfWidth, -halfHeight));
-            graffitis.Add(decal);
+            graffitiOffsets[slugcat].Add(new Vector2(-halfWidth, -halfHeight));
+            graffitis[slugcat].Add(decal);
         }
 
         public static bool IsPostInit;
@@ -247,7 +287,7 @@ namespace Vinki
                 }
 
                 // Randomize which graffiti shows
-                int randGraffiti = UnityEngine.Random.Range(0, menuGraffitis.Count-1);
+                int randGraffiti = UnityEngine.Random.Range(0, menuGraffitis.Count - 1);
                 string fileName = "Graffiti - " + randGraffiti.ToString();
 
                 // Show the random graffiti and hide the rest

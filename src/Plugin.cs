@@ -10,7 +10,7 @@ namespace Vinki
 {
     [BepInDependency("slime-cubed.slugbase")]
     [BepInDependency("dressmyslugcat", BepInDependency.DependencyFlags.SoftDependency)]
-    [BepInPlugin(MOD_ID, "The Vinki", "0.8.10")]
+    [BepInPlugin(MOD_ID, "The Vinki", "0.8.11")]
     class Plugin : BaseUnityPlugin
     {
         public const string MOD_ID = "olaycolay.thevinki";
@@ -33,8 +33,8 @@ namespace Vinki
         public static Player.AnimationIndex[] lastAnimationFrame = { Player.AnimationIndex.None, Player.AnimationIndex.None, Player.AnimationIndex.None, Player.AnimationIndex.None };
         public static Player.AnimationIndex[] lastAnimation = { Player.AnimationIndex.None, Player.AnimationIndex.None, Player.AnimationIndex.None, Player.AnimationIndex.None };
         public static ChunkSoundEmitter grindSound;
-        public static List<PlacedObject.CustomDecalData> graffitis = new List<PlacedObject.CustomDecalData>();
-        public static List<Vector2> graffitiOffsets = new List<Vector2>();
+        public static Dictionary<string, List<PlacedObject.CustomDecalData>> graffitis = new();
+        public static Dictionary<string, List<Vector2>> graffitiOffsets = new();
         public static List<Color> graffitiAvgColors = new List<Color>();
         public static List<string> shelterItems = new List<string>();
         public static Dictionary<int, Vector2> storyGraffitiRoomPositions = new Dictionary<int, Vector2>();
