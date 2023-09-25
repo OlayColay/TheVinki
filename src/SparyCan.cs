@@ -2,6 +2,7 @@
 using RWCustom;
 using UnityEngine;
 using Smoke;
+using MoreSlugcats;
 
 namespace SprayCans;
 
@@ -145,6 +146,13 @@ sealed class SprayCan : Weapon
         {
             return false;
         }
+
+        // If there are no charges left, it should hit something like a Rock would
+        if (this.Abstr.uses == 0)
+        {
+            return HitLikeRock(result, eu);
+        }
+
         this.vibrate = 20;
         this.ChangeMode(Weapon.Mode.Free);
         if (result.obj is Creature)
@@ -449,6 +457,45 @@ sealed class SprayCan : Weapon
     private Color RandomColor()
     {
         return Color.HSVToRGB(Random.Range(0f, 1f), 1f, 1f);
+    }
+
+    private bool HitLikeRock(SharedPhysics.CollisionResult result, bool eu)
+    {
+        if (this.thrownBy is Scavenger && (this.thrownBy as Scavenger).AI != null)
+        {
+            (this.thrownBy as Scavenger).AI.HitAnObjectWithWeapon(this, result.obj);
+        }
+        this.vibrate = 20;
+        this.ChangeMode(Weapon.Mode.Free);
+        if (result.obj is Creature)
+        {
+            float stunBonus = 45f;
+            if (ModManager.MMF && MMF.cfgIncreaseStuns.Value && (result.obj is Cicada || result.obj is LanternMouse || (ModManager.MSC && result.obj is Yeek)))
+            {
+                stunBonus = 90f;
+            }
+            if (ModManager.MSC && this.room.game.IsArenaSession && this.room.game.GetArenaGameSession.chMeta != null)
+            {
+                stunBonus = 90f;
+            }
+            (result.obj as Creature).Violence(base.firstChunk, new Vector2?(base.firstChunk.vel * base.firstChunk.mass), result.chunk, result.onAppendagePos, Creature.DamageType.Blunt, 0.01f, stunBonus);
+        }
+        else if (result.chunk != null)
+        {
+            result.chunk.vel += base.firstChunk.vel * base.firstChunk.mass / result.chunk.mass;
+        }
+        else if (result.onAppendagePos != null)
+        {
+            (result.obj as PhysicalObject.IHaveAppendages).ApplyForceOnAppendage(result.onAppendagePos, base.firstChunk.vel * base.firstChunk.mass);
+        }
+        base.firstChunk.vel = base.firstChunk.vel * -0.5f + Custom.DegToVec(Random.value * 360f) * Mathf.Lerp(0.1f, 0.4f, Random.value) * base.firstChunk.vel.magnitude;
+        this.room.PlaySound(SoundID.Rock_Hit_Creature, base.firstChunk);
+        if (result.chunk != null)
+        {
+            this.room.AddObject(new ExplosionSpikes(this.room, result.chunk.pos + Custom.DirVec(result.chunk.pos, result.collisionPoint) * result.chunk.rad, 5, 2f, 4f, 4.5f, 30f, new Color(1f, 1f, 1f, 0.5f)));
+        }
+        this.SetRandomSpin();
+        return true;
     }
 
 #nullable enable
