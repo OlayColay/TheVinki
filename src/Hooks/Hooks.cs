@@ -40,10 +40,6 @@ namespace Vinki
             Enums.RegisterValues();
             ApplyHooks();
 
-            // Add the story graffitis
-            AddGraffiti("5P", Enums.vinki.value, new Vector2?(new Vector2(650, 200)));
-            AddGraffiti("5P_stretched", Enums.vinki.value, new Vector2?(new Vector2(520, 400)));
-
             bool modChanged = false;
             if (rainWorld.options.modLoadOrder.TryGetValue("olaycolay.thevinki", out _) && VinkiConfig.RestoreGraffitiOnUpdate.Value)
             {
@@ -88,6 +84,10 @@ namespace Vinki
 
             // Go through each graffiti image and add it to the list of decals Vinki can place
             LoadGraffiti();
+
+            // Add the story graffitis
+            AddGraffiti("5P", "Story", new Vector2?(new Vector2(650, 200)));
+            AddGraffiti("5P_stretched", "Story", new Vector2?(new Vector2(520, 400)));
 
             // Remix menu config
             VinkiConfig.RegisterOI();
@@ -135,13 +135,15 @@ namespace Vinki
             {
                 graffitiOffsets[slugcat] = new();
                 graffitis[slugcat] = new();
+                graffitiAvgColors[slugcat] = new();
             }
 
             string filePath;
             if (storyGraffitiRoomPos.HasValue)
             {
                 filePath = AssetManager.ResolveFilePath("decals/" + Path.GetFileNameWithoutExtension(image) + ".png");
-                storyGraffitiRoomPositions.Add(graffitis[Enums.vinki.value].Count, storyGraffitiRoomPos.Value);
+                decal.imageName = Path.GetFileNameWithoutExtension(image);
+                storyGraffitiRoomPositions.Add(graffitis["Story"].Count, storyGraffitiRoomPos.Value);
                 storyGraffitiCount++;
             }
             else
@@ -155,7 +157,7 @@ namespace Vinki
             ImageConversion.LoadImage(img, tmpBytes);
 
             // Get average color of image (to use for graffiti spray/smoke color)
-            graffitiAvgColors.Add(AverageColorFromTexture(img));
+            graffitiAvgColors[slugcat].Add(AverageColorFromTexture(img));
 
             // Resize image to look good in game
             if (!storyGraffitiRoomPos.HasValue)
@@ -266,11 +268,12 @@ namespace Vinki
                 {
                     image.alpha = 0f;
                     string imageName = Path.GetFileNameWithoutExtension(image.fileName);
+                    imageName = imageName.Substring(imageName.IndexOf('-') + 2);
 
                     // Show the item layers that are in the shelter
                     foreach (string item in shelterItems)
                     {
-                        if (imageName.EndsWith(item))
+                        if (imageName == item)
                         {
                             image.alpha = 1f;
                         }

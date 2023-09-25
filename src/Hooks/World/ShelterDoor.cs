@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using static Vinki.Plugin;
 
 namespace Vinki
@@ -38,11 +39,12 @@ namespace Vinki
                     else
                     {
                         string itemType = item.GetType().ToString();
-                        if (itemType.Contains('.'))
+                        while (itemType.Contains('.'))
                         {
                             itemType = itemType.Substring(itemType.IndexOf('.') + 1);
                         }
 
+                        Debug.Log("Adding shelter item: " + itemType);
                         shelterItems.Add(itemType);
                     }
                 }

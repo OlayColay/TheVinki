@@ -196,7 +196,7 @@ namespace Vinki
                         this.owner.voice = base.oracle.room.PlaySound(SoundID.SS_AI_Talk_5, base.oracle.firstChunk);
                         this.owner.voice.requireActiveUpkeep = true;
                     }
-                    if (base.inActionCounter == 120)
+                    if (base.inActionCounter == 220)
                     {
                         var grasp = player.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan);
                         if (grasp != null && (grasp.grabbed as SprayCan).TryUse())
@@ -213,7 +213,7 @@ namespace Vinki
                     {
                         this.owner.NewAction(SSOracleBehavior.Action.ThrowOut_KillOnSight);
                     }
-                    if (base.inActionCounter > 100)
+                    if (base.inActionCounter > 200)
                     {
                         if (base.player.room == base.oracle.room)
                         {

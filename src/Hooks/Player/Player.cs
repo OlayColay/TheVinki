@@ -17,10 +17,15 @@ namespace Vinki
             string slugcat = graffitis.ContainsKey(self.slugcatStats.name.value) ? self.slugcatStats.name.value : SlugcatStats.Name.White.value;
             if (gNum < 0)
             {
-                gNum = UnityEngine.Random.Range(slugcat == Enums.vinki.value ? storyGraffitiCount : 0, graffitis[slugcat].Count);
+                gNum = UnityEngine.Random.Range(0, graffitis[slugcat].Count);
             }
+            else
+            {
+                slugcat = "Story";
+            }
+            Debug.Log("Spraying " + slugcat + " #" + gNum + "\tsize:" + graffitis[slugcat][gNum].handles[1].ToString());
 
-            Vector2 sprayPos = (slugcat == Enums.vinki.value && storyGraffitiRoomPositions.ContainsKey(gNum)) ? storyGraffitiRoomPositions[gNum] : self.mainBodyChunk.pos;
+            Vector2 sprayPos = (slugcat == "Story" && storyGraffitiRoomPositions.ContainsKey(gNum)) ? storyGraffitiRoomPositions[gNum] : self.mainBodyChunk.pos;
             Room room = self.room;
 
             room.PlaySound(SoundID.Vulture_Jet_LOOP, self.mainBodyChunk, false, 1f, 2f);
@@ -44,7 +49,7 @@ namespace Vinki
                 smoke.lifeTime = 15f;
                 smoke.life = 2f;
                 room.AddObject(smoke);
-                smoke.colorA = graffitiAvgColors[gNum];
+                smoke.colorA = graffitiAvgColors[slugcat][gNum];
                 smoke.colorB = Color.gray;
 
                 await Task.Delay(100);

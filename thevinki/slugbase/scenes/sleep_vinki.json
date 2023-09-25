@@ -63,6 +63,24 @@
 			"shader": "Basic"
 		},
 		{
+			"name": "Item - Spear",
+			"pos": [ 700, 100 ],
+			"depth": 3,
+			"shader": "Basic"
+		},
+		{
+			"name": "Item - ElectricSpear",
+			"pos": [ 700, 100 ],
+			"depth": 2.9,
+			"shader": "Basic"
+		},
+		{
+			"name": "Item - ExplosiveSpear",
+			"pos": [ 700, 100 ],
+			"depth": 2.8,
+			"shader": "Basic"
+		},
+		{
 			"name": "Doodle - 0",
 			"pos": [ 700, 100 ],
 			"depth": 3.5,
