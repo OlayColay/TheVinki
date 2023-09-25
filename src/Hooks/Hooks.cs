@@ -65,7 +65,9 @@ namespace Vinki
             }
 
             // If the graffiti folder doesn't exist (or is empty), copy it from the mod
-            if (!Directory.Exists(graffitiFolder) || !Directory.EnumerateFileSystemEntries(graffitiFolder).Any() || modChanged)
+            if (!Directory.Exists(graffitiFolder) || !Directory.EnumerateDirectories(graffitiFolder).Any() ||
+                !Directory.Exists(graffitiFolder + "/vinki") || !Directory.EnumerateFileSystemEntries(graffitiFolder + "/vinki").Any() ||
+                !Directory.Exists(graffitiFolder + "/White") || !Directory.EnumerateFileSystemEntries(graffitiFolder + "/White").Any() || modChanged)
             {
                 string modFolder = AssetManager.ResolveDirectory("../../../../workshop/content/312520/3001275271");
                 if (!Directory.Exists(modFolder))
