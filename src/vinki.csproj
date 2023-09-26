@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net48</TargetFramework>
         <LangVersion>11</LangVersion>
-        <BaseOutputPath>C:\Users\crstr\Documents\TheVinki\thevinki\plugins</BaseOutputPath>
+        <BaseOutputPath>C:\Users\coles\Documents\TheVinki\thevinki\plugins</BaseOutputPath>
     </PropertyGroup>
     
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
