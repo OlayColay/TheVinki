@@ -87,10 +87,6 @@ namespace Vinki
             // Go through each graffiti image and add it to the list of decals Vinki can place
             LoadGraffiti();
 
-            // Add the story graffitis
-            AddGraffiti("5P", "Story", new("SS_AI", new Vector2(650, 200)));
-            AddGraffiti("5P_stretched", "Story", new("SS_AI", new Vector2(520, 400)));
-
             // Remix menu config
             VinkiConfig.RegisterOI();
 
@@ -116,6 +112,7 @@ namespace Vinki
         {
             graffitiOffsets.Clear();
             graffitis.Clear();
+            storyGraffitiRoomPositions.Clear();
 
             foreach (string parent in Directory.EnumerateDirectories(graffitiFolder))
             {
@@ -125,6 +122,10 @@ namespace Vinki
                     AddGraffiti(image, new DirectoryInfo(parent).Name);
                 }
             }
+
+            // Add the story graffitis
+            AddGraffiti("5P", "Story", new("SS_AI", new Vector2(650, 200)));
+            AddGraffiti("5P_stretched", "Story", new("SS_AI", new Vector2(520, 400)));
         }
 
         private static void AddGraffiti(string image, string slugcat, KeyValuePair<string, Vector2>? storyGraffitiRoomPos = null)
