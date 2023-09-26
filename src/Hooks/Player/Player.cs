@@ -25,7 +25,7 @@ namespace Vinki
             }
             Debug.Log("Spraying " + slugcat + " #" + gNum + "\tsize:" + graffitis[slugcat][gNum].handles[1].ToString());
 
-            Vector2 sprayPos = (slugcat == "Story" && storyGraffitiRoomPositions.ContainsKey(gNum)) ? storyGraffitiRoomPositions[gNum] : self.mainBodyChunk.pos;
+            Vector2 sprayPos = (slugcat == "Story" && storyGraffitiRoomPositions.ContainsKey(gNum)) ? storyGraffitiRoomPositions[gNum].Value : self.mainBodyChunk.pos;
             Room room = self.room;
 
             room.PlaySound(SoundID.Vulture_Jet_LOOP, self.mainBodyChunk, false, 1f, 2f);

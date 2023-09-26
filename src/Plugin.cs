@@ -37,7 +37,7 @@ namespace Vinki
         public static Dictionary<string, List<Vector2>> graffitiOffsets = new();
         public static Dictionary<string, List<Color>> graffitiAvgColors = new();
         public static List<string> shelterItems = new List<string>();
-        public static Dictionary<int, Vector2> storyGraffitiRoomPositions = new Dictionary<int, Vector2>();
+        public static Dictionary<int, KeyValuePair<string, Vector2>> storyGraffitiRoomPositions = new();
         public static Dictionary<AbstractPhysicalObject.AbstractObjectType, int> colorfulItems = new Dictionary<AbstractPhysicalObject.AbstractObjectType, int>();
         public static Texture2D TailTexture;
         public static Color?[][] jollyColors = new Color?[4][] { new Color?[6], new Color?[6], new Color?[6], new Color?[6] };

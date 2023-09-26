@@ -1,6 +1,8 @@
 ﻿using SlugBase.SaveData;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 namespace Vinki;
 
@@ -10,7 +12,9 @@ public static partial class Hooks
     private static void ApplyRoomHooks()
     {
         On.AbstractRoom.RealizeRoom += AbstractRoom_RealizeRoom;
+
         On.Room.Loaded += Room_Loaded;
+        On.Room.Update += Room_Update;
 
         On.RoomSpecificScript.AddRoomSpecificScript += RoomSpecificScript_AddRoomSpecificScript;
     }
@@ -23,6 +27,14 @@ public static partial class Hooks
         if (game.GetStorySession == null || game.GetStorySession.saveStateNumber != Enums.vinki)
         {
             return;
+        }
+
+        // Create hologram for any story graffiti
+        var storyGraffitisInRoom = Plugin.storyGraffitiRoomPositions.Where(e => e.Value.Key == self.name);
+        foreach (var storyGraffiti in storyGraffitisInRoom)
+        {
+            GraffitiHolder graffitiHolder = new GraffitiHolder(Plugin.graffitis["Story"][storyGraffiti.Key], storyGraffiti.Value);
+            self.realizedRoom.AddObject(graffitiHolder);
         }
 
         SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(world.game.GetStorySession.saveState.miscWorldSaveData);
@@ -70,6 +82,16 @@ public static partial class Hooks
         {
             intro = new CutsceneVinkiIntro(self);
             self.AddObject(intro);
+        }
+    }
+
+    private static void Room_Update(On.Room.orig_Update orig, Room self)
+    {
+        orig(self);
+
+        foreach (GraffitiHolder gHolder in self.drawableObjects.Where(e => e is GraffitiHolder))
+        {
+            gHolder.Update();
         }
     }
 

@@ -88,8 +88,8 @@ namespace Vinki
             LoadGraffiti();
 
             // Add the story graffitis
-            AddGraffiti("5P", "Story", new Vector2?(new Vector2(650, 200)));
-            AddGraffiti("5P_stretched", "Story", new Vector2?(new Vector2(520, 400)));
+            AddGraffiti("5P", "Story", new("SS_AI", new Vector2(650, 200)));
+            AddGraffiti("5P_stretched", "Story", new("SS_AI", new Vector2(520, 400)));
 
             // Remix menu config
             VinkiConfig.RegisterOI();
@@ -127,7 +127,7 @@ namespace Vinki
             }
         }
 
-        private static void AddGraffiti(string image, string slugcat, Vector2? storyGraffitiRoomPos = null)
+        private static void AddGraffiti(string image, string slugcat, KeyValuePair<string, Vector2>? storyGraffitiRoomPos = null)
         {
             PlacedObject.CustomDecalData decal = new PlacedObject.CustomDecalData(null);
             decal.imageName = "VinkiGraffiti/" + slugcat + "/" + Path.GetFileNameWithoutExtension(image);
