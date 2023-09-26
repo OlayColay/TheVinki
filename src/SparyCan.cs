@@ -157,7 +157,7 @@ sealed class SprayCan : Weapon
         this.ChangeMode(Weapon.Mode.Free);
         if (result.obj is Creature)
         {
-            (result.obj as Creature).Violence(base.firstChunk, new Vector2?(base.firstChunk.vel * base.firstChunk.mass), result.chunk, result.onAppendagePos, Creature.DamageType.Explosion, 0.8f, 85f);
+            (result.obj as Creature).Violence(base.firstChunk, new Vector2?(base.firstChunk.vel * base.firstChunk.mass), result.chunk, result.onAppendagePos, Creature.DamageType.Explosion, 0f, 85f);
         }
         else if (result.chunk != null)
         {
