@@ -27,6 +27,11 @@ public class GraffitiObject : CustomDecal
 
     public GraffitiObject(PlacedObject placedObject, SaveState save, int gNum, string roomId) : base(placedObject)
     {
+        if (save == null)
+        {
+            return;
+        }
+
         cyclePlaced = (gNum < Plugin.storyGraffitiCount) ? -1 : save.cycleNumber;
         serializableGraffiti = new(placedObject, cyclePlaced);
 

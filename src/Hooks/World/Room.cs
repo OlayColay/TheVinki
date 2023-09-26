@@ -30,12 +30,12 @@ public static partial class Hooks
         }
 
         // Create hologram for any story graffiti
-        var storyGraffitisInRoom = Plugin.storyGraffitiRoomPositions.Where(e => e.Value.Key == self.name);
-        foreach (var storyGraffiti in storyGraffitisInRoom)
-        {
-            GraffitiHolder graffitiHolder = new GraffitiHolder(Plugin.graffitis["Story"][storyGraffiti.Key], storyGraffiti.Value);
-            self.realizedRoom.AddObject(graffitiHolder);
-        }
+        //var storyGraffitisInRoom = Plugin.storyGraffitiRoomPositions.Where(e => e.Value.Key == self.name);
+        //foreach (var storyGraffiti in storyGraffitisInRoom)
+        //{
+        //    GraffitiHolder graffitiHolder = new GraffitiHolder(Plugin.graffitis["Story"][storyGraffiti.Key], storyGraffiti.Value);
+        //    self.realizedRoom.AddObject(graffitiHolder);
+        //}
 
         SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(world.game.GetStorySession.saveState.miscWorldSaveData);
         if (!miscSave.TryGet("PlacedGraffitis", out placedGraffitis) || !placedGraffitis.ContainsKey(self.name))
