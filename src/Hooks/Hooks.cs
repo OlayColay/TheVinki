@@ -64,24 +64,18 @@ namespace Vinki
                 Debug.Log("Can't find vinki mod ID");
             }
 
+            graffitiFolder = AssetManager.ResolveDirectory(graffitiFolder);
+            storyGraffitiFolder = AssetManager.ResolveDirectory(storyGraffitiFolder);
+
             // If the graffiti folder doesn't exist (or is empty), copy it from the mod
             if (!Directory.Exists(graffitiFolder) || !Directory.EnumerateDirectories(graffitiFolder).Any() ||
                 !Directory.Exists(graffitiFolder + "/vinki") || !Directory.EnumerateFileSystemEntries(graffitiFolder + "/vinki").Any() ||
                 !Directory.Exists(graffitiFolder + "/White") || !Directory.EnumerateFileSystemEntries(graffitiFolder + "/White").Any() || modChanged)
             {
-                string modFolder = AssetManager.ResolveDirectory("../../../../workshop/content/312520/3001275271");
-                if (!Directory.Exists(modFolder))
+                if (!CopyGraffitiBackup())
                 {
-                    Debug.Log("Vinki was not installed from Steam Workshop. Attempting to find locally...");
-                    modFolder = AssetManager.ResolveDirectory("./mods/thevinki");
-                    if (!Directory.Exists(modFolder))
-                    {
-                        Debug.LogError("Could not find Vinki mod in workshop files or local mods!");
-                        return;
-                    }
+                    return;
                 }
-                Debug.Log("Graffiti folder doesn't exist! Copying from mod folder: " + modFolder);
-                CopyFilesRecursively(modFolder + "/VinkiGraffiti", graffitiFolder);
             }
 
             // Go through each graffiti image and add it to the list of decals Vinki can place
@@ -106,6 +100,20 @@ namespace Vinki
 
             // Populate the colorfulItems List for crafting Spray Cans
             InitColorfulItems();
+        }
+
+        public static bool CopyGraffitiBackup()
+        {
+            string backupFolder = AssetManager.ResolveDirectory("decals/GraffitiBackup");
+            if (!Directory.Exists(backupFolder))
+            {
+                Debug.LogError("Could not find Vinki graffiti backup folder in workshop files or local mods!");
+                return false;
+            }
+            Debug.Log("Graffiti folder doesn't exist! Copying from backup folder: " + backupFolder);
+            CopyFilesRecursively(backupFolder, backupFolder + "/../VinkiGraffiti");
+            graffitiFolder = AssetManager.ResolveDirectory("decals/VinkiGraffiti");
+            return true;
         }
 
         public static void LoadGraffiti()
@@ -144,8 +152,8 @@ namespace Vinki
             string filePath;
             if (storyGraffitiRoomPos.HasValue)
             {
-                filePath = AssetManager.ResolveFilePath("decals/" + Path.GetFileNameWithoutExtension(image) + ".png");
-                decal.imageName = Path.GetFileNameWithoutExtension(image);
+                filePath = AssetManager.ResolveFilePath(storyGraffitiFolder + '/' + Path.GetFileNameWithoutExtension(image) + ".png");
+                decal.imageName = "StorySpoilers/" + Path.GetFileNameWithoutExtension(image);
                 storyGraffitiRoomPositions.Add(graffitis["Story"].Count, storyGraffitiRoomPos.Value);
                 storyGraffitiCount++;
             }
