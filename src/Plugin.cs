@@ -10,7 +10,7 @@ namespace Vinki
 {
     [BepInDependency("slime-cubed.slugbase")]
     [BepInDependency("dressmyslugcat", BepInDependency.DependencyFlags.SoftDependency)]
-    [BepInPlugin(MOD_ID, "The Vinki", "0.8.14")]
+    [BepInPlugin(MOD_ID, "The Vinki", "0.8.14.1")]
     class Plugin : BaseUnityPlugin
     {
         public const string MOD_ID = "olaycolay.thevinki";
@@ -18,20 +18,35 @@ namespace Vinki
         public static int lastYDirection = 1;
         public static int craftCounter = 0;
         public static int storyGraffitiCount = 0;
-        public static int[] vineGrindDelay = { 0, 0, 0, 0 };
+        public static int[] vineGrindDelay = { 
+            0, 0, 0, 0,
+            0, 0, 0, 0,
+            0, 0, 0, 0,
+            0, 0, 0, 0
+        };
         public static bool grindUpPoleFlag = false;
         public static bool isGrindingH = false;
         public static bool isGrindingV = false;
         public static bool isGrindingNoGrav = false;
         public static bool isGrindingVine = false;
         public static bool isGrinding = false;
-        public static bool[] grindToggle = { false, false, false, false };
+        public static bool[] grindToggle = { 
+            false, false, false, false,
+            false, false, false, false,
+            false, false, false, false,
+            false, false, false, false
+        };
         public static bool sleeping;
         public static bool introPlayed = false;
         public static Vector2 lastVineDir = Vector2.zero;
-        public static ClimbableVinesSystem.VinePosition[] vineAtFeet = { null, null, null, null };
-        public static Player.AnimationIndex[] lastAnimationFrame = { Player.AnimationIndex.None, Player.AnimationIndex.None, Player.AnimationIndex.None, Player.AnimationIndex.None };
-        public static Player.AnimationIndex[] lastAnimation = { Player.AnimationIndex.None, Player.AnimationIndex.None, Player.AnimationIndex.None, Player.AnimationIndex.None };
+        public static ClimbableVinesSystem.VinePosition[] vineAtFeet = new ClimbableVinesSystem.VinePosition[16];
+        public static Player.AnimationIndex[] lastAnimationFrame = { 
+            Player.AnimationIndex.None, Player.AnimationIndex.None, Player.AnimationIndex.None, Player.AnimationIndex.None,
+            Player.AnimationIndex.None, Player.AnimationIndex.None, Player.AnimationIndex.None, Player.AnimationIndex.None,
+            Player.AnimationIndex.None, Player.AnimationIndex.None, Player.AnimationIndex.None, Player.AnimationIndex.None,
+            Player.AnimationIndex.None, Player.AnimationIndex.None, Player.AnimationIndex.None, Player.AnimationIndex.None
+        };
+        public static Player.AnimationIndex[] lastAnimation = lastAnimationFrame.Clone() as Player.AnimationIndex[];
         public static ChunkSoundEmitter grindSound;
         public static Dictionary<string, List<PlacedObject.CustomDecalData>> graffitis = new();
         public static Dictionary<string, List<Vector2>> graffitiOffsets = new();
@@ -40,7 +55,12 @@ namespace Vinki
         public static Dictionary<int, KeyValuePair<string, Vector2>> storyGraffitiRoomPositions = new();
         public static Dictionary<AbstractPhysicalObject.AbstractObjectType, int> colorfulItems = new Dictionary<AbstractPhysicalObject.AbstractObjectType, int>();
         public static Texture2D TailTexture;
-        public static Color?[][] jollyColors = new Color?[4][] { new Color?[6], new Color?[6], new Color?[6], new Color?[6] };
+        public static Color?[][] jollyColors = new Color?[16][] { 
+            new Color?[6], new Color?[6], new Color?[6], new Color?[6],
+            new Color?[6], new Color?[6], new Color?[6], new Color?[6],
+            new Color?[6], new Color?[6], new Color?[6], new Color?[6],
+            new Color?[6], new Color?[6], new Color?[6], new Color?[6]
+        };
         public static string graffitiFolder = "decals/VinkiGraffiti";
         public static string storyGraffitiFolder = "decals/StorySpoilers";
         public static readonly PlayerFeature<float> CoyoteBoost = PlayerFloat("thevinki/coyote_boost");
