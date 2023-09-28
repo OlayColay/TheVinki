@@ -177,6 +177,8 @@ namespace Vinki
             {
                 return;
             }
+            trigger.PlaySound(SoundID.MENU_Start_New_Game);
+            trigger.held = false;
 
             Hooks.LoadGraffiti();
         }
