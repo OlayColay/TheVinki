@@ -58,6 +58,12 @@
             </summary>
             <remarks>This value starts at 10 and can only be increased. Set it when your mod is being enabled. Avoid setting this to anything extremely high.</remarks>
         </member>
+        <member name="P:ImprovedInput.CustomInputExt.MaxPlayers">
+            <summary>
+            The number of players who could possibly be receiving input at the moment.
+            </summary>
+            <remarks>This value starts at 10 and can only be increased. Set it when your mod is being enabled. Avoid setting this to anything extremely high.</remarks>
+        </member>
         <member name="M:ImprovedInput.CustomInputExt.UsingKeyboard(Options.ControlSetup)">
             <summary>Returns true if a given control setup uses a keyboard.</summary>
         </member>
