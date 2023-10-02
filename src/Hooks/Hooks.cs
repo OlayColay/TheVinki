@@ -32,6 +32,7 @@ namespace Vinki
             ApplyRoomHooks();
             ApplyJollyCoopHooks();
             ApplySaveStateHooks();
+            ApplyKarmaLadderScreenHooks();
         }
 
         // Load any resources, such as sprites or sounds
