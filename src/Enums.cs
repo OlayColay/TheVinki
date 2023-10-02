@@ -5,6 +5,7 @@ namespace Vinki;
 public static class Enums
 {
     public static SlugcatStats.Name vinki = new(nameof(vinki), false);
+    public static ProcessManager.ProcessID GraffitiQuest = new(nameof(GraffitiQuest), false);
     public static string vinkiStr = nameof(vinki);
 
     public static class SSOracle

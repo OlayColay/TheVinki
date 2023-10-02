@@ -8,6 +8,7 @@ using Fisobs.Core;
 using MoreSlugcats;
 using static Vinki.Plugin;
 using MonoMod.Utils;
+using System.Runtime.CompilerServices;
 
 namespace Vinki
 {
@@ -199,6 +200,7 @@ namespace Vinki
 
                 // Putting this hook here ensures that SlugBase's BuildScene hook goes first
                 On.Menu.MenuScene.BuildScene += MenuScene_BuildScene;
+                On.ProcessManager.PostSwitchMainProcess += ProcessManager_PostSwitchMainProcess;
             }
             catch (Exception ex)
             {
@@ -393,6 +395,15 @@ namespace Vinki
                 return Color.white;
             }
             return new Color(r, g, b, 1f);
+        }
+
+        private static void ProcessManager_PostSwitchMainProcess(On.ProcessManager.orig_PostSwitchMainProcess orig, ProcessManager self, ProcessManager.ProcessID ID)
+        {
+            if (ID == Enums.GraffitiQuest)
+            {
+                
+            }
+            orig(self, ID);
         }
     }
 }

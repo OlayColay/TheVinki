@@ -11,6 +11,7 @@ public static partial class Hooks
 		On.Menu.KarmaLadderScreen.ctor += KarmaLadderScreen_ctor;
         On.Menu.KarmaLadderScreen.Update += KarmaLadderScreen_Update;
         On.Menu.KarmaLadderScreen.Singal += KarmaLadderScreen_Singal;
+        On.Menu.KarmaLadderScreen.CommunicateWithUpcomingProcess += KarmaLadderScreen_CommunicateWithUpcomingProcess;
 
         On.Menu.SleepAndDeathScreen.UpdateInfoText += SleepAndDeathScreen_UpdateInfoText;
 	}
@@ -25,7 +26,7 @@ public static partial class Hooks
             return;
         }
 
-        questButton = new SimpleButton(self, self.pages[0], self.Translate("QUEST MAP"), "QUEST MAP", new Vector2(self.ContinueAndExitButtonsXPos - 470f - self.manager.rainWorld.options.SafeScreenOffset.x, Mathf.Max(self.manager.rainWorld.options.SafeScreenOffset.y, 15f)), new Vector2(110f, 30f));
+        questButton = new SimpleButton(self, self.pages[0], self.Translate("QUEST MAP"), "QUEST MAP", new Vector2(self.ContinueAndExitButtonsXPos - 460f - self.manager.rainWorld.options.SafeScreenOffset.x, Mathf.Max(self.manager.rainWorld.options.SafeScreenOffset.y, 15f)), new Vector2(110f, 30f));
         self.pages[0].subObjects.Add(questButton);
         questButton.black = (false ? 1f : 0f);
     }
@@ -56,13 +57,23 @@ public static partial class Hooks
 
         if (message == "QUEST MAP")
         {
-            Debug.Log("Congratulations! The quest map button works!");
-            self.PlaySound(SoundID.MENU_Switch_Page_Out);
+            GraffitiDialog dialog = new GraffitiDialog(Enums.vinki, self.manager, self.continueButton.pos);
+            self.manager.ShowDialog(dialog);
+            self.PlaySound(SoundID.MENU_Switch_Page_In);
         }
         else
         {
             orig(self, sender, message);
         }
+    }
+
+    private static void KarmaLadderScreen_CommunicateWithUpcomingProcess(On.Menu.KarmaLadderScreen.orig_CommunicateWithUpcomingProcess orig, KarmaLadderScreen self, MainLoopProcess nextProcess)
+    {
+        //if (nextProcess is GraffitiDreamScreen)
+        //{
+        //    (nextProcess as GraffitiDialog).GetDataFromGame(null);
+        //}
+        orig(self, nextProcess);
     }
 
     private static string SleepAndDeathScreen_UpdateInfoText(On.Menu.SleepAndDeathScreen.orig_UpdateInfoText orig, SleepAndDeathScreen self)
