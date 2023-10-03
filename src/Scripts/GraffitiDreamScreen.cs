@@ -21,12 +21,12 @@ namespace Menu
             this.background = new MenuIllustration(this, this.pages[0], "", "graffiti_map", new Vector2(Screen.width/2, Screen.height/2), true, true);
             this.pages[0].subObjects.Add(this.background);
 
-            this.graffitiSpots[0] = new MenuIllustration(this, this.pages[0], "", "graffiti_ss", new Vector2(Screen.width / 2, Screen.height / 2), true, true);
+            this.graffitiSpots[0] = new MenuIllustration(this, this.pages[0], "", "graffiti_ss", new Vector2(750, 550), true, true);
 
             for (int i = 0; i < graffitiSpots.Length; i++)
             {
-                graffitiSlapping[i] = 60;
-                graffitiSpots[i].sprite.scale = 3f;
+                graffitiSlapping[i] = (int)slapLength;
+                graffitiSpots[i].sprite.scale = 0.1f;
                 graffitiSpots[i].alpha = 0f;
 
                 this.pages[0].subObjects.Add(graffitiSpots[i]);
@@ -85,7 +85,7 @@ namespace Menu
                 this.manager.StopSideProcess(this);
                 this.closing = false;
             }
-            this.cancelButton.buttonBehav.greyedOut = this.opening;
+            this.cancelButton.buttonBehav.greyedOut = this.opening || graffitiSlapping.Max() > 0;
 
             if (this.opening)
             {
@@ -99,15 +99,40 @@ namespace Menu
                     continue;
                 }
 
-                float t = (60f - graffitiSlapping[i]) / 60f;
-                Debug.Log("Graffiti width: " + graffitiSpots[i].sprite.scaleX);
-                graffitiSpots[i].sprite.scale = Mathf.Lerp(3f, 1f, t);
-                graffitiSpots[i].alpha = t * 1.2f;
+                float t = (slapLength - graffitiSlapping[i]) / slapLength;
+                graffitiSpots[i].sprite.scale = EaseOutElastic(0.01f, 1f, t);
+                graffitiSpots[i].alpha = t * 5f;
                 graffitiSlapping[i]--;
 
                 // Only show one graffiti animation at a time
                 break;
             }
+        }
+
+        private float EaseOutElastic(float start, float end, float value)
+        {
+            end -= start;
+
+            float d = 1f;
+            float p = d * .3f;
+            float s;
+            float a = 0;
+
+            if (value == 0) return start;
+
+            if ((value /= d) == 1) return start + end;
+
+            if (a == 0f || a < Mathf.Abs(end))
+            {
+                a = end;
+                s = p * 0.25f;
+            }
+            else
+            {
+                s = p / (2 * Mathf.PI) * Mathf.Asin(end / a);
+            }
+
+            return (a * Mathf.Pow(2, -10 * value) * Mathf.Sin((value * d - s) * (2 * Mathf.PI) / p) + end + start);
         }
 
         public MenuIllustration background;
@@ -127,5 +152,7 @@ namespace Menu
 
         public float uAlpha;
         public float targetAlpha;
+
+        public float slapLength = 40f;
     }
 }
