@@ -7,10 +7,8 @@ using UnityEngine;
 
 namespace Menu
 {
-    // Token: 0x0200041C RID: 1052
     public class GraffitiDialog : Dialog
     {
-        // Token: 0x06002A9C RID: 10908 RVA: 0x0033BE9C File Offset: 0x0033A09C
         public GraffitiDialog(ProcessManager manager, Vector2 cancelButtonPos) : base(manager)
         {
             float[] screenOffsets = Custom.GetScreenOffsets();
@@ -19,8 +17,21 @@ namespace Menu
             this.pages[0].pos = new Vector2(0.01f, 0f);
             Page page = this.pages[0];
             page.pos.y = page.pos.y + 2000f;
-            this.title = new MenuIllustration(this, this.pages[0], "", "graffiti_map", new Vector2(Screen.width/2, Screen.height/2), true, true);
-            this.pages[0].subObjects.Add(this.title);
+
+            this.background = new MenuIllustration(this, this.pages[0], "", "graffiti_map", new Vector2(Screen.width/2, Screen.height/2), true, true);
+            this.pages[0].subObjects.Add(this.background);
+
+            this.graffitiSpots[0] = new MenuIllustration(this, this.pages[0], "", "graffiti_ss", new Vector2(Screen.width / 2, Screen.height / 2), true, true);
+
+            for (int i = 0; i < graffitiSpots.Length; i++)
+            {
+                graffitiSlapping[i] = 60;
+                graffitiSpots[i].sprite.scale = 3f;
+                graffitiSpots[i].alpha = 0f;
+
+                this.pages[0].subObjects.Add(graffitiSpots[i]);
+            }
+
             float cancelButtonWidth = GraffitiDialog.GetCancelButtonWidth(base.CurrLang);
             this.cancelButton = new SimpleButton(this, this.pages[0], base.Translate("CLOSE"), "CLOSE", cancelButtonPos, new Vector2(cancelButtonWidth, 30f));
             this.pages[0].subObjects.Add(this.cancelButton);
@@ -47,10 +58,9 @@ namespace Menu
                 this.darkSprite.alpha = this.uAlpha * 0.95f;
             }
             this.pages[0].pos.y = Mathf.Lerp(this.manager.rainWorld.options.ScreenSize.y + 100f, 0.01f, (this.uAlpha < 0.999f) ? this.uAlpha : 1f);
-            this.title.sprite.alpha = Mathf.Lerp(0f, 1f, Mathf.Lerp(0f, 0.85f, this.darkSprite.alpha));
+            this.background.sprite.alpha = Mathf.Lerp(0f, 1f, Mathf.Lerp(0f, 0.85f, this.darkSprite.alpha));
         }
 
-        // Token: 0x06002AA4 RID: 10916 RVA: 0x0033CAC0 File Offset: 0x0033ACC0
         public override void Singal(MenuObject sender, string message)
         {
             base.Singal(sender, message);
@@ -61,7 +71,6 @@ namespace Menu
             }
         }
 
-        // Token: 0x06002AA5 RID: 10917 RVA: 0x0033CB90 File Offset: 0x0033AD90
         public override void Update()
         {
             base.Update();
@@ -77,36 +86,46 @@ namespace Menu
                 this.closing = false;
             }
             this.cancelButton.buttonBehav.greyedOut = this.opening;
+
+            if (this.opening)
+            {
+                return;
+            }
+
+            for (int i = 0; i < this.graffitiSpots.Length; i++)
+            {
+                if (graffitiSlapping[i] == 0)
+                {
+                    continue;
+                }
+
+                float t = (60f - graffitiSlapping[i]) / 60f;
+                Debug.Log("Graffiti width: " + graffitiSpots[i].sprite.scaleX);
+                graffitiSpots[i].sprite.scale = Mathf.Lerp(3f, 1f, t);
+                graffitiSpots[i].alpha = t * 1.2f;
+                graffitiSlapping[i]--;
+
+                // Only show one graffiti animation at a time
+                break;
+            }
         }
 
-        // Token: 0x0400272A RID: 10026
-        public MenuIllustration title;
+        public MenuIllustration background;
+        public MenuIllustration[] graffitiSpots = new MenuIllustration[1];
+        public int[] graffitiSlapping = new int[1];
 
-        // Token: 0x0400272B RID: 10027
         public SimpleButton cancelButton;
 
-        // Token: 0x0400272C RID: 10028
         public float leftAnchor;
-
-        // Token: 0x0400272D RID: 10029
         public float rightAnchor;
 
-        // Token: 0x0400272E RID: 10030
         public bool opening;
-
-        // Token: 0x0400272F RID: 10031
         public bool closing;
 
-        // Token: 0x0400273C RID: 10044
         public float lastAlpha;
-
-        // Token: 0x0400273D RID: 10045
         public float currentAlpha;
 
-        // Token: 0x0400273E RID: 10046
         public float uAlpha;
-
-        // Token: 0x0400273F RID: 10047
         public float targetAlpha;
     }
 }
