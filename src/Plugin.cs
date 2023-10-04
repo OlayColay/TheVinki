@@ -38,6 +38,12 @@ namespace Vinki
         };
         public static bool sleeping;
         public static bool introPlayed = false;
+        public static bool[] storyGraffitisSprayed = { 
+            false, false,
+        };
+        public static bool[] storyGraffitisOnMap = {
+            false, false,
+        };
         public static Vector2 lastVineDir = Vector2.zero;
         public static ClimbableVinesSystem.VinePosition[] vineAtFeet = new ClimbableVinesSystem.VinePosition[16];
         public static Player.AnimationIndex[] lastAnimationFrame = { 

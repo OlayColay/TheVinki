@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using Menu.Remix;
 using RWCustom;
+using SlugBase.SaveData;
 using UnityEngine;
+using Vinki;
 
 namespace Menu
 {
     public class GraffitiDialog : Dialog
     {
-        public GraffitiDialog(ProcessManager manager, Vector2 cancelButtonPos) : base(manager)
+        public GraffitiDialog(ProcessManager manager, Vector2 cancelButtonPos, MiscWorldSaveData miscWorldSaveData) : base(manager)
         {
             float[] screenOffsets = Custom.GetScreenOffsets();
             this.leftAnchor = screenOffsets[0];
@@ -22,13 +24,32 @@ namespace Menu
             this.pages[0].subObjects.Add(this.background);
 
             this.graffitiSpots[0] = new MenuIllustration(this, this.pages[0], "", "graffiti_ss", new Vector2(750, 550), true, true);
+            this.graffitiSpots[1] = new MenuIllustration(this, this.pages[0], "", "graffiti_ss", new Vector2(800, 560), true, true);
+
+            // Save that we sprayed this story graffiti
+            SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(miscWorldSaveData);
+            if (miscSave.TryGet("StoryGraffitisSprayed", out bool[] sprd))
+            {
+                Plugin.storyGraffitisSprayed = sprd;
+            }
+            if (miscSave.TryGet("StoryGraffitisOnMap", out bool[] onMap))
+            {
+                Plugin.storyGraffitisOnMap = onMap;
+            }
+            for (int i = 0; i < Plugin.storyGraffitisSprayed.Length; i++)
+            {
+                graffitiSpots[i].alpha = Plugin.storyGraffitisOnMap[i] ? 1f : 0f;
+                if (!Plugin.storyGraffitisOnMap[i] && Plugin.storyGraffitisSprayed[i])
+                {
+                    graffitiSlapping[i] = (int)slapLength;
+                    graffitiSpots[i].sprite.scale = 0.1f;
+                    Plugin.storyGraffitisOnMap[i] = true;
+                }
+            }
+            miscSave.Set("StoryGraffitisOnMap", Plugin.storyGraffitisOnMap);
 
             for (int i = 0; i < graffitiSpots.Length; i++)
             {
-                graffitiSlapping[i] = (int)slapLength;
-                graffitiSpots[i].sprite.scale = 0.1f;
-                graffitiSpots[i].alpha = 0f;
-
                 this.pages[0].subObjects.Add(graffitiSpots[i]);
             }
 
@@ -136,8 +157,8 @@ namespace Menu
         }
 
         public MenuIllustration background;
-        public MenuIllustration[] graffitiSpots = new MenuIllustration[1];
-        public int[] graffitiSlapping = new int[1];
+        public MenuIllustration[] graffitiSpots = new MenuIllustration[2];
+        public int[] graffitiSlapping = new int[2];
 
         public SimpleButton cancelButton;
 

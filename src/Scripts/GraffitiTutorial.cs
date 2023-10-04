@@ -29,7 +29,7 @@ public class GraffitiTutorial : UpdatableAndDeletable
     {
         base.Update(eu);
 
-        if (!room.fullyLoaded || !room.BeingViewed || nextPhase == Phase.End)
+        if (!room.fullyLoaded || !room.BeingViewed || nextPhase == Phase.End || room.PlayersInRoom.Count < 1)
         {
             return;
         }

@@ -7,6 +7,7 @@ using SprayCans;
 using static Vinki.Plugin;
 using System.Threading.Tasks;
 using DevInterface;
+using SlugBase.SaveData;
 
 namespace Vinki
 {
@@ -22,6 +23,15 @@ namespace Vinki
             else
             {
                 slugcat = "Story";
+
+                // Save that we sprayed this story graffiti
+                SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(self.room.game.GetStorySession.saveState.miscWorldSaveData);
+                if (miscSave.TryGet("StoryGraffitisSprayed", out bool[] sprd))
+                {
+                    storyGraffitisSprayed = sprd;
+                }
+                storyGraffitisSprayed[gNum] = true;
+                miscSave.Set("StoryGraffitisSprayed", storyGraffitisSprayed);
             }
             Debug.Log("Spraying " + slugcat + " #" + gNum + "\tsize:" + graffitis[slugcat][gNum].handles[1].ToString());
 
