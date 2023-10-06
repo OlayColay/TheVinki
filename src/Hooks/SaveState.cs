@@ -10,6 +10,11 @@ public static partial class Hooks
     private static void ApplySaveStateHooks()
     {
         On.SaveState.GetStoryDenPosition += SaveState_GetStoryDenPosition;
+
+        On.PlayerProgression.WipeSaveState += (On.PlayerProgression.orig_WipeSaveState orig, PlayerProgression self, SlugcatStats.Name name) => { 
+            if (name == Enums.vinki) Plugin.introPlayed = false;
+            orig(self, name);
+        };
     }
 
     private static string SaveState_GetStoryDenPosition(On.SaveState.orig_GetStoryDenPosition orig, SlugcatStats.Name slugcat, out bool isVanilla)
