@@ -1,5 +1,7 @@
-﻿using RWCustom;
+﻿using JollyCoop;
+using RWCustom;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using static Vinki.Plugin;
 using Random = UnityEngine.Random;
@@ -17,9 +19,67 @@ namespace Vinki
             On.PlayerGraphics.AddToContainer += PlayerGraphics_AddToContainer;
             On.PlayerGraphics.DrawSprites += PlayerGraphics_DrawSprites;
             On.PlayerGraphics.Update += PlayerGraphics_Update;
-            On.PlayerGraphics.JollyBodyColorMenu += PlayerGraphics_JollyBodyColorMenu;
             On.PlayerGraphics.JollyUniqueColorMenu += PlayerGraphics_JollyUniqueColorMenu;
             On.PlayerGraphics.LoadJollyColorsFromOptions += PlayerGraphics_Debug;
+            On.PlayerGraphics.PopulateJollyColorArray += PlayerGraphics_PopulateJollyColorsArray;
+        }
+
+        private static void PlayerGraphics_PopulateJollyColorsArray(On.PlayerGraphics.orig_PopulateJollyColorArray orig, SlugcatStats.Name reference)
+        {
+            if (reference != Enums.vinki || Custom.rainWorld.options.jollyColorMode != Options.JollyColorMode.AUTO)
+            {
+                orig(reference);
+                return;
+            }
+
+            PlayerGraphics.jollyColors = new Color?[4][];
+            JollyCustom.Log("Initializing colors... reference " + ((reference != null) ? reference.ToString() : null), false);
+            for (int i = 0; i < PlayerGraphics.jollyColors.Length; i++)
+            {
+                PlayerGraphics.jollyColors[i] = new Color?[3];
+                JollyCustom.Log("Need to generate colors for player " + i.ToString(), false);
+                if (i == 0)
+                {
+                    List<string> list = PlayerGraphics.DefaultBodyPartColorHex(reference);
+                    PlayerGraphics.jollyColors[0][0] = new Color?(Color.white);
+                    PlayerGraphics.jollyColors[0][1] = new Color?(Color.black);
+                    PlayerGraphics.jollyColors[0][2] = new Color?(Color.green);
+                    if (list.Count >= 1)
+                    {
+                        PlayerGraphics.jollyColors[0][0] = new Color?(Custom.hexToColor(list[0]));
+                    }
+                    if (list.Count >= 2)
+                    {
+                        PlayerGraphics.jollyColors[0][1] = new Color?(Custom.hexToColor(list[1]));
+                    }
+                    if (list.Count >= 3)
+                    {
+                        PlayerGraphics.jollyColors[0][2] = new Color?(Custom.hexToColor(list[2]));
+                    }
+                }
+                // Rider OC for AUTO player 2
+                else if (i == 1)
+                {
+                    PlayerGraphics.jollyColors[1][0] = new Color(0.484f, 0.297f, 1f);
+                    PlayerGraphics.jollyColors[1][1] = PlayerGraphics.jollyColors[0][1];
+                    PlayerGraphics.jollyColors[1][2] = new Color(0.98f, 1f, 0.039f);
+                }
+                else
+                {
+                    Color color = JollyCustom.GenerateComplementaryColor(PlayerGraphics.JollyColor(i - 1, 0));
+                    PlayerGraphics.jollyColors[i][0] = new Color?(color);
+                    HSLColor hslcolor = JollyCustom.RGB2HSL(JollyCustom.GenerateClippedInverseColor(color));
+                    float num = hslcolor.lightness + 0.45f;
+                    hslcolor.lightness *= num;
+                    hslcolor.saturation *= num;
+                    PlayerGraphics.jollyColors[i][1] = new Color?(hslcolor.rgb);
+                    HSLColor hslcolor2 = JollyCustom.RGB2HSL(JollyCustom.GenerateComplementaryColor(hslcolor.rgb));
+                    hslcolor2.saturation = Mathf.Lerp(hslcolor2.saturation, 1f, 0.8f);
+                    hslcolor2.lightness = Mathf.Lerp(hslcolor2.lightness, 1f, 0.8f);
+                    PlayerGraphics.jollyColors[i][2] = new Color?(hslcolor2.rgb);
+                    JollyCustom.Log("Generating auto color for player " + i.ToString(), false);
+                }
+            }
         }
 
         private static void PlayerGraphics_Debug(On.PlayerGraphics.orig_LoadJollyColorsFromOptions orig, int playerNumber)
@@ -288,26 +348,8 @@ namespace Vinki
             return result;
         }
 
-        private static Color PlayerGraphics_JollyBodyColorMenu(On.PlayerGraphics.orig_JollyBodyColorMenu orig, SlugcatStats.Name slugName, SlugcatStats.Name reference)
-        {
-            // Rider OC for AUTO player 2
-            if (slugName.value == "JollyPlayer2" && Custom.rainWorld.options.jollyColorMode == Options.JollyColorMode.AUTO && reference == Enums.vinki)
-            {
-                return new Color(0.298f, 0.459f, 1f);
-            }
-            else
-            {
-                return orig(slugName, reference);
-            }
-        }
-
         private static Color PlayerGraphics_JollyUniqueColorMenu(On.PlayerGraphics.orig_JollyUniqueColorMenu orig, SlugcatStats.Name slugName, SlugcatStats.Name reference, int playerNumber)
         {
-            // Rider OC for AUTO player 2
-            if (playerNumber == 1 && Custom.rainWorld.options.jollyColorMode == Options.JollyColorMode.AUTO && slugName == Enums.vinki)
-            {
-                return new Color(1f, 0.541f, 0.039f);
-            }
             if ((Custom.rainWorld.options.jollyColorMode == Options.JollyColorMode.DEFAULT || (playerNumber == 0 && Custom.rainWorld.options.jollyColorMode == Options.JollyColorMode.AUTO)) && slugName == Enums.vinki)
             {
                 return new Color(0.28627450980392155f, 0.3058823529411765f, 0.8274509803921568f);

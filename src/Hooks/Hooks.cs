@@ -49,8 +49,8 @@ namespace Vinki
                 var saveData = SlugBase.SaveData.SaveDataExtension.GetSlugBaseData(rainWorld.progression.miscProgressionData);
                 if (saveData.TryGet("VinkiVersion", out string modVersion))
                 {
-                    Debug.Log("Vinki mod version changed!");
                     modChanged = vinkiMod.version != modVersion;
+                    if (modChanged) Debug.Log("Vinki mod version changed!");
                 }
                 else
                 {

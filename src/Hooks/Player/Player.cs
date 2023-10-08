@@ -162,10 +162,9 @@ namespace Vinki
         private static bool isCoyoteJumping(Player self)
         {
             Debug.Log("Last animation: " + lastAnimation[self.JollyOption.playerNumber].ToString() +
-                "\t This animation: " + self.animation.ToString() + "\t Body mode: " + self.bodyMode.ToString() +
-                "\t Can jump: " + self.canJump);
+                "\t This animation: " + self.animation.ToString() + "\t Body mode: " + self.bodyMode.ToString());
             return (lastAnimation[self.JollyOption.playerNumber] == Player.AnimationIndex.StandOnBeam && self.animation == Player.AnimationIndex.None &&
-                    self.bodyMode == Player.BodyModeIndex.Default && self.canJump > 0);
+                    self.bodyMode == Player.BodyModeIndex.Default);
         }
 
         // Implement higher beam speed
