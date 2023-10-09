@@ -16,8 +16,14 @@ public static class Enums
         public static SSOracleBehavior.Action Vinki_SSActionTriggered = new(nameof(Vinki_SSActionTriggered), true);
         public static SSOracleBehavior.Action Vinki_SSActionGetOut = new(nameof(Vinki_SSActionGetOut), true);
         public static SSOracleBehavior.SubBehavior.SubBehavID Vinki_SSSubBehavGeneral = new(nameof(Vinki_SSSubBehavGeneral), true);
+    }
 
-        public static SlugcatStats.Name VinkiPebbles = new(nameof(VinkiPebbles), true);
+    public static class DMOracle
+    {
+        public static Conversation.ID Vinki_DMConvoFirstMeet = new(nameof(Vinki_DMConvoFirstMeet), true);
+
+        public static SSOracleBehavior.Action Vinki_DMActionGeneral = new(nameof(Vinki_DMActionGeneral), true);
+        public static SSOracleBehavior.SubBehavior.SubBehavID Vinki_DMSubBehavGeneral = new(nameof(Vinki_DMSubBehavGeneral), true);
     }
 
     public static class Color

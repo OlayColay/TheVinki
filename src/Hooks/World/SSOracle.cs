@@ -34,7 +34,12 @@ namespace Vinki
 
         private static void SSOracleBehavior_SeePlayer(On.SSOracleBehavior.orig_SeePlayer orig, SSOracleBehavior self)
         {
-            if (self.oracle.room.game.StoryCharacter == Enums.vinki && self.action != Enums.SSOracle.Vinki_SSActionGeneral &&
+            if (self.oracle.room.game.StoryCharacter == Enums.vinki && ModManager.MSC && self.oracle.ID == MoreSlugcatsEnums.OracleID.DM)
+            {
+                self.NewAction(Enums.DMOracle.Vinki_DMActionGeneral);
+                return;
+            }
+            else if (self.oracle.room.game.StoryCharacter == Enums.vinki && self.action != Enums.SSOracle.Vinki_SSActionGeneral &&
                 self.oracle.room.game.GetStorySession.saveState.miscWorldSaveData.SSaiConversationsHad == 0)
             {
                 oracleBehavior = self;
@@ -61,6 +66,20 @@ namespace Vinki
                 self.action.ToString(),
                 ")"
             }));
+            if (nextAction == Enums.DMOracle.Vinki_DMActionGeneral)
+            {
+                if (self.currSubBehavior.ID == Enums.DMOracle.Vinki_DMSubBehavGeneral) return;
+
+                self.inActionCounter = 0;
+                self.action = nextAction;
+
+                self.currSubBehavior.Deactivate();
+
+                var subBehavior = new DMOracleMeetVinki(self);
+                subBehavior.Activate(self.action, nextAction);
+                self.currSubBehavior = subBehavior;
+                return;
+            }
             if (self.oracle.room.game.StoryCharacter == Enums.vinki && self.action != Enums.SSOracle.Vinki_SSActionGeneral && nextAction == Enums.SSOracle.Vinki_SSActionGeneral)
             {
                 if (self.currSubBehavior.ID == Enums.SSOracle.Vinki_SSSubBehavGeneral) return;
@@ -130,6 +149,10 @@ namespace Vinki
 
                 e.Add(new TextEvent(self, 0,
                     self.Translate("It is simply laughable that a little beast climbed all the way up my exterior just to insult me in this way. I hope you realize that I am NOT<LINE>offended in any way, shape, or form. After all, I am a being who is, if you excuse me, godlike in compar-"), 0));
+            }
+            else if (id == Enums.DMOracle.Vinki_DMConvoFirstMeet)
+            {
+                self.LoadEventsFromFile(8675309);
             }
             else
             {
@@ -229,6 +252,36 @@ namespace Vinki
                             return;
                         }
                         this.owner.NewAction(SSOracleBehavior.Action.ThrowOut_KillOnSight);
+                    }
+                    return;
+                }
+            }
+        }
+
+        public class DMOracleMeetVinki : SSOracleBehavior.ConversationBehavior
+        {
+            public DMOracleMeetVinki(SSOracleBehavior owner) : base(owner, Enums.DMOracle.Vinki_DMSubBehavGeneral, Enums.DMOracle.Vinki_DMConvoFirstMeet)
+            {
+
+            }
+
+            public override void Update()
+            {
+                if (owner.oracle.room.game.StoryCharacter == Enums.vinki && owner.action == Enums.DMOracle.Vinki_DMActionGeneral)
+                {
+                    owner.LockShortcuts();
+                    owner.movementBehavior = SSOracleBehavior.MovementBehavior.KeepDistance;
+                    //owner.gravOn = true;
+                    if (owner.inActionCounter == 80 && (owner.conversation == null || owner.conversation.id != Enums.DMOracle.Vinki_DMConvoFirstMeet))
+                    {
+                        owner.InitateConversation(Enums.DMOracle.Vinki_DMConvoFirstMeet, this);
+                    }
+                    if (owner.inActionCounter > 80 && (owner.conversation == null || (owner.conversation != null && owner.conversation.id == Enums.DMOracle.Vinki_DMConvoFirstMeet && owner.conversation.slatedForDeletion)))
+                    {
+                        owner.UnlockShortcuts();
+                        owner.conversation = null;
+                        owner.getToWorking = 1f;
+                        owner.NewAction(null);
                     }
                     return;
                 }
