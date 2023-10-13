@@ -1,8 +1,32 @@
 0-8675309
-OMG it's the Vinki hiiiiiiiiiiiiiii
+Oh, funny little creature! You're back!
 
-0 : I am testing what these weird colon things do : 30
+I received a message from Five Pebbles about your visit. It appears that he was not too<LINE>pleased with your art. I'm sorry that my idea to surprise him got you in trouble.
 
-0 : What if it's really LONG : 120
+He can get irritable sometimes, but I'm sure he wouldn't hurt anyone unprovoked. He's<LINE>like a younger brother to me, so please don't take his lashing out at you too seriously.
 
-Interesting.
+The reason I suggested that you show him your art is because he is very interested in our<LINE>creators' history, and your art reminds me of some of theirs! I wonder how you were able<LINE>to replicate their style so well? He must be wondering too, as angry as he seemed to you.
+
+If you create some more art around our facility grounds, he may come around to you. I am<LINE>sure that he can only hold back his historical enthusiasm for so long!
+
+0 : ... : 60
+
+0 : Oh! While you were away, I searched through my memory banks about the shoes that you are<LINE>wearing. If you are also interested in my creators' history, as well as your species's, I<LINE>can tell you about them. : 60
+
+My creators produced organisms that were purposed for various tasks, such as guards for us<LINE>Iterators, and microbes that can digest inorganic material. Your species was initially<LINE>created for the purpose of cleaning out their ventalation systems that could not be<LINE>reached otherwise.
+
+However, some of my creators' took a liking to your species - likely because of your<LINE>intelligence and generally cute appearence. Many of my creators' began to bring you<LINE>into their homes as companions.
+
+Soon enough, some of my creators began to fashion clothing for your species. Robes,<LINE>masks, and shoes were not all that uncommon for your kind to wear! 
+
+The particular shoes you wear are actually composed of purposed organisms themselves. I<LINE>will spare you the details, but do you know what magnets are, little creature? Microbes<LINE>that make up the base of your shoes create an effect similar to magnets that allow for<LINE>quick traversal on metallic poles and beams.
+
+As for the glasses you wear, they were for the many of your kind that did not enjoy<LINE>wearing masks but needed ocular protection from the sun. Your style was most likely<LINE>sold at clearence shops, but don't worry - they suit you perfectly!~
+
+...
+
+I feel sorry for all of the companions that returned home from work to find that all my<LINE>creators had vanished on that final day.
+
+0 : ... : 60
+
+Stay for as long as you would like, little friend. Although I do not have anything else<LINE>to offer unfortunately.

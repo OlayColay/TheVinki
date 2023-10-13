@@ -58,14 +58,14 @@ namespace Vinki
 
         private static void SSOracleBehavior_NewAction(On.SSOracleBehavior.orig_NewAction orig, SSOracleBehavior self, SSOracleBehavior.Action nextAction)
         {
-            Debug.Log(string.Concat(new string[]
-            {
-                "Vinki new action: ",
-                nextAction.ToString(),
-                " (from ",
-                self.action.ToString(),
-                ")"
-            }));
+            //Debug.Log(string.Concat(new string[]
+            //{
+            //    "Vinki new action: ",
+            //    nextAction.ToString(),
+            //    " (from ",
+            //    self.action.ToString(),
+            //    ")"
+            //}));
             if (nextAction == Enums.DMOracle.Vinki_DMActionGeneral)
             {
                 if (self.currSubBehavior.ID == Enums.DMOracle.Vinki_DMSubBehavGeneral) return;
@@ -281,7 +281,7 @@ namespace Vinki
                         owner.UnlockShortcuts();
                         owner.conversation = null;
                         owner.getToWorking = 1f;
-                        owner.NewAction(null);
+                        owner.NewAction(SSOracleBehavior.Action.General_Idle);
                     }
                     return;
                 }
