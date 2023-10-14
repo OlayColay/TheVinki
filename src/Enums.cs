@@ -23,7 +23,7 @@ public static class Enums
         public static Conversation.ID Vinki_DMConvoFirstMeet = new(nameof(Vinki_DMConvoFirstMeet), true);
 
         public static SSOracleBehavior.Action Vinki_DMActionGeneral = new(nameof(Vinki_DMActionGeneral), true);
-        public static SSOracleBehavior.SubBehavior.SubBehavID Vinki_DMSubBehavGeneral = new(nameof(Vinki_DMSubBehavGeneral), true);
+        public static SSOracleBehavior.SubBehavior.SubBehavID Vinki_DMSlumberParty = new(nameof(Vinki_DMSlumberParty), true);
     }
 
     public static class Color
