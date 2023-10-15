@@ -9,6 +9,8 @@ using MoreSlugcats;
 using static Vinki.Plugin;
 using MonoMod.Utils;
 using System.Runtime.CompilerServices;
+using MonoMod.Cil;
+using Mono.Cecil.Cil;
 
 namespace Vinki
 {
@@ -24,6 +26,8 @@ namespace Vinki
         private static void ApplyHooks()
         {
             Content.Register(new SprayCanFisob());
+
+            IL.Menu.IntroRoll.ctor += IntroRoll_ctor;
 
             // Put your custom hooks here!
             ApplyPlayerHooks();
@@ -404,6 +408,23 @@ namespace Vinki
                 
             }
             orig(self, ID);
+        }
+
+        private static void IntroRoll_ctor(ILContext il)
+        {
+            var cursor = new ILCursor(il);
+
+            if (cursor.TryGotoNext(i => i.MatchLdstr("Intro_Roll_C_"))
+                && cursor.TryGotoNext(MoveType.After, i => i.MatchCallOrCallvirt<string>(nameof(string.Concat))))
+            {
+                cursor.Emit(OpCodes.Ldloc_3);
+                cursor.EmitDelegate<Func<string, string[], string>>((titleImage, oldTitleImages) =>
+                {
+                    titleImage = (UnityEngine.Random.value < 0.5f) ? "intro_roll_vinki_0" : "intro_roll_vinki_1";
+
+                    return titleImage;
+                });
+            }
         }
     }
 }
