@@ -11,6 +11,7 @@ using MonoMod.Utils;
 using System.Runtime.CompilerServices;
 using MonoMod.Cil;
 using Mono.Cecil.Cil;
+using SlugBase;
 
 namespace Vinki
 {
@@ -26,8 +27,6 @@ namespace Vinki
         private static void ApplyHooks()
         {
             Content.Register(new SprayCanFisob());
-
-            IL.Menu.IntroRoll.ctor += IntroRoll_ctor;
 
             // Put your custom hooks here!
             ApplyPlayerHooks();
@@ -45,6 +44,9 @@ namespace Vinki
         {
             Enums.RegisterValues();
             ApplyHooks();
+
+            SlugBase.SaveData.SlugBaseSaveData progSaveData = SlugBase.SaveData.SaveDataExtension.GetSlugBaseData(rainWorld.progression.miscProgressionData);
+            VinkiConfig.ShowVinkiTitleCard.OnChange += () => progSaveData.Set("ShowVinkiTitleCard", VinkiConfig.ShowVinkiTitleCard.Value);
 
             bool modChanged = false;
             if (rainWorld.options.modLoadOrder.TryGetValue("olaycolay.thevinki", out _) && VinkiConfig.RestoreGraffitiOnUpdate.Value)
@@ -205,6 +207,12 @@ namespace Vinki
                 // Putting this hook here ensures that SlugBase's BuildScene hook goes first
                 On.Menu.MenuScene.BuildScene += MenuScene_BuildScene;
                 On.ProcessManager.PostSwitchMainProcess += ProcessManager_PostSwitchMainProcess;
+
+                if (SlugBase.SaveData.SaveDataExtension.GetSlugBaseData(self.progression.miscProgressionData).TryGet("ShowVinkiTitleCard", out bool value) == false || value)
+                {
+                    Debug.Log("Enabled vinki title card: " + value ?? "null");
+                    IL.Menu.IntroRoll.ctor += IntroRoll_ctor;
+                }
             }
             catch (Exception ex)
             {

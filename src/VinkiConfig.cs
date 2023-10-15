@@ -1,5 +1,7 @@
 ﻿using Menu;
 using Menu.Remix.MixedUI;
+using SlugBase;
+using SlugBase.SaveData;
 using System.IO;
 using UnityEngine;
 
@@ -13,6 +15,7 @@ namespace Vinki
         public static Configurable<int> GraffitiFadeTime;
         public static Configurable<bool> DeleteGraffiti;
         public static Configurable<bool> RestoreGraffitiOnUpdate;
+        public static Configurable<bool> ShowVinkiTitleCard;
 
         public VinkiConfig()
         {
@@ -35,6 +38,10 @@ namespace Vinki
             RestoreGraffitiOnUpdate = config.Bind("restoreGraffitiOnUpdate", true, new ConfigurableInfo("Restore default graffiti when the mod updates to a new version. Helpful to automatically add any new graffiti from updates.", tags: new object[]
             {
                 "Restore Default Graffiti when Mod Updates"
+            }));
+            ShowVinkiTitleCard = config.Bind("showVinkiTitleCard", true, new ConfigurableInfo("Always show one of the Vinki title cards when starting the game. This replaces other title cards, and the mod must be high in the mod order on the left to work!", tags: new object[]
+            {
+                "Always Show Vinki Title Cards"
             }));
         }
 
@@ -77,6 +84,7 @@ namespace Vinki
                 200f,
                 color: Color.red
             );
+            AddCheckbox(ShowVinkiTitleCard, 240f);
         }
 
         // Combines two flipped 'LinearGradient200's together to make a fancy looking divider.
