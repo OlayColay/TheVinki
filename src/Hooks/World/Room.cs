@@ -29,14 +29,6 @@ public static partial class Hooks
             return;
         }
 
-        // Create hologram for any story graffiti
-        //var storyGraffitisInRoom = Plugin.storyGraffitiRoomPositions.Where(e => e.Value.Key == self.name);
-        //foreach (var storyGraffiti in storyGraffitisInRoom)
-        //{
-        //    GraffitiHolder graffitiHolder = new GraffitiHolder(Plugin.graffitis["Story"][storyGraffiti.Key], storyGraffiti.Value);
-        //    self.realizedRoom.AddObject(graffitiHolder);
-        //}
-
         SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(world.game.GetStorySession.saveState.miscWorldSaveData);
         if (!miscSave.TryGet("PlacedGraffitis", out placedGraffitis) || !placedGraffitis.ContainsKey(self.name))
         {
@@ -83,16 +75,19 @@ public static partial class Hooks
             intro = new CutsceneVinkiIntro(self);
             self.AddObject(intro);
         }
+
+        // Create hologram for any story graffiti
+        var storyGraffitisInRoom = Plugin.storyGraffitiRoomPositions.Where(e => e.Value.Key == self.abstractRoom.name);
+        foreach (var storyGraffiti in storyGraffitisInRoom)
+        {
+            GraffitiHolder graffitiHolder = new GraffitiHolder(Plugin.graffitis["Story"][storyGraffiti.Key], storyGraffiti.Value, self);
+            self.AddObject(graffitiHolder);
+        }
     }
 
     private static void Room_Update(On.Room.orig_Update orig, Room self)
     {
         orig(self);
-
-        foreach (GraffitiHolder gHolder in self.drawableObjects.Where(e => e is GraffitiHolder))
-        {
-            gHolder.Update();
-        }
     }
 
     private static void RoomSpecificScript_AddRoomSpecificScript(On.RoomSpecificScript.orig_AddRoomSpecificScript orig, Room self)
