@@ -98,7 +98,7 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
         }
 
         // Initialize corners of graffiti bounds
-        Vector2 grafRadii = graffitiData.handles[1] / 2f;
+        Vector2 grafRadii = graffitiData.handles[1] / 3f;
         boundsPoints[0] = new Vector2(-grafRadii.x, grafRadii.y);
         boundsPoints[1] = new Vector2(grafRadii.x, grafRadii.y);
         boundsPoints[2] = new Vector2(grafRadii.x, -grafRadii.y);
@@ -178,24 +178,24 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
         sLeaser.sprites[this.GoldSprite].y = vector.y - camPos.y;
         if (this.sprayable)
         {
-            sLeaser.sprites[this.GoldSprite].alpha = 0.75f * Mathf.Lerp(Mathf.Lerp(0.8f, 0.5f, Mathf.Pow(num, 0.6f + 0.2f * Random.value)), 0.7f, num2) * num3;
+            sLeaser.sprites[this.GoldSprite].alpha = this.displayBounds ? 0f : 0.75f * Mathf.Lerp(Mathf.Lerp(0.8f, 0.5f, Mathf.Pow(num, 0.6f + 0.2f * Random.value)), 0.7f, num2) * num3;
         }
         else
         {
-            sLeaser.sprites[this.GoldSprite].alpha = Mathf.Lerp(Mathf.Lerp(0.8f, 0.5f, Mathf.Pow(num, 0.6f + 0.2f * Random.value)), 0.7f, num2) * num3;
+            sLeaser.sprites[this.GoldSprite].alpha = this.displayBounds ? 0f : Mathf.Lerp(Mathf.Lerp(0.8f, 0.5f, Mathf.Pow(num, 0.6f + 0.2f * Random.value)), 0.7f, num2) * num3;
         }
         sLeaser.sprites[this.GoldSprite].scale = Mathf.Lerp(true ? 110f : 100f, 300f, num2) / 16f;
         Color color = this.GoldCol(num);
         sLeaser.sprites[this.MainSprite].color = color;
         sLeaser.sprites[this.MainSprite].x = vector.x - camPos.x;
         sLeaser.sprites[this.MainSprite].y = vector.y - camPos.y - 11f;
-        sLeaser.sprites[this.MainSprite].alpha = (1f - num) * Mathf.InverseLerp(0.5f, 0f, num2) * num3;
+        sLeaser.sprites[this.MainSprite].alpha = this.displayBounds ? 0f : (1f - num) * Mathf.InverseLerp(0.5f, 0f, num2) * num3;
         sLeaser.sprites[this.MainSprite].scaleY = 0.5f;
         sLeaser.sprites[this.MainSprite].isVisible = (!this.contract && num3 > 0f);
         sLeaser.sprites[this.TrailSprite].color = color;
         sLeaser.sprites[this.TrailSprite].x = Mathf.Lerp(this.trail[this.trail.Length - 1].x, this.trail[this.trail.Length - 2].x, timeStacker) - camPos.x;
         sLeaser.sprites[this.TrailSprite].y = Mathf.Lerp(this.trail[this.trail.Length - 1].y, this.trail[this.trail.Length - 2].y, timeStacker) - camPos.y;
-        sLeaser.sprites[this.TrailSprite].alpha = 0.75f * (1f - num) * Mathf.InverseLerp(0.5f, 0f, num2) * num3;
+        sLeaser.sprites[this.TrailSprite].alpha = this.displayBounds ? 0f : 0.75f * (1f - num) * Mathf.InverseLerp(0.5f, 0f, num2) * num3;
         sLeaser.sprites[this.TrailSprite].isVisible = (!this.contract && num3 > 0f);
         sLeaser.sprites[this.TrailSprite].scaleX = ((Random.value < num) ? (1f + 20f * Random.value * this.glitch) : 1f);
         sLeaser.sprites[this.TrailSprite].scaleY = ((Random.value < num) ? (1f + 2f * Random.value * Random.value * this.glitch) : 1f);
@@ -304,7 +304,14 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
         {
             if (Mathf.Pow(Random.value, 0.1f + this.glitch * 5f) > this.lines[k, 3].x)
             {
-                this.lines[k, 0] = Vector2.Lerp(this.lines[k, 0], this.pos + new Vector2(this.lines[k, 2].x * num, this.lines[k, 2].y), Mathf.Pow(Random.value, 1f + this.lines[k, 3].x * 17f));
+                if (this.displayBounds)
+                {
+                    this.lines[k, 0] = this.pos + this.lines[k, 2];
+                }
+                else
+                {
+                    this.lines[k, 0] = Vector2.Lerp(this.lines[k, 0], this.pos + new Vector2(this.lines[k, 2].x * num, this.lines[k, 2].y), Mathf.Pow(Random.value, 1f + this.lines[k, 3].x * 17f));
+                }
             }
             if (Random.value < Mathf.Pow(this.lines[k, 3].x, 0.2f) && Random.value < Mathf.Pow(this.glitch, 0.8f - 0.4f * this.lines[k, 3].x))
             {
@@ -328,7 +335,7 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
                 this.generalGlitch = Random.value;
             }
             float f = Mathf.Sin(Mathf.Clamp(this.glitch, 0f, 1f) * 3.1415927f);
-            if (Random.value < 0.05f + 0.35f * Mathf.Pow(f, 0.5f) && Random.value < this.power)
+            if (Random.value < 0.05f + 0.35f * Mathf.Pow(f, 0.5f) && Random.value < this.power && !this.displayBounds)
             {
                 this.room.AddObject(new CollectToken.TokenSpark(this.pos + Custom.RNV() * 6f * this.glitch, Custom.RNV() * Mathf.Lerp(2f, 9f, Mathf.Pow(f, 2f)) * Random.value, this.GoldCol(this.glitch), false));
             }
