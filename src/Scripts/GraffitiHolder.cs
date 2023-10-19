@@ -377,15 +377,30 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
                 }
                 this.room.PlaySound(SoundID.Token_Turn_Off, this.pos);
             }
-            else if (!this.displayBounds && Random.value < Mathf.InverseLerp(num5 + 60f, num5 - 20f, num4))
+            else if (!this.displayBounds)
             {
-                this.displayBounds = true;
-                // Set vertices of hologram to be bounds of graffiti
-                for (int i = 0; i < this.lines.GetLength(0); i++)
+                // check if a player is within the graffiti bounds, and show the bounds if one is
+                foreach (AbstractCreature player in this.room.game.session.Players)
                 {
-                    this.lines[i, 2] = boundsPoints[i];
+                    if (player.realizedCreature == null)
+                    {
+                        continue;
+                    }
+
+                    Vector2 playerPos = player.realizedCreature.mainBodyChunk.pos;
+                    if (playerPos.x >= this.pos.x - this.boundsPoints[1].x && playerPos.x <= this.pos.x + this.boundsPoints[1].x &&
+                        playerPos.y >= this.pos.y - this.boundsPoints[1].y && playerPos.y <= this.pos.y + this.boundsPoints[1].y)
+                    {
+                        this.displayBounds = true;
+                        // Set vertices of hologram to be bounds of graffiti
+                        for (int i = 0; i < this.lines.GetLength(0); i++)
+                        {
+                            this.lines[i, 2] = boundsPoints[i];
+                        }
+                        this.room.PlaySound(SoundID.Token_Turn_On, this.pos);
+                    }
                 }
-                this.room.PlaySound(SoundID.Token_Turn_On, this.pos);
+                
             }
         }
         base.Update(eu);

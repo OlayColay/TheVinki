@@ -14,7 +14,6 @@ public static partial class Hooks
         On.AbstractRoom.RealizeRoom += AbstractRoom_RealizeRoom;
 
         On.Room.Loaded += Room_Loaded;
-        On.Room.Update += Room_Update;
 
         On.RoomSpecificScript.AddRoomSpecificScript += RoomSpecificScript_AddRoomSpecificScript;
     }
@@ -88,11 +87,6 @@ public static partial class Hooks
                 self.AddObject(graffitiHolder);
             }
         }
-    }
-
-    private static void Room_Update(On.Room.orig_Update orig, Room self)
-    {
-        orig(self);
     }
 
     private static void RoomSpecificScript_AddRoomSpecificScript(On.RoomSpecificScript.orig_AddRoomSpecificScript orig, Room self)

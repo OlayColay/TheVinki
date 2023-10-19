@@ -158,8 +158,8 @@ namespace Menu
         }
 
         public MenuIllustration background;
-        public MenuIllustration[] graffitiSpots = new MenuIllustration[2];
-        public int[] graffitiSlapping = new int[2];
+        public MenuIllustration[] graffitiSpots = new MenuIllustration[3];
+        public int[] graffitiSlapping = new int[3];
 
         public SimpleButton cancelButton;
 
