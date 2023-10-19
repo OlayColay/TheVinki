@@ -25,6 +25,7 @@ namespace Menu
 
             this.graffitiSpots[0] = new MenuIllustration(this, this.pages[0], "", "graffiti_ss", new Vector2(750, 550), true, true);
             this.graffitiSpots[1] = new MenuIllustration(this, this.pages[0], "", "graffiti_ss", new Vector2(800, 560), true, true);
+            this.graffitiSpots[2] = new MenuIllustration(this, this.pages[0], "", "graffiti_test", new Vector2(650, 580), true, true);
 
             // Save that we sprayed this story graffiti
             SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(miscWorldSaveData);

@@ -98,7 +98,7 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
         }
 
         // Initialize corners of graffiti bounds
-        Vector2 grafRadii = graffitiData.handles[1] / 3f;
+        Vector2 grafRadii = graffitiData.handles[1] / 2f;
         boundsPoints[0] = new Vector2(-grafRadii.x, grafRadii.y);
         boundsPoints[1] = new Vector2(grafRadii.x, grafRadii.y);
         boundsPoints[2] = new Vector2(grafRadii.x, -grafRadii.y);

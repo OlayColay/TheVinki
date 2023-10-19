@@ -455,18 +455,7 @@ namespace Vinki
             // Spray a random graffiti
             if (self.JustPressed(Spray) && IsPressingGraffiti(self))
             {
-                if (!VinkiConfig.RequireSprayCans.Value)
-                {
-                    _ = SprayGraffiti(self);
-                }
-                else
-                {
-                    var grasp = self.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan);
-                    if (grasp != null && (grasp.grabbed as SprayCan).TryUse())
-                    {
-                        _ = SprayGraffiti(self);
-                    }
-                }
+                SprayGraffitiInGame(self);
             }
 
             if (self.SlugCatClass != Enums.vinki)
@@ -592,6 +581,44 @@ namespace Vinki
         private static bool IsPressingGraffiti(Player self)
         {
             return self.IsPressed(Graffiti) || (VinkiConfig.UpGraffiti.Value && self.input[0].y > 0f);
+        }
+
+        private static void SprayGraffitiInGame(Player self)
+        {
+            var storyGraffitisInRoom = Plugin.storyGraffitiRoomPositions.Where(e => e.Value.Key == self.room.abstractRoom.name);
+            var miscWorldSave = SaveDataExtension.GetSlugBaseData(self.room.game.GetStorySession.saveState.miscWorldSaveData);
+            bool storyGraffitisExist = miscWorldSave.TryGet("StoryGraffitisSprayed", out bool[] sprayedGNums);
+            int gNum = -1;
+
+            // Check if we are in the right place to spray a story graffiti
+            foreach (var storyGraffiti in storyGraffitisInRoom)
+            {
+                var graf = Plugin.graffitis["Story"][storyGraffiti.Key];
+                if (graf != null && (!storyGraffitisExist || !sprayedGNums[storyGraffiti.Key]))
+                {
+                    Vector2 grafRadius = graf.handles[1] / 2f;
+                    Vector2 grafPos = storyGraffiti.Value.Value;
+                    if (self.mainBodyChunk.pos.x >= grafPos.x - grafRadius.x && self.mainBodyChunk.pos.x <= grafPos.x + grafRadius.x &&
+                        self.mainBodyChunk.pos.y >= grafPos.y - grafRadius.y && self.mainBodyChunk.pos.y <= grafPos.y + grafRadius.y)
+                    {
+                        gNum = storyGraffiti.Key; 
+                        break;
+                    }
+                }
+            }
+
+            if (!VinkiConfig.RequireSprayCans.Value)
+            {
+                _ = SprayGraffiti(self, gNum: gNum);
+            }
+            else
+            {
+                var grasp = self.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan);
+                if (grasp != null && (grasp.grabbed as SprayCan).TryUse())
+                {
+                    _ = SprayGraffiti(self, gNum: gNum);
+                }
+            }
         }
     }
 }
