@@ -88,10 +88,10 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
             this.lines[i, 0] = this.pos;
             this.lines[i, 1] = this.pos;
         }
-        this.lines[0, 2] = new Vector2(-7f, 0f);
-        this.lines[1, 2] = new Vector2(0f, 11f);
-        this.lines[2, 2] = new Vector2(7f, 0f);
-        this.lines[3, 2] = new Vector2(0f, -11f);
+        this.lines[0, 2] = new Vector2(-22f, 22f);
+        this.lines[1, 2] = new Vector2(10f, -10f);
+        this.lines[2, 2] = new Vector2(22f, 22f);
+        this.lines[3, 2] = new Vector2(-10f, -10f);
         this.trail = new Vector2[5];
         for (int j = 0; j < this.trail.Length; j++)
         {
@@ -176,8 +176,9 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
         Color color = this.GoldCol(num);
         sLeaser.sprites[this.MainSprite].color = color;
         sLeaser.sprites[this.MainSprite].x = vector.x - camPos.x;
-        sLeaser.sprites[this.MainSprite].y = vector.y - camPos.y;
+        sLeaser.sprites[this.MainSprite].y = vector.y - camPos.y - 11f;
         sLeaser.sprites[this.MainSprite].alpha = (1f - num) * Mathf.InverseLerp(0.5f, 0f, num2) * num3;
+        sLeaser.sprites[this.MainSprite].scaleY = 0.5f;
         sLeaser.sprites[this.MainSprite].isVisible = (!this.contract && num3 > 0f);
         sLeaser.sprites[this.TrailSprite].color = color;
         sLeaser.sprites[this.TrailSprite].x = Mathf.Lerp(this.trail[this.trail.Length - 1].x, this.trail[this.trail.Length - 2].x, timeStacker) - camPos.x;
@@ -188,8 +189,9 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
         sLeaser.sprites[this.TrailSprite].scaleY = ((Random.value < num) ? (1f + 2f * Random.value * Random.value * this.glitch) : 1f);
         sLeaser.sprites[this.LightSprite].x = vector.x - camPos.x;
         sLeaser.sprites[this.LightSprite].y = vector.y - camPos.y;
-        sLeaser.sprites[this.LightSprite].alpha = 0.9f * (1f - num) * Mathf.InverseLerp(0.5f, 0f, num2) * num3;
+        sLeaser.sprites[this.LightSprite].alpha = 0f;
         sLeaser.sprites[this.LightSprite].scale = Mathf.Lerp(20f, 40f, num) / 16f;
+        sLeaser.sprites[this.LightSprite].isVisible = false;
         if (this.sprayable)
         {
             sLeaser.sprites[this.LightSprite].color = Color.Lerp(this.TokenColor, color, 0.4f);
@@ -199,10 +201,10 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
             sLeaser.sprites[this.LightSprite].color = color;
         }
         sLeaser.sprites[this.LightSprite].isVisible = (!this.contract && num3 > 0f);
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < lines.GetLength(0); i++)
         {
             Vector2 vector2 = Vector2.Lerp(this.lines[i, 1], this.lines[i, 0], timeStacker);
-            int num4 = (i == 3) ? 0 : (i + 1);
+            int num4 = (i == lines.GetLength(0)-1) ? 0 : (i + 1);
             Vector2 vector3 = Vector2.Lerp(this.lines[num4, 1], this.lines[num4, 0], timeStacker);
             float num5 = 1f - (1f - Mathf.Max(this.lines[i, 3].x, this.lines[num4, 3].x)) * (1f - num);
             num5 = Mathf.Pow(num5, 2f);
@@ -244,7 +246,7 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
         sLeaser.sprites[this.MainSprite].shader = rCam.game.rainWorld.Shaders["Hologram"];
         sLeaser.sprites[this.TrailSprite] = new FSprite("JetFishEyeA", true);
         sLeaser.sprites[this.TrailSprite].shader = rCam.game.rainWorld.Shaders["Hologram"];
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < this.lines.GetLength(0); i++)
         {
             sLeaser.sprites[this.LineSprite(i)] = new FSprite("pixel", true);
             sLeaser.sprites[this.LineSprite(i)].anchorY = 0f;
@@ -286,7 +288,6 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
         this.lastPower = this.power;
         this.power = Custom.LerpAndTick(this.power, this.poweredOn ? 1f : 0f, 0.07f, 0.025f);
         this.glitch = Mathf.Max(this.glitch, 1f - this.power);
-        this.pos += this.vel;
         for (int k = 0; k < this.lines.GetLength(0); k++)
         {
             if (Mathf.Pow(Random.value, 0.1f + this.glitch * 5f) > this.lines[k, 3].x)
@@ -308,16 +309,11 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
         this.vel *= 0.995f;
         this.vel += Vector2.ClampMagnitude(this.hoverPos + new Vector2(0f, Mathf.Sin(this.sinCounter / 15f) * 7f) - this.pos, 15f) / 81f;
         this.vel += Custom.RNV() * Random.value * Random.value * Mathf.Lerp(0.06f, 0.4f, this.glitch);
-        this.pos += Custom.RNV() * Mathf.Pow(Random.value, 7f - 6f * this.generalGlitch) * Mathf.Lerp(0.06f, 1.2f, this.glitch);
         {
             this.generalGlitch = Mathf.Max(0f, this.generalGlitch - 0.008333334f);
             if (Random.value < 0.0027027028f)
             {
                 this.generalGlitch = Random.value;
-            }
-            if (!Custom.DistLess(this.pos, this.hoverPos, 11f))
-            {
-                this.pos += Custom.DirVec(this.hoverPos, this.pos) * (11f - Vector2.Distance(this.pos, this.hoverPos)) * 0.7f;
             }
             float f = Mathf.Sin(Mathf.Clamp(this.glitch, 0f, 1f) * 3.1415927f);
             if (Random.value < 0.05f + 0.35f * Mathf.Pow(f, 0.5f) && Random.value < this.power)
@@ -345,10 +341,6 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
                     {
                         if (Custom.DistLess(this.room.game.session.Players[n].realizedCreature.mainBodyChunk.pos, this.pos, num5))
                         {
-                            if (Custom.DistLess(this.pos, this.hoverPos, 80f))
-                            {
-                                this.pos += Custom.DirVec(this.pos, this.room.game.session.Players[n].realizedCreature.mainBodyChunk.pos) * Custom.LerpMap(Vector2.Distance(this.pos, this.room.game.session.Players[n].realizedCreature.mainBodyChunk.pos), 40f, num5, 2.2f, 0f, 0.5f) * Random.value;
-                            }
                             if (Random.value < 0.05f && Random.value < Mathf.InverseLerp(num5, 40f, Vector2.Distance(this.pos, this.room.game.session.Players[n].realizedCreature.mainBodyChunk.pos)))
                             {
                                 this.glitch = Mathf.Max(this.glitch, Random.value * 0.5f);

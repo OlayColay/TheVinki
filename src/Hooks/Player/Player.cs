@@ -33,7 +33,7 @@ namespace Vinki
                 storyGraffitisSprayed[gNum] = true;
                 miscSave.Set("StoryGraffitisSprayed", storyGraffitisSprayed);
             }
-            Debug.Log("Spraying " + slugcat + " #" + gNum + "\tsize:" + graffitis[slugcat][gNum].handles[1].ToString());
+            Debug.Log("Spraying " + slugcat + " #" + gNum + "\tsize: " + graffitis[slugcat][gNum].handles[1].ToString());
 
             Vector2 sprayPos = (slugcat == "Story" && storyGraffitiRoomPositions.ContainsKey(gNum)) ? storyGraffitiRoomPositions[gNum].Value : self.mainBodyChunk.pos;
             Room room = self.room;
