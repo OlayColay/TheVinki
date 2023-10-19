@@ -32,6 +32,8 @@ namespace Vinki
                 }
                 storyGraffitisSprayed[gNum] = true;
                 miscSave.Set("StoryGraffitisSprayed", storyGraffitisSprayed);
+
+                (self.room.drawableObjects.Find((x) => x is GraffitiHolder && (x as GraffitiHolder).gNum == gNum) as GraffitiHolder)?.RemoveFromRoom();
             }
             Debug.Log("Spraying " + slugcat + " #" + gNum + "\tsize: " + graffitis[slugcat][gNum].handles[1].ToString());
 

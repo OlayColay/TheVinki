@@ -78,10 +78,15 @@ public static partial class Hooks
 
         // Create hologram for any story graffiti
         var storyGraffitisInRoom = Plugin.storyGraffitiRoomPositions.Where(e => e.Value.Key == self.abstractRoom.name);
+        var miscWorldSave = SaveDataExtension.GetSlugBaseData(self.game.GetStorySession.saveState.miscWorldSaveData);
+        bool storyGraffitisHaveBeenSprayed = miscWorldSave.TryGet("StoryGraffitisSprayed", out bool[] sprayedGNums);
         foreach (var storyGraffiti in storyGraffitisInRoom)
         {
-            GraffitiHolder graffitiHolder = new GraffitiHolder(Plugin.graffitis["Story"][storyGraffiti.Key], storyGraffiti.Value, self);
-            self.AddObject(graffitiHolder);
+            if ((!storyGraffitisHaveBeenSprayed || !sprayedGNums[storyGraffiti.Key]) && storyGraffiti.Key != 1)
+            {
+                GraffitiHolder graffitiHolder = new GraffitiHolder(Plugin.graffitis["Story"][storyGraffiti.Key], storyGraffiti.Value, self, storyGraffiti.Key);
+                self.AddObject(graffitiHolder);
+            }
         }
     }
 

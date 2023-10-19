@@ -76,10 +76,10 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
     private StaticSoundLoop soundLoop;
     private StaticSoundLoop glitchLoop;
     public Color TokenColor = new Color(1f, 0.5f, 0f);
+    public int gNum;
 
-    public GraffitiHolder(PlacedObject.CustomDecalData graffitiData, KeyValuePair<string, Vector2> graffitiPosition, Room room, PlacedObject placedObj = null)
+    public GraffitiHolder(PlacedObject.CustomDecalData graffitiData, KeyValuePair<string, Vector2> graffitiPosition, Room room, int gNum)
 	{
-        //this.placedObj = placedObj;
         this.room = room;
         this.pos = graffitiPosition.Value;
         this.hoverPos = this.pos;
@@ -111,6 +111,8 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
         }
         this.soundLoop = new StaticSoundLoop(SoundID.Token_Idle_LOOP, this.pos, room, 0f, 1f);
         this.glitchLoop = new StaticSoundLoop(SoundID.Token_Upset_LOOP, this.pos, room, 0f, 1f);
+
+        this.gNum = gNum;
     }
 
     public void AddToContainer(RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, FContainer newContatiner)
