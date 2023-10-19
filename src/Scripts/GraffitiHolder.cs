@@ -108,6 +108,7 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
         for (int j = 0; j < this.trail.Length; j++)
         {
             this.trail[j] = this.pos;
+            this.trail[j].y += -11f;
         }
         this.soundLoop = new StaticSoundLoop(SoundID.Token_Idle_LOOP, this.pos, room, 0f, 1f);
         this.glitchLoop = new StaticSoundLoop(SoundID.Token_Upset_LOOP, this.pos, room, 0f, 1f);
@@ -187,6 +188,7 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
             sLeaser.sprites[this.GoldSprite].alpha = this.displayBounds ? 0f : Mathf.Lerp(Mathf.Lerp(0.8f, 0.5f, Mathf.Pow(num, 0.6f + 0.2f * Random.value)), 0.7f, num2) * num3;
         }
         sLeaser.sprites[this.GoldSprite].scale = Mathf.Lerp(true ? 110f : 100f, 300f, num2) / 16f;
+        sLeaser.sprites[this.GoldSprite].isVisible = !this.displayBounds;
         Color color = this.GoldCol(num);
         sLeaser.sprites[this.MainSprite].color = color;
         sLeaser.sprites[this.MainSprite].x = vector.x - camPos.x;
@@ -197,10 +199,10 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
         sLeaser.sprites[this.TrailSprite].color = color;
         sLeaser.sprites[this.TrailSprite].x = Mathf.Lerp(this.trail[this.trail.Length - 1].x, this.trail[this.trail.Length - 2].x, timeStacker) - camPos.x;
         sLeaser.sprites[this.TrailSprite].y = Mathf.Lerp(this.trail[this.trail.Length - 1].y, this.trail[this.trail.Length - 2].y, timeStacker) - camPos.y;
-        sLeaser.sprites[this.TrailSprite].alpha = this.displayBounds ? 0f : 0.75f * (1f - num) * Mathf.InverseLerp(0.5f, 0f, num2) * num3;
-        sLeaser.sprites[this.TrailSprite].isVisible = (!this.contract && num3 > 0f);
+        sLeaser.sprites[this.TrailSprite].alpha = 0f;
+        sLeaser.sprites[this.TrailSprite].isVisible = false;
         sLeaser.sprites[this.TrailSprite].scaleX = ((Random.value < num) ? (1f + 20f * Random.value * this.glitch) : 1f);
-        sLeaser.sprites[this.TrailSprite].scaleY = ((Random.value < num) ? (1f + 2f * Random.value * Random.value * this.glitch) : 1f);
+        sLeaser.sprites[this.TrailSprite].scaleY = ((Random.value < num) ? (0.5f + 2f * Random.value * Random.value * this.glitch) : 0.5f);
         sLeaser.sprites[this.LightSprite].x = vector.x - camPos.x;
         sLeaser.sprites[this.LightSprite].y = vector.y - camPos.y;
         sLeaser.sprites[this.LightSprite].alpha = 0f;
