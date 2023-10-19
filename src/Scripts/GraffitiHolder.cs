@@ -59,13 +59,15 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
     public Vector2 vel;
     public Vector2[] trail;
     public Vector2[,] lines;
+    public Vector2[] glassesPoints = new Vector2[4] { new Vector2(-22f, 22f), new Vector2(10f, -10f), new Vector2(22f, 22f), new Vector2(-10f, -10f) };
+    public Vector2[] boundsPoints = new Vector2[4];
     private float glitch;
     private float lastGlitch;
     private float generalGlitch;
     public float sinCounter;
     public float sinCounter2;
     //public PlacedObject placedObj;
-    private bool poweredOn;
+    private bool displayBounds;
     private bool contract;
     private float power;
     private float lastPower;
@@ -88,10 +90,20 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
             this.lines[i, 0] = this.pos;
             this.lines[i, 1] = this.pos;
         }
-        this.lines[0, 2] = new Vector2(-22f, 22f);
-        this.lines[1, 2] = new Vector2(10f, -10f);
-        this.lines[2, 2] = new Vector2(22f, 22f);
-        this.lines[3, 2] = new Vector2(-10f, -10f);
+
+        // Initially set vertices of hologram to be glasses
+        for (int i = 0; i < this.lines.GetLength(0); i++)
+        {
+            this.lines[i, 2] = glassesPoints[i];
+        }
+
+        // Initialize corners of graffiti bounds
+        Vector2 grafRadii = graffitiData.handles[1] / 2f;
+        boundsPoints[0] = new Vector2(-grafRadii.x, grafRadii.y);
+        boundsPoints[1] = new Vector2(grafRadii.x, grafRadii.y);
+        boundsPoints[2] = new Vector2(grafRadii.x, -grafRadii.y);
+        boundsPoints[3] = new Vector2(-grafRadii.x, -grafRadii.y);
+
         this.trail = new Vector2[5];
         for (int j = 0; j < this.trail.Length; j++)
         {
@@ -286,7 +298,7 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
         }
         this.trail[0] = this.lastPos;
         this.lastPower = this.power;
-        this.power = Custom.LerpAndTick(this.power, this.poweredOn ? 1f : 0f, 0.07f, 0.025f);
+        this.power = Custom.LerpAndTick(this.power, 1f, 0.07f, 0.025f);
         this.glitch = Mathf.Max(this.glitch, 1f - this.power);
         for (int k = 0; k < this.lines.GetLength(0); k++)
         {
@@ -337,33 +349,33 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
                 if (this.room.game.session.Players[n].realizedCreature != null && this.room.game.session.Players[n].realizedCreature.Consious && (this.room.game.session.Players[n].realizedCreature as Player).dangerGrasp == null && this.room.game.session.Players[n].realizedCreature.room == this.room)
                 {
                     num4 = Mathf.Min(num4, Vector2.Distance(this.room.game.session.Players[n].realizedCreature.mainBodyChunk.pos, this.pos));
-                    if (flag)
-                    {
-                        if (Custom.DistLess(this.room.game.session.Players[n].realizedCreature.mainBodyChunk.pos, this.pos, num5))
-                        {
-                            if (Random.value < 0.05f && Random.value < Mathf.InverseLerp(num5, 40f, Vector2.Distance(this.pos, this.room.game.session.Players[n].realizedCreature.mainBodyChunk.pos)))
-                            {
-                                this.glitch = Mathf.Max(this.glitch, Random.value * 0.5f);
-                            }
-                        }
-                    }
                 }
             }
-            if (!flag && this.poweredOn)
+            if (!flag && this.displayBounds)
             {
                 if (Random.value < 0.14285715f)
                 {
                     this.glitch = Mathf.Max(this.glitch, Random.value * Random.value * Random.value);
                 }
             }
-            if (this.poweredOn && this.expand == 0f && !this.contract && Random.value < Mathf.InverseLerp(num5 + 160f, num5 + 460f, num4))
+            if (this.displayBounds && this.expand == 0f && !this.contract && Random.value < Mathf.InverseLerp(num5 + 160f, num5 + 460f, num4))
             {
-                this.poweredOn = false;
+                this.displayBounds = false;
+                // Set vertices of hologram to be glasses
+                for (int i = 0; i < this.lines.GetLength(0); i++)
+                {
+                    this.lines[i, 2] = glassesPoints[i];
+                }
                 this.room.PlaySound(SoundID.Token_Turn_Off, this.pos);
             }
-            else if (!this.poweredOn && Random.value < Mathf.InverseLerp(num5 + 60f, num5 - 20f, num4))
+            else if (!this.displayBounds && Random.value < Mathf.InverseLerp(num5 + 60f, num5 - 20f, num4))
             {
-                this.poweredOn = true;
+                this.displayBounds = true;
+                // Set vertices of hologram to be bounds of graffiti
+                for (int i = 0; i < this.lines.GetLength(0); i++)
+                {
+                    this.lines[i, 2] = boundsPoints[i];
+                }
                 this.room.PlaySound(SoundID.Token_Turn_On, this.pos);
             }
         }
