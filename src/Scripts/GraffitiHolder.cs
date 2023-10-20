@@ -23,24 +23,16 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
         }
     }
 
-    public int TrailSprite
-    {
-        get
-        {
-            return 2;
-        }
-    }
-
     public int LineSprite(int line)
     {
-        return 3 + line;
+        return 2 + line;
     }
 
     public int GoldSprite
     {
         get
         {
-            return 7;
+            return 6;
         }
     }
 
@@ -48,7 +40,7 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
     {
         get
         {
-            return 8;
+            return 7;
         }
     }
 
@@ -195,14 +187,7 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
         sLeaser.sprites[this.MainSprite].y = vector.y - camPos.y - 11f;
         sLeaser.sprites[this.MainSprite].alpha = this.displayBounds ? 0f : (1f - num) * Mathf.InverseLerp(0.5f, 0f, num2) * num3;
         sLeaser.sprites[this.MainSprite].scaleY = 0.5f;
-        sLeaser.sprites[this.MainSprite].isVisible = (!this.contract && num3 > 0f);
-        sLeaser.sprites[this.TrailSprite].color = color;
-        sLeaser.sprites[this.TrailSprite].x = Mathf.Lerp(this.trail[this.trail.Length - 1].x, this.trail[this.trail.Length - 2].x, timeStacker) - camPos.x;
-        sLeaser.sprites[this.TrailSprite].y = Mathf.Lerp(this.trail[this.trail.Length - 1].y, this.trail[this.trail.Length - 2].y, timeStacker) - camPos.y;
-        sLeaser.sprites[this.TrailSprite].alpha = 0f;
-        sLeaser.sprites[this.TrailSprite].isVisible = false;
-        sLeaser.sprites[this.TrailSprite].scaleX = ((Random.value < num) ? (1f + 20f * Random.value * this.glitch) : 1f);
-        sLeaser.sprites[this.TrailSprite].scaleY = ((Random.value < num) ? (0.5f + 2f * Random.value * Random.value * this.glitch) : 0.5f);
+        sLeaser.sprites[this.MainSprite].isVisible = !this.displayBounds;
         sLeaser.sprites[this.LightSprite].x = vector.x - camPos.x;
         sLeaser.sprites[this.LightSprite].y = vector.y - camPos.y;
         sLeaser.sprites[this.LightSprite].alpha = 0f;
@@ -260,8 +245,6 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
         }
         sLeaser.sprites[this.MainSprite] = new FSprite("JetFishEyeA", true);
         sLeaser.sprites[this.MainSprite].shader = rCam.game.rainWorld.Shaders["Hologram"];
-        sLeaser.sprites[this.TrailSprite] = new FSprite("JetFishEyeA", true);
-        sLeaser.sprites[this.TrailSprite].shader = rCam.game.rainWorld.Shaders["Hologram"];
         for (int i = 0; i < this.lines.GetLength(0); i++)
         {
             sLeaser.sprites[this.LineSprite(i)] = new FSprite("pixel", true);
@@ -310,7 +293,7 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
             {
                 if (this.displayBounds)
                 {
-                    this.lines[k, 0] = this.pos + this.lines[k, 2];
+                    this.lines[k, 0] = Vector2.Lerp(this.lines[k, 0], this.pos + new Vector2(this.lines[k, 2].x, this.lines[k, 2].y), Mathf.Pow(Random.value, 1f + this.lines[k, 3].x * 8f));
                 }
                 else
                 {
@@ -371,13 +354,27 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
             }
             if (this.displayBounds && this.expand == 0f && !this.contract && Random.value < Mathf.InverseLerp(num5 + 160f, num5 + 460f, num4))
             {
-                this.displayBounds = false;
-                // Set vertices of hologram to be glasses
-                for (int i = 0; i < this.lines.GetLength(0); i++)
+                // check if a player is within the graffiti bounds, and show the bounds if one is
+                foreach (AbstractCreature player in this.room.game.session.Players)
                 {
-                    this.lines[i, 2] = glassesPoints[i];
+                    if (player.realizedCreature == null)
+                    {
+                        continue;
+                    }
+
+                    Vector2 playerPos = player.realizedCreature.mainBodyChunk.pos;
+                    if (playerPos.x <= this.pos.x - this.boundsPoints[1].x || playerPos.x >= this.pos.x + this.boundsPoints[1].x ||
+                        playerPos.y <= this.pos.y - this.boundsPoints[1].y || playerPos.y >= this.pos.y + this.boundsPoints[1].y)
+                    {
+                        this.displayBounds = false;
+                        // Set vertices of hologram to be glasses
+                        for (int i = 0; i < this.lines.GetLength(0); i++)
+                        {
+                            this.lines[i, 2] = glassesPoints[i];
+                        }
+                        this.room.PlaySound(SoundID.Token_Turn_Off, this.pos);
+                    }
                 }
-                this.room.PlaySound(SoundID.Token_Turn_Off, this.pos);
             }
             else if (!this.displayBounds)
             {
