@@ -36,7 +36,7 @@ namespace Vinki
             ApplyRoomHooks();
             ApplyJollyCoopHooks();
             ApplySaveStateHooks();
-            ApplyKarmaLadderScreenHooks();
+            ApplySleepAndDeathScreenHooks();
         }
 
         // Load any resources, such as sprites or sounds
@@ -97,6 +97,7 @@ namespace Vinki
             Futile.atlasManager.LoadAtlas("atlases/glasses");
             Futile.atlasManager.LoadAtlas("atlases/rainpods");
             Futile.atlasManager.LoadAtlas("atlases/shoes");
+            Futile.atlasManager.LoadImage("atlases/icon_SprayCan");
 
             TailTexture = new Texture2D(150, 75, TextureFormat.ARGB32, false);
             var tailTextureFile = AssetManager.ResolveFilePath("textures/VinkiTail.png");

@@ -22,6 +22,6 @@ sealed class SprayCanIcon : Icon
     {
         // Fisobs autoloads the file in the mod folder named "icon_{Type}.png"
         // To use that, just remove the png suffix: "icon_SprayCan"
-        return "icon_SprayCan";
+        return "atlases/icon_SprayCan";
     }
 }

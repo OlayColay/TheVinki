@@ -62,7 +62,7 @@ namespace Vinki
                     // Spawn SprayCan in hand
                     var tilePosition = player.room.GetTilePosition(player.mainBodyChunk.pos);
                     var pos = new WorldCoordinate(player.room.abstractRoom.index, tilePosition.x, tilePosition.y - 1, 0);
-                    var abstr = new SprayCanAbstract(player.room.world, pos, player.room.game.GetNewID(), 3);
+                    var abstr = new SprayCanAbstract(player.room.world, pos, player.room.game.GetNewID(), 2);
                     abstr.Realize();
                     player.room.abstractRoom.AddEntity(abstr);
                     player.room.AddObject(abstr.realizedObject);

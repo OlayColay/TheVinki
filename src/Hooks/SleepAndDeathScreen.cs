@@ -6,18 +6,17 @@ using UnityEngine;
 namespace Vinki;
 public static partial class Hooks
 {
-	private static void ApplyKarmaLadderScreenHooks()
+	private static void ApplySleepAndDeathScreenHooks()
 	{
-		On.Menu.KarmaLadderScreen.ctor += KarmaLadderScreen_ctor;
-        On.Menu.KarmaLadderScreen.Update += KarmaLadderScreen_Update;
-        On.Menu.KarmaLadderScreen.Singal += KarmaLadderScreen_Singal;
-        On.Menu.KarmaLadderScreen.CommunicateWithUpcomingProcess += KarmaLadderScreen_CommunicateWithUpcomingProcess;
-
+		On.Menu.SleepAndDeathScreen.ctor += SleepAndDeathScreen_ctor;
+        On.Menu.SleepAndDeathScreen.Update += SleepAndDeathScreen_Update;
+        On.Menu.SleepAndDeathScreen.Singal += SleepAndDeathScreen_Singal;
+        On.Menu.SleepAndDeathScreen.CommunicateWithUpcomingProcess += SleepAndDeathScreen_CommunicateWithUpcomingProcess;
         On.Menu.SleepAndDeathScreen.UpdateInfoText += SleepAndDeathScreen_UpdateInfoText;
 	}
 
     private static SimpleButton questButton;
-    private static void KarmaLadderScreen_ctor(On.Menu.KarmaLadderScreen.orig_ctor orig, Menu.KarmaLadderScreen self, ProcessManager manager, ProcessManager.ProcessID ID)
+    private static void SleepAndDeathScreen_ctor(On.Menu.SleepAndDeathScreen.orig_ctor orig, Menu.SleepAndDeathScreen self, ProcessManager manager, ProcessManager.ProcessID ID)
     {
         orig(self, manager, ID);
 
@@ -31,7 +30,7 @@ public static partial class Hooks
         questButton.black = (false ? 1f : 0f);
     }
 
-    private static void KarmaLadderScreen_Update(On.Menu.KarmaLadderScreen.orig_Update orig, KarmaLadderScreen self)
+    private static void SleepAndDeathScreen_Update(On.Menu.SleepAndDeathScreen.orig_Update orig, SleepAndDeathScreen self)
     {
         orig(self);
 
@@ -47,7 +46,7 @@ public static partial class Hooks
         }
     }
 
-    private static void KarmaLadderScreen_Singal(On.Menu.KarmaLadderScreen.orig_Singal orig, KarmaLadderScreen self, MenuObject sender, string message)
+    private static void SleepAndDeathScreen_Singal(On.Menu.SleepAndDeathScreen.orig_Singal orig, SleepAndDeathScreen self, MenuObject sender, string message)
     {
         if(self.myGamePackage.saveState.saveStateNumber != Enums.vinki || message == null)
         {
@@ -67,7 +66,7 @@ public static partial class Hooks
         }
     }
 
-    private static void KarmaLadderScreen_CommunicateWithUpcomingProcess(On.Menu.KarmaLadderScreen.orig_CommunicateWithUpcomingProcess orig, KarmaLadderScreen self, MainLoopProcess nextProcess)
+    private static void SleepAndDeathScreen_CommunicateWithUpcomingProcess(On.Menu.SleepAndDeathScreen.orig_CommunicateWithUpcomingProcess orig, SleepAndDeathScreen self, MainLoopProcess nextProcess)
     {
         //if (nextProcess is GraffitiDreamScreen)
         //{

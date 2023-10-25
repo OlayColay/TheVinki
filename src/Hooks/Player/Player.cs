@@ -586,8 +586,14 @@ namespace Vinki
         private static void SprayGraffitiInGame(Player self)
         {
             var storyGraffitisInRoom = Plugin.storyGraffitiRoomPositions.Where(e => e.Value.Key == self.room.abstractRoom.name);
-            var miscWorldSave = SaveDataExtension.GetSlugBaseData(self.room.game.GetStorySession.saveState.miscWorldSaveData);
-            bool storyGraffitisExist = miscWorldSave.TryGet("StoryGraffitisSprayed", out bool[] sprayedGNums);
+            SlugBaseSaveData miscWorldSave;
+            bool storyGraffitisExist = false;
+            bool[] sprayedGNums = null;
+            if (self.room.game.GetStorySession != null)
+            {
+                miscWorldSave = SaveDataExtension.GetSlugBaseData(self.room.game.GetStorySession.saveState.miscWorldSaveData);
+                storyGraffitisExist = miscWorldSave.TryGet("StoryGraffitisSprayed", out sprayedGNums);
+            }
             int gNum = -1;
 
             // Check if we are in the right place to spray a story graffiti
