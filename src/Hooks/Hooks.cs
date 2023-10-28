@@ -37,6 +37,7 @@ namespace Vinki
             ApplyJollyCoopHooks();
             ApplySaveStateHooks();
             ApplySleepAndDeathScreenHooks();
+            ApplyGhostConversationHooks();
         }
 
         // Load any resources, such as sprites or sounds
