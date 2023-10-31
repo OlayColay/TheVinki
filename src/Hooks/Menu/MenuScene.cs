@@ -1,4 +1,5 @@
 ﻿using Menu;
+using SlugBase.SaveData;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,7 +12,7 @@ public static partial class Hooks
 {
     private static void ApplyMenuSceneHooks()
     {
-        On.Menu.MenuScene.BuildScene += MenuScene_BuildScene;
+        //On.Menu.MenuScene.BuildScene += MenuScene_BuildScene;
     }
 
     private static void MenuScene_BuildScene(On.Menu.MenuScene.orig_BuildScene orig, Menu.MenuScene self)
@@ -105,6 +106,7 @@ public static partial class Hooks
         }
         else if (self.sceneID == Enums.GraffitiMap)
         {
+            Debug.Log("Building Graffiti Map Scene!\n" + StackTraceUtility.ExtractStackTrace());
             self.sceneFolder = "Scenes" + Path.DirectorySeparatorChar.ToString() + "Graffiti Map";
             if (self.flatMode)
             {
@@ -113,6 +115,44 @@ public static partial class Hooks
             else
             {
                 self.AddIllustration(new MenuDepthIllustration(self.menu, self, self.sceneFolder, "graffiti_map", new Vector2(0f, 0f), 5f, MenuDepthIllustration.MenuShader.Basic));
+            }
+
+            GraffitiDialog.graffitiSpots = new MenuDepthIllustration[]
+            {
+                new MenuDepthIllustration(self.menu, self, self.sceneFolder, "graffiti_ss", new Vector2(750, 550), 4f, MenuDepthIllustration.MenuShader.Basic),
+                new MenuDepthIllustration(self.menu, self, self.sceneFolder, "graffiti_ss", new Vector2(800, 560), 4.5f, MenuDepthIllustration.MenuShader.Basic),
+                new MenuDepthIllustration(self.menu, self, self.sceneFolder, "graffiti_test", new Vector2(650, 580), 6f, MenuDepthIllustration.MenuShader.Basic)
+            };
+            GraffitiDialog.graffitiSlapping = new int[GraffitiDialog.graffitiSpots.Length];
+
+            // Save that we sprayed self story graffiti
+            SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(self.menu.manager.rainWorld.progression.currentSaveState.miscWorldSaveData);
+            if (miscSave.TryGet("StoryGraffitisSprayed", out bool[] sprd))
+            {
+                Plugin.storyGraffitisSprayed = sprd;
+            }
+            if (miscSave.TryGet("StoryGraffitisOnMap", out bool[] onMap))
+            {
+                Plugin.storyGraffitisOnMap = onMap;
+            }
+            for (int i = 0; i < Plugin.storyGraffitisSprayed.Length; i++)
+            {
+                GraffitiDialog.graffitiSpots[i].alpha = Plugin.storyGraffitisOnMap[i] ? 1f : 0f;
+                if (!Plugin.storyGraffitisOnMap[i] && Plugin.storyGraffitisSprayed[i])
+                {
+                    GraffitiDialog.graffitiSlapping[i] = (int)GraffitiDialog.slapLength;
+                    GraffitiDialog.graffitiSpots[i].sprite.scale = 0.1f;
+                    Plugin.storyGraffitisOnMap[i] = true;
+                }
+            }
+            miscSave.Set("StoryGraffitisOnMap", Plugin.storyGraffitisOnMap);
+
+            for (int i = 0; i < GraffitiDialog.graffitiSpots.Length; i++)
+            {
+                if (Plugin.storyGraffitisOnMap[i])
+                {
+                    self.AddIllustration(GraffitiDialog.graffitiSpots[i]);
+                }
             }
         }
     }

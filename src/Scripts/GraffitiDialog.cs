@@ -11,8 +11,13 @@ namespace Menu
 {
     public class GraffitiDialog : Dialog
     {
-        public GraffitiDialog(ProcessManager manager, Vector2 cancelButtonPos, MiscWorldSaveData miscWorldSaveData) : base(manager)
+        public GraffitiDialog(ProcessManager manager, Vector2 cancelButtonPos) : base(manager)
         {
+            if (this.scene != null)
+            {
+                return;
+            }
+
             float[] screenOffsets = Custom.GetScreenOffsets();
             this.leftAnchor = screenOffsets[0];
             this.rightAnchor = screenOffsets[1];
@@ -22,38 +27,7 @@ namespace Menu
             this.scene = new InteractiveMenuScene(this, pages[0], Enums.GraffitiMap);
             this.pages[0].subObjects.Add(this.scene);
 
-            //this.graffitiSpots[0] = new MenuDepthIllustration(this, this.pages[0], this.scene.sceneFolder, "graffiti_ss", new Vector2(750, 550), 4f, MenuDepthIllustration.MenuShader.Basic);
-            //this.graffitiSpots[1] = new MenuDepthIllustration(this, this.pages[0], this.scene.sceneFolder, "graffiti_ss", new Vector2(800, 560), 4.5f, MenuDepthIllustration.MenuShader.Basic);
-            //this.graffitiSpots[2] = new MenuDepthIllustration(this, this.pages[0], this.scene.sceneFolder, "graffiti_test", new Vector2(650, 580), 6f, MenuDepthIllustration.MenuShader.Basic);
-
-            //// Save that we sprayed this story graffiti
-            //SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(miscWorldSaveData);
-            //if (miscSave.TryGet("StoryGraffitisSprayed", out bool[] sprd))
-            //{
-            //    Plugin.storyGraffitisSprayed = sprd;
-            //}
-            //if (miscSave.TryGet("StoryGraffitisOnMap", out bool[] onMap))
-            //{
-            //    Plugin.storyGraffitisOnMap = onMap;
-            //}
-            //for (int i = 0; i < Plugin.storyGraffitisSprayed.Length; i++)
-            //{
-            //    graffitiSpots[i].alpha = Plugin.storyGraffitisOnMap[i] ? 1f : 0f;
-            //    if (!Plugin.storyGraffitisOnMap[i] && Plugin.storyGraffitisSprayed[i])
-            //    {
-            //        graffitiSlapping[i] = (int)slapLength;
-            //        graffitiSpots[i].sprite.scale = 0.1f;
-            //        Plugin.storyGraffitisOnMap[i] = true;
-            //    }
-            //}
-            //miscSave.Set("StoryGraffitisOnMap", Plugin.storyGraffitisOnMap);
-
-            //for (int i = 0; i < graffitiSpots.Length; i++)
-            //{
-            //    this.scene.AddIllustration(graffitiSpots[i]);
-            //}
-
-            float cancelButtonWidth = GraffitiDialog.GetCancelButtonWidth(base.CurrLang);
+            float cancelButtonWidth = GetCancelButtonWidth(base.CurrLang);
             this.cancelButton = new SimpleButton(this, this.pages[0], base.Translate("CLOSE"), "CLOSE", cancelButtonPos, new Vector2(cancelButtonWidth, 30f));
             this.pages[0].subObjects.Add(this.cancelButton);
             this.opening = true;
@@ -79,9 +53,9 @@ namespace Menu
                 this.darkSprite.alpha = this.uAlpha * 0.95f;
             }
             this.pages[0].pos.y = Mathf.Lerp(this.manager.rainWorld.options.ScreenSize.y + 100f, 0.01f, (this.uAlpha < 0.999f) ? this.uAlpha : 1f);
-            foreach (MenuDepthIllustration bg in this.scene.depthIllustrations)
+            for (int i = 0; i < bgCount; i++)
             {
-                bg.sprite.alpha = Mathf.Lerp(0f, 1f, Mathf.Lerp(0f, 0.85f, this.darkSprite.alpha));
+                this.scene.depthIllustrations[i].sprite.alpha = Mathf.Lerp(0f, 1f, Mathf.Lerp(0f, 1f, this.darkSprite.alpha * 1.25f));
             }
         }
 
@@ -116,7 +90,7 @@ namespace Menu
                 return;
             }
 
-            for (int i = 0; i < this.graffitiSpots.Length; i++)
+            for (int i = 0; i < graffitiSpots.Length; i++)
             {
                 if (graffitiSlapping[i] == 0)
                 {
@@ -125,7 +99,7 @@ namespace Menu
 
                 float t = (slapLength - graffitiSlapping[i]) / slapLength;
                 graffitiSpots[i].sprite.scale = EaseOutElastic(0.01f, 1f, t);
-                graffitiSpots[i].alpha = t * 5f;
+                graffitiSpots[i].alpha = Mathf.Min(t * 5f, 1f);
                 graffitiSlapping[i]--;
 
                 // Only show one graffiti animation at a time
@@ -159,9 +133,8 @@ namespace Menu
             return (a * Mathf.Pow(2, -10 * value) * Mathf.Sin((value * d - s) * (2 * Mathf.PI) / p) + end + start);
         }
 
-        public MenuDepthIllustration[] background = new MenuDepthIllustration[1];
-        public MenuDepthIllustration[] graffitiSpots = new MenuDepthIllustration[3];
-        public int[] graffitiSlapping = new int[3];
+        public static MenuDepthIllustration[] graffitiSpots;
+        public static int[] graffitiSlapping;
 
         public SimpleButton cancelButton;
 
@@ -177,6 +150,7 @@ namespace Menu
         public float uAlpha;
         public float targetAlpha;
 
-        public float slapLength = 40f;
+        public static readonly float slapLength = 40f;
+        public static readonly int bgCount = 1;
     }
 }

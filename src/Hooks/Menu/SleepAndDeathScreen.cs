@@ -56,7 +56,7 @@ public static partial class Hooks
 
         if (message == "QUEST MAP")
         {
-            GraffitiDialog dialog = new GraffitiDialog(self.manager, self.continueButton.pos, self.saveState.miscWorldSaveData);
+            GraffitiDialog dialog = new GraffitiDialog(self.manager, self.continueButton.pos);
             self.manager.ShowDialog(dialog);
             self.PlaySound(SoundID.MENU_Switch_Page_In);
         }
