@@ -19,40 +19,39 @@ namespace Menu
             this.pages[0].pos = new Vector2(0.01f, 0f);
             Page page = this.pages[0];
             page.pos.y = page.pos.y + 2000f;
+            this.scene = new InteractiveMenuScene(this, pages[0], Enums.GraffitiMap);
+            this.pages[0].subObjects.Add(this.scene);
 
-            this.background = new MenuIllustration(this, this.pages[0], "", "graffiti_map", new Vector2(Screen.width/2, Screen.height/2), true, true);
-            this.pages[0].subObjects.Add(this.background);
+            //this.graffitiSpots[0] = new MenuDepthIllustration(this, this.pages[0], this.scene.sceneFolder, "graffiti_ss", new Vector2(750, 550), 4f, MenuDepthIllustration.MenuShader.Basic);
+            //this.graffitiSpots[1] = new MenuDepthIllustration(this, this.pages[0], this.scene.sceneFolder, "graffiti_ss", new Vector2(800, 560), 4.5f, MenuDepthIllustration.MenuShader.Basic);
+            //this.graffitiSpots[2] = new MenuDepthIllustration(this, this.pages[0], this.scene.sceneFolder, "graffiti_test", new Vector2(650, 580), 6f, MenuDepthIllustration.MenuShader.Basic);
 
-            this.graffitiSpots[0] = new MenuIllustration(this, this.pages[0], "", "graffiti_ss", new Vector2(750, 550), true, true);
-            this.graffitiSpots[1] = new MenuIllustration(this, this.pages[0], "", "graffiti_ss", new Vector2(800, 560), true, true);
-            this.graffitiSpots[2] = new MenuIllustration(this, this.pages[0], "", "graffiti_test", new Vector2(650, 580), true, true);
+            //// Save that we sprayed this story graffiti
+            //SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(miscWorldSaveData);
+            //if (miscSave.TryGet("StoryGraffitisSprayed", out bool[] sprd))
+            //{
+            //    Plugin.storyGraffitisSprayed = sprd;
+            //}
+            //if (miscSave.TryGet("StoryGraffitisOnMap", out bool[] onMap))
+            //{
+            //    Plugin.storyGraffitisOnMap = onMap;
+            //}
+            //for (int i = 0; i < Plugin.storyGraffitisSprayed.Length; i++)
+            //{
+            //    graffitiSpots[i].alpha = Plugin.storyGraffitisOnMap[i] ? 1f : 0f;
+            //    if (!Plugin.storyGraffitisOnMap[i] && Plugin.storyGraffitisSprayed[i])
+            //    {
+            //        graffitiSlapping[i] = (int)slapLength;
+            //        graffitiSpots[i].sprite.scale = 0.1f;
+            //        Plugin.storyGraffitisOnMap[i] = true;
+            //    }
+            //}
+            //miscSave.Set("StoryGraffitisOnMap", Plugin.storyGraffitisOnMap);
 
-            // Save that we sprayed this story graffiti
-            SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(miscWorldSaveData);
-            if (miscSave.TryGet("StoryGraffitisSprayed", out bool[] sprd))
-            {
-                Plugin.storyGraffitisSprayed = sprd;
-            }
-            if (miscSave.TryGet("StoryGraffitisOnMap", out bool[] onMap))
-            {
-                Plugin.storyGraffitisOnMap = onMap;
-            }
-            for (int i = 0; i < Plugin.storyGraffitisSprayed.Length; i++)
-            {
-                graffitiSpots[i].alpha = Plugin.storyGraffitisOnMap[i] ? 1f : 0f;
-                if (!Plugin.storyGraffitisOnMap[i] && Plugin.storyGraffitisSprayed[i])
-                {
-                    graffitiSlapping[i] = (int)slapLength;
-                    graffitiSpots[i].sprite.scale = 0.1f;
-                    Plugin.storyGraffitisOnMap[i] = true;
-                }
-            }
-            miscSave.Set("StoryGraffitisOnMap", Plugin.storyGraffitisOnMap);
-
-            for (int i = 0; i < graffitiSpots.Length; i++)
-            {
-                this.pages[0].subObjects.Add(graffitiSpots[i]);
-            }
+            //for (int i = 0; i < graffitiSpots.Length; i++)
+            //{
+            //    this.scene.AddIllustration(graffitiSpots[i]);
+            //}
 
             float cancelButtonWidth = GraffitiDialog.GetCancelButtonWidth(base.CurrLang);
             this.cancelButton = new SimpleButton(this, this.pages[0], base.Translate("CLOSE"), "CLOSE", cancelButtonPos, new Vector2(cancelButtonWidth, 30f));
@@ -80,7 +79,10 @@ namespace Menu
                 this.darkSprite.alpha = this.uAlpha * 0.95f;
             }
             this.pages[0].pos.y = Mathf.Lerp(this.manager.rainWorld.options.ScreenSize.y + 100f, 0.01f, (this.uAlpha < 0.999f) ? this.uAlpha : 1f);
-            this.background.sprite.alpha = Mathf.Lerp(0f, 1f, Mathf.Lerp(0f, 0.85f, this.darkSprite.alpha));
+            foreach (MenuDepthIllustration bg in this.scene.depthIllustrations)
+            {
+                bg.sprite.alpha = Mathf.Lerp(0f, 1f, Mathf.Lerp(0f, 0.85f, this.darkSprite.alpha));
+            }
         }
 
         public override void Singal(MenuObject sender, string message)
@@ -157,8 +159,8 @@ namespace Menu
             return (a * Mathf.Pow(2, -10 * value) * Mathf.Sin((value * d - s) * (2 * Mathf.PI) / p) + end + start);
         }
 
-        public MenuIllustration background;
-        public MenuIllustration[] graffitiSpots = new MenuIllustration[3];
+        public MenuDepthIllustration[] background = new MenuDepthIllustration[1];
+        public MenuDepthIllustration[] graffitiSpots = new MenuDepthIllustration[3];
         public int[] graffitiSlapping = new int[3];
 
         public SimpleButton cancelButton;

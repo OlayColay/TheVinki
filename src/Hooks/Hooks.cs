@@ -37,7 +37,7 @@ namespace Vinki
             ApplyJollyCoopHooks();
             ApplySaveStateHooks();
             ApplySleepAndDeathScreenHooks();
-            ApplyGhostConversationHooks();
+            ApplyMenuSceneHooks();
         }
 
         // Load any resources, such as sprites or sounds
@@ -184,7 +184,7 @@ namespace Vinki
             // Resize image to look good in game
             if (!storyGraffitiRoomPos.HasValue)
             {
-                int[] newSize = ResizeAndKeepAspectRatio(img.width, img.height, 100f * 100f);
+                int[] newSize = ResizeAndKeepAspectRatio(img.width, img.height, 150f * 150f);
                 img.Resize(newSize[0], newSize[1]);
             }
 
@@ -258,97 +258,6 @@ namespace Vinki
             colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.LillyPuck, 1);
             colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.Seed, 1);
             colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.SingularityBomb, 9001);
-        }
-
-        private static void MenuScene_BuildScene(On.Menu.MenuScene.orig_BuildScene orig, Menu.MenuScene self)
-        {
-            orig(self);
-
-            if (self.sceneID == null)
-            {
-                return;
-            }
-
-            if (self.sceneID.ToString() == "Slugcat_Vinki")
-            {
-                // Find the graffiti layers of the slugcat select scene
-                List<Menu.MenuDepthIllustration> menuGraffitis = new List<Menu.MenuDepthIllustration>();
-                foreach (var image in self.depthIllustrations.Where(f => Path.GetFileNameWithoutExtension(f.fileName).StartsWith("Graffiti - ")))
-                {
-                    menuGraffitis.Add(image);
-                }
-
-                // Randomize which graffiti shows
-                int randGraffiti = UnityEngine.Random.Range(0, menuGraffitis.Count);
-                string fileName = "Graffiti - " + randGraffiti.ToString();
-
-                // Show the random graffiti and hide the rest
-                foreach (var image in menuGraffitis)
-                {
-                    string imageName = Path.GetFileNameWithoutExtension(image.fileName);
-                    image.alpha = (imageName == fileName) ? 1f : 0f;
-                }
-            }
-            else if (self.sceneID.ToString() == "Sleep_Vinki")
-            {
-                // Find the item layers of the slugcat select scene
-                List<Menu.MenuDepthIllustration> sleepItems = new List<Menu.MenuDepthIllustration>();
-                foreach (Menu.MenuDepthIllustration image in self.depthIllustrations.Where(f => Path.GetFileNameWithoutExtension(f.fileName).StartsWith("Item - ")))
-                {
-                    image.alpha = 0f;
-                    string imageName = Path.GetFileNameWithoutExtension(image.fileName);
-                    imageName = imageName.Substring(imageName.IndexOf('-') + 2);
-
-                    // Show the item layers that are in the shelter
-                    foreach (string item in shelterItems)
-                    {
-                        if (imageName == item)
-                        {
-                            image.alpha = 1f;
-                        }
-                    }
-                }
-
-                shelterItems.Clear();
-
-                // Find the graffiti layers of the slugcat select scene
-                List<Menu.MenuDepthIllustration> menuGraffitis = new List<Menu.MenuDepthIllustration>();
-                foreach (var image in self.depthIllustrations.Where(f => Path.GetFileNameWithoutExtension(f.fileName).StartsWith("Graffiti - ")))
-                {
-                    menuGraffitis.Add(image);
-                }
-
-                // Randomize which graffiti shows
-                int randGraffiti = UnityEngine.Random.Range(0, menuGraffitis.Count - 1);
-                string fileName = "Graffiti - " + randGraffiti.ToString();
-
-                // Show the random graffiti and hide the rest
-                foreach (var image in menuGraffitis)
-                {
-                    string imageName = Path.GetFileNameWithoutExtension(image.fileName);
-                    //Debug.Log("Graffiti: Checking if " + imageName + " matches " + fileName + "\t" + (imageName == fileName));
-                    image.alpha = (imageName == fileName) ? 1f : 0f;
-                }
-
-                // Find the doodle layers of the slugcat select scene
-                List<Menu.MenuDepthIllustration> menuDoodles = new List<Menu.MenuDepthIllustration>();
-                foreach (var image in self.depthIllustrations.Where(f => Path.GetFileNameWithoutExtension(f.fileName).StartsWith("Doodle - ")))
-                {
-                    menuDoodles.Add(image);
-                }
-
-                // Randomize which doodle shows
-                int randDoodles = UnityEngine.Random.Range(0, menuDoodles.Count);
-                fileName = "Doodle - " + randDoodles.ToString();
-
-                // Show the random doodle and hide the rest
-                foreach (var image in menuDoodles)
-                {
-                    string imageName = Path.GetFileNameWithoutExtension(image.fileName);
-                    //Debug.Log("Doodle: Checking if " + imageName + " matches " + fileName);
-                    image.alpha = (imageName == fileName) ? 1f : 0f;
-                }
-            }
         }
 
         private static int[] ResizeAndKeepAspectRatio(float original_width, float original_height, float target_area)
