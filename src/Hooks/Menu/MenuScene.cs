@@ -12,7 +12,7 @@ public static partial class Hooks
 {
     private static void ApplyMenuSceneHooks()
     {
-        //On.Menu.MenuScene.BuildScene += MenuScene_BuildScene;
+
     }
 
     private static void MenuScene_BuildScene(On.Menu.MenuScene.orig_BuildScene orig, Menu.MenuScene self)

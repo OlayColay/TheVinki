@@ -52,10 +52,13 @@ namespace Menu
                 this.uAlpha = Mathf.Pow(Mathf.Max(0f, Mathf.Lerp(this.lastAlpha, this.currentAlpha, timeStacker)), 1.5f);
                 this.darkSprite.alpha = this.uAlpha * 0.95f;
             }
-            this.pages[0].pos.y = Mathf.Lerp(this.manager.rainWorld.options.ScreenSize.y + 100f, 0.01f, (this.uAlpha < 0.999f) ? this.uAlpha : 1f);
-            for (int i = 0; i < bgCount; i++)
+            this.pages[0].pos.y = this.scene.camPos.y = Mathf.Lerp(this.manager.rainWorld.options.ScreenSize.y + 100f, 0.01f, (this.uAlpha < 0.999f) ? this.uAlpha : 1f);
+            for (int i = 0; i < this.scene.depthIllustrations.Count; i++)
             {
-                this.scene.depthIllustrations[i].sprite.alpha = Mathf.Lerp(0f, 1f, Mathf.Lerp(0f, 1f, this.darkSprite.alpha * 1.25f));
+                if (i < bgCount || graffitiSlapping[i - bgCount] == 0)
+                {
+                    this.scene.depthIllustrations[i].sprite.alpha = Mathf.Lerp(0f, 1f, Mathf.Lerp(0f, 1f, this.darkSprite.alpha * 1.25f));
+                }
             }
         }
 
