@@ -363,7 +363,7 @@ sealed class SprayCan : Weapon
         {
             this.abstractPhysicalObject.stuckObjects[m].Deactivate();
         }
-        this.room.PlaySound(SoundID.Bomb_Explode, vector, 0.3f * Abstr.uses, 1f);
+        this.room.PlaySound(SoundID.Bomb_Explode, vector, 0.2f * Abstr.uses, 1f);
         //this.room.InGameNoise(new InGameNoise(vector, 9000f, this, 1f));
         bool flag = hitChunk != null;
         for (int n = 0; n < 5; n++)
