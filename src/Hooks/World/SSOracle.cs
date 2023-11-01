@@ -212,10 +212,10 @@ namespace Vinki
                     return;
                 }
 
-                if (sleeping)
+                if (Plugin.sleeping)
                 {
                     this.owner.NewAction(Enums.SSOracle.Vinki_SSActionTriggered);
-                    sleeping = false;
+                    Plugin.sleeping = false;
                 }
 
                 if (base.action == Enums.SSOracle.Vinki_SSActionGeneral)

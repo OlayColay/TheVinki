@@ -98,7 +98,7 @@ namespace Vinki
 
                 if (intro.cutsceneTimer == 2260)
                 {
-                    sleeping = true;
+                    Plugin.sleeping = true;
                 }
             }
         }
@@ -106,8 +106,10 @@ namespace Vinki
         // Implement SuperJump
         private static void Player_Jump(On.Player.orig_Jump orig, Player self)
         {
+            VinkiPlayerData v = self.Vinki();
+
             // Don't jump off a pole when we're trying to do a trick jump at the top
-            if (isGrindingV && !grindUpPoleFlag && self.input[0].x == 0f && lastYDirection > 0)
+            if (v.isGrindingV && !v.grindUpPoleFlag && self.input[0].x == 0f && v.lastYDirection > 0)
             {
                 return;
             }
@@ -122,11 +124,11 @@ namespace Vinki
 
             // If player jumped or coyote jumped from a beam (or grinded to top of pole), then trick jump
             bool coyote = isCoyoteJumping(self);
-            if (coyote || isGrindingH || grindUpPoleFlag || vineAtFeet[self.JollyOption.playerNumber] != null)
+            if (coyote || v.isGrindingH || v.grindUpPoleFlag || v.vineAtFeet != null)
             {
                 // Separate from vine
-                Plugin.vineAtFeet[self.JollyOption.playerNumber] = null;
-                vineGrindDelay[self.JollyOption.playerNumber] = 10;
+                v.vineAtFeet = null;
+                v.vineGrindDelay = 10;
 
                 // Get num multiplier
                 float num = Mathf.Lerp(1f, 1.15f, self.Adrenaline);
@@ -146,7 +148,7 @@ namespace Vinki
                     self.bodyChunks[0].vel.y = 9f * num;
                     self.bodyChunks[1].vel.y = 7f * num;
                 }
-                self.slideDirection = lastXDirection;
+                self.slideDirection = v.lastXDirection;
 
                 // Get risk/reward speedboost when coyote jumping
                 if (coyote)
@@ -164,15 +166,16 @@ namespace Vinki
                 self.animation = Player.AnimationIndex.Flip;
                 self.slideCounter = 0;
 
-                grindUpPoleFlag = false;
+                v.grindUpPoleFlag = false;
             }
         }
 
         private static bool isCoyoteJumping(Player self)
         {
-            Debug.Log("Last animation: " + lastAnimation[self.JollyOption.playerNumber].ToString() +
-                "\t This animation: " + self.animation.ToString() + "\t Body mode: " + self.bodyMode.ToString());
-            return (lastAnimation[self.JollyOption.playerNumber] == Player.AnimationIndex.StandOnBeam && self.animation == Player.AnimationIndex.None &&
+            VinkiPlayerData v = self.Vinki();
+            //Debug.Log("Last animation: " + v.lastAnimation.ToString() +
+            //    "\t This animation: " + self.animation.ToString() + "\t Body mode: " + self.bodyMode.ToString());
+            return (v.lastAnimation == Player.AnimationIndex.StandOnBeam && self.animation == Player.AnimationIndex.None &&
                     self.bodyMode == Player.BodyModeIndex.Default);
         }
 
@@ -188,38 +191,39 @@ namespace Vinki
             {
                 return;
             }
+            VinkiPlayerData v = self.Vinki();
 
             // Save the last direction that Vinki was facing
             if (self.input[0].x != 0)
             {
-                lastXDirection = self.input[0].x;
+                v.lastXDirection = self.input[0].x;
             }
             if (self.input[0].y != 0)
             {
-                lastYDirection = self.input[0].y;
+                v.lastYDirection = self.input[0].y;
             }
             if (self.SwimDir(true).magnitude > 0f)
             {
-                lastVineDir = self.SwimDir(true);
+                v.lastVineDir = self.SwimDir(true);
             }
             // Save the last animation
-            if (self.animation != lastAnimationFrame[self.JollyOption.playerNumber])
+            if (self.animation != v.lastAnimationFrame)
             {
-                lastAnimation[self.JollyOption.playerNumber] = lastAnimationFrame[self.JollyOption.playerNumber];
-                lastAnimationFrame[self.JollyOption.playerNumber] = self.animation;
+                v.lastAnimation = v.lastAnimationFrame;
+                v.lastAnimationFrame = self.animation;
             }
 
             // If grinding up a pole and reach the top, jump up high
-            if (self.animation == Player.AnimationIndex.GetUpToBeamTip && isGrindingV)
+            if (self.animation == Player.AnimationIndex.GetUpToBeamTip && v.isGrindingV)
             {
                 if (self.input[0].jmp)
                 {
-                    grindUpPoleFlag = true;
+                    v.grindUpPoleFlag = true;
                     self.Jump();
                 }
                 else
                 {
-                    grindUpPoleFlag = false;
+                    v.grindUpPoleFlag = false;
                     self.bodyChunks[1].pos = self.room.MiddleOfTile(self.bodyChunks[1].pos) + new Vector2(0f, 5f);
                     self.bodyChunks[1].vel *= 0f;
                     self.bodyChunks[0].vel = Vector2.ClampMagnitude(self.bodyChunks[0].vel, 9f);
@@ -227,30 +231,30 @@ namespace Vinki
             }
             else
             {
-                grindUpPoleFlag = false;
+                v.grindUpPoleFlag = false;
             }
 
-            vineGrindDelay[self.JollyOption.playerNumber] = Math.Max(0, vineGrindDelay[self.JollyOption.playerNumber] - 1);
+            v.vineGrindDelay = Math.Max(0, v.vineGrindDelay - 1);
 
             // If player isn't holding Grind, no need to do other stuff
-            if (!self.IsPressed(Grind) && !grindToggle[self.JollyOption.playerNumber])
+            if (!self.IsPressed(Grind) && !v.grindToggle)
             {
-                isGrindingH = isGrindingV = isGrindingNoGrav = isGrindingVine = false;
-                Plugin.vineAtFeet[self.JollyOption.playerNumber] = null;
+                v.isGrindingH = v.isGrindingV = v.isGrindingNoGrav = v.isGrindingVine = false;
+                v.vineAtFeet = null;
                 self.slugcatStats.runspeedFac = normalXSpeed;
                 self.slugcatStats.poleClimbSpeedFac = normalYSpeed;
                 return;
             }
 
-            isGrindingH = IsGrindingHorizontally(self);
-            isGrindingV = IsGrindingVertically(self);
-            isGrindingNoGrav = IsGrindingNoGrav(self);
-            isGrindingVine = IsGrindingVineNoGrav(self);
-            isGrinding = isGrindingH || isGrindingV || isGrindingNoGrav || isGrindingVine;
+            v.isGrindingH = IsGrindingHorizontally(self);
+            v.isGrindingV = IsGrindingVertically(self);
+            v.isGrindingNoGrav = IsGrindingNoGrav(self);
+            v.isGrindingVine = IsGrindingVineNoGrav(self);
+            v.isGrinding = v.isGrindingH || v.isGrindingV || v.isGrindingNoGrav || v.isGrindingVine;
 
-            ClimbableVinesSystem.VinePosition vineAtFeet = Plugin.vineAtFeet[self.JollyOption.playerNumber];
+            ClimbableVinesSystem.VinePosition vineAtFeet = v.vineAtFeet;
             bool isGrindingAtopVine = vineAtFeet != null;
-            bool goodVineState = (vineGrindDelay[self.JollyOption.playerNumber] == 0 &&
+            bool goodVineState = (v.vineGrindDelay == 0 &&
                 self.animation != Player.AnimationIndex.ClimbOnBeam && self.animation != Player.AnimationIndex.HangFromBeam &&
                 self.animation != Player.AnimationIndex.StandOnBeam && self.animation != Player.AnimationIndex.ClimbOnBeam &&
                 self.animation != Player.AnimationIndex.HangUnderVerticalBeam && self.animation != Player.AnimationIndex.VineGrab && 
@@ -273,7 +277,7 @@ namespace Vinki
             }
 
             // Grind horizontally if holding Grind on a beam
-            if (isGrindingH || (isGrindingAtopVine && goodVineState))
+            if (v.isGrindingH || (isGrindingAtopVine && goodVineState))
             {
                 self.slugcatStats.runspeedFac = 0;
                 if (isGrindingAtopVine)
@@ -290,7 +294,7 @@ namespace Vinki
 
                     // vines can "face" either direction, so we need to take that into account
                     Vector2 vineDir = self.room.climbableVines.VineDir(vineAtFeet);
-                    float dot = vineDir.normalized.x * lastXDirection;
+                    float dot = vineDir.normalized.x * v.lastXDirection;
                     if (dot > 0f)
                     {
                         vineAtFeet.floatPos += grindVineSpeed / self.room.climbableVines.TotalLength(vineAtFeet.vine);
@@ -303,28 +307,28 @@ namespace Vinki
                     // Fall off the vine if reached the end
                     if (vineAtFeet.floatPos <= 0f || vineAtFeet.floatPos >= 1f)
                     {
-                        vineGrindDelay[self.JollyOption.playerNumber] = 10;
-                        Plugin.vineAtFeet[self.JollyOption.playerNumber] = null;
+                        v.vineGrindDelay = 10;
+                        v.vineAtFeet = null;
                     }
                     else
                     {
-                        Plugin.vineAtFeet[self.JollyOption.playerNumber] = vineAtFeet;
+                        v.vineAtFeet = vineAtFeet;
                         Vector2 grindDir = (self.room.climbableVines.OnVinePos(vineAtFeet) - self.bodyChunks[1].pos).normalized;
                         self.room.climbableVines.PushAtVine(vineAtFeet, (oldPos - self.room.climbableVines.OnVinePos(vineAtFeet)) * 0.05f);
                     }
                 }
                 else
                 {
-                    self.bodyChunks[1].vel.x = grindXSpeed * lastXDirection;
+                    self.bodyChunks[1].vel.x = grindXSpeed * v.lastXDirection;
                 }
                 
                 // Sparks from grinding
                 Vector2 pos = self.bodyChunks[1].pos;
-                Vector2 posB = pos - new Vector2(10f * lastXDirection, 0);
+                Vector2 posB = pos - new Vector2(10f * v.lastXDirection, 0);
                 for (int j = 0; j < 2; j++)
                 {
                     Vector2 a = RWCustom.Custom.RNV();
-                    a.x = Mathf.Abs(a.x) * -lastXDirection;
+                    a.x = Mathf.Abs(a.x) * -v.lastXDirection;
                     a.y = Mathf.Abs(a.y);
                     self.room.AddObject(new Spark(pos, a * Mathf.Lerp(4f, 30f, UnityEngine.Random.value), sparkColor, null, 2, 4));
                     self.room.AddObject(new Spark(posB, a * Mathf.Lerp(4f, 30f, UnityEngine.Random.value), sparkColor, null, 2, 4));
@@ -339,16 +343,16 @@ namespace Vinki
             }
 
             // Grind if holding Grind on a pole (vertical beam or 0G beam or vine)
-            if (isGrindingV || isGrindingNoGrav || isGrindingVine)
+            if (v.isGrindingV || v.isGrindingNoGrav || v.isGrindingVine)
             {
                 //Debug.Log("Zero G Pole direction: " + self.zeroGPoleGrabDir.x + "," + self.zeroGPoleGrabDir.y);
                 self.slugcatStats.poleClimbSpeedFac = 0;
 
                 // Handle vine grinding
-                if (isGrindingVine)
+                if (v.isGrindingVine)
                 {
                     self.vineClimbCursor = grindVineSpeed * Vector2.ClampMagnitude(
-                        self.vineClimbCursor + lastVineDir * Custom.LerpMap(Vector2.Dot(lastVineDir, self.vineClimbCursor.normalized), -1f, 1f, 10f, 3f), 30f
+                        self.vineClimbCursor + v.lastVineDir * Custom.LerpMap(Vector2.Dot(v.lastVineDir, self.vineClimbCursor.normalized), -1f, 1f, 10f, 3f), 30f
                     );
                     Vector2 a6 = self.room.climbableVines.OnVinePos(self.vinePos);
                     self.vinePos.floatPos += self.room.climbableVines.ClimbOnVineSpeed(self.vinePos, self.mainBodyChunk.pos + self.vineClimbCursor) * 
@@ -370,14 +374,14 @@ namespace Vinki
                 else
                 {
                     // Handle 0G horizontal beam grinding
-                    if (isGrindingNoGrav && self.room.GetTile(self.mainBodyChunk.pos).horizontalBeam)
+                    if (v.isGrindingNoGrav && self.room.GetTile(self.mainBodyChunk.pos).horizontalBeam)
                     {
-                        self.bodyChunks[0].vel.x = grindYSpeed * lastXDirection;
+                        self.bodyChunks[0].vel.x = grindYSpeed * v.lastXDirection;
                     }
                     else
                     {
                         // This works in gravity and no gravity
-                        self.bodyChunks[0].vel.y = grindYSpeed * lastYDirection;
+                        self.bodyChunks[0].vel.y = grindYSpeed * v.lastYDirection;
                     }
                 }
 
@@ -387,8 +391,8 @@ namespace Vinki
                 for (int j = 0; j < 2; j++)
                 {
                     Vector2 a = RWCustom.Custom.RNV();
-                    a.x = Mathf.Abs(a.x) * lastXDirection;
-                    a.y = Mathf.Abs(a.y) * -lastYDirection;
+                    a.x = Mathf.Abs(a.x) * v.lastXDirection;
+                    a.y = Mathf.Abs(a.y) * -v.lastYDirection;
                     Vector2 b = new Vector2(-a.x, a.y);
                     self.room.AddObject(new Spark(pos, a * Mathf.Lerp(4f, 30f, UnityEngine.Random.value), sparkColor, null, 2, 4));
                     self.room.AddObject(new Spark(posB, b * Mathf.Lerp(4f, 30f, UnityEngine.Random.value), sparkColor, null, 2, 4));
@@ -427,12 +431,13 @@ namespace Vinki
 
         private static void PlayGrindSound(Player self)
         {
-            if (grindSound == null || grindSound.currentSoundObject == null || grindSound.currentSoundObject.slatedForDeletion)
+            VinkiPlayerData v = self.Vinki();
+            if (v.grindSound == null || v.grindSound.currentSoundObject == null || v.grindSound.currentSoundObject.slatedForDeletion)
             {
-                grindSound = self.room.PlaySound(Enums.Sound.Grind1A, self.mainBodyChunk, true, 1f, 1f, true);
-                grindSound.requireActiveUpkeep = true;
+                v.grindSound = self.room.PlaySound(Enums.Sound.Grind1A, self.mainBodyChunk, true, 1f, 1f, true);
+                v.grindSound.requireActiveUpkeep = true;
             }
-            grindSound.alive = true;
+            v.grindSound.alive = true;
         }
 
         private static bool IsGrindingHorizontally(Player self)
@@ -443,9 +448,10 @@ namespace Vinki
 
         private static bool IsGrindingVertically(Player self)
         {
+            VinkiPlayerData v = self.Vinki();
             return (self.animation == Player.AnimationIndex.ClimbOnBeam &&
-                ((lastYDirection > 0 && self.bodyChunks[1].vel.magnitude > 2f) ||
-                (lastYDirection < 0 && self.bodyChunks[1].vel.magnitude > 1f)));
+                ((v.lastYDirection > 0 && self.bodyChunks[1].vel.magnitude > 2f) ||
+                (v.lastYDirection < 0 && self.bodyChunks[1].vel.magnitude > 1f)));
         }
 
         private static bool IsGrindingNoGrav(Player self)
@@ -475,11 +481,12 @@ namespace Vinki
             {
                 return;
             }
+            VinkiPlayerData v = self.Vinki();
 
             // Update grindToggle if needed
             if (self.JustPressed(ToggleGrind) && !IsPressingGraffiti(self))
             {
-                grindToggle[self.JollyOption.playerNumber] = !grindToggle[self.JollyOption.playerNumber];
+                v.grindToggle = !v.grindToggle;
             }
 
             // Craft SprayCan
@@ -488,9 +495,9 @@ namespace Vinki
                 int sprayCount = CanCraftSprayCan(self.grasps[0], self.grasps[1]);
                 if (sprayCount > 0)
                 {
-                    craftCounter++;
+                    v.craftCounter++;
 
-                    if (craftCounter > 30)
+                    if (v.craftCounter > 30)
                     {
                         for (int num13 = 0; num13 < 2; num13++)
                         {
@@ -529,22 +536,22 @@ namespace Vinki
                         }
 
                         self.SlugcatGrab(abstr.realizedObject, self.FreeHand());
-                        craftCounter = 0;
+                        v.craftCounter = 0;
                     }
                 }
-                else if (craftCounter > 0)
+                else if (v.craftCounter > 0)
                 {
-                    craftCounter--;
+                    v.craftCounter--;
                 }
             }
-            else if (craftCounter > 0)
+            else if (v.craftCounter > 0)
             {
-                craftCounter--;
+                v.craftCounter--;
             }
 
             // Give Vinki Survivor throwing skill if doing fancy tricks
             if (self.animation == Player.AnimationIndex.Flip || self.animation == Player.AnimationIndex.Roll ||
-                self.animation == Player.AnimationIndex.BellySlide || isGrinding)
+                self.animation == Player.AnimationIndex.BellySlide || v.isGrinding)
             {
                 self.slugcatStats.throwingSkill = 1;
             }
@@ -557,7 +564,7 @@ namespace Vinki
         private static int CanCraftSprayCan(Creature.Grasp a, Creature.Grasp b)
         {
             // You can craft while moving if you're not grinding
-            if (a == null || b == null || isGrinding)
+            if (a == null || b == null || (a.grabber as Player).Vinki().isGrinding)
             {
                 return 0;
             }

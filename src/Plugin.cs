@@ -14,29 +14,7 @@ namespace Vinki
     class Plugin : BaseUnityPlugin
     {
         public const string MOD_ID = "olaycolay.thevinki";
-        public static int lastXDirection = 1;
-        public static int lastYDirection = 1;
-        public static int craftCounter = 0;
-        public static int storyGraffitiCount = 0;
-        public static int[] vineGrindDelay = { 
-            0, 0, 0, 0,
-            0, 0, 0, 0,
-            0, 0, 0, 0,
-            0, 0, 0, 0
-        };
-        public static bool grindUpPoleFlag = false;
-        public static bool isGrindingH = false;
-        public static bool isGrindingV = false;
-        public static bool isGrindingNoGrav = false;
-        public static bool isGrindingVine = false;
-        public static bool isGrinding = false;
-        public static bool[] grindToggle = { 
-            false, false, false, false,
-            false, false, false, false,
-            false, false, false, false,
-            false, false, false, false
-        };
-        public static bool sleeping;
+        
         public static bool introPlayed = false;
         public static bool[] storyGraffitisSprayed = { 
             false, false, false
@@ -44,31 +22,26 @@ namespace Vinki
         public static bool[] storyGraffitisOnMap = {
             false, false, false
         };
-        public static Vector2 lastVineDir = Vector2.zero;
-        public static ClimbableVinesSystem.VinePosition[] vineAtFeet = new ClimbableVinesSystem.VinePosition[16];
-        public static Player.AnimationIndex[] lastAnimationFrame = { 
-            Player.AnimationIndex.None, Player.AnimationIndex.None, Player.AnimationIndex.None, Player.AnimationIndex.None,
-            Player.AnimationIndex.None, Player.AnimationIndex.None, Player.AnimationIndex.None, Player.AnimationIndex.None,
-            Player.AnimationIndex.None, Player.AnimationIndex.None, Player.AnimationIndex.None, Player.AnimationIndex.None,
-            Player.AnimationIndex.None, Player.AnimationIndex.None, Player.AnimationIndex.None, Player.AnimationIndex.None
-        };
-        public static Player.AnimationIndex[] lastAnimation = lastAnimationFrame.Clone() as Player.AnimationIndex[];
-        public static ChunkSoundEmitter grindSound;
+        public static FAtlas TailAtlas;
+        public static Texture2D TailTexture;
         public static Dictionary<string, List<PlacedObject.CustomDecalData>> graffitis = new();
         public static Dictionary<string, List<Vector2>> graffitiOffsets = new();
         public static Dictionary<string, List<Color>> graffitiAvgColors = new();
         public static List<string> shelterItems = new List<string>();
         public static Dictionary<int, KeyValuePair<string, Vector2>> storyGraffitiRoomPositions = new();
         public static Dictionary<AbstractPhysicalObject.AbstractObjectType, int> colorfulItems = new Dictionary<AbstractPhysicalObject.AbstractObjectType, int>();
-        public static Texture2D TailTexture;
-        public static Color?[][] jollyColors = new Color?[16][] { 
+        public static string graffitiFolder = "decals/VinkiGraffiti";
+        public static string storyGraffitiFolder = "decals/StorySpoilers";
+        public static int storyGraffitiCount = 0;
+        public static bool sleeping = false;
+        public static Color?[][] jollyColors = new Color?[16][] {
             new Color?[6], new Color?[6], new Color?[6], new Color?[6],
             new Color?[6], new Color?[6], new Color?[6], new Color?[6],
             new Color?[6], new Color?[6], new Color?[6], new Color?[6],
             new Color?[6], new Color?[6], new Color?[6], new Color?[6]
         };
-        public static string graffitiFolder = "decals/VinkiGraffiti";
-        public static string storyGraffitiFolder = "decals/StorySpoilers";
+
+
         public static readonly PlayerFeature<float> CoyoteBoost = PlayerFloat("thevinki/coyote_boost");
         public static readonly PlayerFeature<float> GrindXSpeed = PlayerFloat("thevinki/grind_x_speed");
         public static readonly PlayerFeature<float> GrindVineSpeed = PlayerFloat("thevinki/grind_vine_speed");

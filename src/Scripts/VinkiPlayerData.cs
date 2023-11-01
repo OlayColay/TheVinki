@@ -23,7 +23,23 @@ public class VinkiPlayerData
     public Color RainPodsColor;
     public Color GlassesColor;
 
-    public FAtlas TailAtlas;
+    public int lastXDirection = 1;
+    public int lastYDirection = 1;
+    public int craftCounter = 0;
+    public int vineGrindDelay = 0;
+    public bool grindUpPoleFlag = false;
+    public bool isGrindingH = false;
+    public bool isGrindingV = false;
+    public bool isGrindingNoGrav = false;
+    public bool isGrindingVine = false;
+    public bool isGrinding = false;
+    public bool grindToggle = false;
+
+    public Vector2 lastVineDir = Vector2.zero;
+    public ClimbableVinesSystem.VinePosition vineAtFeet = null;
+    public Player.AnimationIndex lastAnimationFrame = Player.AnimationIndex.None;
+    public Player.AnimationIndex lastAnimation = Player.AnimationIndex.None;
+    public ChunkSoundEmitter grindSound;
 
     public VinkiPlayerData(Player player)
     {
@@ -47,7 +63,7 @@ public class VinkiPlayerData
 
         if (playerRef.TryGetTarget(out var player))
         {
-            TailAtlas = Futile.atlasManager.LoadAtlasFromTexture("vinkitailtexture_" + player.playerState.playerNumber + Time.time + UnityEngine.Random.value, tailTexture, false);
+            Plugin.TailAtlas = Futile.atlasManager.LoadAtlasFromTexture("vinkitailtexture_" + player.playerState.playerNumber + Time.time + UnityEngine.Random.value, tailTexture, false);
         }
     }
 

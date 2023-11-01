@@ -134,9 +134,9 @@ namespace Vinki
             sLeaser.sprites[vinki.rainPodsSprite] = new FSprite("RainPodsA0");
             sLeaser.sprites[vinki.glassesSprite] = new FSprite("GlassesA0");
 
-            if (sLeaser.sprites[2] is TriangleMesh tail && vinki.TailAtlas.elements != null && vinki.TailAtlas.elements.Count > 0)
+            if (sLeaser.sprites[2] is TriangleMesh tail && Plugin.TailAtlas.elements != null && Plugin.TailAtlas.elements.Count > 0)
             {
-                tail.element = vinki.TailAtlas.elements[0];
+                tail.element = Plugin.TailAtlas.elements[0];
                 for (var i = tail.vertices.Length - 1; i >= 0; i--)
                 {
                     var perc = i / 2 / (float)(tail.vertices.Length / 2);
@@ -280,16 +280,17 @@ namespace Vinki
             {
                 return;
             }
+            VinkiPlayerData v = self.player.Vinki();
 
-            if (craftCounter > 0)
+            if (v.craftCounter > 0)
             {
                 foreach (SlugcatHand hand in self.hands)
                 {
-                    hand.pos = Vector2.Lerp(hand.pos, self.drawPositions[0, 0], (float)craftCounter / 25f);
+                    hand.pos = Vector2.Lerp(hand.pos, self.drawPositions[0, 0], (float)v.craftCounter / 25f);
                 }
 
-                float num10 = Mathf.InverseLerp(0f, 110f, (float)craftCounter);
-                float num11 = (float)craftCounter / Mathf.Lerp(30f, 15f, num10);
+                float num10 = Mathf.InverseLerp(0f, 110f, (float)v.craftCounter);
+                float num11 = (float)v.craftCounter / Mathf.Lerp(30f, 15f, num10);
                 if (self.player.standing)
                 {
                     self.drawPositions[0, 0].y += Mathf.Sin(num11 * 3.1415927f * 2f) * num10 * 2f;
