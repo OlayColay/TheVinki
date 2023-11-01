@@ -347,14 +347,19 @@ namespace Vinki
                 // Handle vine grinding
                 if (isGrindingVine)
                 {
-                    self.vineClimbCursor = grindVineSpeed * Vector2.ClampMagnitude(self.vineClimbCursor + lastVineDir * Custom.LerpMap(Vector2.Dot(lastVineDir, self.vineClimbCursor.normalized), -1f, 1f, 10f, 3f), 30f);
+                    self.vineClimbCursor = grindVineSpeed * Vector2.ClampMagnitude(
+                        self.vineClimbCursor + lastVineDir * Custom.LerpMap(Vector2.Dot(lastVineDir, self.vineClimbCursor.normalized), -1f, 1f, 10f, 3f), 30f
+                    );
                     Vector2 a6 = self.room.climbableVines.OnVinePos(self.vinePos);
-                    self.vinePos.floatPos += self.room.climbableVines.ClimbOnVineSpeed(self.vinePos, self.mainBodyChunk.pos + self.vineClimbCursor) * Mathf.Lerp(2.1f, 1.5f, self.EffectiveRoomGravity) / self.room.climbableVines.TotalLength(self.vinePos.vine);
+                    self.vinePos.floatPos += self.room.climbableVines.ClimbOnVineSpeed(self.vinePos, self.mainBodyChunk.pos + self.vineClimbCursor) * 
+                        Mathf.Lerp(2.1f, 1.5f, self.EffectiveRoomGravity) / self.room.climbableVines.TotalLength(self.vinePos.vine);
                     self.vinePos.floatPos = Mathf.Clamp(self.vinePos.floatPos, 0f, 1f);
                     self.room.climbableVines.PushAtVine(self.vinePos, (a6 - self.room.climbableVines.OnVinePos(self.vinePos)) * 0.05f);
                     if (self.vineGrabDelay == 0 && (!ModManager.MMF || !self.GrabbedByDaddyCorruption))
                     {
-                        ClimbableVinesSystem.VinePosition vinePosition = self.room.climbableVines.VineSwitch(self.vinePos, self.mainBodyChunk.pos + self.vineClimbCursor, self.mainBodyChunk.rad);
+                        ClimbableVinesSystem.VinePosition vinePosition = self.room.climbableVines.VineSwitch(
+                            self.vinePos, self.mainBodyChunk.pos + self.vineClimbCursor, self.mainBodyChunk.rad
+                        );
                         if (vinePosition != null)
                         {
                             self.vinePos = vinePosition;
@@ -511,7 +516,9 @@ namespace Vinki
                             self.ReleaseGrasp(j);
                             for (int k = apo.stuckObjects.Count - 1; k >= 0; k--)
                             {
-                                if (apo.stuckObjects[k] is AbstractPhysicalObject.AbstractSpearStick && apo.stuckObjects[k].A.type == AbstractPhysicalObject.AbstractObjectType.Spear && apo.stuckObjects[k].A.realizedObject != null)
+                                if (apo.stuckObjects[k] is AbstractPhysicalObject.AbstractSpearStick && 
+                                    apo.stuckObjects[k].A.type == AbstractPhysicalObject.AbstractObjectType.Spear && 
+                                    apo.stuckObjects[k].A.realizedObject != null)
                                 {
                                     (apo.stuckObjects[k].A.realizedObject as Spear).ChangeMode(Weapon.Mode.Free);
                                 }
@@ -533,6 +540,17 @@ namespace Vinki
             else if (craftCounter > 0)
             {
                 craftCounter--;
+            }
+
+            // Give Vinki Survivor throwing skill if doing fancy tricks
+            if (self.animation == Player.AnimationIndex.Flip || self.animation == Player.AnimationIndex.Roll ||
+                self.animation == Player.AnimationIndex.BellySlide || isGrinding)
+            {
+                self.slugcatStats.throwingSkill = 1;
+            }
+            else
+            {
+                self.slugcatStats.throwingSkill = 0;
             }
         }
 
