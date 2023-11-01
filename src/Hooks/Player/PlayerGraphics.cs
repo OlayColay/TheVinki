@@ -118,21 +118,14 @@ namespace Vinki
             vinki.rainPodsSprite = vinki.shoesSprite + 1;
             vinki.glassesSprite = vinki.rainPodsSprite + 1;
 
-            Array.Resize(ref sLeaser.sprites, sLeaser.sprites.Length + 3);
+            if (!ModManager.ActiveMods.Exists((ModManager.Mod mod) => mod.id == DressMySlugcat.Plugin.BaseName))
+            {
+                Array.Resize(ref sLeaser.sprites, sLeaser.sprites.Length + 3);
 
-            //for (var i = 0; i < 2; i++)
-            //{
-            //    for (var j = 0; j < 2; j++)
-            //    {
-            //        sLeaser.sprites[vinki.WingSprite(i, j)] = new FSprite("VinkiWing" + (j == 0 ? "A1" : "B2"));
-            //        sLeaser.sprites[vinki.WingSprite(i, j)].anchorX = 0f;
-            //        sLeaser.sprites[vinki.WingSprite(i, j)].scaleY = 1f;
-            //    }
-            //}
-
-            sLeaser.sprites[vinki.shoesSprite] = new FSprite("ShoesA0");
-            sLeaser.sprites[vinki.rainPodsSprite] = new FSprite("RainPodsA0");
-            sLeaser.sprites[vinki.glassesSprite] = new FSprite("GlassesA0");
+                sLeaser.sprites[vinki.shoesSprite] = new FSprite("ShoesA0");
+                sLeaser.sprites[vinki.rainPodsSprite] = new FSprite("RainPodsA0");
+                sLeaser.sprites[vinki.glassesSprite] = new FSprite("GlassesA0");
+            }
 
             if (sLeaser.sprites[2] is TriangleMesh tail && Plugin.TailAtlas.elements != null && Plugin.TailAtlas.elements.Count > 0)
             {
@@ -203,7 +196,7 @@ namespace Vinki
         {
             orig(self, sLeaser, rCam, timeStacker, camPos);
 
-            if (!self.player.IsVinki(out var vinki))
+            if (!self.player.IsVinki(out var vinki) || sLeaser.sprites.Length <= vinki.shoesSprite + 2)
             {
                 return;
             }
