@@ -553,27 +553,27 @@ namespace Vinki
             // Upgrade Spray Can
             if (abstractObjectType.ToString() == "SprayCan" && abstractObjectType2.ToString() == "SprayCan")
             {
-                if ((a.grabbed as SprayCan).Abstr.uses >= 3 || (b.grabbed as SprayCan).Abstr.uses >= 3)
+                if ((a.grabbed as SprayCan).Abstr.uses >= 5 || (b.grabbed as SprayCan).Abstr.uses >= 5)
                 {
                     return 0;
                 }
-                return Math.Min(3, (a.grabbed as SprayCan).Abstr.uses + (b.grabbed as SprayCan).Abstr.uses);
+                return Math.Min(5, (a.grabbed as SprayCan).Abstr.uses + (b.grabbed as SprayCan).Abstr.uses);
             }
             if (abstractObjectType.ToString() == "SprayCan" && colorfulItems.ContainsKey(abstractObjectType2))
             {
-                if ((a.grabbed as SprayCan).Abstr.uses >= 3)
+                if ((a.grabbed as SprayCan).Abstr.uses >= 5)
                 {
                     return 0;
                 }
-                return Math.Min(3, (a.grabbed as SprayCan).Abstr.uses + colorfulItems[abstractObjectType2]);
+                return Math.Min(5, (a.grabbed as SprayCan).Abstr.uses + colorfulItems[abstractObjectType2]);
             }
             if (abstractObjectType2.ToString() == "SprayCan" && colorfulItems.ContainsKey(abstractObjectType))
             {
-                if ((b.grabbed as SprayCan).Abstr.uses >= 3)
+                if ((b.grabbed as SprayCan).Abstr.uses >= 5)
                 {
                     return 0;
                 }
-                return Math.Min(3, (b.grabbed as SprayCan).Abstr.uses + colorfulItems[abstractObjectType]);
+                return Math.Min(5, (b.grabbed as SprayCan).Abstr.uses + colorfulItems[abstractObjectType]);
             }
             return 0;
         }

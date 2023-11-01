@@ -69,7 +69,7 @@ public class GraffitiTutorial : UpdatableAndDeletable
                 0, 600, false, false
             );
             game.cameras.First().hud.textPrompt.AddMessage(
-                game.manager.rainWorld.inGameTranslator.Translate("The more charages a Spray Can has, the more force the explosion will have. (The max charges of a Spray Can is 3)"),
+                game.manager.rainWorld.inGameTranslator.Translate("The more charages a Spray Can has, the more force the explosion will have. (The max charges of a Spray Can is 5)"),
                 100, 600, false, false
             );
             nextPhase = Phase.End;
