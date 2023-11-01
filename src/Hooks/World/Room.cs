@@ -37,17 +37,20 @@ public static partial class Hooks
         int thisCycle = game.GetStorySession.saveState.cycleNumber;
         for (int i = 0; i < placedGraffitis[self.name].Count; i++)
         {
-            // If the graffiti's placement cycle + number of fade cycles >= the current cycle number (or if story graffiti)
-            if (VinkiConfig.GraffitiFadeTime.Value == -1 || 
-                placedGraffitis[self.name][i].cyclePlaced + VinkiConfig.GraffitiFadeTime.Value >= thisCycle || 
-                placedGraffitis[self.name][i].cyclePlaced == -1)
+            // The first three story graffitis are erased after one cycle because FP erases them
+            if (placedGraffitis[self.name][i].cyclePlaced >= 0 || (placedGraffitis[self.name][i].gNum < Plugin.storyGraffitiCount && placedGraffitis[self.name][i].gNum >= 3))
             {
-                // Spawn the graffiti
-                PlacedObject.CustomDecalData decalData = new PlacedObject.CustomDecalData(null);
-                decalData.FromString(placedGraffitis[self.name][i].data);
-                PlacedObject placedObject = new PlacedObject(PlacedObject.Type.CustomDecal, decalData);
-                placedObject.pos = new UnityEngine.Vector2(placedGraffitis[self.name][i].x, placedGraffitis[self.name][i].y);
-                self.realizedRoom.AddObject(new CustomDecal(placedObject));
+                // If the graffiti's placement cycle + number of fade cycles >= the current cycle number (or if story graffiti)
+                if (VinkiConfig.GraffitiFadeTime.Value == -1 ||
+                    placedGraffitis[self.name][i].cyclePlaced + VinkiConfig.GraffitiFadeTime.Value >= thisCycle)
+                {
+                    // Spawn the graffiti
+                    PlacedObject.CustomDecalData decalData = new PlacedObject.CustomDecalData(null);
+                    decalData.FromString(placedGraffitis[self.name][i].data);
+                    PlacedObject placedObject = new PlacedObject(PlacedObject.Type.CustomDecal, decalData);
+                    placedObject.pos = new UnityEngine.Vector2(placedGraffitis[self.name][i].x, placedGraffitis[self.name][i].y);
+                    self.realizedRoom.AddObject(new CustomDecal(placedObject));
+                } 
             }
             else if (VinkiConfig.DeleteGraffiti.Value)
             {
@@ -107,6 +110,11 @@ public static partial class Hooks
         else if (self.abstractRoom?.name == "SS_E08" && self.game.rainWorld.progression.currentSaveState.cycleNumber == 0)
         {
             self.AddObject(new GraffitiTutorial(self));
+        }
+        // Story GraffitiTutorial
+        else if (self.abstractRoom?.name == "SS_D08")
+        {
+            self.AddObject(new StoryGraffitiTutorial(self));
         }
     }
 }

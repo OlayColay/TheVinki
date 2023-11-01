@@ -12,13 +12,15 @@ public class GraffitiObject : CustomDecal
         public string data;
         public float x, y;
         public int cyclePlaced;
+        public int gNum;
 
-        public SerializableGraffiti(PlacedObject placedObject, int cyclePlaced)
+        public SerializableGraffiti(PlacedObject placedObject, int cyclePlaced, int gNum)
         {
             this.data = (placedObject.data as PlacedObject.CustomDecalData).ToString();
             this.x = placedObject.pos.x;
             this.y = placedObject.pos.y;
             this.cyclePlaced = cyclePlaced;
+            this.gNum = gNum;
         }
     }
 
@@ -33,7 +35,7 @@ public class GraffitiObject : CustomDecal
         }
 
         cyclePlaced = (gNum < Plugin.storyGraffitiCount) ? -1 : save.cycleNumber;
-        serializableGraffiti = new(placedObject, cyclePlaced);
+        serializableGraffiti = new(placedObject, cyclePlaced, gNum);
 
         SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(save.miscWorldSaveData);
 
