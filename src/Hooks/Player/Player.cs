@@ -377,15 +377,16 @@ namespace Vinki
                 }
 
                 // Sparks from grinding
-                Vector2 pos = (self.graphicsModule as PlayerGraphics).hands[0].pos;
-                Vector2 posB = (self.graphicsModule as PlayerGraphics).hands[1].pos;
+                Vector2 pos = new Vector2(self.room.MiddleOfTile(self.PlayerGraphics().legs.pos).x, self.PlayerGraphics().legs.pos.y);
+                Vector2 posB = pos + new Vector2(0f, -3f);
                 for (int j = 0; j < 2; j++)
                 {
                     Vector2 a = RWCustom.Custom.RNV();
                     a.x = Mathf.Abs(a.x) * lastXDirection;
                     a.y = Mathf.Abs(a.y) * -lastYDirection;
+                    Vector2 b = new Vector2(-a.x, a.y);
                     self.room.AddObject(new Spark(pos, a * Mathf.Lerp(4f, 30f, UnityEngine.Random.value), sparkColor, null, 2, 4));
-                    self.room.AddObject(new Spark(posB, a * Mathf.Lerp(4f, 30f, UnityEngine.Random.value), sparkColor, null, 2, 4));
+                    self.room.AddObject(new Spark(posB, b * Mathf.Lerp(4f, 30f, UnityEngine.Random.value), sparkColor, null, 2, 4));
                 }
 
                 // Looping grind sound
