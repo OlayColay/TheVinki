@@ -329,7 +329,7 @@ sealed class SprayCan : Weapon
         }
 
         Vector2 vector = Vector2.Lerp(base.firstChunk.pos, base.firstChunk.lastPos, 0.35f);
-        this.room.AddObject(new Explosion(this.room, this, vector, 7, 250f, 2f * Abstr.uses, 0f, 100f, 0f, this.thrownBy, 0f, 20f, 1f));
+        this.room.AddObject(new Explosion(this.room, this, vector, 7, 250f, 2f * Abstr.uses, 0f, 100f * Abstr.uses, 0f, this.thrownBy, 0f, 20f, 1f));
         this.room.AddObject(new Explosion.ExplosionLight(vector, 280f, 1f, 7, RandomColor()));
         this.room.AddObject(new Explosion.ExplosionLight(vector, 230f, 1f, 3, RandomColor()));
         this.room.AddObject(new ExplosionSpikes(this.room, vector, 14, 30f, 9f, 7f, 170f, RandomColor()));
