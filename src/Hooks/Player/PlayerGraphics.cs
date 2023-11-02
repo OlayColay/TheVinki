@@ -114,17 +114,43 @@ namespace Vinki
                 return;
             }
 
-            vinki.shoesSprite = sLeaser.sprites.Length;
-            vinki.rainPodsSprite = vinki.shoesSprite + 1;
-            vinki.glassesSprite = vinki.rainPodsSprite + 1;
+            vinki.glassesSprite = sLeaser.sprites.Length;
+            vinki.rainPodsSprite = vinki.glassesSprite + 1;
+            vinki.shoesSprite = vinki.rainPodsSprite + 1;
 
-            if (!ModManager.ActiveMods.Exists((ModManager.Mod mod) => mod.id == DressMySlugcat.Plugin.BaseName))
+            if (!ModManager.ActiveMods.Exists((ModManager.Mod mod) => mod.id == "dressmyslugcat"))
             {
                 Array.Resize(ref sLeaser.sprites, sLeaser.sprites.Length + 3);
 
                 sLeaser.sprites[vinki.shoesSprite] = new FSprite("ShoesA0");
                 sLeaser.sprites[vinki.rainPodsSprite] = new FSprite("RainPodsA0");
                 sLeaser.sprites[vinki.glassesSprite] = new FSprite("GlassesA0");
+            }
+            else 
+            {
+                string faceSprite = "";
+                try
+                {
+                    faceSprite = GetDMSFaceSprite(self.player);
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("Somehow DMS is active yet it isn't? " + e.Message);
+                }
+                switch (faceSprite)
+                {
+                    case "olaycolay.thevinki0":
+                    case "olaycolay.thevinki1":
+                    case "olaycolay.thevinki2":
+                    case "olaycolay.thevinki3":
+                    case "olaycolay.thevinki4":
+                    case "olaycolay.thevinki5":
+                        break;
+                    default:
+                        Array.Resize(ref sLeaser.sprites, sLeaser.sprites.Length + 1);
+                        sLeaser.sprites[vinki.glassesSprite] = new FSprite("GlassesA0");
+                        break;
+                }
             }
 
             if (sLeaser.sprites[2] is TriangleMesh tail && Plugin.TailAtlas.elements != null && Plugin.TailAtlas.elements.Count > 0)
@@ -162,7 +188,7 @@ namespace Vinki
                 return;
             }
 
-            if (vinki.shoesSprite > 0 && sLeaser.sprites.Length > vinki.shoesSprite + 2)
+            if (vinki.shoesSprite > 0 && sLeaser.sprites.Length > vinki.glassesSprite)
             {
                 // (Debug) Get indices of sprites
                 //for (int i = 0; i < sLeaser.sprites.Length; i++)
@@ -177,15 +203,18 @@ namespace Vinki
                 midgroundContainer.AddChild(sLeaser.sprites[vinki.glassesSprite]);
                 sLeaser.sprites[vinki.glassesSprite].MoveInFrontOfOtherNode(sLeaser.sprites[9]);
 
-                //-- RainPods go behind glasses
-                sLeaser.sprites[vinki.rainPodsSprite].RemoveFromContainer();
-                midgroundContainer.AddChild(sLeaser.sprites[vinki.rainPodsSprite]);
-                sLeaser.sprites[vinki.rainPodsSprite].MoveBehindOtherNode(sLeaser.sprites[vinki.glassesSprite]);
+                if (sLeaser.sprites.Length > vinki.shoesSprite)
+                {
+                    //-- RainPods go behind glasses
+                    sLeaser.sprites[vinki.rainPodsSprite].RemoveFromContainer();
+                    midgroundContainer.AddChild(sLeaser.sprites[vinki.rainPodsSprite]);
+                    sLeaser.sprites[vinki.rainPodsSprite].MoveBehindOtherNode(sLeaser.sprites[vinki.glassesSprite]);
 
-                // Shoes go in front of legs
-                sLeaser.sprites[vinki.shoesSprite].RemoveFromContainer();
-                midgroundContainer.AddChild(sLeaser.sprites[vinki.shoesSprite]);
-                sLeaser.sprites[vinki.shoesSprite].MoveInFrontOfOtherNode(sLeaser.sprites[4]);
+                    // Shoes go in front of legs
+                    sLeaser.sprites[vinki.shoesSprite].RemoveFromContainer();
+                    midgroundContainer.AddChild(sLeaser.sprites[vinki.shoesSprite]);
+                    sLeaser.sprites[vinki.shoesSprite].MoveInFrontOfOtherNode(sLeaser.sprites[4]);
+                }
 
                 //-- Tail goes behind hips
                 sLeaser.sprites[2].MoveBehindOtherNode(sLeaser.sprites[1]);
@@ -196,7 +225,7 @@ namespace Vinki
         {
             orig(self, sLeaser, rCam, timeStacker, camPos);
 
-            if (!self.player.IsVinki(out var vinki) || sLeaser.sprites.Length <= vinki.shoesSprite + 2)
+            if (!self.player.IsVinki(out var vinki) || sLeaser.sprites.Length <= vinki.glassesSprite)
             {
                 return;
             }
@@ -212,7 +241,7 @@ namespace Vinki
 
             // RainPods
             var headSpriteName = sLeaser.sprites[3].element.name;
-            if (!string.IsNullOrWhiteSpace(headSpriteName) && headSpriteName.Contains("HeadA"))
+            if (!string.IsNullOrWhiteSpace(headSpriteName) && headSpriteName.Contains("HeadA") && sLeaser.sprites.Length > vinki.rainPodsSprite)
             {
                 var headSpriteNumber = headSpriteName.Substring(headSpriteName.LastIndexOf("HeadA", StringComparison.InvariantCultureIgnoreCase) + 5);
                 var rainPodsPos = new Vector2(sLeaser.sprites[3].x, sLeaser.sprites[3].y);
@@ -230,7 +259,7 @@ namespace Vinki
 
             // Shoes
             var legsSpriteName = sLeaser.sprites[4].element.name;
-            if (!string.IsNullOrWhiteSpace(legsSpriteName) && legsSpriteName.Contains("LegsA"))
+            if (!string.IsNullOrWhiteSpace(legsSpriteName) && legsSpriteName.Contains("LegsA") && sLeaser.sprites.Length > vinki.shoesSprite)
             {
                 var legsSpriteNumber = legsSpriteName.Substring(legsSpriteName.LastIndexOf("LegsA", StringComparison.InvariantCultureIgnoreCase) + 5);
                 var shoesPos = new Vector2(sLeaser.sprites[4].x, sLeaser.sprites[4].y);
@@ -248,7 +277,7 @@ namespace Vinki
 
             // Glasses
             var faceSpriteName = sLeaser.sprites[9].element.name;
-            if (!string.IsNullOrWhiteSpace(faceSpriteName) && faceSpriteName.Contains("Face"))
+            if (!string.IsNullOrWhiteSpace(faceSpriteName) && faceSpriteName.Contains("Face") && sLeaser.sprites.Length > vinki.glassesSprite)
             {
                 var faceSpriteNumber = faceSpriteName.Substring(faceSpriteName.LastIndexOf("Face", StringComparison.InvariantCultureIgnoreCase) + 4);
                 var glassesPos = new Vector2(sLeaser.sprites[9].x, sLeaser.sprites[9].y);
@@ -352,6 +381,11 @@ namespace Vinki
             {
                 return orig(slugName, reference, playerNumber);
             }
+        }
+
+        private static string GetDMSFaceSprite(Player player)
+        {
+            return DressMySlugcat.Customization.For(player).CustomSprite("FACE").SpriteSheetID;
         }
     }
 }
