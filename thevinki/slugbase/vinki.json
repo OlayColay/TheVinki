@@ -48,6 +48,8 @@
     "thevinki/normal_y_speed": 1.3,
     "thevinki/spark_color": "d1faff",
     "thevinki/super_jump": 1.25,
-    "title_card": "intro_roll_vinki_0"
+    "timeline_before": [ "Spear", "Red" ],
+    "title_card": "intro_roll_vinki_0",
+    "world_state": [ "Spear", "Red" ]
   }
 }
