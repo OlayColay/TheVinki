@@ -1,5 +1,6 @@
 ﻿using RWCustom;
 using SlugBase.DataTypes;
+using Smoke;
 using System;
 using System.Runtime.CompilerServices;
 using UnityEngine;
@@ -15,6 +16,7 @@ public class VinkiPlayerData
     public int rainPodsSprite;
     public int glassesSprite;
     public int tagIconSprite;
+    public int tagLag = 0;
     public float tagIconSize = 0f;
 
     public WeakReference<Player> playerRef;
@@ -43,6 +45,7 @@ public class VinkiPlayerData
     public Player.AnimationIndex lastAnimation = Player.AnimationIndex.None;
     public ChunkSoundEmitter grindSound;
     public Creature tagableCreature = null;
+    public TagSmoke tagSmoke = null;
 
     public VinkiPlayerData(Player player)
     {

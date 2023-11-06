@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using DevInterface;
 using SlugBase.SaveData;
 using IL.MoreSlugcats;
+using Smoke;
 
 namespace Vinki
 {
@@ -674,7 +675,17 @@ namespace Vinki
         private static float boxOffset = 40f;
         private static void CheckForTagging(Player self, VinkiPlayerData v)
         {
-            if (!IsPressingGraffiti(self) || (VinkiConfig.RequireSprayCans.Value && self.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan) == null))
+            if (v.tagLag > 0)
+            {
+                v.tagLag--;
+                if (v.tagSmoke.room == self.room)
+                {
+                    v.tagSmoke.EmitSmoke((v.tagableCreature.mainBodyChunk.pos - self.mainBodyChunk.pos) * 60f, 1f);
+                }
+            }
+
+            if (!IsPressingGraffiti(self) || (VinkiConfig.RequireSprayCans.Value && self.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan) == null) ||
+                self.room == null)
             {
                 v.tagableCreature = null;
                 return;
@@ -690,7 +701,7 @@ namespace Vinki
             // Find any creatures in the room within the box
             foreach (var creature in self.room.abstractRoom.creatures.Select((absCreature) => absCreature.realizedCreature))
             {
-                if (!creature.canBeHitByWeapons || creature.dead || creature == self)
+                if (!creature.canBeHitByWeapons || creature.dead || creature == self/* || (creature is Lizard && (creature as Lizard).AI.friendTracker.friend == self)*/)
                 {
                     continue;
                 }
@@ -719,6 +730,12 @@ namespace Vinki
             VinkiPlayerData v = self.Vinki();
             float damage = 1f;
 
+            if (v.tagLag > 0)
+            {
+                return;
+            }
+            v.tagLag = 60;
+
             if (v.tagableCreature is Player)
             {
                 damage = 0.5f;
@@ -726,6 +743,10 @@ namespace Vinki
 
             self.room.PlaySound(SoundID.Red_Lizard_Spit, self.mainBodyChunk, false, 2f, 1f);
             v.tagableCreature.Violence(self.firstChunk, null, v.tagableCreature.firstChunk, null, Creature.DamageType.Stab, damage, 0f);
+
+            v.tagSmoke = new Smoke.TagSmoke(self.room, self.mainBodyChunk.pos/*, v.tagableCreature.mainBodyChunk.pos*/);
+            self.room.AddObject(v.tagSmoke);
+            v.tagSmoke.EmitSmoke((v.tagableCreature.mainBodyChunk.pos - self.mainBodyChunk.pos) * 60f, 1f);
         }
     }
 }

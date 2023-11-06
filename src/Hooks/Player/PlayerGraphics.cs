@@ -315,7 +315,7 @@ namespace Vinki
                 sLeaser.sprites[vinki.tagIconSprite].x = iconPos.x;
                 sLeaser.sprites[vinki.tagIconSprite].y = iconPos.y;
                 sLeaser.sprites[vinki.tagIconSprite].element = Futile.atlasManager.GetElementWithName("TagIcon");
-                sLeaser.sprites[vinki.tagIconSprite].color = Color.white;
+                sLeaser.sprites[vinki.tagIconSprite].color = vinki.tagLag > 0 ? Color.gray : Color.white;
 
                 bool tagReady = vinki.tagableCreature != null;
                 vinki.tagIconSize = Mathf.Clamp01(tagReady ? vinki.tagIconSize + 0.02f : vinki.tagIconSize - 0.02f);
