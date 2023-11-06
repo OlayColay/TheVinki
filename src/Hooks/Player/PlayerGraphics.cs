@@ -1,4 +1,5 @@
 ﻿using JollyCoop;
+using Menu;
 using RWCustom;
 using System;
 using System.Collections.Generic;
@@ -307,7 +308,9 @@ namespace Vinki
             // TagIcon
             if (sLeaser.sprites.Length > vinki.tagIconSprite)
             {
-                var iconPos = new Vector2(sLeaser.sprites[9].x + vinki.tagIconSize * 30f, sLeaser.sprites[9].y + vinki.tagIconSize * 20f);
+                float xPos = sLeaser.sprites[9].x + GraffitiDialog.EaseOutElastic(0f, 30f, vinki.tagIconSize);
+                float yPos = sLeaser.sprites[9].y + GraffitiDialog.EaseOutElastic(0f, 20f, vinki.tagIconSize);
+                var iconPos = new Vector2(xPos, yPos);
 
                 sLeaser.sprites[vinki.glassesSprite].anchorX = sLeaser.sprites[9].anchorX;
                 sLeaser.sprites[vinki.glassesSprite].anchorY = sLeaser.sprites[9].anchorY;

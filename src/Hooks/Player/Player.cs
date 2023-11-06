@@ -680,7 +680,7 @@ namespace Vinki
                 v.tagLag--;
                 if (v.tagSmoke.room == self.room)
                 {
-                    v.tagSmoke.EmitSmoke((v.tagableCreature.mainBodyChunk.pos - self.mainBodyChunk.pos) * 60f, 1f);
+                    v.tagSmoke.EmitSmoke(0.5f);
                 }
             }
 
@@ -701,14 +701,16 @@ namespace Vinki
             // Find any creatures in the room within the box
             foreach (var creature in self.room.abstractRoom.creatures.Select((absCreature) => absCreature.realizedCreature))
             {
-                if (!creature.canBeHitByWeapons || creature.dead || creature == self/* || (creature is Lizard && (creature as Lizard).AI.friendTracker.friend == self)*/)
+                if (!creature.canBeHitByWeapons || creature.dead || creature == self/* || (creature is Lizard && (creature as Lizard).AI.friendTracker.friend == self)*/ ||
+                    creature is Fly || (creature is Centipede && (creature as Centipede).Small) || creature is Hazer || creature is VultureGrub || creature is SmallNeedleWorm)
                 {
                     continue;
                 }
 
                 foreach (var chunk in creature.bodyChunks)
                 {
-                    if (!chunk.collideWithObjects)
+                    // Can't spray face to encourage spraying from behind
+                    if (!chunk.collideWithObjects || chunk == creature.mainBodyChunk)
                     {
                         continue;
                     }
@@ -728,25 +730,30 @@ namespace Vinki
         private static void TagCreature(Player self)
         {
             VinkiPlayerData v = self.Vinki();
-            float damage = 1f;
 
             if (v.tagLag > 0)
             {
                 return;
             }
-            v.tagLag = 60;
+            v.tagLag = 30;
 
+            float damage = 1f;
             if (v.tagableCreature is Player)
             {
                 damage = 0.5f;
             }
 
-            self.room.PlaySound(SoundID.Red_Lizard_Spit, self.mainBodyChunk, false, 2f, 1f);
+            self.room.PlaySound(SoundID.Hazer_Squirt_Smoke_LOOP, self.mainBodyChunk, false, 2f, 1f);
             v.tagableCreature.Violence(self.firstChunk, null, v.tagableCreature.firstChunk, null, Creature.DamageType.Stab, damage, 0f);
 
-            v.tagSmoke = new Smoke.TagSmoke(self.room, self.mainBodyChunk.pos/*, v.tagableCreature.mainBodyChunk.pos*/);
+            if(v.tagSmoke != null)
+            {
+                v.tagSmoke.RemoveFromRoom();
+            }
+
+            v.tagSmoke = new Smoke.TagSmoke(self.room, self, v.tagableCreature);
             self.room.AddObject(v.tagSmoke);
-            v.tagSmoke.EmitSmoke((v.tagableCreature.mainBodyChunk.pos - self.mainBodyChunk.pos) * 60f, 1f);
+            v.tagSmoke.EmitSmoke(0.5f);
         }
     }
 }

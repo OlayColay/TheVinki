@@ -110,7 +110,7 @@ namespace Menu
             }
         }
 
-        private float EaseOutElastic(float start, float end, float value)
+        public static float EaseOutElastic(float start, float end, float value)
         {
             end -= start;
 

@@ -7,15 +7,28 @@ namespace Smoke;
 
 public class TagSmoke : PositionedSmokeEmitter
 {
+    public Player source;
+    public Creature target;
+    public float hue;
+
     // Token: 0x06002820 RID: 10272 RVA: 0x0030DCD0 File Offset: 0x0030BED0
-    public TagSmoke(Room room, Vector2 pos) : base(SmokeSystem.SmokeType.NewVultureSmoke, room, pos, 2, 0f, false, -1f, -1)
+    public TagSmoke(Room room, Player source, Creature target) : base(SmokeSystem.SmokeType.BlackHaze, room, source.mainBodyChunk.pos, 2, 0f, false, -1f, -1)
     {
+        this.source = source;
+        this.target = target;
+        this.hue = Random.value;
+
+        this.particles.Clear();
+        if (this.particlePool.GetParticle() != null)
+        {
+            this.particlePool.RemoveFromRoom();
+        }
     }
 
     // Token: 0x06002821 RID: 10273 RVA: 0x0030DCF7 File Offset: 0x0030BEF7
     public override SmokeSystem.SmokeSystemParticle CreateParticle()
     {
-        return new TagSmoke.NewVultureSmokeSegment();
+        return new TagSmoke.NewVultureSmokeSegment(this.hue);
     }
 
     // Token: 0x06002822 RID: 10274 RVA: 0x0030DD00 File Offset: 0x0030BF00
@@ -39,6 +52,10 @@ public class TagSmoke : PositionedSmokeEmitter
                 }
             }
         }
+        if (source != null && source.mainBodyChunk != null)
+        {
+            this.pos = source.mainBodyChunk.pos;
+        }
     }
 
     // Token: 0x06002823 RID: 10275 RVA: 0x0030DE66 File Offset: 0x0030C066
@@ -48,9 +65,9 @@ public class TagSmoke : PositionedSmokeEmitter
     }
 
     // Token: 0x06002824 RID: 10276 RVA: 0x0030DEA0 File Offset: 0x0030C0A0
-    public void EmitSmoke(Vector2 vel, float power)
+    public void EmitSmoke(float power)
     {
-        TagSmoke.NewVultureSmokeSegment newVultureSmokeSegment = this.AddParticle(this.pos, vel * power, Custom.LerpMap(power, 0.3f, 0f, Mathf.Lerp(20f, 60f, Random.value), Mathf.Lerp(60f, 100f, Random.value))) as TagSmoke.NewVultureSmokeSegment;
+        TagSmoke.NewVultureSmokeSegment newVultureSmokeSegment = this.AddParticle(this.pos, (this.target.bodyChunks[1].pos - this.pos) * power, Custom.LerpMap(power, 0.3f, 0f, Mathf.Lerp(20f, 60f, Random.value), Mathf.Lerp(60f, 100f, Random.value))) as TagSmoke.NewVultureSmokeSegment;
         if (newVultureSmokeSegment != null)
         {
             newVultureSmokeSegment.power = power;
@@ -60,6 +77,11 @@ public class TagSmoke : PositionedSmokeEmitter
     // Token: 0x02000867 RID: 2151
     public class NewVultureSmokeSegment : MeshSmoke.HyrbidSmokeSegment
     {
+        public NewVultureSmokeSegment(float hue) : base()
+        {
+            this.hue = hue;
+        }
+
         // Token: 0x06004078 RID: 16504 RVA: 0x00485191 File Offset: 0x00483391
         public override void Reset(SmokeSystem newOwner, Vector2 pos, Vector2 vel, float lifeTime)
         {
@@ -131,9 +153,7 @@ public class TagSmoke : PositionedSmokeEmitter
         // Token: 0x0600407F RID: 16511 RVA: 0x00485518 File Offset: 0x00483718
         public Color VultureSmokeColor(float x)
         {
-            Color rgb = HSLColor.Lerp(new HSLColor(0f, 0.5f, 0.8f), new HSLColor(0.9f, 0.5f, 0.15f), x).rgb;
-            Color b = Color.Lerp(new HSLColor(0f, 0.5f, 0.8f).rgb, new HSLColor(0.9f, 0.5f, 0.15f).rgb, x);
-            return Color.Lerp(rgb, b, 0.3f);
+            return new HSLColor(this.hue, 0.5f, Mathf.Lerp(0.8f, 0.15f, x)).rgb;
         }
 
         // Token: 0x06004080 RID: 16512 RVA: 0x004855A8 File Offset: 0x004837A8
@@ -149,11 +169,11 @@ public class TagSmoke : PositionedSmokeEmitter
         public override void HybridDraw(RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, float timeStacker, Vector2 camPos, Vector2 Apos, Vector2 Bpos, Color Acol, Color Bcol, float Arad, float Brad)
         {
             base.HybridDraw(sLeaser, rCam, timeStacker, camPos, Apos, Bpos, Acol, Bcol, Arad, Brad);
-            sLeaser.sprites[1].scale = Arad * (2f - Acol.a) / 8f;
+            sLeaser.sprites[1].scale = Arad * (6f - Acol.a) / 8f;
             sLeaser.sprites[1].alpha = Mathf.Pow(Acol.a, 0.6f) * (0.5f + 0.5f * Mathf.InverseLerp(0.2f, 0.4f, this.power));
             Acol.a = 1f;
             sLeaser.sprites[1].color = Acol;
-            sLeaser.sprites[2].scale = Brad * (2f - Bcol.a) / 8f;
+            sLeaser.sprites[2].scale = Brad * (6f - Bcol.a) / 8f;
             sLeaser.sprites[2].alpha = Mathf.Pow(Bcol.a, 0.6f) * (0.5f + 0.5f * Mathf.InverseLerp(0.2f, 0.4f, this.power));
             Bcol.a = 1f;
             sLeaser.sprites[2].color = Bcol;
@@ -167,5 +187,7 @@ public class TagSmoke : PositionedSmokeEmitter
 
         // Token: 0x040043CD RID: 17357
         public float power;
+
+        public float hue;
     }
 }
