@@ -7,12 +7,12 @@ namespace Smoke;
 
 public class TagSmoke : PositionedSmokeEmitter
 {
-    public Player source;
+    public PhysicalObject source;
     public Creature target;
     public float hue;
 
     // Token: 0x06002820 RID: 10272 RVA: 0x0030DCD0 File Offset: 0x0030BED0
-    public TagSmoke(Room room, Player source, Creature target) : base(SmokeSystem.SmokeType.BlackHaze, room, source.mainBodyChunk.pos, 2, 0f, false, -1f, -1)
+    public TagSmoke(Room room, PhysicalObject source, Creature target) : base(SmokeSystem.SmokeType.BlackHaze, room, source.firstChunk.pos, 2, 0f, false, -1f, -1)
     {
         this.source = source;
         this.target = target;
@@ -52,9 +52,9 @@ public class TagSmoke : PositionedSmokeEmitter
                 }
             }
         }
-        if (source != null && source.mainBodyChunk != null)
+        if (source != null && source.firstChunk != null)
         {
-            this.pos = source.mainBodyChunk.pos;
+            this.pos = source.firstChunk.pos + new Vector2(0f, 10f);
         }
     }
 

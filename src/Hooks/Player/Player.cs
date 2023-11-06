@@ -701,7 +701,7 @@ namespace Vinki
             // Find any creatures in the room within the box
             foreach (var creature in self.room.abstractRoom.creatures.Select((absCreature) => absCreature.realizedCreature))
             {
-                if (!creature.canBeHitByWeapons || creature.dead || creature == self/* || (creature is Lizard && (creature as Lizard).AI.friendTracker.friend == self)*/ ||
+                if (!creature.canBeHitByWeapons || creature.dead || creature == self || (creature is Lizard && (creature as Lizard).AI.friendTracker.friend == self) ||
                     creature is Fly || (creature is Centipede && (creature as Centipede).Small) || creature is Hazer || creature is VultureGrub || creature is SmallNeedleWorm)
                 {
                     continue;
@@ -737,7 +737,7 @@ namespace Vinki
             }
             v.tagLag = 30;
 
-            float damage = 1f;
+            float damage = 2f;
             if (v.tagableCreature is Player)
             {
                 damage = 0.5f;
@@ -751,7 +751,18 @@ namespace Vinki
                 v.tagSmoke.RemoveFromRoom();
             }
 
-            v.tagSmoke = new Smoke.TagSmoke(self.room, self, v.tagableCreature);
+            PhysicalObject source = self;
+            if (VinkiConfig.RequireSprayCans.Value)
+            {
+                SprayCan can = self.grasps.FirstOrDefault(g => g?.grabbed is SprayCan).grabbed as SprayCan;
+                if (!can.TryUse())
+                {
+                    return;
+                }
+                source = can;
+            }
+
+            v.tagSmoke = new Smoke.TagSmoke(self.room, source, v.tagableCreature);
             self.room.AddObject(v.tagSmoke);
             v.tagSmoke.EmitSmoke(0.5f);
         }

@@ -308,8 +308,8 @@ namespace Vinki
             // TagIcon
             if (sLeaser.sprites.Length > vinki.tagIconSprite)
             {
-                float xPos = sLeaser.sprites[9].x + GraffitiDialog.EaseOutElastic(0f, 30f, vinki.tagIconSize);
-                float yPos = sLeaser.sprites[9].y + GraffitiDialog.EaseOutElastic(0f, 20f, vinki.tagIconSize);
+                float xPos = sLeaser.sprites[9].x + Mathf.Lerp(0f, 30f, vinki.tagIconSize);
+                float yPos = sLeaser.sprites[9].y + Mathf.Lerp(0f, 20f, vinki.tagIconSize);
                 var iconPos = new Vector2(xPos, yPos);
 
                 sLeaser.sprites[vinki.glassesSprite].anchorX = sLeaser.sprites[9].anchorX;
