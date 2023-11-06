@@ -40,6 +40,7 @@ public class VinkiPlayerData
     public Player.AnimationIndex lastAnimationFrame = Player.AnimationIndex.None;
     public Player.AnimationIndex lastAnimation = Player.AnimationIndex.None;
     public ChunkSoundEmitter grindSound;
+    public Creature tagableCreature = null;
 
     public VinkiPlayerData(Player player)
     {

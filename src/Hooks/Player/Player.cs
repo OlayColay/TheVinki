@@ -8,6 +8,7 @@ using static Vinki.Plugin;
 using System.Threading.Tasks;
 using DevInterface;
 using SlugBase.SaveData;
+using IL.MoreSlugcats;
 
 namespace Vinki
 {
@@ -471,10 +472,17 @@ namespace Vinki
         {
             orig(self, eu);
 
-            // Spray a random graffiti
+            // Spray a random graffiti, or tag a creature if there's one to tag
             if (self.JustPressed(Spray) && IsPressingGraffiti(self))
             {
-                SprayGraffitiInGame(self);
+                if (self.SlugCatClass == Enums.vinki && self.Vinki().tagableCreature != null)
+                {
+                    TagCreature(self);
+                }
+                else
+                {
+                    SprayGraffitiInGame(self);
+                }
             }
 
             if (self.SlugCatClass != Enums.vinki)
@@ -559,6 +567,8 @@ namespace Vinki
             {
                 self.slugcatStats.throwingSkill = 0;
             }
+
+            CheckForTagging(self, v);
         }
 
         private static int CanCraftSprayCan(Creature.Grasp a, Creature.Grasp b)
@@ -658,6 +668,57 @@ namespace Vinki
                     _ = SprayGraffiti(self, gNum: gNum);
                 }
             }
+        }
+
+        private static float boxRadius = 50f;
+        private static float boxOffset = 100f;
+        private static void CheckForTagging(Player self, VinkiPlayerData v)
+        {
+            if (!IsPressingGraffiti(self) || (VinkiConfig.RequireSprayCans.Value && self.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan) == null))
+            {
+                v.tagableCreature = null;
+                return;
+            }
+
+            // Create box for where Vinki can tag creatures
+            Vector2 boxCenter = new(self.mainBodyChunk.pos.x + (v.lastXDirection * boxOffset), self.mainBodyChunk.pos.y);
+            float minX = boxCenter.x - boxRadius;
+            float maxX = boxCenter.x + boxRadius;
+            float minY = boxCenter.y - boxRadius;
+            float maxY = boxCenter.y + boxRadius;
+
+            // Find any creatures in the room within the box
+            foreach (var creature in self.room.abstractRoom.creatures.Select((absCreature) => absCreature.realizedCreature))
+            {
+                if (!creature.canBeHitByWeapons)
+                {
+                    continue;
+                }
+
+                foreach (var chunk in creature.bodyChunks)
+                {
+                    if (!chunk.collideWithObjects)
+                    {
+                        continue;
+                    }
+
+                    Vector2 cPos = chunk.pos;
+                    if (cPos.x > minX && cPos.x < maxX && cPos.y > minY && cPos.y < maxY)
+                    {
+                        v.tagableCreature = creature;
+                        return;
+                    }
+                }
+            }
+
+            v.tagableCreature = null;
+        }
+
+        private static void TagCreature(Player self)
+        {
+            VinkiPlayerData v = self.Vinki();
+
+            self.room.PlaySound(SoundID.Red_Lizard_Spit, self.mainBodyChunk, false, 2f, 1f);
         }
     }
 }
