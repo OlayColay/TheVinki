@@ -690,7 +690,7 @@ namespace Vinki
             // Find any creatures in the room within the box
             foreach (var creature in self.room.abstractRoom.creatures.Select((absCreature) => absCreature.realizedCreature))
             {
-                if (!creature.canBeHitByWeapons)
+                if (!creature.canBeHitByWeapons || creature.dead)
                 {
                     continue;
                 }
@@ -717,8 +717,15 @@ namespace Vinki
         private static void TagCreature(Player self)
         {
             VinkiPlayerData v = self.Vinki();
+            float damage = 1f;
+
+            if (v.tagableCreature is Player)
+            {
+                damage = 0.5f;
+            }
 
             self.room.PlaySound(SoundID.Red_Lizard_Spit, self.mainBodyChunk, false, 2f, 1f);
+            v.tagableCreature.Violence(self.firstChunk, null, v.tagableCreature.firstChunk, null, Creature.DamageType.Water, damage, 0f);
         }
     }
 }
