@@ -114,14 +114,19 @@ namespace Vinki
                 return;
             }
 
-            vinki.glassesSprite = sLeaser.sprites.Length;
+            vinki.tagIconSprite = sLeaser.sprites.Length;
+            vinki.glassesSprite = vinki.tagIconSprite + 1;
             vinki.rainPodsSprite = vinki.glassesSprite + 1;
             vinki.shoesSprite = vinki.rainPodsSprite + 1;
+
+            Array.Resize(ref sLeaser.sprites, sLeaser.sprites.Length + 1);
+            sLeaser.sprites[vinki.tagIconSprite] = new FSprite("TagIcon");
 
             if (!ModManager.ActiveMods.Exists((ModManager.Mod mod) => mod.id == "dressmyslugcat"))
             {
                 Array.Resize(ref sLeaser.sprites, sLeaser.sprites.Length + 3);
 
+                sLeaser.sprites[vinki.tagIconSprite] = new FSprite("TagIcon");
                 sLeaser.sprites[vinki.shoesSprite] = new FSprite("ShoesA0");
                 sLeaser.sprites[vinki.rainPodsSprite] = new FSprite("RainPodsA0");
                 sLeaser.sprites[vinki.glassesSprite] = new FSprite("GlassesA0");
@@ -197,6 +202,12 @@ namespace Vinki
                 //}
 
                 var midgroundContainer = rCam.ReturnFContainer("Midground");
+
+                //-- TagIcon goes above face
+                sLeaser.sprites[vinki.tagIconSprite].RemoveFromContainer();
+                midgroundContainer.AddChild(sLeaser.sprites[vinki.tagIconSprite]);
+                sLeaser.sprites[vinki.tagIconSprite].MoveInFrontOfOtherNode(sLeaser.sprites[9]);
+                sLeaser.sprites[vinki.tagIconSprite].shader = FShader.Basic;
 
                 //-- Glasses go in front of face
                 sLeaser.sprites[vinki.glassesSprite].RemoveFromContainer();
@@ -291,6 +302,25 @@ namespace Vinki
                 sLeaser.sprites[vinki.glassesSprite].y = glassesPos.y;
                 sLeaser.sprites[vinki.glassesSprite].element = Futile.atlasManager.GetElementWithName("Glasses" + faceSpriteNumber);
                 sLeaser.sprites[vinki.glassesSprite].color = glassesColor;
+            }
+
+            // TagIcon
+            if (sLeaser.sprites.Length > vinki.tagIconSprite)
+            {
+                var iconPos = new Vector2(sLeaser.sprites[9].x + vinki.tagIconSize * 30f, sLeaser.sprites[9].y + vinki.tagIconSize * 20f);
+
+                sLeaser.sprites[vinki.glassesSprite].anchorX = sLeaser.sprites[9].anchorX;
+                sLeaser.sprites[vinki.glassesSprite].anchorY = sLeaser.sprites[9].anchorY;
+                sLeaser.sprites[vinki.tagIconSprite].rotation = 0f;
+                sLeaser.sprites[vinki.tagIconSprite].x = iconPos.x;
+                sLeaser.sprites[vinki.tagIconSprite].y = iconPos.y;
+                sLeaser.sprites[vinki.tagIconSprite].element = Futile.atlasManager.GetElementWithName("TagIcon");
+                sLeaser.sprites[vinki.tagIconSprite].color = Color.white;
+
+                bool tagReady = vinki.tagableCreature != null;
+                vinki.tagIconSize = Mathf.Clamp01(tagReady ? vinki.tagIconSize + 0.02f : vinki.tagIconSize - 0.02f);
+                sLeaser.sprites[vinki.tagIconSprite].scale = Mathf.Lerp(0f, 0.25f, vinki.tagIconSize);
+                sLeaser.sprites[vinki.tagIconSprite].isVisible = tagReady || vinki.tagIconSize > 0f;
             }
         }
 

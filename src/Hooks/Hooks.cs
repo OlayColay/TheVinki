@@ -98,6 +98,7 @@ namespace Vinki
             Futile.atlasManager.LoadAtlas("atlases/glasses");
             Futile.atlasManager.LoadAtlas("atlases/rainpods");
             Futile.atlasManager.LoadAtlas("atlases/shoes");
+            Futile.atlasManager.LoadAtlas("atlases/TagIcon");
             Futile.atlasManager.LoadImage("atlases/icon_SprayCan");
 
             TailTexture = new Texture2D(150, 75, TextureFormat.ARGB32, false);

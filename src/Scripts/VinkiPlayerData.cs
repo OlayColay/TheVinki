@@ -14,6 +14,8 @@ public class VinkiPlayerData
     public int shoesSprite;
     public int rainPodsSprite;
     public int glassesSprite;
+    public int tagIconSprite;
+    public float tagIconSize = 0f;
 
     public WeakReference<Player> playerRef;
     public Color BodyColor;

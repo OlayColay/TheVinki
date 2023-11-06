@@ -670,8 +670,8 @@ namespace Vinki
             }
         }
 
-        private static float boxRadius = 50f;
-        private static float boxOffset = 100f;
+        private static float boxRadius = 40f;
+        private static float boxOffset = 40f;
         private static void CheckForTagging(Player self, VinkiPlayerData v)
         {
             if (!IsPressingGraffiti(self) || (VinkiConfig.RequireSprayCans.Value && self.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan) == null))
@@ -690,7 +690,7 @@ namespace Vinki
             // Find any creatures in the room within the box
             foreach (var creature in self.room.abstractRoom.creatures.Select((absCreature) => absCreature.realizedCreature))
             {
-                if (!creature.canBeHitByWeapons || creature.dead)
+                if (!creature.canBeHitByWeapons || creature.dead || creature == self)
                 {
                     continue;
                 }
@@ -725,7 +725,7 @@ namespace Vinki
             }
 
             self.room.PlaySound(SoundID.Red_Lizard_Spit, self.mainBodyChunk, false, 2f, 1f);
-            v.tagableCreature.Violence(self.firstChunk, null, v.tagableCreature.firstChunk, null, Creature.DamageType.Water, damage, 0f);
+            v.tagableCreature.Violence(self.firstChunk, null, v.tagableCreature.firstChunk, null, Creature.DamageType.Stab, damage, 0f);
         }
     }
 }
