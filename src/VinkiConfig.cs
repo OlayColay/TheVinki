@@ -17,6 +17,7 @@ namespace Vinki
         public static Configurable<bool> RestoreGraffitiOnUpdate;
         public static Configurable<bool> ShowVinkiTitleCard;
         public static Configurable<bool> GlassesOverDMS;
+        public static Configurable<bool> TagDamageJolly;
 
         public VinkiConfig()
         {
@@ -47,6 +48,10 @@ namespace Vinki
             GlassesOverDMS = config.Bind("glassesOverDMS", true, new ConfigurableInfo("Wear Vinki's glasses on top of the current DMS skin for Vinki. Only works if you have DMS enabled.", tags: new object[]
             {
                 "Wear Glasses Over DMS Skin"
+            }));
+            TagDamageJolly = config.Bind("tagDamageJolly", false, new ConfigurableInfo("Tagging a player while in Jolly Coop does damage.", tags: new object[]
+            {
+                "Tagging Damages Jolly Players"
             }));
         }
 
@@ -91,6 +96,7 @@ namespace Vinki
             );
             AddCheckbox(ShowVinkiTitleCard, 240f);
             AddCheckbox(GlassesOverDMS, 200f);
+            AddCheckbox(TagDamageJolly, 160f);
         }
 
         // Combines two flipped 'LinearGradient200's together to make a fancy looking divider.

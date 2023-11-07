@@ -718,7 +718,8 @@ namespace Vinki
             foreach (var creature in self.room.abstractRoom.creatures.Select((absCreature) => absCreature.realizedCreature))
             {
                 if (!creature.canBeHitByWeapons || creature.dead || creature == self || (creature is Lizard && (creature as Lizard).AI.friendTracker.friend == self) ||
-                    creature is Fly || (creature is Centipede && (creature as Centipede).Small) || creature is Hazer || creature is VultureGrub || creature is SmallNeedleWorm)
+                    creature is Fly || (creature is Centipede && (creature as Centipede).Small) || creature is Hazer || creature is VultureGrub || creature is SmallNeedleWorm ||
+                    (creature is Player && (creature as Player).abstractCreature.abstractAI != null))
                 {
                     continue;
                 }
@@ -753,10 +754,21 @@ namespace Vinki
             }
             v.tagLag = 30;
 
-            float damage = 1f;
+            PhysicalObject source = self;
+            if (VinkiConfig.RequireSprayCans.Value)
+            {
+                SprayCan can = self.grasps.FirstOrDefault(g => g?.grabbed is SprayCan).grabbed as SprayCan;
+                if (!can.TryUse())
+                {
+                    return;
+                }
+                source = can;
+            }
+
+            float damage = 2f;
             if (v.tagableCreature is Player)
             {
-                if (self.room.game.IsStorySession)
+                if (!VinkiConfig.TagDamageJolly.Value && self.room.game.IsStorySession)
                 {
                     damage = 0f;
                 }
@@ -767,23 +779,22 @@ namespace Vinki
             }
 
             self.room.PlaySound(SoundID.Hazer_Squirt_Smoke_LOOP, self.mainBodyChunk, false, 2f, 1f);
-            v.tagableCreature.Violence(self.firstChunk, null, v.tagableCreature.firstChunk, null, Creature.DamageType.Stab, damage, 0f);
-            v.poisonedVictims.Add(new VinkiPlayerData.PoisonedCreature(v.tagableCreature, 120, 1f));
+            if (damage > 0f)
+            {
+                if (v.tagableCreature.State is HealthState)
+                {
+                    v.tagableCreature.Violence(self.firstChunk, null, v.tagableCreature.firstChunk, null, Creature.DamageType.Stab, damage / 2, 0f);
+                    v.poisonedVictims.Add(new VinkiPlayerData.PoisonedCreature(v.tagableCreature, 120, damage / 2));
+                }
+                else
+                {
+                    v.tagableCreature.Violence(self.firstChunk, null, v.tagableCreature.firstChunk, null, Creature.DamageType.Stab, damage, 0f);
+                }
+            }
 
             if(v.tagSmoke != null)
             {
                 v.tagSmoke.RemoveFromRoom();
-            }
-
-            PhysicalObject source = self;
-            if (VinkiConfig.RequireSprayCans.Value)
-            {
-                SprayCan can = self.grasps.FirstOrDefault(g => g?.grabbed is SprayCan).grabbed as SprayCan;
-                if (!can.TryUse())
-                {
-                    return;
-                }
-                source = can;
             }
 
             v.tagSmoke = new Smoke.TagSmoke(self.room, source, v.tagableCreature);
