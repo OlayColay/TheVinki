@@ -682,7 +682,13 @@ namespace Vinki
                 v.tagLag--;
                 if (v.tagSmoke.room == self.room)
                 {
-                    v.tagSmoke.EmitSmoke(0.5f);
+                    v.tagSmoke.EmitSmoke(0.4f);
+                }
+                if (v.tagLag == 0)
+                {
+                    v.tagSmoke.target.graphicsModule.Tag().isBeingTagged = false;
+                    v.tagSmoke.RemoveFromRoom();
+                    v.tagSmoke = null;
                 }
             }
 
@@ -746,14 +752,6 @@ namespace Vinki
 
         private static void TagCreature(Player self)
         {
-            VinkiPlayerData v = self.Vinki();
-
-            if (v.tagLag > 0)
-            {
-                return;
-            }
-            v.tagLag = 30;
-
             PhysicalObject source = self;
             if (VinkiConfig.RequireSprayCans.Value)
             {
@@ -764,6 +762,14 @@ namespace Vinki
                 }
                 source = can;
             }
+
+            VinkiPlayerData v = self.Vinki();
+
+            if (v.tagLag > 0)
+            {
+                return;
+            }
+            v.tagLag = 30;
 
             float damage = 2f;
             if (v.tagableCreature is Player)
@@ -799,7 +805,9 @@ namespace Vinki
 
             v.tagSmoke = new Smoke.TagSmoke(self.room, source, v.tagableCreature);
             self.room.AddObject(v.tagSmoke);
-            v.tagSmoke.EmitSmoke(0.5f);
+            v.tagSmoke.EmitSmoke(0.4f);
+            v.tagSmoke.target.graphicsModule.Tag().isBeingTagged = true;
+            v.tagSmoke.target.graphicsModule.Tag().tagColor = new HSLColor(v.tagSmoke.hue, 0.5f, 0.8f).rgb;
         }
     }
 }

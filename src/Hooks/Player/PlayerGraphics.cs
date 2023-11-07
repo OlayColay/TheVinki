@@ -3,6 +3,7 @@ using Menu;
 using RWCustom;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static Vinki.Plugin;
 using Random = UnityEngine.Random;
@@ -112,6 +113,7 @@ namespace Vinki
 
             if (!self.player.IsVinki(out var vinki))
             {
+                self.Tag().ogColors = sLeaser.sprites.Select((sprite) => sprite.color).ToArray();
                 return;
             }
 
@@ -182,6 +184,7 @@ namespace Vinki
                 }
             }
 
+            self.Tag().ogColors = sLeaser.sprites.Select((sprite) => sprite.color).ToArray();
             self.AddToContainer(sLeaser, rCam, null);
         }
 
@@ -206,7 +209,7 @@ namespace Vinki
 
                 //-- TagIcon goes above face
                 sLeaser.sprites[vinki.tagIconSprite].RemoveFromContainer();
-                midgroundContainer.AddChild(sLeaser.sprites[vinki.tagIconSprite]);
+                rCam.ReturnFContainer("HUD").AddChild(sLeaser.sprites[vinki.tagIconSprite]);
                 sLeaser.sprites[vinki.tagIconSprite].MoveInFrontOfOtherNode(sLeaser.sprites[9]);
                 sLeaser.sprites[vinki.tagIconSprite].shader = FShader.Basic;
 
@@ -236,6 +239,8 @@ namespace Vinki
         private static void PlayerGraphics_DrawSprites(On.PlayerGraphics.orig_DrawSprites orig, PlayerGraphics self, RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, float timeStacker, Vector2 camPos)
         {
             orig(self, sLeaser, rCam, timeStacker, camPos);
+
+            UpdateTagColors(self.Tag(), sLeaser);
 
             if (!self.player.IsVinki(out var vinki) || sLeaser.sprites.Length <= vinki.glassesSprite)
             {
@@ -419,6 +424,34 @@ namespace Vinki
         private static string GetDMSFaceSprite(Player player)
         {
             return DressMySlugcat.Customization.For(player).CustomSprite("FACE").SpriteSheetID;
+        }
+
+        private static void UpdateTagColors(GraphicsModuleData tag, RoomCamera.SpriteLeaser sLeaser)
+        {
+            if (tag.isBeingTagged)
+            {
+                if (tag.taggedColors == null)
+                {
+                    tag.taggedColors = new Color[tag.ogColors.Length];
+                }
+                for (int i = 0; i < tag.taggedColors.Length; i++)
+                {
+                    tag.taggedColors[i] = Color.Lerp(sLeaser.sprites[i].color, tag.tagColor, 0.004f);
+                }
+            }
+
+            if (tag.taggedColors == null)
+            {
+                return;
+            }
+
+            for (int i = 0; i < (ModManager.MSC ? 13 : 12); i++)
+            {
+                if (i != 9 && i != 11)
+                {
+                    sLeaser.sprites[i].color = tag.taggedColors[i];
+                }
+            }
         }
     }
 }

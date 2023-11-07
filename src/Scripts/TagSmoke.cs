@@ -28,7 +28,7 @@ public class TagSmoke : PositionedSmokeEmitter
     // Token: 0x06002821 RID: 10273 RVA: 0x0030DCF7 File Offset: 0x0030BEF7
     public override SmokeSystem.SmokeSystemParticle CreateParticle()
     {
-        return new TagSmoke.NewVultureSmokeSegment(this.hue);
+        return new TagSmoke.SmokeSegment(this.hue);
     }
 
     // Token: 0x06002822 RID: 10274 RVA: 0x0030DD00 File Offset: 0x0030BF00
@@ -61,13 +61,13 @@ public class TagSmoke : PositionedSmokeEmitter
     // Token: 0x06002823 RID: 10275 RVA: 0x0030DE66 File Offset: 0x0030C066
     private float PushPow(int i)
     {
-        return Mathf.InverseLerp(0.65f, 0.85f, this.particles[i].life) * (this.particles[i] as TagSmoke.NewVultureSmokeSegment).power;
+        return Mathf.InverseLerp(0.65f, 0.85f, this.particles[i].life) * (this.particles[i] as TagSmoke.SmokeSegment).power;
     }
 
     // Token: 0x06002824 RID: 10276 RVA: 0x0030DEA0 File Offset: 0x0030C0A0
     public void EmitSmoke(float power)
     {
-        TagSmoke.NewVultureSmokeSegment newVultureSmokeSegment = this.AddParticle(this.pos, (this.target.bodyChunks[1].pos - this.pos) * power, Custom.LerpMap(power, 0.3f, 0f, Mathf.Lerp(20f, 60f, Random.value), Mathf.Lerp(60f, 100f, Random.value))) as TagSmoke.NewVultureSmokeSegment;
+        TagSmoke.SmokeSegment newVultureSmokeSegment = this.AddParticle(this.pos, (this.target.bodyChunks[1].pos - this.pos) * power, Custom.LerpMap(power, 0.3f, 0f, Mathf.Lerp(20f, 60f, Random.value), Mathf.Lerp(60f, 100f, Random.value))) as TagSmoke.SmokeSegment;
         if (newVultureSmokeSegment != null)
         {
             newVultureSmokeSegment.power = power;
@@ -75,9 +75,9 @@ public class TagSmoke : PositionedSmokeEmitter
     }
 
     // Token: 0x02000867 RID: 2151
-    public class NewVultureSmokeSegment : MeshSmoke.HyrbidSmokeSegment
+    public class SmokeSegment : MeshSmoke.HyrbidSmokeSegment
     {
-        public NewVultureSmokeSegment(float hue) : base()
+        public SmokeSegment(float hue) : base()
         {
             this.hue = hue;
         }
