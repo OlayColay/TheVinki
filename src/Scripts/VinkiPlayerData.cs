@@ -2,6 +2,7 @@
 using SlugBase.DataTypes;
 using Smoke;
 using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
@@ -9,6 +10,20 @@ namespace Vinki;
 
 public class VinkiPlayerData
 {
+    public class PoisonedCreature
+    {
+        public Creature creature;
+        public int timeLeft;
+        public float damagePerTick;
+
+        public PoisonedCreature(Creature creature, int timeLeft, float totalDamage)
+        {
+            this.creature = creature;
+            this.timeLeft = timeLeft;
+            this.damagePerTick = totalDamage / timeLeft / creature.Template.baseDamageResistance;
+        }
+    }
+
     public readonly bool IsVinki;
 
     public int tailStripesSprite;
@@ -45,6 +60,7 @@ public class VinkiPlayerData
     public Player.AnimationIndex lastAnimation = Player.AnimationIndex.None;
     public ChunkSoundEmitter grindSound;
     public Creature tagableCreature = null;
+    public List<PoisonedCreature> poisonedVictims = new();
     public TagSmoke tagSmoke = null;
 
     public VinkiPlayerData(Player player)

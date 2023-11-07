@@ -10,6 +10,7 @@ using DevInterface;
 using SlugBase.SaveData;
 using IL.MoreSlugcats;
 using Smoke;
+using System.Collections;
 
 namespace Vinki
 {
@@ -675,6 +676,7 @@ namespace Vinki
         private static float boxOffset = 40f;
         private static void CheckForTagging(Player self, VinkiPlayerData v)
         {
+            // Wait before being able to tag again
             if (v.tagLag > 0)
             {
                 v.tagLag--;
@@ -682,6 +684,20 @@ namespace Vinki
                 {
                     v.tagSmoke.EmitSmoke(0.5f);
                 }
+            }
+
+            // Go through poisoned creatures
+            for (int i = 0; i < v.poisonedVictims.Count; i++)
+            {
+                if (v.poisonedVictims[i].timeLeft <= 0)
+                {
+                    v.poisonedVictims.Remove(v.poisonedVictims[i]);
+                    i--;
+                    continue;
+                }
+
+                v.poisonedVictims[i].timeLeft--;
+                (v.poisonedVictims[i].creature.State as HealthState).health -= v.poisonedVictims[i].damagePerTick;
             }
 
             if (!IsPressingGraffiti(self) || (VinkiConfig.RequireSprayCans.Value && self.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan) == null) ||
@@ -737,14 +753,22 @@ namespace Vinki
             }
             v.tagLag = 30;
 
-            float damage = 2f;
+            float damage = 1f;
             if (v.tagableCreature is Player)
             {
-                damage = 0.5f;
+                if (self.room.game.IsStorySession)
+                {
+                    damage = 0f;
+                }
+                else
+                {
+                    damage = 0.5f;
+                }
             }
 
             self.room.PlaySound(SoundID.Hazer_Squirt_Smoke_LOOP, self.mainBodyChunk, false, 2f, 1f);
             v.tagableCreature.Violence(self.firstChunk, null, v.tagableCreature.firstChunk, null, Creature.DamageType.Stab, damage, 0f);
+            v.poisonedVictims.Add(new VinkiPlayerData.PoisonedCreature(v.tagableCreature, 120, 1f));
 
             if(v.tagSmoke != null)
             {
