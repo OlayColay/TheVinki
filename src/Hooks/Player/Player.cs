@@ -680,13 +680,13 @@ namespace Vinki
             if (v.tagLag > 0)
             {
                 v.tagLag--;
+                v.tagSmoke.target.graphicsModule.Tag().tagLag = v.tagLag;
                 if (v.tagSmoke.room == self.room)
                 {
                     v.tagSmoke.EmitSmoke(0.4f);
                 }
                 if (v.tagLag == 0)
                 {
-                    v.tagSmoke.target.graphicsModule.Tag().isBeingTagged = false;
                     v.tagSmoke.RemoveFromRoom();
                     v.tagSmoke = null;
                 }
@@ -723,7 +723,7 @@ namespace Vinki
             // Find any creatures in the room within the box
             foreach (var creature in self.room.abstractRoom.creatures.Select((absCreature) => absCreature.realizedCreature))
             {
-                if (!creature.canBeHitByWeapons || creature.dead || creature == self || (creature is Lizard && (creature as Lizard).AI.friendTracker.friend == self) ||
+                if (!creature.canBeHitByWeapons || creature.dead || creature == self || (creature is Lizard && (creature as Lizard).AI.friendTracker.friend != null) ||
                     creature is Fly || (creature is Centipede && (creature as Centipede).Small) || creature is Hazer || creature is VultureGrub || creature is SmallNeedleWorm ||
                     (creature is Player && (creature as Player).abstractCreature.abstractAI != null))
                 {
@@ -806,8 +806,8 @@ namespace Vinki
             v.tagSmoke = new Smoke.TagSmoke(self.room, source, v.tagableCreature);
             self.room.AddObject(v.tagSmoke);
             v.tagSmoke.EmitSmoke(0.4f);
-            v.tagSmoke.target.graphicsModule.Tag().isBeingTagged = true;
-            v.tagSmoke.target.graphicsModule.Tag().tagColor = new HSLColor(v.tagSmoke.hue, 0.5f, 0.8f).rgb;
+            v.tagSmoke.target.graphicsModule.Tag().tagLag = 30;
+            v.tagSmoke.target.graphicsModule.Tag().tagColor = new HSLColor(v.tagSmoke.hue, 0.8f, 0.5f).rgb;
         }
     }
 }

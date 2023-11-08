@@ -113,7 +113,6 @@ namespace Vinki
 
             if (!self.player.IsVinki(out var vinki))
             {
-                self.Tag().ogColors = sLeaser.sprites.Select((sprite) => sprite.color).ToArray();
                 return;
             }
 
@@ -134,7 +133,7 @@ namespace Vinki
                 sLeaser.sprites[vinki.rainPodsSprite] = new FSprite("RainPodsA0");
                 sLeaser.sprites[vinki.glassesSprite] = new FSprite("GlassesA0");
             }
-            else 
+            else
             {
                 string faceSprite = "";
                 try
@@ -184,7 +183,6 @@ namespace Vinki
                 }
             }
 
-            self.Tag().ogColors = sLeaser.sprites.Select((sprite) => sprite.color).ToArray();
             self.AddToContainer(sLeaser, rCam, null);
         }
 
@@ -252,7 +250,6 @@ namespace Vinki
             Color glassesColor = GetCustomVinkiColor(self.player.JollyOption.playerNumber, 5);
             Color shoesColor = GetCustomVinkiColor(self.player.JollyOption.playerNumber, 4);
             Color rainPodsColor = GetCustomVinkiColor(self.player.JollyOption.playerNumber, 3);
-            //Color stripesColor = vinki.StripesColor;
 
             sLeaser.sprites[2].color = Color.white;
 
@@ -428,7 +425,14 @@ namespace Vinki
 
         private static void UpdateTagColors(GraphicsModuleData tag, RoomCamera.SpriteLeaser sLeaser)
         {
-            if (tag.isBeingTagged)
+            if (tag.ogColors == null)
+            {
+                tag.ogColors = sLeaser.sprites.Select((sprite) => sprite.color).ToArray();
+                tag.curColors = new Color[tag.ogColors.Length];
+                tag.ogColors.CopyTo(tag.curColors, 0);
+            }
+
+            if (tag.tagLag > 0)
             {
                 if (tag.taggedColors == null)
                 {
@@ -436,8 +440,13 @@ namespace Vinki
                 }
                 for (int i = 0; i < tag.taggedColors.Length; i++)
                 {
-                    tag.taggedColors[i] = Color.Lerp(sLeaser.sprites[i].color, tag.tagColor, 0.004f);
+                    tag.taggedColors[i] = Color.Lerp(tag.curColors[i], tag.tagColor, (30f - tag.tagLag) / 30f);
                 }
+            }
+            else if (tag.tagLag == 0)
+            {
+                tag.taggedColors.CopyTo(tag.curColors, 0);
+                tag.tagLag = -1;
             }
 
             if (tag.taggedColors == null)
@@ -449,7 +458,7 @@ namespace Vinki
             {
                 if (i != 9 && i != 11)
                 {
-                    sLeaser.sprites[i].color = tag.taggedColors[i];
+                    sLeaser.sprites[i].color = Color.Lerp(Color.Lerp(tag.ogColors[i], tag.curColors[i], 0.5f), tag.taggedColors[i], 0.5f);
                 }
             }
         }

@@ -6,10 +6,11 @@ namespace Vinki;
 
 public class GraphicsModuleData
 {
-    public bool isBeingTagged = false;
+    public int tagLag = -1;
     public Color tagColor;
     public Color[] ogColors;
     public Color[] taggedColors;
+    public Color[] curColors;
 }
 public static class GraphicsModuleExtension
 {
