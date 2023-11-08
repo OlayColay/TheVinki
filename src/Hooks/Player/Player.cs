@@ -702,6 +702,7 @@ namespace Vinki
                     continue;
                 }
 
+                v.poisonedVictims[i].creature.SetKillTag(self.abstractCreature);
                 v.poisonedVictims[i].timeLeft--;
                 (v.poisonedVictims[i].creature.State as HealthState).health -= v.poisonedVictims[i].damagePerTick;
             }
@@ -795,6 +796,15 @@ namespace Vinki
                 else
                 {
                     v.tagableCreature.Violence(self.firstChunk, null, v.tagableCreature.firstChunk, null, Creature.DamageType.Stab, damage, 0f);
+                    if (ModManager.MSC && v.tagableCreature is Player)
+                    {
+                        Player player = v.tagableCreature as Player;
+                        player.playerState.permanentDamageTracking += (double)(damage / player.Template.baseDamageResistance);
+                        if (player.playerState.permanentDamageTracking >= 1.0)
+                        {
+                            player.Die();
+                        }
+                    }
                 }
             }
 
