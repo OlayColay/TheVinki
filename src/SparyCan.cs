@@ -281,44 +281,8 @@ sealed class SprayCan : Weapon
 
     private void UpdateColor()
     {
-        switch (Abstr.uses)
-        {
-            case 0:
-                color = Color.gray;
-                Abstr.hue = 0f;
-                Abstr.saturation = 0f;
-                break;
-            case 1:
-                color = Color.red;
-                Abstr.hue = 0f;
-                Abstr.saturation = 1f;
-                break;
-            case 2:
-                color = Color.HSVToRGB(0.07669325f, 1f, 1f);
-                Abstr.hue = 0.07669325f;
-                Abstr.saturation = 1f;
-                break;
-            case 3:
-                color = Color.yellow;
-                Abstr.hue = 0.1533865f;
-                Abstr.saturation = 1f;
-                break;
-            case 4:
-                color = Color.HSVToRGB(0.245f, 1f, 1f);
-                Abstr.hue = 0.245f;
-                Abstr.saturation = 1f;
-                break;
-            case 5:
-                color = Color.green;
-                Abstr.hue = 0.3333333f;
-                Abstr.saturation = 1f;
-                break;
-            default:
-                color = Color.white;
-                Abstr.hue = 0f;
-                Abstr.saturation = 0f;
-                break;
-        }
+        color = Abstr.uses <= SprayCanAbstract.CanColors.Length ? SprayCanAbstract.CanColors[Abstr.uses] : Color.white;
+        Color.RGBToHSV(color, out Abstr.hue, out Abstr.saturation, out _);
     }
 
     private void Explode(BodyChunk hitChunk)
