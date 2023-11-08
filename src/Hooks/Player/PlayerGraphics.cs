@@ -1,6 +1,7 @@
 ﻿using JollyCoop;
 using Menu;
 using RWCustom;
+using SprayCans;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace Vinki
             On.PlayerGraphics.DrawSprites += PlayerGraphics_DrawSprites;
             On.PlayerGraphics.Update += PlayerGraphics_Update;
             On.PlayerGraphics.JollyUniqueColorMenu += PlayerGraphics_JollyUniqueColorMenu;
-            On.PlayerGraphics.LoadJollyColorsFromOptions += PlayerGraphics_Debug;
+            On.PlayerGraphics.LoadJollyColorsFromOptions += PlayerGraphics_LoadJollyColorsFromOptions;
             On.PlayerGraphics.PopulateJollyColorArray += PlayerGraphics_PopulateJollyColorsArray;
         }
 
@@ -84,7 +85,7 @@ namespace Vinki
             }
         }
 
-        private static void PlayerGraphics_Debug(On.PlayerGraphics.orig_LoadJollyColorsFromOptions orig, int playerNumber)
+        private static void PlayerGraphics_LoadJollyColorsFromOptions(On.PlayerGraphics.orig_LoadJollyColorsFromOptions orig, int playerNumber)
         {
             orig(playerNumber);
             //Debug.Log("Called PlayerGraphics.LoadJollyColorsFromOptions. Lengths: [" + PlayerGraphics.jollyColors.Length + "][" + PlayerGraphics.jollyColors[playerNumber].Length + ']');
@@ -123,12 +124,12 @@ namespace Vinki
 
             Array.Resize(ref sLeaser.sprites, sLeaser.sprites.Length + 1);
             sLeaser.sprites[vinki.tagIconSprite] = new FSprite("TagIcon");
+            sLeaser.sprites[vinki.tagIconSprite].isVisible = false;
 
             if (!ModManager.ActiveMods.Exists((ModManager.Mod mod) => mod.id == "dressmyslugcat"))
             {
                 Array.Resize(ref sLeaser.sprites, sLeaser.sprites.Length + 3);
 
-                sLeaser.sprites[vinki.tagIconSprite] = new FSprite("TagIcon");
                 sLeaser.sprites[vinki.shoesSprite] = new FSprite("ShoesA0");
                 sLeaser.sprites[vinki.rainPodsSprite] = new FSprite("RainPodsA0");
                 sLeaser.sprites[vinki.glassesSprite] = new FSprite("GlassesA0");
@@ -314,13 +315,17 @@ namespace Vinki
                 float yPos = sLeaser.sprites[9].y + Mathf.Lerp(0f, 20f, vinki.tagIconSize);
                 var iconPos = new Vector2(xPos, yPos);
 
+                bool tagAble = vinki.tagLag <= 0 && (!VinkiConfig.RequireSprayCans.Value || (
+                    self.player.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan) != null) && 
+                    ((self.player.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan).grabbed as SprayCan).Abstr.uses > 0));
+
                 sLeaser.sprites[vinki.glassesSprite].anchorX = sLeaser.sprites[9].anchorX;
                 sLeaser.sprites[vinki.glassesSprite].anchorY = sLeaser.sprites[9].anchorY;
                 sLeaser.sprites[vinki.tagIconSprite].rotation = 0f;
                 sLeaser.sprites[vinki.tagIconSprite].x = iconPos.x;
                 sLeaser.sprites[vinki.tagIconSprite].y = iconPos.y;
                 sLeaser.sprites[vinki.tagIconSprite].element = Futile.atlasManager.GetElementWithName("TagIcon");
-                sLeaser.sprites[vinki.tagIconSprite].color = vinki.tagLag > 0 ? Color.gray : Color.white;
+                sLeaser.sprites[vinki.tagIconSprite].color = tagAble ? Color.white : Color.gray;
 
                 bool tagReady = vinki.tagableCreature != null;
                 vinki.tagIconSize = Mathf.Clamp01(tagReady ? vinki.tagIconSize + 0.02f : vinki.tagIconSize - 0.02f);
