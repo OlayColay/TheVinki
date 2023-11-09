@@ -67,9 +67,11 @@ namespace Vinki
             base.Initialize();
             Tabs = new OpTab[]
             {
-                new OpTab(this, "Options")
+                new OpTab(this, "Options"),
+                new OpTab(this, "Credits")
             };
 
+            // Options tab
             AddDivider(593f);
             AddTitle();
             AddDivider(557f);
@@ -97,10 +99,33 @@ namespace Vinki
             AddCheckbox(ShowVinkiTitleCard, 240f);
             AddCheckbox(GlassesOverDMS, 200f);
             AddCheckbox(TagDamageJolly, 160f);
+
+            // Credits tab
+            AddDivider(593f, 1);
+            AddTitle(1);
+            AddDivider(557f, 1);
+            AddSubtitle(500f, "Art", 1);
+            AddText(480f, "Beep", 1);
+            AddSubtitle(440f, "Coding", 1);
+            AddText(420f, "OlayColay", 1);
+            AddSubtitle(380f, "Cursed Art", 1);
+            AddText(360f, "Beep    Bluzai    MagicaJaphet    MaxDubstep    OlayColay", 1);
+            AddSubtitle(320f, "Level Editing", 1);
+            AddText(300f, "tarnpot", 1);
+            AddSubtitle(260f, "Music", 1);
+            AddText(240f, "MaxDubstep", 1);
+            AddSubtitle(200f, "Sound Effects", 1);
+            AddText(180f, "MaxDubstep", 1);
+            AddSubtitle(140f, "Writing", 1);
+            AddText(120f, "Beep    MaxDubstep    OlayColay    tarnpot    Tsunochizu", 1);
+            AddSubtitle(60f, "Special Thanks", 1);
+            AddText(30f, "Developers of this mod's dependencies\n" +
+                "Abigail    banba fan    Doop    goof    JayDee    Nico    Rae    Sadman    skrybl    Sunbloom    SunnyBeam\n",
+            1);
         }
 
         // Combines two flipped 'LinearGradient200's together to make a fancy looking divider.
-        private void AddDivider(float y)
+        private void AddDivider(float y, int tab = 0)
         {
             OpImage dividerLeft = new OpImage(new Vector2(300f, y), "LinearGradient200");
             dividerLeft.sprite.SetAnchor(0.5f, 0f);
@@ -110,19 +135,41 @@ namespace Vinki
             dividerRight.sprite.SetAnchor(0.5f, 0f);
             dividerRight.sprite.rotation = 90f;
 
-            Tabs[0].AddItems(new UIelement[]
+            Tabs[tab].AddItems(new UIelement[]
             {
                 dividerLeft,
                 dividerRight
             });
         }
 
-        // Adds the mod name and version to the interface.
-        private void AddTitle()
+        // Adds the mod name to the interface.
+        private void AddTitle(int tab = 0)
         {
             OpLabel title = new OpLabel(new Vector2(150f, 560f), new Vector2(300f, 30f), "The Vinki", bigText: true);
 
-            Tabs[0].AddItems(new UIelement[]
+            Tabs[tab].AddItems(new UIelement[]
+            {
+                title
+            });
+        }
+
+        // Adds a subtitle to the interface.
+        private void AddSubtitle(float y, string text, int tab = 0)
+        {
+            OpLabel title = new OpLabel(new Vector2(200f, y), new Vector2(200f, 20f), text, bigText: true);
+
+            Tabs[tab].AddItems(new UIelement[]
+            {
+                title
+            });
+        }
+
+        // Adds small text to the interface.
+        private void AddText(float y, string text, int tab = 0)
+        {
+            OpLabel title = new OpLabel(new Vector2(250f, y), new Vector2(100f, 10f), text);
+
+            Tabs[tab].AddItems(new UIelement[]
             {
                 title
             });
