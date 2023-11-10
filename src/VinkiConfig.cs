@@ -73,7 +73,8 @@ namespace Vinki
                 new OpTab(this, "Options"),
                 new OpTab(this, "Credits"),
                 new OpTab(this, "Vinki Graffiti"),
-                new OpTab(this, "Other Graffiti"),
+                new OpTab(this, "Other Graffiti 1"),
+                new OpTab(this, "Other Graffiti 2"),
             };
 
             // Options tab
@@ -130,6 +131,28 @@ namespace Vinki
 
             // Vinki Graffiti tab
             AddGraffiti(525f, "decals" + Path.DirectorySeparatorChar + "VinkiGraffiti" + Path.DirectorySeparatorChar + "vinki", 2);
+
+            // Other Graffiti 1 tab
+            AddSubtitle(580f, "Artificer", 3);
+            float curY = AddGraffiti(525f, "decals" + Path.DirectorySeparatorChar + "VinkiGraffiti" + Path.DirectorySeparatorChar + "Artificer", 3);
+            AddSubtitle(curY + 30f, "Gourmand", 3);
+            curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "VinkiGraffiti" + Path.DirectorySeparatorChar + "Gourmand", 3);
+            AddSubtitle(curY + 30f, "Hunter", 3);
+            curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "VinkiGraffiti" + Path.DirectorySeparatorChar + "Red", 3);
+            AddSubtitle(curY + 30f, "Monk", 3);
+            curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "VinkiGraffiti" + Path.DirectorySeparatorChar + "Yellow", 3);
+            AddSubtitle(curY + 30f, "Rivulet", 3);
+            curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "VinkiGraffiti" + Path.DirectorySeparatorChar + "Rivulet", 3);
+
+            // Other Graffiti 2 tab
+            AddSubtitle(580f, "Saint", 4);
+            curY = AddGraffiti(525f, "decals" + Path.DirectorySeparatorChar + "VinkiGraffiti" + Path.DirectorySeparatorChar + "Saint", 4);
+            AddSubtitle(curY + 30f, "Sofanthiel", 4);
+            curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "VinkiGraffiti" + Path.DirectorySeparatorChar + "Sofanthiel", 4);
+            AddSubtitle(curY + 30f, "Spearmaster", 4);
+            curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "VinkiGraffiti" + Path.DirectorySeparatorChar + "Spear", 4);
+            AddSubtitle(curY + 30f, "Survivor", 4);
+            curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "VinkiGraffiti" + Path.DirectorySeparatorChar + "White", 4);
         }
 
         // Combines two flipped 'LinearGradient200's together to make a fancy looking divider.
@@ -279,10 +302,9 @@ namespace Vinki
             {
                 for (float x = 25f; x <= 525f && i < thumbnails.Length; x += 125f,i++)
                 {
-                    thumbnails[i].SetPos(new Vector2(x, y));
                     float newScale = imgHeight / thumbnails[i].size.y;
                     thumbnails[i].scale = new Vector2(newScale, newScale);
-                    thumbnails[i].Change();
+                    thumbnails[i].SetPos(new Vector2(x, y));
 
                     int separator = names[i].LastIndexOf(" - ");
                     if (separator <= 0)
