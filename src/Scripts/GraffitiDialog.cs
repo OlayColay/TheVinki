@@ -13,25 +13,25 @@ namespace Menu
     {
         public GraffitiDialog(ProcessManager manager, Vector2 cancelButtonPos) : base(manager)
         {
-            if (this.scene != null)
+            if (scene != null)
             {
                 return;
             }
 
             float[] screenOffsets = Custom.GetScreenOffsets();
-            this.leftAnchor = screenOffsets[0];
-            this.rightAnchor = screenOffsets[1];
-            this.pages[0].pos = new Vector2(0.01f, 0f);
-            Page page = this.pages[0];
+            leftAnchor = screenOffsets[0];
+            rightAnchor = screenOffsets[1];
+            pages[0].pos = new Vector2(0.01f, 0f);
+            Page page = pages[0];
             page.pos.y = page.pos.y + 2000f;
-            this.scene = new InteractiveMenuScene(this, pages[0], Enums.GraffitiMap);
-            this.pages[0].subObjects.Add(this.scene);
+            scene = new InteractiveMenuScene(this, pages[0], Enums.GraffitiMap);
+            pages[0].subObjects.Add(scene);
 
             float cancelButtonWidth = GetCancelButtonWidth(base.CurrLang);
-            this.cancelButton = new SimpleButton(this, this.pages[0], base.Translate("CLOSE"), "CLOSE", cancelButtonPos, new Vector2(cancelButtonWidth, 30f));
-            this.pages[0].subObjects.Add(this.cancelButton);
-            this.opening = true;
-            this.targetAlpha = 1f;
+            cancelButton = new SimpleButton(this, pages[0], base.Translate("CLOSE"), "CLOSE", cancelButtonPos, new Vector2(cancelButtonWidth, 30f));
+            pages[0].subObjects.Add(cancelButton);
+            opening = true;
+            targetAlpha = 1f;
         }
 
         private static float GetCancelButtonWidth(InGameTranslator.LanguageID lang)
@@ -47,17 +47,17 @@ namespace Menu
         public override void GrafUpdate(float timeStacker)
         {
             base.GrafUpdate(timeStacker);
-            if (this.opening || this.closing)
+            if (opening || closing)
             {
-                this.uAlpha = Mathf.Pow(Mathf.Max(0f, Mathf.Lerp(this.lastAlpha, this.currentAlpha, timeStacker)), 1.5f);
-                this.darkSprite.alpha = this.uAlpha * 0.95f;
+                uAlpha = Mathf.Pow(Mathf.Max(0f, Mathf.Lerp(lastAlpha, currentAlpha, timeStacker)), 1.5f);
+                darkSprite.alpha = uAlpha * 0.95f;
             }
-            this.pages[0].pos.y = Mathf.Lerp(this.manager.rainWorld.options.ScreenSize.y + 100f, 0.01f, (this.uAlpha < 0.999f) ? this.uAlpha : 1f);
-            for (int i = 0; i < this.scene.depthIllustrations.Count; i++)
+            pages[0].pos.y = Mathf.Lerp(manager.rainWorld.options.ScreenSize.y + 100f, 0.01f, (uAlpha < 0.999f) ? uAlpha : 1f);
+            for (int i = 0; i < scene.depthIllustrations.Count; i++)
             {
                 if (i < bgCount || graffitiSlapping[i - bgCount] == 0)
                 {
-                    this.scene.depthIllustrations[i].sprite.alpha = Mathf.Lerp(0f, 1f, Mathf.Lerp(0f, 1f, this.darkSprite.alpha * 1.25f));
+                    scene.depthIllustrations[i].sprite.alpha = Mathf.Lerp(0f, 1f, Mathf.Lerp(0f, 1f, darkSprite.alpha * 1.25f));
                 }
             }
         }
@@ -67,28 +67,28 @@ namespace Menu
             base.Singal(sender, message);
             if (message == "CLOSE")
             {
-                this.closing = true;
-                this.targetAlpha = 0f;
+                closing = true;
+                targetAlpha = 0f;
             }
         }
 
         public override void Update()
         {
             base.Update();
-            this.lastAlpha = this.currentAlpha;
-            this.currentAlpha = Mathf.Lerp(this.currentAlpha, this.targetAlpha, 0.2f);
-            if (this.opening && this.pages[0].pos.y <= 0.01f)
+            lastAlpha = currentAlpha;
+            currentAlpha = Mathf.Lerp(currentAlpha, targetAlpha, 0.2f);
+            if (opening && pages[0].pos.y <= 0.01f)
             {
-                this.opening = false;
+                opening = false;
             }
-            if (this.closing && Math.Abs(this.currentAlpha - this.targetAlpha) < 0.09f)
+            if (closing && Math.Abs(currentAlpha - targetAlpha) < 0.09f)
             {
-                this.manager.StopSideProcess(this);
-                this.closing = false;
+                manager.StopSideProcess(this);
+                closing = false;
             }
-            this.cancelButton.buttonBehav.greyedOut = this.opening || graffitiSlapping.Max() > 0;
+            cancelButton.buttonBehav.greyedOut = opening || graffitiSlapping.Max() > 0;
 
-            if (this.opening)
+            if (opening)
             {
                 return;
             }

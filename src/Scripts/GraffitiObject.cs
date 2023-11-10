@@ -16,9 +16,9 @@ public class GraffitiObject : CustomDecal
 
         public SerializableGraffiti(PlacedObject placedObject, int cyclePlaced, int gNum)
         {
-            this.data = (placedObject.data as PlacedObject.CustomDecalData).ToString();
-            this.x = placedObject.pos.x;
-            this.y = placedObject.pos.y;
+            data = (placedObject.data as PlacedObject.CustomDecalData).ToString();
+            x = placedObject.pos.x;
+            y = placedObject.pos.y;
             this.cyclePlaced = cyclePlaced;
             this.gNum = gNum;
         }

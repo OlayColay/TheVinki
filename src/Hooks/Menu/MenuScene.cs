@@ -15,7 +15,7 @@ public static partial class Hooks
 
     }
 
-    private static void MenuScene_BuildScene(On.Menu.MenuScene.orig_BuildScene orig, Menu.MenuScene self)
+    private static void MenuScene_BuildScene(On.Menu.MenuScene.orig_BuildScene orig, MenuScene self)
     {
         orig(self);
 
@@ -27,7 +27,7 @@ public static partial class Hooks
         if (self.sceneID.ToString() == "Slugcat_Vinki")
         {
             // Find the graffiti layers of the slugcat select scene
-            List<Menu.MenuDepthIllustration> menuGraffitis = new List<Menu.MenuDepthIllustration>();
+            List<MenuDepthIllustration> menuGraffitis = new List<MenuDepthIllustration>();
             foreach (var image in self.depthIllustrations.Where(f => Path.GetFileNameWithoutExtension(f.fileName).StartsWith("Graffiti - ")))
             {
                 menuGraffitis.Add(image);
@@ -47,8 +47,8 @@ public static partial class Hooks
         else if (self.sceneID.ToString() == "Sleep_Vinki")
         {
             // Find the item layers of the slugcat select scene
-            List<Menu.MenuDepthIllustration> sleepItems = new List<Menu.MenuDepthIllustration>();
-            foreach (Menu.MenuDepthIllustration image in self.depthIllustrations.Where(f => Path.GetFileNameWithoutExtension(f.fileName).StartsWith("Item - ")))
+            List<MenuDepthIllustration> sleepItems = new List<MenuDepthIllustration>();
+            foreach (MenuDepthIllustration image in self.depthIllustrations.Where(f => Path.GetFileNameWithoutExtension(f.fileName).StartsWith("Item - ")))
             {
                 image.alpha = 0f;
                 string imageName = Path.GetFileNameWithoutExtension(image.fileName);
@@ -67,7 +67,7 @@ public static partial class Hooks
             Plugin.shelterItems.Clear();
 
             // Find the graffiti layers of the slugcat select scene
-            List<Menu.MenuDepthIllustration> menuGraffitis = new List<Menu.MenuDepthIllustration>();
+            List<MenuDepthIllustration> menuGraffitis = new List<MenuDepthIllustration>();
             foreach (var image in self.depthIllustrations.Where(f => Path.GetFileNameWithoutExtension(f.fileName).StartsWith("Graffiti - ")))
             {
                 menuGraffitis.Add(image);
@@ -86,7 +86,7 @@ public static partial class Hooks
             }
 
             // Find the doodle layers of the slugcat select scene
-            List<Menu.MenuDepthIllustration> menuDoodles = new List<Menu.MenuDepthIllustration>();
+            List<MenuDepthIllustration> menuDoodles = new List<MenuDepthIllustration>();
             foreach (var image in self.depthIllustrations.Where(f => Path.GetFileNameWithoutExtension(f.fileName).StartsWith("Doodle - ")))
             {
                 menuDoodles.Add(image);

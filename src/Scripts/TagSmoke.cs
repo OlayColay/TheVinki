@@ -16,66 +16,65 @@ public class TagSmoke : PositionedSmokeEmitter
     {
         this.source = source;
         this.target = target;
-        this.hue = Random.value;
+        hue = Random.value;
 
-        this.particles.Clear();
-        if (this.particlePool.GetParticle() != null)
+        particles.Clear();
+        if (particlePool.GetParticle() != null)
         {
-            this.particlePool.RemoveFromRoom();
+            particlePool.RemoveFromRoom();
         }
     }
 
     // Token: 0x06002821 RID: 10273 RVA: 0x0030DCF7 File Offset: 0x0030BEF7
-    public override SmokeSystem.SmokeSystemParticle CreateParticle()
+    public override SmokeSystemParticle CreateParticle()
     {
-        return new TagSmoke.SmokeSegment(this.hue);
+        return new SmokeSegment(hue);
     }
 
     // Token: 0x06002822 RID: 10274 RVA: 0x0030DD00 File Offset: 0x0030BF00
     public override void Update(bool eu)
     {
         base.Update(eu);
-        for (int i = 0; i < this.particles.Count; i++)
+        for (int i = 0; i < particles.Count; i++)
         {
-            if (this.PushPow(i) > 0f)
+            if (PushPow(i) > 0f)
             {
                 for (int j = i - 1; j >= 0; j--)
                 {
-                    if (Custom.DistLess(this.particles[i].pos, this.particles[j].pos, 60f))
+                    if (Custom.DistLess(particles[i].pos, particles[j].pos, 60f))
                     {
-                        float num = this.PushPow(j) / (this.PushPow(i) + this.PushPow(j));
-                        Vector2 b = (this.particles[i].vel + this.particles[j].vel) / 2f;
-                        float num2 = Mathf.InverseLerp(60f, 30f, Vector2.Distance(this.particles[i].pos, this.particles[j].pos));
-                        this.particles[i].vel = Vector2.Lerp(this.particles[i].vel, b, num * num2);
-                        this.particles[j].vel = Vector2.Lerp(this.particles[j].vel, b, (1f - num) * num2);
+                        float num = PushPow(j) / (PushPow(i) + PushPow(j));
+                        Vector2 b = (particles[i].vel + particles[j].vel) / 2f;
+                        float num2 = Mathf.InverseLerp(60f, 30f, Vector2.Distance(particles[i].pos, particles[j].pos));
+                        particles[i].vel = Vector2.Lerp(particles[i].vel, b, num * num2);
+                        particles[j].vel = Vector2.Lerp(particles[j].vel, b, (1f - num) * num2);
                     }
                 }
             }
         }
         if (source != null && source.firstChunk != null)
         {
-            this.pos = source.firstChunk.pos + new Vector2(0f, 10f);
+            pos = source.firstChunk.pos + new Vector2(0f, 10f);
         }
     }
 
     // Token: 0x06002823 RID: 10275 RVA: 0x0030DE66 File Offset: 0x0030C066
     private float PushPow(int i)
     {
-        return Mathf.InverseLerp(0.65f, 0.85f, this.particles[i].life) * (this.particles[i] as TagSmoke.SmokeSegment).power;
+        return Mathf.InverseLerp(0.65f, 0.85f, particles[i].life) * (particles[i] as SmokeSegment).power;
     }
 
     // Token: 0x06002824 RID: 10276 RVA: 0x0030DEA0 File Offset: 0x0030C0A0
     public void EmitSmoke(float power)
     {
-        TagSmoke.SmokeSegment newVultureSmokeSegment = this.AddParticle(this.pos, (this.target.bodyChunks[1].pos - this.pos) * power, Custom.LerpMap(power, 0.3f, 0f, Mathf.Lerp(20f, 60f, Random.value), Mathf.Lerp(60f, 100f, Random.value))) as TagSmoke.SmokeSegment;
-        if (newVultureSmokeSegment != null)
+        if (AddParticle(pos, (target.bodyChunks[1].pos - pos) * power, Custom.LerpMap(power, 0.3f, 0f, Mathf.Lerp(20f, 60f, Random.value), Mathf.Lerp(60f, 100f, Random.value))) is SmokeSegment newVultureSmokeSegment)
         {
             newVultureSmokeSegment.power = power;
         }
     }
 
     // Token: 0x02000867 RID: 2151
-    public class SmokeSegment : MeshSmoke.HyrbidSmokeSegment
+    public new class SmokeSegment : HyrbidSmokeSegment
     {
         public SmokeSegment(float hue) : base()
         {
@@ -86,17 +85,17 @@ public class TagSmoke : PositionedSmokeEmitter
         public override void Reset(SmokeSystem newOwner, Vector2 pos, Vector2 vel, float lifeTime)
         {
             base.Reset(newOwner, pos, vel, lifeTime);
-            this.driftDir = Custom.RNV();
-            this.age = 0;
-            this.power = 0f;
+            driftDir = Custom.RNV();
+            age = 0;
+            power = 0f;
         }
 
         // Token: 0x06004079 RID: 16505 RVA: 0x004851BC File Offset: 0x004833BC
         public override void Update(bool eu)
         {
             base.Update(eu);
-            this.age++;
-            this.vel += this.driftDir * Mathf.Sin(Mathf.InverseLerp(0.55f, 0.75f, this.life) * 3.1415927f) * 0.6f * this.power;
+            age++;
+            vel += driftDir * Mathf.Sin(Mathf.InverseLerp(0.55f, 0.75f, life) * 3.1415927f) * 0.6f * power;
         }
 
         // Token: 0x0600407A RID: 16506 RVA: 0x00485230 File Offset: 0x00483430
@@ -125,35 +124,35 @@ public class TagSmoke : PositionedSmokeEmitter
         // Token: 0x0600407B RID: 16507 RVA: 0x00485351 File Offset: 0x00483551
         public override float ConDist(float timeStacker)
         {
-            return Custom.LerpMap(Mathf.Lerp(this.lastLife, this.life, timeStacker), 1f, 0.7f, 4f, 20f, 3f) * this.power;
+            return Custom.LerpMap(Mathf.Lerp(lastLife, life, timeStacker), 1f, 0.7f, 4f, 20f, 3f) * power;
         }
 
         // Token: 0x0600407C RID: 16508 RVA: 0x0048538C File Offset: 0x0048358C
         public override float MyRad(float timeStacker)
         {
-            return Mathf.Min(Custom.LerpMap(Mathf.Lerp(this.lastLife, this.life, timeStacker), 1f, 0.7f, 4f, 20f, 3f) + Mathf.Sin(Mathf.InverseLerp(0.7f, 0f, Mathf.Lerp(this.lastLife, this.life, timeStacker)) * 3.1415927f) * 8f, 5f + 25f * this.power) * (2f - this.MyOpactiy(timeStacker));
+            return Mathf.Min(Custom.LerpMap(Mathf.Lerp(lastLife, life, timeStacker), 1f, 0.7f, 4f, 20f, 3f) + Mathf.Sin(Mathf.InverseLerp(0.7f, 0f, Mathf.Lerp(lastLife, life, timeStacker)) * 3.1415927f) * 8f, 5f + 25f * power) * (2f - MyOpactiy(timeStacker));
         }
 
         // Token: 0x0600407D RID: 16509 RVA: 0x00485424 File Offset: 0x00483624
         public override float MyOpactiy(float timeStacker)
         {
-            if (this.resting)
+            if (resting)
             {
                 return 0f;
             }
-            return Mathf.InverseLerp(0f, 0.7f, Mathf.Lerp(this.lastLife, this.life, timeStacker)) * Mathf.Lerp(Custom.LerpMap(Vector2.Distance(Vector2.Lerp(this.lastPos, this.pos, timeStacker), base.NextPos(timeStacker)), 20f, 250f, 1f, 0f, 1.5f), 1f, Mathf.InverseLerp(0.9f, 1f, Mathf.Lerp(this.lastLife, this.life, timeStacker))) * (0.5f + 0.5f * Mathf.InverseLerp(0.2f, 0.4f, this.power));
+            return Mathf.InverseLerp(0f, 0.7f, Mathf.Lerp(lastLife, life, timeStacker)) * Mathf.Lerp(Custom.LerpMap(Vector2.Distance(Vector2.Lerp(lastPos, pos, timeStacker), base.NextPos(timeStacker)), 20f, 250f, 1f, 0f, 1.5f), 1f, Mathf.InverseLerp(0.9f, 1f, Mathf.Lerp(lastLife, life, timeStacker))) * (0.5f + 0.5f * Mathf.InverseLerp(0.2f, 0.4f, power));
         }
 
         // Token: 0x0600407E RID: 16510 RVA: 0x004854EA File Offset: 0x004836EA
         public override Color MyColor(float timeStacker)
         {
-            return this.VultureSmokeColor(Mathf.InverseLerp(1f, 5f + 15f * this.power, (float)this.age + timeStacker));
+            return VultureSmokeColor(Mathf.InverseLerp(1f, 5f + 15f * power, (float)age + timeStacker));
         }
 
         // Token: 0x0600407F RID: 16511 RVA: 0x00485518 File Offset: 0x00483718
         public Color VultureSmokeColor(float x)
         {
-            return new HSLColor(this.hue, 0.5f, Mathf.Lerp(0.8f, 0.15f, x)).rgb;
+            return new HSLColor(hue, 0.5f, Mathf.Lerp(0.8f, 0.15f, x)).rgb;
         }
 
         // Token: 0x06004080 RID: 16512 RVA: 0x004855A8 File Offset: 0x004837A8
@@ -170,11 +169,11 @@ public class TagSmoke : PositionedSmokeEmitter
         {
             base.HybridDraw(sLeaser, rCam, timeStacker, camPos, Apos, Bpos, Acol, Bcol, Arad, Brad);
             sLeaser.sprites[1].scale = Arad * (6f - Acol.a) / 8f;
-            sLeaser.sprites[1].alpha = Mathf.Pow(Acol.a, 0.6f) * (0.5f + 0.5f * Mathf.InverseLerp(0.2f, 0.4f, this.power));
+            sLeaser.sprites[1].alpha = Mathf.Pow(Acol.a, 0.6f) * (0.5f + 0.5f * Mathf.InverseLerp(0.2f, 0.4f, power));
             Acol.a = 1f;
             sLeaser.sprites[1].color = Acol;
             sLeaser.sprites[2].scale = Brad * (6f - Bcol.a) / 8f;
-            sLeaser.sprites[2].alpha = Mathf.Pow(Bcol.a, 0.6f) * (0.5f + 0.5f * Mathf.InverseLerp(0.2f, 0.4f, this.power));
+            sLeaser.sprites[2].alpha = Mathf.Pow(Bcol.a, 0.6f) * (0.5f + 0.5f * Mathf.InverseLerp(0.2f, 0.4f, power));
             Bcol.a = 1f;
             sLeaser.sprites[2].color = Bcol;
         }

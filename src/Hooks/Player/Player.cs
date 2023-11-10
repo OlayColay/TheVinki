@@ -813,7 +813,7 @@ namespace Vinki
                 v.tagSmoke.RemoveFromRoom();
             }
 
-            v.tagSmoke = new Smoke.TagSmoke(self.room, source, v.tagableCreature);
+            v.tagSmoke = new TagSmoke(self.room, source, v.tagableCreature);
             self.room.AddObject(v.tagSmoke);
             v.tagSmoke.EmitSmoke(0.4f);
             v.tagSmoke.target.graphicsModule.Tag().tagLag = 30;

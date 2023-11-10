@@ -20,7 +20,7 @@ public class VinkiPlayerData
         {
             this.creature = creature;
             this.timeLeft = timeLeft;
-            this.damagePerTick = totalDamage / timeLeft / creature.Template.baseDamageResistance;
+            damagePerTick = totalDamage / timeLeft / creature.Template.baseDamageResistance;
         }
     }
 

@@ -48,7 +48,7 @@ public static partial class Hooks
                     PlacedObject.CustomDecalData decalData = new PlacedObject.CustomDecalData(null);
                     decalData.FromString(placedGraffitis[self.name][i].data);
                     PlacedObject placedObject = new PlacedObject(PlacedObject.Type.CustomDecal, decalData);
-                    placedObject.pos = new UnityEngine.Vector2(placedGraffitis[self.name][i].x, placedGraffitis[self.name][i].y);
+                    placedObject.pos = new Vector2(placedGraffitis[self.name][i].x, placedGraffitis[self.name][i].y);
                     self.realizedRoom.AddObject(new CustomDecal(placedObject));
                 } 
             }

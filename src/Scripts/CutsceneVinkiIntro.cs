@@ -16,7 +16,7 @@ namespace Vinki
 		{
 			Debug.Log("VINKI CUTSCENE START!");
 			this.room = room;
-			this.phase = CutsceneVinkiIntro.Phase.Init;
+			phase = CutsceneVinkiIntro.Phase.Init;
 		}
 
 		// Token: 0x06002095 RID: 8341 RVA: 0x0028D744 File Offset: 0x0028B944
@@ -24,40 +24,40 @@ namespace Vinki
 		{
 			base.Update(eu);
 
-			if (this.phase == CutsceneVinkiIntro.Phase.Init)
+			if (phase == CutsceneVinkiIntro.Phase.Init)
 			{
-				if (!this.room.BeingViewed)
+				if (!room.BeingViewed)
 				{
 					return;
 				}
 
-				if (this.player != null && !this.foodMeterInit)
+				if (player != null && !foodMeterInit)
 				{
-					if (this.room.game.cameras[0].hud == null)
+					if (room.game.cameras[0].hud == null)
 					{
-						this.room.game.cameras[0].FireUpSinglePlayerHUD(this.player);
+						room.game.cameras[0].FireUpSinglePlayerHUD(player);
 					}
-					this.foodMeterInit = true;
-					this.room.game.cameras[0].hud.foodMeter.NewShowCount(this.player.FoodInStomach);
-					this.room.game.cameras[0].hud.foodMeter.visibleCounter = 0;
-					this.room.game.cameras[0].hud.foodMeter.fade = 0f;
-					this.room.game.cameras[0].hud.foodMeter.lastFade = 0f;
-					this.room.game.cameras[0].followAbstractCreature = this.player.abstractCreature;
+					foodMeterInit = true;
+					room.game.cameras[0].hud.foodMeter.NewShowCount(player.FoodInStomach);
+					room.game.cameras[0].hud.foodMeter.visibleCounter = 0;
+					room.game.cameras[0].hud.foodMeter.fade = 0f;
+					room.game.cameras[0].hud.foodMeter.lastFade = 0f;
+					room.game.cameras[0].followAbstractCreature = player.abstractCreature;
 				}
-				if (this.player != null && this.player.room != null && !this.playerPosCorrect)
+				if (player != null && player.room != null && !playerPosCorrect)
 				{
 					for (int j = 0; j < 2; j++)
 					{
-						this.player.bodyChunks[j].HardSetPosition(this.room.MiddleOfTile(28, 34));
+						player.bodyChunks[j].HardSetPosition(room.MiddleOfTile(28, 34));
 					}
-					this.playerPosCorrect = true;
-					if (this.player.graphicsModule != null)
+					playerPosCorrect = true;
+					if (player.graphicsModule != null)
 					{
-						this.player.graphicsModule.Reset();
+						player.graphicsModule.Reset();
 					}
-					this.startController = new CutsceneVinkiIntro.StartController(this);
-					this.player.controller = this.startController;
-					this.player.standing = true;
+					startController = new StartController(this);
+					player.controller = startController;
+					player.standing = true;
 
                     // Spawn SprayCan in hand
                     var tilePosition = player.room.GetTilePosition(player.mainBodyChunk.pos);
@@ -68,42 +68,42 @@ namespace Vinki
                     player.room.AddObject(abstr.realizedObject);
                     player.SlugcatGrab(abstr.realizedObject, 0);
                 }
-				if (this.playerPosCorrect && this.foodMeterInit)
+				if (playerPosCorrect && foodMeterInit)
 				{
-					this.phase = CutsceneVinkiIntro.Phase.PlayerRun;
+					phase = CutsceneVinkiIntro.Phase.PlayerRun;
 					return;
 				}
 			}
 			else
 			{
-				if (this.phase == CutsceneVinkiIntro.Phase.PlayerRun)
+				if (phase == CutsceneVinkiIntro.Phase.PlayerRun)
 				{
-					this.cutsceneTimer++;
+					cutsceneTimer++;
 					return;
 				}
-				if (this.phase == CutsceneVinkiIntro.Phase.Wait && this.player != null)
+				if (phase == CutsceneVinkiIntro.Phase.Wait && player != null)
 				{
-					if (this.player.room != null)
+					if (player.room != null)
 					{
-						if (this.player.room == this.room)
+						if (player.room == room)
 						{
-							this.cutsceneTimer++;
+							cutsceneTimer++;
 						}
 						else
 						{
-							this.phase = CutsceneVinkiIntro.Phase.End;
+							phase = CutsceneVinkiIntro.Phase.End;
 						}
 					}
 				}
-				if (this.phase == CutsceneVinkiIntro.Phase.End)
+				if (phase == CutsceneVinkiIntro.Phase.End)
 				{
 					Debug.Log("VINKI CUTSCENE END!");
-					if (this.player != null)
+					if (player != null)
 					{
-						this.player.controller = null;
+						player.controller = null;
                     }
 					Plugin.introPlayed = true;
-					this.Destroy();
+					Destroy();
 				}
 			}
 		}
@@ -111,7 +111,7 @@ namespace Vinki
 		// Token: 0x06002096 RID: 8342 RVA: 0x0028DB88 File Offset: 0x0028BD88
 		public Player.InputPackage GetInput()
 		{
-			if (this.player == null)
+			if (player == null)
 			{
 				return new Player.InputPackage(false, Options.ControlSetup.Preset.None, 0, 0, false, false, false, false, false);
 			}
@@ -120,7 +120,7 @@ namespace Vinki
 			bool jmp = false;
 			bool pckp = false;
 			bool thrw = false;
-			if (this.phase == CutsceneVinkiIntro.Phase.PlayerRun)
+			if (phase == CutsceneVinkiIntro.Phase.PlayerRun)
 			{
 				int[] array2 = new int[]
 				{
@@ -132,47 +132,47 @@ namespace Vinki
 					15,
 					120
 				};
-				if (this.cutsceneTimer < 30)
+				if (cutsceneTimer < 30)
 				{
 					pckp = true;
 				}
 				int num2 = array2[0];
-				if (this.cutsceneTimer >= num2 && this.cutsceneTimer < num2 + array2[1])
+				if (cutsceneTimer >= num2 && cutsceneTimer < num2 + array2[1])
 				{
 					y = -1;
-					if (this.cutsceneTimer >= num2 + 30)
+					if (cutsceneTimer >= num2 + 30)
 					{
 						x = -1;
                     }
-                    if (this.cutsceneTimer >= num2 + 60)
+                    if (cutsceneTimer >= num2 + 60)
                     {
                         y = 1;
                     }
                 }
 				num2 += array2[1];
-				if (this.cutsceneTimer >= num2 && this.cutsceneTimer < num2 + array2[2])
+				if (cutsceneTimer >= num2 && cutsceneTimer < num2 + array2[2])
 				{
 					x = 1;
 				}
 				num2 += array2[2];
-				if (this.cutsceneTimer >= num2 && this.cutsceneTimer < num2 + array2[3])
+				if (cutsceneTimer >= num2 && cutsceneTimer < num2 + array2[3])
 				{
 					x = 1;
 					jmp = true;
 				}
 				num2 += array2[3];
-				if (this.cutsceneTimer >= num2 && this.cutsceneTimer < num2 + array2[4])
+				if (cutsceneTimer >= num2 && cutsceneTimer < num2 + array2[4])
 				{
 					x = -1;
 				}
 				num2 += array2[4];
-				if (this.cutsceneTimer >= num2 && this.cutsceneTimer < num2 + array2[5])
+				if (cutsceneTimer >= num2 && cutsceneTimer < num2 + array2[5])
 				{
 					x = -1;
 					jmp = true;
 				}
 				num2 += array2[5];
-				if (this.cutsceneTimer == num2)
+				if (cutsceneTimer == num2)
 				{
 					x = -1;
                     var grasp = player.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan);
@@ -184,11 +184,11 @@ namespace Vinki
                     }
                 }
 				num2 += array2[6];
-				if (this.cutsceneTimer >= num2)
+				if (cutsceneTimer >= num2)
 				{
 					//thrw = true;
-					this.cutsceneTimer = 0;
-					this.phase = CutsceneVinkiIntro.Phase.Wait;
+					cutsceneTimer = 0;
+					phase = CutsceneVinkiIntro.Phase.Wait;
 				}
 			}
 			return new Player.InputPackage(false, Options.ControlSetup.Preset.None, x, y, jmp, thrw, pckp, false, false);
@@ -200,8 +200,8 @@ namespace Vinki
 		{
 			get
 			{
-				AbstractCreature firstAlivePlayer = this.room.game.FirstAlivePlayer;
-				if (this.room.game.Players.Count > 0 && firstAlivePlayer != null && firstAlivePlayer.realizedCreature != null)
+				AbstractCreature firstAlivePlayer = room.game.FirstAlivePlayer;
+				if (room.game.Players.Count > 0 && firstAlivePlayer != null && firstAlivePlayer.realizedCreature != null)
 				{
 					return firstAlivePlayer.realizedCreature as Player;
 				}
@@ -216,16 +216,16 @@ namespace Vinki
 		public bool playerPosCorrect;
 
 		// Token: 0x04001E84 RID: 7812
-		public CutsceneVinkiIntro.Phase phase;
+		public Phase phase;
 
 		// Token: 0x04001E85 RID: 7813
-		public CutsceneVinkiIntro.StartController startController;
+		public StartController startController;
 
 		// Token: 0x04001E86 RID: 7814
 		public int cutsceneTimer;
 
 		// Token: 0x0200078B RID: 1931
-		public class Phase : ExtEnum<CutsceneVinkiIntro.Phase>
+		public class Phase : ExtEnum<Phase>
 		{
 			// Token: 0x06003D8B RID: 15755 RVA: 0x0045D077 File Offset: 0x0045B277
 			public Phase(string value, bool register = false) : base(value, register)
@@ -233,16 +233,16 @@ namespace Vinki
 			}
 
 			// Token: 0x04003ED4 RID: 16084
-			public static readonly CutsceneVinkiIntro.Phase Init = new CutsceneVinkiIntro.Phase("Init", true);
+			public static readonly Phase Init = new Phase("Init", true);
 
 			// Token: 0x04003ED5 RID: 16085
-			public static readonly CutsceneVinkiIntro.Phase PlayerRun = new CutsceneVinkiIntro.Phase("PlayerRun", true);
+			public static readonly Phase PlayerRun = new Phase("PlayerRun", true);
 
 			// Token: 0x04003ED7 RID: 16087
-			public static readonly CutsceneVinkiIntro.Phase Wait = new CutsceneVinkiIntro.Phase("Wait", true);
+			public static readonly Phase Wait = new Phase("Wait", true);
 
 			// Token: 0x04003ED8 RID: 16088
-			public static readonly CutsceneVinkiIntro.Phase End = new CutsceneVinkiIntro.Phase("End", true);
+			public static readonly Phase End = new Phase("End", true);
 		}
 
 		// Token: 0x0200078C RID: 1932
@@ -257,7 +257,7 @@ namespace Vinki
 			// Token: 0x06003D8E RID: 15758 RVA: 0x0045D0F0 File Offset: 0x0045B2F0
 			public override Player.InputPackage GetInput()
 			{
-				return this.owner.GetInput();
+				return owner.GetInput();
 			}
 
 			// Token: 0x04003ED9 RID: 16089

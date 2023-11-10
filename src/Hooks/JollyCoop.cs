@@ -22,7 +22,7 @@ public static partial class Hooks
         On.JollyCoop.JollyMenu.JollyPlayerSelector.GrafUpdate += Vinki_Jolly_GrafUpdate;
     }
 
-    private static void Vinki_Jolly_PupUpdate(On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.orig_Update orig, JollyCoop.JollyMenu.SymbolButtonTogglePupButton self)
+    private static void Vinki_Jolly_PupUpdate(On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.orig_Update orig, SymbolButtonTogglePupButton self)
     {
         //if (!(self.owner as JollyPlayerSelector).dirty)
         //{
@@ -78,7 +78,7 @@ public static partial class Hooks
         orig(self);
     }
 
-    private static void Vinki_Jolly_GrafUpdate(On.JollyCoop.JollyMenu.JollyPlayerSelector.orig_GrafUpdate orig, JollyCoop.JollyMenu.JollyPlayerSelector self, float timeStacker)
+    private static void Vinki_Jolly_GrafUpdate(On.JollyCoop.JollyMenu.JollyPlayerSelector.orig_GrafUpdate orig, JollyPlayerSelector self, float timeStacker)
     {
         if (self.slugName != Enums.vinki || rainPodsSymbol[self.index] == null)
         {
@@ -97,7 +97,7 @@ public static partial class Hooks
         orig(self, timeStacker);
     }
 
-    private static void Vinki_Jolly_Update(On.JollyCoop.JollyMenu.JollyPlayerSelector.orig_Update orig, JollyCoop.JollyMenu.JollyPlayerSelector self)
+    private static void Vinki_Jolly_Update(On.JollyCoop.JollyMenu.JollyPlayerSelector.orig_Update orig, JollyPlayerSelector self)
     {
         orig(self);
         // TODO: Make pup sprite
@@ -120,7 +120,7 @@ public static partial class Hooks
         self.pupButton.LoadIcon();
     }
 
-    private static void Vinki_Jolly_ctor(On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.orig_ctor orig, JollyCoop.JollyMenu.SymbolButtonTogglePupButton self, Menu.Menu menu, MenuObject owner, string signal, Vector2 pos, Vector2 size, string symbolNameOn, string symbolNameOff, bool isOn, string stringLabelOn, string stringLabelOff)
+    private static void Vinki_Jolly_ctor(On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.orig_ctor orig, SymbolButtonTogglePupButton self, Menu.Menu menu, MenuObject owner, string signal, Vector2 pos, Vector2 size, string symbolNameOn, string symbolNameOff, bool isOn, string stringLabelOn, string stringLabelOff)
     {
         orig(self, menu, owner, signal, pos, size, symbolNameOn, symbolNameOff, isOn, stringLabelOn, stringLabelOff);
 
@@ -147,14 +147,14 @@ public static partial class Hooks
         self.LoadIcon();
     }
 
-    private static bool Vinki_Jolly_Sprite(On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.orig_HasUniqueSprite orig, JollyCoop.JollyMenu.SymbolButtonTogglePupButton self)
+    private static bool Vinki_Jolly_Sprite(On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.orig_HasUniqueSprite orig, SymbolButtonTogglePupButton self)
     {
         // TODO: Make pup sprite
         if (self.symbolNameOff.Contains(Enums.vinkiStr) && !self.isToggled) return true;
         return orig(self);
     }
 
-    private static string Vinki_Jolly_Name(On.JollyCoop.JollyMenu.JollyPlayerSelector.orig_GetPupButtonOffName orig, JollyCoop.JollyMenu.JollyPlayerSelector self)
+    private static string Vinki_Jolly_Name(On.JollyCoop.JollyMenu.JollyPlayerSelector.orig_GetPupButtonOffName orig, JollyPlayerSelector self)
     {
         SlugcatStats.Name playerClass = self.JollyOptions(self.index).playerClass;
         if (playerClass != null && playerClass == Enums.vinki)
@@ -164,7 +164,7 @@ public static partial class Hooks
         return orig(self);
     }
 
-    private static void Vinki_Jolly_LoadIcon(On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.orig_LoadIcon orig, JollyCoop.JollyMenu.SymbolButtonTogglePupButton self)
+    private static void Vinki_Jolly_LoadIcon(On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.orig_LoadIcon orig, SymbolButtonTogglePupButton self)
     {
         orig(self);
 
@@ -179,20 +179,20 @@ public static partial class Hooks
         // RainPods
         rainPodsSymbol[index].fileName = "rainpods_" + self.symbol.fileName;
         rainPodsSymbol[index].LoadFile();
-        rainPodsSymbol[index].sprite.color = GetCustomVinkiColor((self.owner as JollyCoop.JollyMenu.JollyPlayerSelector).index, 3);
-        rainPodsSymbol[index].color = GetCustomVinkiColor((self.owner as JollyCoop.JollyMenu.JollyPlayerSelector).index, 3);
+        rainPodsSymbol[index].sprite.color = GetCustomVinkiColor((self.owner as JollyPlayerSelector).index, 3);
+        rainPodsSymbol[index].color = GetCustomVinkiColor((self.owner as JollyPlayerSelector).index, 3);
         rainPodsSymbol[index].sprite.SetElementByName(rainPodsSymbol[index].fileName);
         // Shoes
         shoesSymbol[index].fileName = "shoes_" + self.symbol.fileName;
         shoesSymbol[index].LoadFile();
-        shoesSymbol[index].sprite.color = GetCustomVinkiColor((self.owner as JollyCoop.JollyMenu.JollyPlayerSelector).index, 4);
-        shoesSymbol[index].color = GetCustomVinkiColor((self.owner as JollyCoop.JollyMenu.JollyPlayerSelector).index, 4);
+        shoesSymbol[index].sprite.color = GetCustomVinkiColor((self.owner as JollyPlayerSelector).index, 4);
+        shoesSymbol[index].color = GetCustomVinkiColor((self.owner as JollyPlayerSelector).index, 4);
         shoesSymbol[index].sprite.SetElementByName(shoesSymbol[index].fileName);
         // Glasses
         glassesSymbol[index].fileName = "glasses_" + self.symbol.fileName;
         glassesSymbol[index].LoadFile();
-        glassesSymbol[index].sprite.color = GetCustomVinkiColor((self.owner as JollyCoop.JollyMenu.JollyPlayerSelector).index, 5);
-        glassesSymbol[index].color = GetCustomVinkiColor((self.owner as JollyCoop.JollyMenu.JollyPlayerSelector).index, 5);
+        glassesSymbol[index].sprite.color = GetCustomVinkiColor((self.owner as JollyPlayerSelector).index, 5);
+        glassesSymbol[index].color = GetCustomVinkiColor((self.owner as JollyPlayerSelector).index, 5);
         glassesSymbol[index].sprite.SetElementByName(glassesSymbol[index].fileName);
     }
 
@@ -231,7 +231,7 @@ public static partial class Hooks
         return Plugin.jollyColors[playerNumber][bodyPartIndex].GetValueOrDefault().CloneWithNewAlpha(1f);
     }
 
-    private static int GetPlayerIndex(JollyCoop.JollyMenu.SymbolButtonTogglePupButton pupButton)
+    private static int GetPlayerIndex(SymbolButtonTogglePupButton pupButton)
     {
         return (pupButton.owner as JollyPlayerSelector).index;
     }

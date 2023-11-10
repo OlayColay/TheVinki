@@ -207,32 +207,32 @@ namespace Vinki
             {
                 base.Update();
 
-                if (this.owner == null || oracle == null || player == null || player.room == null)
+                if (owner == null || oracle == null || player == null || player.room == null)
                 {
                     return;
                 }
 
                 if (Plugin.sleeping)
                 {
-                    this.owner.NewAction(Enums.SSOracle.Vinki_SSActionTriggered);
+                    owner.NewAction(Enums.SSOracle.Vinki_SSActionTriggered);
                     Plugin.sleeping = false;
                 }
 
                 if (base.action == Enums.SSOracle.Vinki_SSActionGeneral)
                 {
-                    this.owner.LockShortcuts();
-                    if (base.inActionCounter == 15 && (this.owner.conversation == null || this.owner.conversation.id != this.convoID))
+                    owner.LockShortcuts();
+                    if (base.inActionCounter == 15 && (owner.conversation == null || owner.conversation.id != convoID))
                     {
                         base.oracle.room.game.GetStorySession.saveState.miscWorldSaveData.SSaiConversationsHad = 1;
-                        this.owner.InitateConversation(this.convoID, this);
+                        owner.InitateConversation(convoID, this);
                     }
                 }
                 else if (base.action == Enums.SSOracle.Vinki_SSActionTriggered)
                 {
                     if (base.inActionCounter == 15)
                     {
-                        this.owner.conversation.paused = true;
-                        this.owner.restartConversationAfterCurrentDialoge = false;
+                        owner.conversation.paused = true;
+                        owner.restartConversationAfterCurrentDialoge = false;
 
                         base.dialogBox.Interrupt(base.Translate(". . ."), 0);
                         base.dialogBox.NewMessage(base.Translate("You disrespectful little cretin."), 0);
@@ -240,19 +240,19 @@ namespace Vinki
                     if (base.inActionCounter > 175)
                     {
                         Debug.Log("Done with conversation.");
-                        this.owner.conversation = null;
-                        this.owner.NewAction(Enums.SSOracle.Vinki_SSActionGetOut);
+                        owner.conversation = null;
+                        owner.NewAction(Enums.SSOracle.Vinki_SSActionGetOut);
                     }
                 }
                 else if (base.action == Enums.SSOracle.Vinki_SSActionGetOut)
                 {
-                    this.owner.UnlockShortcuts();
-                    this.owner.getToWorking = 1f;
+                    owner.UnlockShortcuts();
+                    owner.getToWorking = 1f;
                     if (base.inActionCounter == 100 && base.oracle.room.game.GetStorySession.saveState.deathPersistentSaveData.theMark)
                     {
                         base.dialogBox.Interrupt(base.Translate("Get out of my sight! Do not return until you have accomplished something worthwhile."), 60);
-                        this.owner.voice = base.oracle.room.PlaySound(SoundID.SS_AI_Talk_5, base.oracle.firstChunk);
-                        this.owner.voice.requireActiveUpkeep = true;
+                        owner.voice = base.oracle.room.PlaySound(SoundID.SS_AI_Talk_5, base.oracle.firstChunk);
+                        owner.voice.requireActiveUpkeep = true;
                     }
                     if (base.inActionCounter == 220)
                     {
@@ -264,12 +264,12 @@ namespace Vinki
                     }
                     if (base.inActionCounter == 500)
                     {
-                        this.owner.voice = base.oracle.room.PlaySound(SoundID.SS_AI_Talk_3, base.oracle.firstChunk);
-                        this.owner.voice.requireActiveUpkeep = true;
+                        owner.voice = base.oracle.room.PlaySound(SoundID.SS_AI_Talk_3, base.oracle.firstChunk);
+                        owner.voice.requireActiveUpkeep = true;
                     }
                     if (base.inActionCounter > 550)
                     {
-                        this.owner.NewAction(SSOracleBehavior.Action.ThrowOut_KillOnSight);
+                        owner.NewAction(SSOracleBehavior.Action.ThrowOut_KillOnSight);
                     }
                     if (base.inActionCounter > 200)
                     {
@@ -286,7 +286,7 @@ namespace Vinki
                             }
                             return;
                         }
-                        this.owner.NewAction(SSOracleBehavior.Action.ThrowOut_KillOnSight);
+                        owner.NewAction(SSOracleBehavior.Action.ThrowOut_KillOnSight);
                     }
                     return;
                 }
@@ -297,7 +297,7 @@ namespace Vinki
         {
             public DMSleepoverBehavior(SSOracleBehavior owner) : base(owner, Enums.DMOracle.Vinki_DMSlumberParty, Enums.DMOracle.Vinki_DMConvoFirstMeet)
             {
-                this.lowGravity = -1f;
+                lowGravity = -1f;
                 if (this.owner.conversation != null)
                 {
                     this.owner.conversation.Destroy();
@@ -333,10 +333,10 @@ namespace Vinki
             public override void NewAction(SSOracleBehavior.Action oldAction, SSOracleBehavior.Action newAction)
             {
                 base.NewAction(oldAction, newAction);
-                if (newAction == SSOracleBehavior.Action.ThrowOut_KillOnSight && this.owner.conversation != null)
+                if (newAction == SSOracleBehavior.Action.ThrowOut_KillOnSight && owner.conversation != null)
                 {
-                    this.owner.conversation.Destroy();
-                    this.owner.conversation = null;
+                    owner.conversation.Destroy();
+                    owner.conversation = null;
                 }
             }
 
@@ -365,34 +365,34 @@ namespace Vinki
                     }
                     return;
                 }
-                if (this.tagTimer > 0f && this.owner.inspectPearl != null)
+                if (tagTimer > 0f && owner.inspectPearl != null)
                 {
-                    this.owner.killFac = Mathf.Clamp(this.tagTimer / 120f, 0f, 1f);
-                    this.tagTimer -= 1f;
-                    if (this.tagTimer <= 0f)
+                    owner.killFac = Mathf.Clamp(tagTimer / 120f, 0f, 1f);
+                    tagTimer -= 1f;
+                    if (tagTimer <= 0f)
                     {
                         for (int i = 0; i < 20; i++)
                         {
-                            base.oracle.room.AddObject(new Spark(this.owner.inspectPearl.firstChunk.pos, Custom.RNV() * Random.value * 40f, new Color(1f, 1f, 1f), null, 30, 120));
+                            base.oracle.room.AddObject(new Spark(owner.inspectPearl.firstChunk.pos, Custom.RNV() * Random.value * 40f, new Color(1f, 1f, 1f), null, 30, 120));
                         }
-                        base.oracle.room.PlaySound(SoundID.SS_AI_Give_The_Mark_Boom, this.owner.inspectPearl.firstChunk.pos, 1f, 0.5f + Random.value * 0.5f);
-                        this.owner.killFac = 0f;
+                        base.oracle.room.PlaySound(SoundID.SS_AI_Give_The_Mark_Boom, owner.inspectPearl.firstChunk.pos, 1f, 0.5f + Random.value * 0.5f);
+                        owner.killFac = 0f;
                     }
                 }
-                if (this.holdPlayer && base.player.room == base.oracle.room)
+                if (holdPlayer && base.player.room == base.oracle.room)
                 {
                     base.player.mainBodyChunk.vel *= Custom.LerpMap((float)base.inActionCounter, 0f, 30f, 1f, 0.95f);
                     base.player.bodyChunks[1].vel *= Custom.LerpMap((float)base.inActionCounter, 0f, 30f, 1f, 0.95f);
-                    base.player.mainBodyChunk.vel += Custom.DirVec(base.player.mainBodyChunk.pos, this.holdPlayerPos) * Mathf.Lerp(0.5f, Custom.LerpMap(Vector2.Distance(base.player.mainBodyChunk.pos, this.holdPlayerPos), 30f, 150f, 2.5f, 7f), base.oracle.room.gravity) * Mathf.InverseLerp(0f, 10f, (float)base.inActionCounter) * Mathf.InverseLerp(0f, 30f, Vector2.Distance(base.player.mainBodyChunk.pos, this.holdPlayerPos));
+                    base.player.mainBodyChunk.vel += Custom.DirVec(base.player.mainBodyChunk.pos, holdPlayerPos) * Mathf.Lerp(0.5f, Custom.LerpMap(Vector2.Distance(base.player.mainBodyChunk.pos, holdPlayerPos), 30f, 150f, 2.5f, 7f), base.oracle.room.gravity) * Mathf.InverseLerp(0f, 10f, (float)base.inActionCounter) * Mathf.InverseLerp(0f, 30f, Vector2.Distance(base.player.mainBodyChunk.pos, holdPlayerPos));
                 }
                 else
                 {
-                    this.owner.getToWorking = 1f;
-                    if (this.lowGravity < 0f)
+                    owner.getToWorking = 1f;
+                    if (lowGravity < 0f)
                     {
-                        this.lowGravity = 0f;
+                        lowGravity = 0f;
                     }
-                    this.owner.SetNewDestination(base.oracle.firstChunk.pos);
+                    owner.SetNewDestination(base.oracle.firstChunk.pos);
                 }
             }
 
@@ -408,7 +408,7 @@ namespace Vinki
             {
                 get
                 {
-                    return this.gravOn;
+                    return gravOn;
                 }
             }
 
@@ -416,7 +416,7 @@ namespace Vinki
             {
                 get
                 {
-                    return this.lowGravity;
+                    return lowGravity;
                 }
             }
 
