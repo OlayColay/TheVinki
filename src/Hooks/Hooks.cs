@@ -100,6 +100,7 @@ namespace Vinki
             Futile.atlasManager.LoadAtlas("atlases/shoes");
             Futile.atlasManager.LoadAtlas("atlases/TagIcon");
             Futile.atlasManager.LoadImage("atlases/icon_SprayCan");
+            Futile.atlasManager.LoadImage("decals/QUESTIONMARK");
 
             TailTexture = new Texture2D(150, 75, TextureFormat.ARGB32, false);
             var tailTextureFile = AssetManager.ResolveFilePath("textures/VinkiTail.png");

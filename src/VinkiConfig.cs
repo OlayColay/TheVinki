@@ -152,8 +152,8 @@ namespace Vinki
             curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Spear", 4);
             AddSubtitle(curY + 30f, "Saint", 4);
             curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Saint", 4);
-            AddSubtitle(curY + 30f, "Sofanthiel", 4);
-            curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Sofanthiel", 4);
+            AddSubtitle(curY + 30f, "???", 4);
+            curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Inv", 4, true);
             AddSubtitle(curY + 30f, "Misc.", 4);
             curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "Scenes", 4);
         }
@@ -288,7 +288,7 @@ namespace Vinki
         }
 
         private static readonly int imgHeight = 50;
-        private float AddGraffiti(float yStart, string folderPath, int tab)
+        private float AddGraffiti(float yStart, string folderPath, int tab, bool hidden = false)
         {
             var names = Directory.EnumerateFiles(AssetManager.ResolveDirectory(folderPath), "*.png", SearchOption.AllDirectories).ToArray()
                 .Select(Path.GetFileNameWithoutExtension).ToArray();
@@ -297,8 +297,16 @@ namespace Vinki
             {
                 Futile.atlasManager.LoadImage(atlasPath);
             }
-            var thumbnails = atlasPaths.Select((atlas) => new OpImage(Vector2.zero, atlas)).ToArray();
-            
+            OpImage[] thumbnails;
+
+            if (hidden)
+            {
+                thumbnails = atlasPaths.Select((_) => new OpImage(Vector2.zero, "decals/QUESTIONMARK")).ToArray();
+            }
+            else
+            {
+                thumbnails = atlasPaths.Select((atlas) => new OpImage(Vector2.zero, atlas)).ToArray();
+            }
 
             float y = yStart;
             for (int i = 0; i < thumbnails.Length; y-=imgHeight+45)
@@ -318,7 +326,7 @@ namespace Vinki
                     string author = "by " + names[i].Substring(0, separator);
                     string title = '"' + names[i].Substring(separator + 3) + '"';
 
-                    OpLabel titleLabel = new(new Vector2(x, y-20f), new Vector2(50f, 20f), title, FLabelAlignment.Center, false);
+                    OpLabel titleLabel = new(new Vector2(x, y-20f), new Vector2(50f, 20f), hidden ? "???" : title, FLabelAlignment.Center, false);
                     OpLabel authorLabel = new(new Vector2(x, y-35f), new Vector2(50f, 20f), author, FLabelAlignment.Center, false);
                     Tabs[tab].AddItems(new UIelement[]{ thumbnails[i], titleLabel, authorLabel });
                 }
