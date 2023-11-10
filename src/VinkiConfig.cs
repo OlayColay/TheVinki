@@ -110,49 +110,49 @@ namespace Vinki
             AddDivider(593f, 1);
             AddTitle(1);
             AddDivider(557f, 1);
-            AddSubtitle(500f, "Art", 1);
-            AddText(480f, "Beep", 1);
-            AddSubtitle(440f, "Coding", 1);
-            AddText(420f, "OlayColay", 1);
-            AddSubtitle(380f, "Cursed Art", 1);
-            AddText(360f, "Beep    Bluzai    MagicaJaphet    MaxDubstep    OlayColay", 1);
-            AddSubtitle(320f, "Level Editing", 1);
-            AddText(300f, "TarnishedPotato", 1);
-            AddSubtitle(260f, "Music", 1);
-            AddText(240f, "MaxDubstep", 1);
-            AddSubtitle(200f, "Sound Effects", 1);
-            AddText(180f, "MaxDubstep", 1);
-            AddSubtitle(140f, "Writing", 1);
-            AddText(120f, "Beep    MaxDubstep    OlayColay    TarnishedPotato    Tsunochizu", 1);
+            AddSubtitle(530f, "Art", 1);
+            AddText(510f, "Beep", 1);
+            AddSubtitle(470f, "Coding", 1);
+            AddText(450f, "OlayColay", 1);
+            AddSubtitle(410f, "Cursed Art", 1);
+            AddText(390f, "Beep    Bluzai    MagicaJaphet    MaxDubstep    OlayColay", 1);
+            AddSubtitle(350f, "Level Editing", 1);
+            AddText(330f, "TarnishedPotato", 1);
+            AddSubtitle(290f, "Music", 1);
+            AddText(270f, "MaxDubstep", 1);
+            AddSubtitle(230f, "Sound Effects", 1);
+            AddText(210f, "MaxDubstep", 1);
+            AddSubtitle(170f, "Writing", 1);
+            AddText(150f, "Beep    MaxDubstep    OlayColay    TarnishedPotato    Tsunochizu", 1);
             AddSubtitle(60f, "Special Thanks", 1);
             AddText(30f, "Developers of this mod's dependencies\n" +
                 "Abigail    banba fan    Doop    goof    JayDee    Nico    Rae    Sadman    skrybl    Sunbloom    SunnyBeam\n",
             1);
 
             // Vinki Graffiti tab
-            AddGraffiti(525f, "decals" + Path.DirectorySeparatorChar + "VinkiGraffiti" + Path.DirectorySeparatorChar + "vinki", 2);
+            AddGraffiti(525f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "vinki", 2);
 
             // Other Graffiti 1 tab
-            AddSubtitle(580f, "Artificer", 3);
-            float curY = AddGraffiti(525f, "decals" + Path.DirectorySeparatorChar + "VinkiGraffiti" + Path.DirectorySeparatorChar + "Artificer", 3);
-            AddSubtitle(curY + 30f, "Gourmand", 3);
-            curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "VinkiGraffiti" + Path.DirectorySeparatorChar + "Gourmand", 3);
+            AddSubtitle(580f, "Monk", 3);
+            float curY = AddGraffiti(525f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Yellow", 3);
+            AddSubtitle(curY + 30f, "Survivor", 3);
+            curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "White", 3);
             AddSubtitle(curY + 30f, "Hunter", 3);
-            curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "VinkiGraffiti" + Path.DirectorySeparatorChar + "Red", 3);
-            AddSubtitle(curY + 30f, "Monk", 3);
-            curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "VinkiGraffiti" + Path.DirectorySeparatorChar + "Yellow", 3);
-            AddSubtitle(curY + 30f, "Rivulet", 3);
-            curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "VinkiGraffiti" + Path.DirectorySeparatorChar + "Rivulet", 3);
+            curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Red", 3);
+            AddSubtitle(curY + 30f, "Gourmand", 3);
+            curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Gourmand", 3);
+            AddSubtitle(curY + 30f, "Artificer", 3);
+            curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Artificer", 3);
 
             // Other Graffiti 2 tab
-            AddSubtitle(580f, "Saint", 4);
-            curY = AddGraffiti(525f, "decals" + Path.DirectorySeparatorChar + "VinkiGraffiti" + Path.DirectorySeparatorChar + "Saint", 4);
-            AddSubtitle(curY + 30f, "Sofanthiel", 4);
-            curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "VinkiGraffiti" + Path.DirectorySeparatorChar + "Sofanthiel", 4);
+            AddSubtitle(580f, "Rivulet", 4);
+            curY = AddGraffiti(525f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Rivulet", 4);
             AddSubtitle(curY + 30f, "Spearmaster", 4);
-            curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "VinkiGraffiti" + Path.DirectorySeparatorChar + "Spear", 4);
-            AddSubtitle(curY + 30f, "Survivor", 4);
-            curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "VinkiGraffiti" + Path.DirectorySeparatorChar + "White", 4);
+            curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Spear", 4);
+            AddSubtitle(curY + 30f, "Saint", 4);
+            curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Saint", 4);
+            AddSubtitle(curY + 30f, "Sofanthiel", 4);
+            curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Sofanthiel", 4);
         }
 
         // Combines two flipped 'LinearGradient200's together to make a fancy looking divider.
