@@ -154,6 +154,6 @@ namespace Menu
         public float targetAlpha;
 
         public static readonly float slapLength = 40f;
-        public static readonly int bgCount = 1;
+        public static readonly int bgCount = 3;
     }
 }
