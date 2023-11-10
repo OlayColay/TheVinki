@@ -1,8 +1,11 @@
 ﻿using Menu;
+using Menu.Remix;
 using Menu.Remix.MixedUI;
 using SlugBase;
 using SlugBase.SaveData;
+using System;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 namespace Vinki
@@ -68,7 +71,9 @@ namespace Vinki
             Tabs = new OpTab[]
             {
                 new OpTab(this, "Options"),
-                new OpTab(this, "Credits")
+                new OpTab(this, "Credits"),
+                new OpTab(this, "Vinki Graffiti"),
+                new OpTab(this, "Other Graffiti"),
             };
 
             // Options tab
@@ -111,17 +116,20 @@ namespace Vinki
             AddSubtitle(380f, "Cursed Art", 1);
             AddText(360f, "Beep    Bluzai    MagicaJaphet    MaxDubstep    OlayColay", 1);
             AddSubtitle(320f, "Level Editing", 1);
-            AddText(300f, "tarnpot", 1);
+            AddText(300f, "TarnishedPotato", 1);
             AddSubtitle(260f, "Music", 1);
             AddText(240f, "MaxDubstep", 1);
             AddSubtitle(200f, "Sound Effects", 1);
             AddText(180f, "MaxDubstep", 1);
             AddSubtitle(140f, "Writing", 1);
-            AddText(120f, "Beep    MaxDubstep    OlayColay    tarnpot    Tsunochizu", 1);
+            AddText(120f, "Beep    MaxDubstep    OlayColay    TarnishedPotato    Tsunochizu", 1);
             AddSubtitle(60f, "Special Thanks", 1);
             AddText(30f, "Developers of this mod's dependencies\n" +
                 "Abigail    banba fan    Doop    goof    JayDee    Nico    Rae    Sadman    skrybl    Sunbloom    SunnyBeam\n",
             1);
+
+            // Vinki Graffiti tab
+            AddGraffiti(525f, "decals" + Path.DirectorySeparatorChar + "VinkiGraffiti" + Path.DirectorySeparatorChar + "vinki", 2);
         }
 
         // Combines two flipped 'LinearGradient200's together to make a fancy looking divider.
@@ -251,6 +259,46 @@ namespace Vinki
         {
             Directory.Delete(Plugin.graffitiFolder, true);
             RestoreDefaultGraffiti(trigger);
+        }
+
+        private static readonly int imgHeight = 50;
+        private float AddGraffiti(float yStart, string folderPath, int tab)
+        {
+            var names = Directory.EnumerateFiles(AssetManager.ResolveDirectory(folderPath), "*.png", SearchOption.AllDirectories).ToArray()
+                .Select(Path.GetFileNameWithoutExtension).ToArray();
+            var atlasPaths = names.Select((name) => folderPath + Path.DirectorySeparatorChar + name);
+            foreach (var atlasPath in atlasPaths)
+            {
+                Futile.atlasManager.LoadImage(atlasPath);
+            }
+            var thumbnails = atlasPaths.Select((atlas) => new OpImage(Vector2.zero, atlas)).ToArray();
+            
+
+            float y = yStart;
+            for (int i = 0; i < thumbnails.Length; y-=imgHeight+45)
+            {
+                for (float x = 25f; x <= 525f && i < thumbnails.Length; x += 125f,i++)
+                {
+                    thumbnails[i].SetPos(new Vector2(x, y));
+                    float newScale = imgHeight / thumbnails[i].size.y;
+                    thumbnails[i].scale = new Vector2(newScale, newScale);
+                    thumbnails[i].Change();
+
+                    int separator = names[i].LastIndexOf(" - ");
+                    if (separator <= 0)
+                    {
+                        continue;
+                    }
+                    string author = "by " + names[i].Substring(0, separator);
+                    string title = '"' + names[i].Substring(separator + 3) + '"';
+
+                    OpLabel titleLabel = new(new Vector2(x, y-20f), new Vector2(50f, 20f), title, FLabelAlignment.Center, false);
+                    OpLabel authorLabel = new(new Vector2(x, y-35f), new Vector2(50f, 20f), author, FLabelAlignment.Center, false);
+                    Tabs[tab].AddItems(new UIelement[]{ thumbnails[i], titleLabel, authorLabel });
+                }
+            }
+
+            return y;
         }
     }
 }
