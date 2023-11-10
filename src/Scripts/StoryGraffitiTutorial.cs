@@ -59,9 +59,13 @@ public class StoryGraffitiTutorial : UpdatableAndDeletable
                 0, 600, false, false
             );
             game.cameras.First().hud.textPrompt.AddMessage(
-                game.manager.rainWorld.inGameTranslator.Translate("Access the Quest Map screen while hibernating to view hints of where to paint next."),
-                100, 600, false, false
+                game.manager.rainWorld.inGameTranslator.Translate("... in a future update."),
+                10, 600, false, false
             );
+            //game.cameras.First().hud.textPrompt.AddMessage(
+            //    game.manager.rainWorld.inGameTranslator.Translate("Access the Quest Map screen while hibernating to view hints of where to paint next."),
+            //    100, 600, false, false
+            //);
             miscSave.Set("StoryGraffitiTutorialPhase", (int)Phase.End);
             nextPhase = Phase.End;
         }
