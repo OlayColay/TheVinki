@@ -130,6 +130,7 @@ namespace Vinki
             1);
 
             // Vinki Graffiti tab
+            AddSubtitle(580f, "Vinki", 2);
             AddGraffiti(525f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "vinki", 2);
 
             // Other Graffiti 1 tab
@@ -153,6 +154,8 @@ namespace Vinki
             curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Saint", 4);
             AddSubtitle(curY + 30f, "Sofanthiel", 4);
             curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Sofanthiel", 4);
+            AddSubtitle(curY + 30f, "Misc.", 4);
+            curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "Scenes", 4);
         }
 
         // Combines two flipped 'LinearGradient200's together to make a fancy looking divider.
@@ -304,7 +307,8 @@ namespace Vinki
                 {
                     float newScale = imgHeight / thumbnails[i].size.y;
                     thumbnails[i].scale = new Vector2(newScale, newScale);
-                    thumbnails[i].SetPos(new Vector2(x, y));
+                    thumbnails[i].SetPos(new Vector2(x + 25f, y + 25f));
+                    thumbnails[i].anchor = new Vector2(0.5f, 0.5f);
 
                     int separator = names[i].LastIndexOf(" - ");
                     if (separator <= 0)
