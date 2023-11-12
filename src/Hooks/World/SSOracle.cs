@@ -27,6 +27,57 @@ namespace Vinki
             }
         }
 
+        public static void SprayNearIterator(bool isMoon, SlugBaseSaveData miscSave, string imageName)
+        {
+            if (oracleBehavior == null)
+            {
+                return;
+            }
+
+            if (isMoon)
+            {
+                if (oracleBehavior.conversation != null)
+                {
+                    oracleBehavior.conversation.paused = true;
+                    oracleBehavior.restartConversationAfterCurrentDialoge = true;
+                }
+
+                if (imageName.Equals("VinkiGraffiti/vinki/Beep - 5P or QT"))
+                {
+                    oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("What the fuck did you do to Five Pebbles?"), 0);
+                    return;
+                }
+
+                Debug.Log("Sprayed near Moon: " + imageName);
+                int moonSprayTimes = 0;
+                if (!miscSave.TryGet("MoonSprayTimes", out moonSprayTimes) || moonSprayTimes == 0)
+                {
+                    oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("Ah… I would appreciate you not painting over my chamber walls. Feel free to do so outside of it, but I require clear walls to project holographic graphs over. Your art, as beautiful as it is, might distort my projections."), 0);
+                }
+                else if (moonSprayTimes == 1)
+                {
+                    oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("I already told you to please not paint over my chamber walls. I’m sure you can find plenty of significantly better canvas outside of my chamber, and I don’t want to have to destroy your hard work, so please do so outside."), 0);
+                }
+                else
+                {
+                    float rand = Random.value;
+                    if (rand < 0.3f)
+                    {
+                        oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("Are you ignoring my request on purpose? Please paint outside."), 0);
+                    }
+                    else if (rand < 0.7f)
+                    {
+                        oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("Little friend, I truly need my walls clean for my systems to work correctly. Please stop."), 0);
+                    }
+                    else
+                    {
+                        oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("You are wasting your materials. Your paintings cannot stay here. Please listen."), 0);
+                    }
+                }
+                miscSave.Set("MoonSprayTimes", moonSprayTimes + 1);
+            }
+        }
+
         // Add hooks
         private static void ApplySSOracleHooks()
         {
@@ -69,6 +120,7 @@ namespace Vinki
 
         private static void SSOracleBehavior_SeePlayer(On.SSOracleBehavior.orig_SeePlayer orig, SSOracleBehavior self)
         {
+            oracleBehavior = self;
             if (self.oracle.room.game.StoryCharacter == Enums.vinki && ModManager.MSC && self.oracle.ID == MoreSlugcatsEnums.OracleID.DM)
             {
                 self.NewAction(Enums.DMOracle.Vinki_DMActionGeneral);
@@ -77,8 +129,6 @@ namespace Vinki
             else if (self.oracle.room.game.StoryCharacter == Enums.vinki && self.action != Enums.SSOracle.Vinki_SSActionGeneral &&
                 self.oracle.room.game.GetStorySession.saveState.miscWorldSaveData.SSaiConversationsHad == 0)
             {
-                oracleBehavior = self;
-
                 if (self.timeSinceSeenPlayer < 0)
                     self.timeSinceSeenPlayer = 0;
 

@@ -22,6 +22,13 @@ namespace Vinki
             if (gNum < 0)
             {
                 gNum = UnityEngine.Random.Range(0, graffitis[slugcat].Count);
+
+                // Trigger Iterator dialogue if there's one in the room
+                Debug.Log("Room name: " + self.room.abstractRoom.name);
+                if (self.room.abstractRoom.name.Equals("DM_AI"))
+                {
+                    Hooks.SprayNearIterator(true, SaveDataExtension.GetSlugBaseData(self.room.game.GetStorySession.saveState.miscWorldSaveData), graffitis[slugcat][gNum].imageName);
+                }
             }
             else
             {
