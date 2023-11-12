@@ -453,8 +453,8 @@ namespace Vinki
         {
             VinkiPlayerData v = self.Vinki();
             return (self.animation == Player.AnimationIndex.ClimbOnBeam &&
-                ((v.lastYDirection > 0 && self.bodyChunks[1].vel.magnitude > 2f) ||
-                (v.lastYDirection < 0 && self.bodyChunks[1].vel.magnitude > 1f)));
+                ((v.lastYDirection > 0 && self.bodyChunks[1].vel.magnitude > 1f) ||
+                (v.lastYDirection < 0 && self.bodyChunks[1].vel.magnitude > 2f)));
         }
 
         private static bool IsGrindingNoGrav(Player self)
@@ -726,7 +726,7 @@ namespace Vinki
             {
                 if (!creature.canBeHitByWeapons || creature.dead || creature == self || (creature is Lizard && (creature as Lizard).AI.friendTracker.friend != null) ||
                     creature is Fly || (creature is Centipede && (creature as Centipede).Small) || creature is Hazer || creature is VultureGrub || creature is SmallNeedleWorm ||
-                    (creature is Player && (creature as Player).abstractCreature.abstractAI != null))
+                    (creature is Player && (creature as Player).abstractCreature.abstractAI != null) || creature is Leech || creature is Spider || creature is TubeWorm)
                 {
                     continue;
                 }

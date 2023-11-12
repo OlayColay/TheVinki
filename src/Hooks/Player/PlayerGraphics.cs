@@ -425,7 +425,11 @@ namespace Vinki
 
         private static string GetDMSFaceSprite(Player player)
         {
-            return DressMySlugcat.Customization.For(player).CustomSprite("FACE").SpriteSheetID;
+            if (DressMySlugcat.Customization.For(player) != null && DressMySlugcat.Customization.For(player).CustomSprite("FACE") != null)
+            {
+                return DressMySlugcat.Customization.For(player).CustomSprite("FACE").SpriteSheetID;
+            }
+            return null;
         }
 
         private static void UpdateTagColors(GraphicsModuleData tag, RoomCamera.SpriteLeaser sLeaser)
