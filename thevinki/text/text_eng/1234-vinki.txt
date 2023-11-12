@@ -1,0 +1,12 @@
+0-1234-vinki
+Hello, little friend!
+
+Now what have you got here…? A citizen drone?
+
+Now that is an interesting find! It seems to have bound itself to you upon reactivation, allowing you to<LINE>use its citizen ID. I wonder why that is. Maybe it has something to do with your outfit, which made you appear<LINE>close enough to the original owner that the damaged scanner misidentified you?
+
+I suppose having it would make you our citizen! 
+
+It seems to be out of sync, but I might help you with it. I will input the code required to activate the<LINE>gate to my city, but if you wish to pay a visit to the top of Five Pebbles, you would need to ask him for a second code.
+
+SPECEVENT : resync

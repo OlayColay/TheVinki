@@ -307,21 +307,45 @@ namespace Vinki
                 this.owner.TurnOffSSMusic(true);
                 owner.getToWorking = 1f;
 
-                // If this is a return visit to Moon
+                // If this is visit 3+ to Moon
                 met = (base.oracle.room.game.rainWorld.ExpeditionMode || base.oracle.room.game.GetStorySession.saveState.miscWorldSaveData.smPearlTagged);
+                SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(base.oracle.room.game.GetStorySession.saveState.miscWorldSaveData);
+                if (miscSave.TryGet("MetMoonTwice", out bool met2) && met2)
+                {
+                    float rand = Random.value;
+                    if (rand < 0.2f)
+                    {
+                        base.dialogBox.NewMessage(base.Translate("Hello, " + owner.NameForPlayer(false) + "."), 0);
+                        base.dialogBox.NewMessage(base.Translate("It is good to see you again, even if I have nothing to give you."), 0);
+                    }
+                    else if (rand < 0.4f)
+                    {
+                        base.dialogBox.NewMessage(base.Translate("Hello again, " + owner.NameForPlayer(false) + "."), 0);
+                        base.dialogBox.NewMessage(base.Translate("How have you been?"), 0);
+                    }
+                    else if (rand < 0.6f)
+                    {
+                        base.dialogBox.NewMessage(base.Translate("Ah... " + owner.NameForPlayer(false) + ", you're back!"), 0);
+                    }
+                    else if (rand < 0.8f)
+                    {
+                        base.dialogBox.NewMessage(base.Translate("Hello, " + owner.NameForPlayer(false) + ". You’re here again."), 0);
+                    }
+                    else
+                    {
+                        base.dialogBox.NewMessage(base.Translate("Hello again, " + owner.NameForPlayer(false) + "."), 0);
+                    }
+                    return;
+                }
+
+                // If this is a return visit to Moon
                 if (met)
                 {
-                    if (Random.value < 0.3f)
-                    {
-                        base.dialogBox.NewMessage(base.Translate("It is nice to see you again little frined!"), 0);
-                        return;
-                    }
-                    if (Random.value < 0.5f)
-                    {
-                        base.dialogBox.NewMessage(base.Translate("Thank you for visiting me, but I'm afraid there is nothing here for you."), 0);
-                        return;
-                    }
-                    base.dialogBox.NewMessage(base.Translate("Welcome back little friend."), 0);
+                    base.dialogBox.NewMessage(base.Translate("Welcome back unusual creature."), 0);
+                    base.dialogBox.NewMessage(base.Translate("It seems to me like you were quite busy with your work, and yet you still made some time to visit me."), 0);
+                    base.dialogBox.NewMessage(base.Translate("I wonder what is it that you want? Is it just to say hello?"), 0);
+                    base.dialogBox.NewMessage(base.Translate("Feel free to visit anytime you wish, little creature. I don’t mind."), 0);
+                    miscSave.Set("MetMoonTwice", true);
                 }
             }
 

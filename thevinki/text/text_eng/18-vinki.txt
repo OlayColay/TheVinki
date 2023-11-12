@@ -1,0 +1,17 @@
+0-18-vinki
+This one is written by me.
+It's about an iterator called Sliver of Straw. I wrote it a long time ago, around fifty cycles after the<LINE>initial signal was sent. Do you know Sliver of Straw? She's quite legendary among us.
+
+Sliver of Straw is the only one to ever broadcast a specific signal: that the Big Problem we're all working<LINE>on has been solved. The triple affirmative - affirmative that a solution has been found,<LINE>affirmative that the solution is portable, and affirmative that a technical implementation is possible<LINE>and generally applicable. She's also one of few that has ever been confirmed as exhaustively<LINE>incapacitated, or dead. We do not die easily.
+
+Sliver of Straw sent this and the ensuing commotion was historically unparalleled, before or after. I<LINE>still remember it. But... nothing happened - except that Sliver of Straw was apparently dead. When the dust<LINE>settled we were all still there blinking at each other.
+
+Everyone had a theory. Some said that she did have a solution, but that the solution itself was somehow<LINE>dangerous. These later became known as the Triangulators, who think that a solution should<LINE>be inferred without being directly discovered.
+
+Some said she never had a solution, she just died. And when the systems broke down an erroneous signal was sent.
+
+One camp claimed that dying *was* the solution.
+
+Either way, after that these different factions developed, as well as a huge forensic effort to recreate<LINE>and simulate Sliver of Straw's last moments. Some of the simulations were wrapped in a simulation wrapped in<LINE>a simulation, in case something dangerous might happen. Nothing much has come from it.
+
+In my essay I make the case that maybe she should be allowed to rest in peace now.
