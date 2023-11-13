@@ -112,6 +112,13 @@ namespace Vinki
         {
             orig(self, sLeaser, rCam);
 
+            if (!ModManager.MSC)
+            {
+                self.Tag().affectedSprites = new int[10] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 10 };
+                return;
+            }
+            self.Tag().affectedSprites = new int[11] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 12 };
+
             if (!self.player.IsVinki(out var vinki))
             {
                 return;
@@ -328,7 +335,7 @@ namespace Vinki
                 sLeaser.sprites[vinki.tagIconSprite].color = tagAble ? Color.white : Color.gray;
 
                 bool tagReady = vinki.tagableCreature != null;
-                vinki.tagIconSize = Mathf.Clamp01(tagReady ? vinki.tagIconSize + 0.02f : vinki.tagIconSize - 0.02f);
+                vinki.tagIconSize = Mathf.Clamp01(tagReady ? vinki.tagIconSize + 0.05f : vinki.tagIconSize - 0.05f);
                 sLeaser.sprites[vinki.tagIconSprite].scale = Mathf.Lerp(0f, 0.25f, vinki.tagIconSize);
                 sLeaser.sprites[vinki.tagIconSprite].isVisible = tagReady || vinki.tagIconSize > 0f;
             }
@@ -430,46 +437,6 @@ namespace Vinki
                 return DressMySlugcat.Customization.For(player).CustomSprite("FACE").SpriteSheetID;
             }
             return null;
-        }
-
-        private static void UpdateTagColors(GraphicsModuleData tag, RoomCamera.SpriteLeaser sLeaser)
-        {
-            if (tag.ogColors == null)
-            {
-                tag.ogColors = sLeaser.sprites.Select((sprite) => sprite.color).ToArray();
-                tag.curColors = new Color[tag.ogColors.Length];
-                tag.ogColors.CopyTo(tag.curColors, 0);
-            }
-
-            if (tag.tagLag > 0)
-            {
-                if (tag.taggedColors == null)
-                {
-                    tag.taggedColors = new Color[tag.ogColors.Length];
-                }
-                for (int i = 0; i < tag.taggedColors.Length; i++)
-                {
-                    tag.taggedColors[i] = Color.Lerp(tag.curColors[i], tag.tagColor, (30f - tag.tagLag) / 30f);
-                }
-            }
-            else if (tag.tagLag == 0)
-            {
-                tag.taggedColors.CopyTo(tag.curColors, 0);
-                tag.tagLag = -1;
-            }
-
-            if (tag.taggedColors == null)
-            {
-                return;
-            }
-
-            for (int i = 0; i < (ModManager.MSC ? 13 : 12); i++)
-            {
-                if (i != 9 && i != 11)
-                {
-                    sLeaser.sprites[i].color = Color.Lerp(Color.Lerp(tag.ogColors[i], tag.curColors[i], 0.5f), tag.taggedColors[i], 0.5f);
-                }
-            }
         }
     }
 }
