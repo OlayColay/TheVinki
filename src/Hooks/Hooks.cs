@@ -246,6 +246,9 @@ namespace Vinki
             colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.SlimeMold, 2);
             colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.SporePlant, 1);
             colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.WaterNut, 2);
+            colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.SLOracleSwarmer, 2);
+            colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.SSOracleSwarmer, 2);
+            colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.PebblesPearl, 3);
 
             if (!ModManager.MSC)
             {
@@ -260,6 +263,7 @@ namespace Vinki
             colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.LillyPuck, 1);
             colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.Seed, 1);
             colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.SingularityBomb, 9001);
+            colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.HalcyonPearl, 3);
         }
 
         private static int[] ResizeAndKeepAspectRatio(float original_width, float original_height, float target_area)
