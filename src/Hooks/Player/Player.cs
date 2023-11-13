@@ -184,8 +184,8 @@ namespace Vinki
         private static bool isCoyoteJumping(Player self)
         {
             VinkiPlayerData v = self.Vinki();
-            Debug.Log("Last animation: " + v.lastAnimation.ToString() + "\t Speed: " + Mathf.Abs(self.mainBodyChunk.vel.x) +
-                "\t This animation: " + self.animation.ToString() + "\t Body mode: " + self.bodyMode.ToString());
+            //Debug.Log("Last animation: " + v.lastAnimation.ToString() + "\t Speed: " + Mathf.Abs(self.mainBodyChunk.vel.x) +
+            //    "\t This animation: " + self.animation.ToString() + "\t Body mode: " + self.bodyMode.ToString());
             GrindXSpeed.TryGet(self, out var grindXSpeed);
             return (v.lastAnimation == Player.AnimationIndex.StandOnBeam && self.animation == Player.AnimationIndex.None &&
                     self.bodyMode == Player.BodyModeIndex.Default && Mathf.Abs(self.mainBodyChunk.vel.x) > grindXSpeed - 1.5f);
