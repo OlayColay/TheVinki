@@ -32,6 +32,6 @@ public static partial class Hooks
     {
         orig(self, sLeaser, rCam, timeStacker, camPos);
 
-        UpdateTagColors(self.Tag(), sLeaser);
+        UpdateTagColors(self.Tag(), sLeaser, 0.3f);
     }
 }

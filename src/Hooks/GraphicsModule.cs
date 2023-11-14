@@ -23,7 +23,7 @@ public static class GraphicsModuleExtension
 
 public static partial class Hooks
 {
-    private static void UpdateTagColors(GraphicsModuleData tag, RoomCamera.SpriteLeaser sLeaser)
+    private static void UpdateTagColors(GraphicsModuleData tag, RoomCamera.SpriteLeaser sLeaser, float mixFactor = 0.5f)
     {
         if (tag.ogColors == null)
         {
@@ -56,7 +56,7 @@ public static partial class Hooks
 
         foreach (int i in tag.affectedSprites)
         {
-            sLeaser.sprites[i].color = Color.Lerp(Color.Lerp(tag.ogColors[i], tag.curColors[i], 0.5f), tag.taggedColors[i], 0.5f);
+            sLeaser.sprites[i].color = Color.Lerp(Color.Lerp(tag.ogColors[i], tag.curColors[i], mixFactor), tag.taggedColors[i], 0.5f);
         }
     }
 }

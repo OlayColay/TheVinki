@@ -53,6 +53,7 @@ public class VinkiPlayerData
     public bool isGrindingVine = false;
     public bool isGrinding = false;
     public bool grindToggle = false;
+    public int canCoyote = 0;
 
     public Vector2 lastVineDir = Vector2.zero;
     public ClimbableVinesSystem.VinePosition vineAtFeet = null;

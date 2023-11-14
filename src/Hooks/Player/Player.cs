@@ -125,6 +125,7 @@ namespace Vinki
             }
 
             bool coyote = isCoyoteJumping(self);
+            v.canCoyote = 0;
 
             orig(self);
 
@@ -184,11 +185,9 @@ namespace Vinki
         private static bool isCoyoteJumping(Player self)
         {
             VinkiPlayerData v = self.Vinki();
-            //Debug.Log("Last animation: " + v.lastAnimation.ToString() + "\t Speed: " + Mathf.Abs(self.mainBodyChunk.vel.x) +
+            //Debug.Log("Last animation: " + v.lastAnimation.ToString() + "\t Can coyote jump: " + v.canCoyote +
             //    "\t This animation: " + self.animation.ToString() + "\t Body mode: " + self.bodyMode.ToString());
-            GrindXSpeed.TryGet(self, out var grindXSpeed);
-            return (v.lastAnimation == Player.AnimationIndex.StandOnBeam && self.animation == Player.AnimationIndex.None &&
-                    self.bodyMode == Player.BodyModeIndex.Default && Mathf.Abs(self.mainBodyChunk.vel.x) > grindXSpeed - 1.5f);
+            return (self.bodyMode == Player.BodyModeIndex.Default || self.bodyMode == Player.BodyModeIndex.Stand) && v.canCoyote > 0;
         }
 
         // Implement higher beam speed
@@ -223,6 +222,15 @@ namespace Vinki
             {
                 v.lastAnimation = v.lastAnimationFrame;
                 v.lastAnimationFrame = self.animation;
+            }
+            // Turn Coyote Jump off if we are not in air AND not grinding
+            if (self.canWallJump != 0 || (self.animation != Player.AnimationIndex.None && !v.isGrindingH))
+            {
+                v.canCoyote = 0;
+            }
+            else if (self.canJump == 5 && v.canCoyote > 0)
+            {
+                v.canCoyote--;
             }
 
             // If grinding up a pole and reach the top, jump up high
@@ -291,6 +299,7 @@ namespace Vinki
             // Grind horizontally if holding Grind on a beam
             if (v.isGrindingH || (isGrindingAtopVine && goodVineState))
             {
+                v.canCoyote = 3;
                 self.slugcatStats.runspeedFac = 0;
                 if (isGrindingAtopVine)
                 {
