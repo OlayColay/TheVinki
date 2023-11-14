@@ -37,8 +37,8 @@ public static partial class Hooks
         int thisCycle = game.GetStorySession.saveState.cycleNumber;
         for (int i = 0; i < placedGraffitis[self.name].Count; i++)
         {
-            // The first three story graffitis are erased after one cycle because FP erases them
-            if (placedGraffitis[self.name][i].cyclePlaced >= 0 || (placedGraffitis[self.name][i].gNum < Plugin.storyGraffitiCount && placedGraffitis[self.name][i].gNum >= 3))
+            // Remove graffiti that are in Moon's chamber or the Five Pebbles region
+            if (!self.name.StartsWith("SS_") && self.name != "DM_AI")
             {
                 // If the graffiti's placement cycle + number of fade cycles >= the current cycle number (or if story graffiti)
                 if (VinkiConfig.GraffitiFadeTime.Value == -1 ||
