@@ -56,6 +56,7 @@ namespace Vinki
         public static readonly PlayerKeybind Graffiti = PlayerKeybind.Register("thevinki:graffiti", "The Vinki", "Graffiti Mode", KeyCode.UpArrow, KeyCode.JoystickButton4);
         public static readonly PlayerKeybind Spray = PlayerKeybind.Register("thevinki:spray", "The Vinki", "Spray Graffiti", KeyCode.LeftControl, KeyCode.JoystickButton3);
         public static readonly PlayerKeybind Craft = PlayerKeybind.Register("thevinki:craft", "The Vinki", "Craft Spray Can", KeyCode.LeftShift, KeyCode.JoystickButton2);
+        public static readonly PlayerKeybind Tag = PlayerKeybind.Register("thevinki:tag", "The Vinki", "Tag Creatures", KeyCode.LeftControl, KeyCode.JoystickButton3);
 
         // Add hooks
         public void OnEnable()

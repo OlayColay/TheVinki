@@ -493,13 +493,13 @@ namespace Vinki
             orig(self, eu);
 
             // Spray a random graffiti, or tag a creature if there's one to tag
-            if (self.JustPressed(Spray) && IsPressingGraffiti(self))
+            if (IsPressingGraffiti(self))
             {
-                if (self.SlugCatClass == Enums.vinki && self.Vinki().tagableCreature != null)
+                if (self.JustPressed(Tag) && self.SlugCatClass == Enums.vinki && self.Vinki().tagableCreature != null)
                 {
                     TagCreature(self);
                 }
-                else
+                else if (self.JustPressed(Spray))
                 {
                     SprayGraffitiInGame(self);
                 }
