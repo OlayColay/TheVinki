@@ -42,12 +42,6 @@ namespace Vinki
                     oracleBehavior.restartConversationAfterCurrentDialoge = true;
                 }
 
-                if (imageName.Equals("VinkiGraffiti/vinki/Beep - 5P or QT"))
-                {
-                    oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("What the fuck did you do to Five Pebbles?"), 0);
-                    return;
-                }
-
                 Debug.Log("Sprayed near Moon: " + imageName);
                 int moonSprayTimes = 0;
                 if (!miscSave.TryGet("MoonSprayTimes", out moonSprayTimes) || moonSprayTimes == 0)
@@ -63,18 +57,60 @@ namespace Vinki
                     float rand = Random.value;
                     if (rand < 0.3f)
                     {
-                        oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("Are you ignoring my request on purpose? Please paint outside."), 0);
+                        oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("Are you ignoring my request on purpose? Please paint outside."), -10);
                     }
                     else if (rand < 0.7f)
                     {
-                        oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("Little friend, I truly need my walls clean for my systems to work correctly. Please stop."), 0);
+                        oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("Little friend, I truly need my walls clean for my systems to work correctly. Please stop."), -10);
                     }
                     else
                     {
-                        oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("You are wasting your materials. Your paintings cannot stay here. Please listen."), 0);
+                        oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("You are wasting your materials. Your paintings cannot stay here. Please listen."), -10);
                     }
                 }
                 miscSave.Set("MoonSprayTimes", moonSprayTimes + 1);
+
+                // Graffiti specific dialogue
+                switch (imageName)
+                {
+                    case "VinkiGraffiti/vinki/Beep - 5P or QT":
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("That is… Surely an interesting piece of art. Although I would highly prefer not to see it. As Five Pebbles' senior and neighbor, it feels disrespectful to have such images of him over my chamber walls."), 10);
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("I apologize, but I have to remove it."), 10);
+                        break;
+                    case "VinkiGraffiti/vinki/hoko - overseercut":
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Ah… I see you do not enjoy the presence of our overseers? Despite your distaste for them, I would appreciate it if you did not advocate for violence against beings that are a part of me."), 10);
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("They are our eyes, after all, and scavengers already hunt them plenty without your guidance."), 10);
+                        break;
+                    case "VinkiGraffiti/vinki/JayDee - SRSside Up":
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Little creature, how did you replicate the exact likeness of one of our neighbouring iterators? Have you travelled from afar, or is it a lucky coincidence?"), 10);
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("This particular piece is… Surely interesting. I am unsure of the meaning of it, but I can freely admit I do not enjoy the implications."), 10);
+                        break;
+                    case "VinkiGraffiti/vinki/MagicaJaphet - Explosive Trick":
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("It is a picture of you. Are you trying to ensure that I remember you forever by putting portraits of yourself over my walls?"), 10);
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("I do have to admit that your ability to capture bodies in motion is incredible. However… I would rather keep my walls clean, please."), 10);
+                        break;
+                    case "VinkiGraffiti/vinki/RW - smileycreature":
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("The creature that you drew is oddly shaped. Is it based on anything in particular?"), 10);
+                        break;
+                    case "VinkiGraffiti/vinki/Salami_Hunter - Jeffry Squeeze":
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("...I do not enjoy the look of this piece of art. The implications might be not intended, but I will be removing it from my walls despite that."), 10);
+                        break;
+                    case "VinkiGraffiti/vinki/Salami_Hunter - Ouroboros":
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("I find it impressive how well you adapt to various painting styles. I think Pebbles would like this one."), 10);
+                        break;
+                }
+
+                if (oracleBehavior.conversation != null)
+                {
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now where was I? Oh yes."), -10);
+                }
             }
         }
 
