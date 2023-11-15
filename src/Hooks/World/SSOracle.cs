@@ -36,62 +36,91 @@ namespace Vinki
 
             if (isMoon)
             {
+                Debug.Log("Sprayed near Moon: " + imageName);
                 if (oracleBehavior.conversation != null)
                 {
                     oracleBehavior.conversation.paused = true;
                     oracleBehavior.restartConversationAfterCurrentDialoge = true;
-                }
-
-                Debug.Log("Sprayed near Moon: " + imageName);
-                int moonSprayTimes = 0;
-                if (!miscSave.TryGet("MoonSprayTimes", out moonSprayTimes) || moonSprayTimes == 0)
-                {
-                    oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("Ah… I would appreciate you not painting over my chamber walls. Feel free to do so outside of it, but I require clear walls to project holographic graphs over. Your art, as beautiful as it is, might distort my projections."), 0);
-                }
-                else if (moonSprayTimes == 1)
-                {
-                    oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("I already told you to please not paint over my chamber walls. I’m sure you can find plenty of significantly better canvas outside of my chamber, and I don’t want to have to destroy your hard work, so please do so outside."), 0);
-                }
-                else
-                {
-                    float rand = Random.value;
-                    if (rand < 0.3f)
+                    int moonInterruptTimes;
+                    if (!miscSave.TryGet("MoonInterruptTimes", out moonInterruptTimes) || moonInterruptTimes == 0)
                     {
-                        oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("Are you ignoring my request on purpose? Please paint outside."), -10);
+                        oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("Were you even listening to me? It appears to me that you find painting in my chamber more interesting than my words, I suppose. I would appreciate it if you did not interrupt me in the future, little friend."), 0);
                     }
-                    else if (rand < 0.7f)
+                    else if (moonInterruptTimes == 1)
                     {
-                        oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("Little friend, I truly need my walls clean for my systems to work correctly. Please stop."), -10);
+                        oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("Little creature... I asked you to please not interrupt me. I know you love art, but could you settle down and listen for a moment?"), 0);
                     }
                     else
                     {
-                        oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("You are wasting your materials. Your paintings cannot stay here. Please listen."), -10);
+                        float rand = Random.value;
+                        if (rand < 0.3f)
+                        {
+                            oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("And now you are painting again..."), -10);
+                        }
+                        else if (rand < 0.7f)
+                        {
+                            oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("Am I boring you, little creature?"), -10);
+                        }
+                        else
+                        {
+                            oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("You are not the most attentive creature, are you?"), -10);
+                        }
                     }
+                    miscSave.Set("MoonInterruptTimes", moonInterruptTimes + 1);
                 }
-                miscSave.Set("MoonSprayTimes", moonSprayTimes + 1);
+                else
+                {
+                    int moonSprayTimes;
+                    if (!miscSave.TryGet("MoonSprayTimes", out moonSprayTimes) || moonSprayTimes == 0)
+                    {
+                        oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("Ah... I would appreciate you not painting over my chamber walls. Feel free to do so outside of it, but I require clear walls to project holographic graphs over. Your art, as beautiful as it is, might distort my projections."), 0);
+                    }
+                    else if (moonSprayTimes == 1)
+                    {
+                        oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("I already told you to please not paint over my chamber walls. I'm sure you can find plenty of significantly better canvas outside of my chamber, and I don't want to have to destroy your hard work, so please do so outside."), 0);
+                    }
+                    else
+                    {
+                        float rand = Random.value;
+                        if (rand < 0.3f)
+                        {
+                            oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("Are you ignoring my request on purpose? Please paint outside."), -10);
+                        }
+                        else if (rand < 0.7f)
+                        {
+                            oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("Little friend, I truly need my walls clean for my systems to work correctly. Please stop."), -10);
+                        }
+                        else
+                        {
+                            oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("You are wasting your materials. Your paintings cannot stay here. Please listen."), -10);
+                        }
+                    }
+                    miscSave.Set("MoonSprayTimes", moonSprayTimes + 1);
+                }
 
                 // Graffiti specific dialogue
                 switch (imageName)
                 {
                     case "VinkiGraffiti/vinki/Beep - 5P or QT":
                         oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
-                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("That is… Surely an interesting piece of art. Although I would highly prefer not to see it. As Five Pebbles' senior and neighbor, it feels disrespectful to have such images of him over my chamber walls."), 10);
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("That is... surely an interesting piece of art. Although I would highly prefer not to see it. As Five Pebbles' senior and close neighbor, it feels disrespectful to have such images of him on my chamber walls."), 10);
                         oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("I apologize, but I have to remove it."), 10);
                         break;
                     case "VinkiGraffiti/vinki/hoko - overseercut":
                         oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
-                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Ah… I see you do not enjoy the presence of our overseers? Despite your distaste for them, I would appreciate it if you did not advocate for violence against beings that are a part of me."), 10);
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Ah... I see you do not enjoy the presence of our overseers? Despite your distaste for them, I would appreciate it if you did not advocate for violence against beings that are a part of me."), 10);
                         oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("They are our eyes, after all, and scavengers already hunt them plenty without your guidance."), 10);
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Do not encourage them further."), 10);
                         break;
                     case "VinkiGraffiti/vinki/JayDee - SRSside Up":
                         oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
-                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Little creature, how did you replicate the exact likeness of one of our neighbouring iterators? Have you travelled from afar, or is it a lucky coincidence?"), 10);
-                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("This particular piece is… Surely interesting. I am unsure of the meaning of it, but I can freely admit I do not enjoy the implications."), 10);
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Little creature, how did you manage to replicate the exact likeness of one of our neighboring iterators so well? Have you traveled from afar, or is it a lucky coincidence?"), 10);
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("This particular piece is... Surely interesting. I am unsure of the meaning of it, but I can freely admit I do not enjoy the implications."), 10);
                         break;
                     case "VinkiGraffiti/vinki/MagicaJaphet - Explosive Trick":
                         oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
                         oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("It is a picture of you. Are you trying to ensure that I remember you forever by putting portraits of yourself over my walls?"), 10);
-                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("I do have to admit that your ability to capture bodies in motion is incredible. However… I would rather keep my walls clean, please."), 10);
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("I do have to admit that your ability to capture bodies in motion is incredible. However... I would rather keep my walls clean, please."), 10);
                         break;
                     case "VinkiGraffiti/vinki/RW - smileycreature":
                         oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
@@ -103,13 +132,14 @@ namespace Vinki
                         break;
                     case "VinkiGraffiti/vinki/Salami_Hunter - Ouroboros":
                         oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
-                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("I find it impressive how well you adapt to various painting styles. I think Pebbles would like this one."), 10);
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("I find it impressive how well you adapt to various painting styles. I think Pebbles would like this one. It reminds me of an ancient piece of art which symbolizes unity of all existing things within the cycle."), 10);
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Did you know about it when you painted it?"), 0);
                         break;
                 }
 
                 if (oracleBehavior.conversation != null)
                 {
-                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now where was I? Oh yes."), -10);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("As for what I was saying before you rudely interrupted me..."), -10);
                 }
             }
         }
@@ -415,7 +445,7 @@ namespace Vinki
                     }
                     else if (rand < 0.8f)
                     {
-                        base.dialogBox.NewMessage(base.Translate("Hello, " + owner.NameForPlayer(false) + ". You’re here again."), 0);
+                        base.dialogBox.NewMessage(base.Translate("Hello, " + owner.NameForPlayer(false) + ". You're here again."), 0);
                     }
                     else
                     {
@@ -430,7 +460,7 @@ namespace Vinki
                     base.dialogBox.NewMessage(base.Translate("Welcome back unusual creature."), 0);
                     base.dialogBox.NewMessage(base.Translate("It seems to me like you were quite busy with your work, and yet you still made some time to visit me."), 0);
                     base.dialogBox.NewMessage(base.Translate("I wonder what is it that you want? Is it just to say hello?"), 0);
-                    base.dialogBox.NewMessage(base.Translate("Feel free to visit anytime you wish, little creature. I don’t mind."), 0);
+                    base.dialogBox.NewMessage(base.Translate("Feel free to visit anytime you wish, little creature. I don't mind."), 0);
                     miscSave.Set("MetMoonTwice", true);
                 }
             }
