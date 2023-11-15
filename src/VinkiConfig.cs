@@ -123,7 +123,7 @@ namespace Vinki
             AddSubtitle(230f, "Sound Effects", 1);
             AddText(210f, "MaxDubstep", 1);
             AddSubtitle(170f, "Writing", 1);
-            AddText(150f, "Beep    MaxDubstep    OlayColay    TarnishedPotato    Tsunochizu", 1);
+            AddText(150f, "Beep    MaxDubstep    OlayColay    TarnishedPotato    Tsuno", 1);
             AddSubtitle(60f, "Special Thanks", 1);
             AddText(30f, "Developers of this mod's dependencies\n" +
                 "Abigail    banba fan    Doop    goof    JayDee    Nico    Rae    Sadman    skrybl    Sunbloom    SunnyBeam\n",
