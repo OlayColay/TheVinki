@@ -67,7 +67,7 @@ public static partial class Hooks
     private static void Room_Loaded(On.Room.orig_Loaded orig, Room self)
     {
         orig(self);
-        if (self.game?.GetStorySession?.saveState?.saveStateNumber != Enums.vinki)
+        if (self.game == null || self.game.GetStorySession == null || self.game.GetStorySession.saveState == null || self.game.GetStorySession.saveState.saveStateNumber != Enums.vinki)
         {
             return;
         }
