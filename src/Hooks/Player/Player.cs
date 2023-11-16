@@ -301,6 +301,7 @@ namespace Vinki
             {
                 v.canCoyote = 3;
                 self.slugcatStats.runspeedFac = 0;
+                self.animationFrame = 0;
                 if (isGrindingAtopVine)
                 {
                     self.canJump = 5;
@@ -368,6 +369,7 @@ namespace Vinki
             {
                 //Debug.Log("Zero G Pole direction: " + self.zeroGPoleGrabDir.x + "," + self.zeroGPoleGrabDir.y);
                 self.slugcatStats.poleClimbSpeedFac = 0;
+                self.animationFrame = 0;
 
                 // Handle vine grinding
                 if (v.isGrindingVine)
