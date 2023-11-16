@@ -1,0 +1,9 @@
+sm-upset
+vk-motionblur
+
+It is in your interest to make a good impression on him, so you scream.
+“YO M8 WASSUP, FLEXY MOVES ‘ERE AIN’T I RIGHT?”
+You receive no reaction. You feel oppressed.
+
+"hey i'm talking to you"
+up_scream.txt

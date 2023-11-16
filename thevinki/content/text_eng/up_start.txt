@@ -1,0 +1,11 @@
+sm1
+none
+
+You go up, way above the majority of buildings and chimneys in the area. You go above the neverending 
+clouds and to the top of a comically large metal can, where you find another slugcat! 
+This slugcat is somehow sliding on poles! How is he doing it?
+
+Inspect
+up_inspect.txt
+Get Closer
+up_getcloser.txt

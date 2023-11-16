@@ -1,0 +1,13 @@
+sm5
+none
+
+As cycles pass by unnoticeably you sit there waiting for those shoes to get right in your hands.
+After a decent amount of time you started feeling cold.
+It started snowing, but you don’t care, because now there is only one thing you need in this world:
+A pair of fancy blue shoes that let you shred on any rail you find.
+But it doesn’t seem like you will be able to get those shoes at all because the superstructure you were sitting on suddenly collapsed.
+
+RESTART
+start.txt
+
+FADE

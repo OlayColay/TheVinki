@@ -1,0 +1,10 @@
+sm4
+none
+
+You’re not as rapid as them, so running is obviously not an option.
+But hey, did you make it all the way here just to give up on stealing a pair of shoes?
+Since there is no way you can catch up with that slugcat and take their shoes away, you set 
+up a trap with decoy rails and sit down waiting for your prey to fall for it.
+
+Hide behind a piece of scrap metal
+up_wantshoes1.txt

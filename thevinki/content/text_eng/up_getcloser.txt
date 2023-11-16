@@ -1,0 +1,11 @@
+sm-upset
+vk-motion blur
+
+You try to approach them, but the slugcat with sick kicks is doing sick flips way too fast for you to catch up. 
+The magnificent tricks he performs fascinate you.
+What do you do?
+
+Shout out to him.
+up_shout.txt
+Keep chasing him.
+up_chase.txt

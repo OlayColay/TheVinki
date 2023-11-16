@@ -1,0 +1,15 @@
+vk1-flip
+fp1
+
+You follow the slugcat down a corridor and find yourself in a large square room. 
+There’s a god-like robot suspended in the middle of the room.
+“Yo, wassup Five Pebsi? I brought a new homie who is seriously cracked with art skills!”
+“Oh, for the love of- Did I not tell you to leave and never return? 
+Whatever, let’s just get this over with so you can leave me in peace.”
+"No problemo, Five Peppinos! Oh snap! Looks like this spray can is totally tapped out. 
+Yo, buddy, got anything rad to refill it? Gotta keep the art vibes flowin'!"
+
+Give him the egg.
+up_egg.txt
+Give him one of the many pearls floating about.
+up_pearl.txt

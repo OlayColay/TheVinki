@@ -1,0 +1,9 @@
+sm-upset
+vk-motionblur
+
+You scream at the top of your lungs, but that has no effect.
+You notice that the slugcat has something in his ears, and yelling won’t help in this situation.
+But maybe he could hear you if you just removed that something from his ears?
+
+Throw a rock to catch their attention.
+up_rock.txt

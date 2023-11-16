@@ -1,0 +1,9 @@
+sm10
+vk-determined
+
+“So, let's chillax and hit up my local hangout, the gnarly acidic garbage dumps skatepark! 
+On the way, you gotta try seeing life through my lenses, man!"
+He takes off the contraption on his head and hands it to you
+
+Put them on.
+up_comment2.txt
