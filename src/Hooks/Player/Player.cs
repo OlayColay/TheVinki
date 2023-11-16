@@ -8,6 +8,7 @@ using static Vinki.Plugin;
 using System.Threading.Tasks;
 using DevInterface;
 using SlugBase.SaveData;
+using MoreSlugcats;
 using IL.MoreSlugcats;
 using Smoke;
 using System.Collections;
@@ -93,6 +94,7 @@ namespace Vinki
             On.Player.MovementUpdate += Player_Move;
             On.Player.Update += Player_Update;
             On.Player.JollyUpdate += Player_JollyUpdate;
+            On.Player.CanBeSwallowed += Player_CanBeSwallowed;
         }
 
         private static void Player_JollyUpdate(On.Player.orig_JollyUpdate orig, Player self, bool eu)
@@ -838,6 +840,17 @@ namespace Vinki
             v.tagSmoke.EmitSmoke(0.4f);
             v.tagSmoke.target.graphicsModule.Tag().tagLag = 30;
             v.tagSmoke.target.graphicsModule.Tag().tagColor = new HSLColor(v.tagSmoke.hue, 0.8f, 0.5f).rgb;
+        }
+
+        private static bool Player_CanBeSwallowed(On.Player.orig_CanBeSwallowed orig, Player self, PhysicalObject testObj)
+        {
+            if (orig(self, testObj))
+            {
+                return true;
+            }
+            
+            // Don't want Spearmaster to be able to swallow a can, sorry Spear :(
+            return (!ModManager.MSC || !(self.SlugCatClass == MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName.Spear)) && (testObj is SprayCan);
         }
     }
 }
