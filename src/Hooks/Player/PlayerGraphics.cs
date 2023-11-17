@@ -248,7 +248,7 @@ namespace Vinki
 
             UpdateTagColors(self.Tag(), sLeaser);
 
-            if (!self.player.IsVinki(out var vinki) || sLeaser.sprites.Length <= vinki.glassesSprite)
+            if (!self.player.IsVinki(out var vinki) || sLeaser.sprites.Length <= vinki.tagIconSprite)
             {
                 return;
             }
