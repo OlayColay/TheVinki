@@ -7,3 +7,5 @@ He takes off the contraption on his head and hands it to you
 
 Put them on.
 up_comment2.txt
+
+RW_42 - Kayava
