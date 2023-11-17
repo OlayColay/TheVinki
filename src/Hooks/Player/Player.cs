@@ -694,8 +694,8 @@ namespace Vinki
             }
         }
 
-        private static float boxRadius = 40f;
-        private static float boxOffset = 40f;
+        private static float boxRadius = 45f;
+        private static float boxOffset = 45f;
         private static void CheckForTagging(Player self, VinkiPlayerData v)
         {
             // Wait before being able to tag again
@@ -794,7 +794,7 @@ namespace Vinki
             }
             v.tagLag = 30;
 
-            float damage = 2f;
+            float damage = 1.25f;
             if (v.tagableCreature is Player)
             {
                 if (!VinkiConfig.TagDamageJolly.Value && self.room.game.IsStorySession)
