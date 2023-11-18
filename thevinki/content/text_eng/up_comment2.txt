@@ -1,13 +1,13 @@
-sm-nerd
-vk-noglasses
+sm7
+vk-determined
 
-You put them on, and suddenly you feel an unspeakably strong urge to correct him. You can’t help yourself.
-“Errrmmm, actually it’s not acidic. 
-The Digestion Zone contains several vats of microbial purposed organisms that break down material into their most basic forms.”
-Silently, the slugcat takes the contraption back and slowly backs away.
-Yeah, there’s no saving this timeline.
+On your way through multiple hidden paths you never knew existed, you keep thinking about 
+that one phrase the orange slugcat said: “acidic garbage dumps.” There’s something about 
+that phrase that really irritates you.
+“Yo, Earth to my new lil bro, you good? You seem like you’re phasing out there. Be straight, 
+you were dreaming about trying out my lenses, am I right?”
 
-RESTART
-start.txt
+“sure, I guess”
+up_comment3.txt
 
 FADE

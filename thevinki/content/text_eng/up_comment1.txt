@@ -1,11 +1,12 @@
 sm10
 vk-determined
 
-“So, let's chillax and hit up my local hangout, the gnarly acidic garbage dumps skatepark! 
-On the way, you gotta try seeing life through my lenses, man!"
-He takes off the contraption on his head and hands it to you
+"Oh, real? So, let's chillax and hit up my local hangout, the gnarly acidic garbage dumps skatepark! 
+C’mon now, I know how to swoop there in one cycle! This way!"
+Doesn’t seem like you have any choice but to follow him.
 
-Put them on.
+
+"sure, i guess"
 up_comment2.txt
 
 RW_42 - Kayava
