@@ -176,7 +176,7 @@ namespace Vinki
                     self.room.PlaySound(SoundID.Slugcat_Flip_Jump, self.mainBodyChunk, false, 1f, 1f);
                 }
 
-                self.jumpBoost *= power;
+                self.jumpBoost *= power + (coyote ? 0.2f : 0f);
                 self.animation = Player.AnimationIndex.Flip;
                 self.slideCounter = 0;
 
