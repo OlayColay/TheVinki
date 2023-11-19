@@ -101,7 +101,15 @@ namespace Vinki
         {
             orig(self, eu);
 
-            if (intro != null && intro.phase == CutsceneVinkiIntro.Phase.Wait && intro.cutsceneTimer > 2230)
+            if (intro != null && self.room.abstractRoom.name != "SS_AI")
+            {
+                self.sleepCounter = 0;
+                sleeping = false;
+                self.JollyEmoteUpdate();
+                self.JollyPointUpdate();
+                intro = null;
+            }
+            else if (intro != null && intro.phase == CutsceneVinkiIntro.Phase.Wait && intro.cutsceneTimer > 2230)
             {
                 self.input[0].y = -1;
                 self.JollyEmoteUpdate();
@@ -110,7 +118,7 @@ namespace Vinki
 
                 if (intro.cutsceneTimer == 2260)
                 {
-                    Plugin.sleeping = true;
+                    sleeping = true;
                 }
             }
         }
