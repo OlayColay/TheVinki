@@ -1,4 +1,5 @@
-﻿using RWCustom;
+﻿using ImprovedInput;
+using RWCustom;
 using SlugBase.DataTypes;
 using Smoke;
 using System;
@@ -127,5 +128,70 @@ public static class PlayerExtension
     {
         Vinki = player.Vinki();
         return Vinki.IsVinki;
+    }
+    
+    public static bool IsPressed(this Player player, int index)
+    {
+        if (Plugin.improvedInput)
+        {
+            try {
+                return player.IsPressedImprovedInput(index);
+            } catch {
+                throw new Exception("Could not find ImprovedInput!");
+            }
+        }
+
+        switch (index)
+        {
+            case 0:
+            case 4:
+                return player.input[0].pckp;
+            case 1:
+                return false;
+            case 2:
+                return player.input[0].y == 1;
+            case 3:
+            case 5:
+                return player.input[0].jmp && player.input[0].pckp;
+        }
+        return false;
+    }
+    private static bool IsPressedImprovedInput(this Player player, int index)
+    {
+        return player.IsPressed((PlayerKeybind)Plugin.improvedControls.GetValue(index));
+    }
+
+    public static bool JustPressed(this Player player, int index)
+    {
+        if (Plugin.improvedInput)
+        {
+            try
+            {
+                return player.JustPressedImprovedInput(index);
+            }
+            catch
+            {
+                throw new Exception("Could not find ImprovedInput!");
+            }
+        }
+
+        switch (index)
+        {
+            case 0:
+            case 4:
+                return player.input[0].pckp && !player.input[1].pckp;
+            case 1:
+                return false;
+            case 2:
+                return player.input[0].y == 1 && player.input[1].y != 1;
+            case 3:
+            case 5:
+                return player.wantToJump > 0 && player.input[0].pckp && !player.input[1].pckp;
+        }
+        return false;
+    }
+    private static bool JustPressedImprovedInput(this Player player, int index)
+    {
+        return player.JustPressed((PlayerKeybind)Plugin.improvedControls.GetValue(index));
     }
 }

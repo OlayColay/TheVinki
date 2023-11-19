@@ -494,8 +494,6 @@ namespace Vinki
 
         private static void Player_Update(On.Player.orig_Update orig, Player self, bool eu)
         {
-            orig(self, eu);
-
             // Spray a random graffiti, or tag a creature if there's one to tag
             if (IsPressingGraffiti(self))
             {
@@ -507,7 +505,14 @@ namespace Vinki
                 {
                     SprayGraffitiInGame(self);
                 }
+
+                if (!improvedInput)
+                {
+                    self.input[0].mp = false;
+                }
             }
+
+            orig(self, eu);
 
             if (self.SlugCatClass != Enums.vinki)
             {

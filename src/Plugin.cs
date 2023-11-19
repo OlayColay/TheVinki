@@ -4,7 +4,7 @@ using SlugBase.Features;
 using static SlugBase.Features.FeatureTypes;
 using System.Collections.Generic;
 using ImprovedInput;
-using IL.Menu.Remix;
+using System;
 
 namespace Vinki
 {
@@ -51,17 +51,25 @@ namespace Vinki
         public static readonly PlayerFeature<float> SuperJump = PlayerFloat("thevinki/super_jump");
         public static readonly PlayerFeature<Color> SparkColor = PlayerColor("thevinki/spark_color");
 
-        public static readonly PlayerKeybind Grind = PlayerKeybind.Register("thevinki:grind", "The Vinki", "Grind", KeyCode.LeftShift, KeyCode.JoystickButton2);
-        public static readonly PlayerKeybind ToggleGrind = PlayerKeybind.Register("thevinki:toggle_grind", "The Vinki", "Toggle Grind", KeyCode.None, KeyCode.None);
-        public static readonly PlayerKeybind Graffiti = PlayerKeybind.Register("thevinki:graffiti", "The Vinki", "Graffiti Mode", KeyCode.UpArrow, KeyCode.JoystickButton4);
-        public static readonly PlayerKeybind Spray = PlayerKeybind.Register("thevinki:spray", "The Vinki", "Spray Graffiti", KeyCode.LeftControl, KeyCode.JoystickButton3);
-        public static readonly PlayerKeybind Craft = PlayerKeybind.Register("thevinki:craft", "The Vinki", "Craft Spray Can", KeyCode.LeftShift, KeyCode.JoystickButton2);
-        public static readonly PlayerKeybind Tag = PlayerKeybind.Register("thevinki:tag", "The Vinki", "Tag Creatures", KeyCode.LeftControl, KeyCode.JoystickButton3);
+        public static bool improvedInput;
+        public static Array improvedControls;
+        public static readonly int Grind = 0, ToggleGrind = 1, Graffiti = 2, Spray = 3, Craft = 4, Tag = 5;
 
         // Add hooks
         public void OnEnable()
         {
             Hooks.ApplyInit();
+        }
+
+        public static void SetImprovedInput()
+        {
+            improvedControls = Array.CreateInstance(typeof(PlayerKeybind), 6);
+            improvedControls.SetValue(PlayerKeybind.Register("thevinki:grind", "The Vinki", "Grind", KeyCode.LeftShift, KeyCode.JoystickButton2), Grind);
+            improvedControls.SetValue(PlayerKeybind.Register("thevinki:toggle_grind", "The Vinki", "Toggle Grind", KeyCode.None, KeyCode.None), ToggleGrind);
+            improvedControls.SetValue(PlayerKeybind.Register("thevinki:graffiti", "The Vinki", "Graffiti Mode", KeyCode.UpArrow, KeyCode.JoystickButton4), Graffiti);
+            improvedControls.SetValue(PlayerKeybind.Register("thevinki:spray", "The Vinki", "Spray Graffiti", KeyCode.LeftControl, KeyCode.JoystickButton3), Spray);
+            improvedControls.SetValue(PlayerKeybind.Register("thevinki:craft", "The Vinki", "Craft Spray Can", KeyCode.LeftShift, KeyCode.JoystickButton2), Craft);
+            improvedControls.SetValue(PlayerKeybind.Register("thevinki:tag", "The Vinki", "Tag Creatures", KeyCode.LeftControl, KeyCode.JoystickButton3), Tag);
         }
 
         public static void MapTextureColor(Texture2D texture, int alpha, Color32 to, bool apply = true)

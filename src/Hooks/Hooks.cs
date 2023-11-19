@@ -224,6 +224,21 @@ namespace Vinki
             {
                 Debug.LogException(ex);
             }
+
+            improvedInput = ModManager.ActiveMods.Exists((mod) => mod.id == "improved-input-config");
+            if (!improvedInput)
+            {
+                return;
+            }
+
+            try
+            {
+                SetImprovedInput();
+            }
+            catch
+            {
+                throw new Exception("Improved Input enabled but also not enabled???");
+            }
         }
 
         private static void InitColorfulItems()
