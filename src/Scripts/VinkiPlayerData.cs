@@ -27,7 +27,8 @@ public class VinkiPlayerData
 
     public readonly bool IsVinki;
 
-    public int tailStripesSprite;
+    public FAtlas TailAtlas;
+
     public int shoesSprite;
     public int rainPodsSprite;
     public int glassesSprite;
@@ -87,7 +88,7 @@ public class VinkiPlayerData
 
         if (playerRef.TryGetTarget(out var player))
         {
-            Plugin.TailAtlas = Futile.atlasManager.LoadAtlasFromTexture("vinkitailtexture_" + player.playerState.playerNumber + Time.time + UnityEngine.Random.value, tailTexture, false);
+            TailAtlas = Futile.atlasManager.LoadAtlasFromTexture("vinkitailtexture_" + player.playerState.playerNumber + Time.time + UnityEngine.Random.value, tailTexture, false);
         }
     }
 

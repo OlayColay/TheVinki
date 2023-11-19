@@ -114,13 +114,13 @@ namespace Vinki
 
             if (!ModManager.MSC)
             {
-                self.Tag().affectedSprites = new int[10] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 10 };
+                self.Tag().affectedSprites = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 10 };
                 return;
             }
-            self.Tag().affectedSprites = new int[11] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 12 };
 
             if (!self.player.IsVinki(out var vinki))
             {
+                self.Tag().affectedSprites = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 12 };
                 return;
             }
 
@@ -128,6 +128,7 @@ namespace Vinki
             vinki.glassesSprite = vinki.tagIconSprite + 1;
             vinki.rainPodsSprite = vinki.glassesSprite + 1;
             vinki.shoesSprite = vinki.rainPodsSprite + 1;
+            self.Tag().affectedSprites = new int[0];
 
             Array.Resize(ref sLeaser.sprites, sLeaser.sprites.Length + 1);
             sLeaser.sprites[vinki.tagIconSprite] = new FSprite("TagIcon");
@@ -168,13 +169,12 @@ namespace Vinki
                 }
             }
 
-            if (sLeaser.sprites[2] is TriangleMesh tail && Plugin.TailAtlas.elements != null && Plugin.TailAtlas.elements.Count > 0)
+            if (sLeaser.sprites[2] is TriangleMesh tail && vinki.TailAtlas.elements != null && vinki.TailAtlas.elements.Count > 0)
             {
-                tail.element = Plugin.TailAtlas.elements[0];
+                tail.element = vinki.TailAtlas.elements[0];
                 for (var i = tail.vertices.Length - 1; i >= 0; i--)
                 {
                     var perc = i / 2 / (float)(tail.vertices.Length / 2);
-                    //tail.verticeColors[i] = Color.Lerp(fromColor, toColor, perc);
                     Vector2 uv;
                     if (i % 2 == 0)
                         uv = new Vector2(perc, 0f);

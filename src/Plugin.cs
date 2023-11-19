@@ -22,7 +22,6 @@ namespace Vinki
         public static bool[] storyGraffitisOnMap = {
             false, false, false
         };
-        public static FAtlas TailAtlas;
         public static Texture2D TailTexture;
         public static Dictionary<string, List<PlacedObject.CustomDecalData>> graffitis = new();
         public static Dictionary<string, List<Vector2>> graffitiOffsets = new();
