@@ -1,0 +1,6 @@
+Template: DM_SettingsTemplate_Conflux
+Clouds: 0.7282609
+Palette: 24
+Effects: Darkness-0.1304348-273-125, Fog-0.8369565-261-185, ZeroG-1-21-121, BrokenZeroG-0-14-19, SSSwarmers-0.3804348-265-77, 
+PlacedObjects: LightFixture><764.2348><561.8005><RedLight~-129.6795~27~7, LightFixture><498.2798><-3.197739><RedLight~17.32051~-10~45, LightFixture><63.4158><399.8882><RedLight~-207.515~-294.4224~23, LightSource><437.6866><463.0749><0.6739131~Environment~453~-109~-260.6454~50.47919~1~0~None~0~0, WallMycelia><891.4399><368.6871><0~100, WallMycelia><536.4346><637.3617><0~100, WallMycelia><330.4196><115.1441><0~100, CoralNeuron><894.6664><444.2595><-341~-48, WallMycelia><755.4374><276.3199><0~100, CoralStem><104.5633><369.5505><355~-21, SteamPipe><216.5004><229.7366><24~36, SteamPipe><151.5416><508.4336><-16~36, SteamPipe><182.2735><476.6416><26~12, SteamPipe><118.7288><429.1403><26~-27, SteamPipe><164.3227><268.5637><-22~18, SteamPipe><217.7256><151.9052><39~-7, SteamPipe><63.50879><164.6589><43~-12, SteamPipe><15.82138><190.9794><22~48, SteamPipe><-19.72337><514.6625><64~-31, CoralStem><890.68><328.3126><-227~99, CoralNeuron><109.6813><360.1657><261~70, LightSource><504.3174><365.8117><0.5978261~White~-539~-14~50~86.60254~1~0~None~0~0, 
+FadePalette: 10, 0.3043478

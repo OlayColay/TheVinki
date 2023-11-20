@@ -1,0 +1,8 @@
+RumbleIntensity: 0.08521735
+Clouds: 0.6630435
+RandomItemDensity: 0
+RandomItemSpearChance: 0
+Effects: BrokenZeroG-0-30-30, ZeroG-0.8043478-32-88, ZeroGSpecks-0.1304348-29-138, Lightning-0.2608696-280-31, ElectricDeath-0.2173913-282-158, GreenSparks-0.2717391-273-93, 
+PlacedObjects: ZapCoil><852.9429><690.7866><299~38, ZapCoil><858.8181><470.5735><295~37, ZapCoil><427.1024><477.6954><302~23, ZapCoil><430.0978><699.6885><302~39, LightFixture><573.6331><715.1641><ZapCoilLight~-133.5272~-120.0237~69, LightFixture><581.4408><488.0197><ZapCoilLight~-151.6546~-102.9804~68, LightFixture><975.7761><711.5493><ZapCoilLight~-112.1631~-116.1375~42, LightFixture><979.6638><490.1303><ZapCoilLight~-105.6669~-73.05206~41, LightFixture><2720.001><448.4293><RedLight~17.32051~-10~59, LightFixture><2481.771><190.8075><RedLight~17.32051~-10~0, LightFixture><2911.801><302.1613><RedLight~17.32051~-10~0, LightFixture><1928.212><164.9875><RedLight~17.32051~-10~0, CosmeticSlimeMold><1370.13><292.3734><0~100, CosmeticSlimeMold2><1448.535><209.3459><0~100, SlimeMold><1370.687><229.6963><0~0~3~6, SlimeMold><1361.323><263.4257><0~0~3~6, SlimeMold><1403.577><232.7401><0~0~3~6, CosmeticSlimeMold2><1542.603><473.329><0~100, SlimeMold><1525.865><466.313><0~0~3~5, SlimeMold><1548.651><447.8326><0~0~3~5, LightFixture><1534.546><475.0851><SlimeMoldLight~56.23932~-101.9717~61, LightFixture><1481.93><203.4375><SlimeMoldLight~97.35895~-160.4701~100, 
+AmbientSounds: OMNI><AM_IND-SuperStructure.ogg><848.6929><655.4473><0.3695652><1, OMNI><AM_IND-Utility03.ogg><850.9763><577.1986><0.423913><1, OMNI><AM_RAIN-RollingThunder.ogg><850.1785><496.0632><0.6304348><1, 
+FadePalette: 17, 0.5217391, 0.5217391, 0.5108696

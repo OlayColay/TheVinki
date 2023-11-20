@@ -1,0 +1,5 @@
+Palette: 26
+Effects: BrokenZeroG-0-20-20, ZeroG-1-55-103, 
+PlacedObjects: LightFixture><440.5834><599.2693><RedLight~17.32051~-10~72, LightFixture><921.2771><313.5994><RedLight~-59.6795~172~0, LightFixture><463.7059><152.1977><RedLight~17.32051~-10~0, 
+AmbientSounds: OMNI><AM_IND-SuperStructure.ogg><800.6475><633.6718><0.3369565><1, OMNI><SO_NAT-WindTunnel.ogg><801.6251><561.3439><0.1847826><1, OMNI><SO_SFX-Drowning.ogg><804.8347><488.3625><0.2282609><1, 
+FadePalette: 10, 0.3478261

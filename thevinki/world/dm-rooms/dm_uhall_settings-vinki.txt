@@ -1,0 +1,8 @@
+Template: DM_SettingsTemplate_Underhang
+RainIntensity: 0
+RumbleIntensity: 0.326087
+EffectColorB: 21
+Effects: Fog-0.2934783-277-116, Moth-0.1956522-275-172, ElectricDeath-0.6195652-269-7, BrokenZeroG-0-16-13, 
+PlacedObjects: LightFixture><891.9904><670.6107><RedLight~17.32051~-10~71, LightFixture><821.6783><281.5439><RedLight~17.32051~-10~89, LightFixture><389.0015><276.5698><RedLight~17.32051~-10~0, LightFixture><-34.52888><511.321><RedLight~17.32051~-10~0, LightFixture><513.9593><642.6278><RedLight~17.32051~-10~11, LightFixture><107.1756><333.4968><RedLight~17.32051~-10~82, LightFixture><1386.258><641.586><ZapCoilLight~68.33527~-199.9894~9, LightFixture><1616.728><562.4158><RedLight~17.32051~-10~88, LightFixture><2731.525><322.8554><RedLight~17.32051~-10~0, LightFixture><2367.453><625.0302><RedLight~17.32051~-10~52, 
+AmbientSounds: SPOT><AM_WIN-StrongWnd2.ogg><658.738><606.4496><0.5><1><3128.738><495.4496><-409.3553><-234.3553><0><1, 
+FadePalette: 17, 0.8695652, 0.8695652, 0.8695652

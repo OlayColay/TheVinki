@@ -1,0 +1,12 @@
+WaveSpeed: 0.5
+WaveLength: 1
+WaveAmplitude: 0
+SecondWaveLength: 0
+SecondWaveAmplitude: 0
+Clouds: 0.1304348
+Palette: 11
+EffectColorB: 6
+Effects: Fog-0.4782609-0-0, ElectricDeath-0-20-20, ZeroGSpecks-1-10-140, GreenSparks-0.5869565-250-186, WaterDepth-0.04347826-246-237, 
+PlacedObjects: InsectGroup><484.1395><641.6067><-215~47~0~0~WaterGlowworm~0.2391304, InsectGroup><1774.553><313.4637><-201~141~0~0~WaterGlowworm~0.2391304, 
+AmbientSounds: OMNI><AM_WAT-Sea01.ogg><656.5712><644.4103><0.04347826><0.1, OMNI><AM_RAIN-QuietThunder.ogg><684.0534><559.7133><0.3478261><1, OMNI><MSC-HeavyCreaking.ogg><438.8279><645.0658><0><0.1, OMNI><MSC-StructureStrain.ogg><487.3441><528.3235><0><0.1, OMNI><MSC-UnrelentingBreakage.ogg><370.9498><416.2405><0><0.1, 
+FadePalette: 35, 0.7826087, 0.8913044, 0.8913044, 0.7717391

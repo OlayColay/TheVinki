@@ -1,0 +1,6 @@
+Palette: 35
+Effects: GreenSparks-0.08695652-4-37, ElectricDeath-0.01086957-265-88, BkgOnlyLightning-0.173913-264-0, Fog-0.3152174-10-134, 
+PlacedObjects: Rainbow><730.0076><836.1998><-580~552~0~0~0.423913,0.6304348,0.6630435,0.5434783,0.75,0.15, DangleFruit><446.9433><618.5514><0~0~2~3, DangleFruit><430.0099><670.6042><0~0~2~3, DevToken><525.0416><1103.446><-71~-34~0~0~0~~~0~0~0~1, 
+AmbientSounds: OMNI><AM_RAIN-Rumbles.ogg><821.1138><467.8965><0.326087><1, OMNI><AM_RAIN-RollingThunder.ogg><814.6445><392.1699><0.3804348><1, OMNI><AM_WIN-MedWind.ogg><815.0605><317.314><0.3913043><1, OMNI><AM_WAT-Sea01.ogg><830.1245><551.5935><0.01086957><0.1, OMNI><MSC-UnrelentingBreakage.ogg><370.9498><416.2405><0><0.1, OMNI><MSC-StructureStrain.ogg><377.3441><262.3235><0><0.1, OMNI><MSC-HeavyCreaking.ogg><369.8279><474.0658><0><0.1, 
+Triggers: RegionBump<tA>event<tB>MusicEvent<eA>songName<eB>RW_66 - Metal Canopy<eA>vol<eB>0.3<eA>prio<eB>0.5<eA>mxThrt<eB>1<eA>loop<eB>0<eA>droneTol<eB>0<eA>rooms<eB>-1<eA>rest<eB>5<eA>fadeIn<eB>0<eA>oneSongPerCycle<eB>0<eA>stopAtDeath<eB>0<eA>stopAtGate<eB>0<tA>multiUse<tB>0<tA>toCycle<tB>-1<tA>fromCycle<tB>0<tA>delay<tB>52<tA>panPos<tB>661.3321<tB>409.8914<tA>fireChance<tB>1<tA>entrance<tB>-1<tA>karma<tB>0<tA>slugcats<tB>, 
+FadePalette: 6, 0.7282609, 0.6086956, 0

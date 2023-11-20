@@ -1,0 +1,8 @@
+Template: DM_SettingsTemplate_Conflux
+DangerType: None
+Clouds: 0
+Grime: 0
+Effects: Brightness-0-270-133, BrokenZeroG-0-30-30, ZeroG-1-27-121, SSSwarmers-0.3369565-281-76, 
+PlacedObjects: LightFixture><282.2376><14.58186><RedLight~-229.6718~-2.00528~77, LightFixture><112.8053><579.9698><RedLight~-265.4825~-32.86749~72, SuperStructureFuses><128.6447><427.9752><21~138, SuperStructureFuses><351.2997><9.741161><102~112, SuperStructureFuses><811.4488><289.5875><25~116, SuperStructureFuses><833.2269><510.2688><102~135, LightSource><485.4695><384.7262><0.8478261~White~-552~225~99~-94.39746~0~0~None~0~0, WallMycelia><586.5259><460.0562><-278~31, WallMycelia><124.2877><337.5577><0~100, WallMycelia><401.5112><143.5485><0~100, CoralCircuit><463.2419><416.8471><0~75, CoralCircuit><533.8449><327.926><67~-41, CoralStem><408.5433><166.986><0~100, CoralStem><190.4136><454.3506><122~-20, CoralStem><432.4559><611.196><-1~-170, CoralNeuron><806.4083><327.1222><-175~56, WallMycelia><240.1817><92.81201><6~135, 
+AmbientSounds: SPOT><SO_SFX-DataTrans2.ogg><743.9383><171.9326><0.5><1><144.9304><506.2485><4.644653><-92.35535><0><0.1, SPOT><SO_SFX-DataTrans.ogg><740.3264><288.9008><0.5><1><404.5422><71.17909><-80.35535><-90.35534><0><0.1, SPOT><SO_SFX-DataTones.ogg><740.8136><408.0726><0.5><1><818.8137><350.0726><27.64465><-92.35535><0><0.1, SPOT><SO_SFX-Data3.ogg><738.7275><523.6987><0.5><1><852.7275><580.6987><-45.35535><-103.3553><0><0.1, SPOT><SO_SFX-Celia.ogg><750.2638><39.30048><0.2391304><1.48913><495.2638><366.3005><-109.3553><-82.35535><0><0.3065219, 
+FadePalette: 17, 0

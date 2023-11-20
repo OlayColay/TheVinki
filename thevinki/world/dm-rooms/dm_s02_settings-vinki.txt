@@ -1,0 +1,5 @@
+DangerType: None
+Effects: ZeroG-0.6521739-30-83, BrokenZeroG-0-20-20, 
+PlacedObjects: LightSource><763.7023><360.7849><0.2064368~Environment~-162~-304~-148~123.6025~1~0~None~0~0, LightFixture><115.6693><335.9124><RedLight~17.32051~-10~40, LightFixture><584.6201><401.5653><RedLight~17.32051~-10~10, 
+AmbientSounds: OMNI><AM_IND-SuperStructure.ogg><851.639><632.1062><0.3695652><1, OMNI><AM_RAIN-RollingThunder.ogg><675.4443><629.0476><0.3478261><1, 
+FadePalette: 10, 0.4347826

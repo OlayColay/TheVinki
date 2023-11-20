@@ -1,0 +1,7 @@
+Template: DM_SettingsTemplate_Underhang
+RainIntensity: 0
+RumbleIntensity: 0.4673913
+Effects: GreenSparks-1-15-128, Moth-0.2934783-265-127, BrokenZeroG-0-7-2, 
+PlacedObjects: LightSource><237.1641><122.1565><1~Environment~0~100~36.96533~-123.346~1~0~None~0~0, LightSource><482.2511><94.31221><1~Environment~0~100~39~-130.3975~1~0~None~0~0, LightSource><669.8727><191.7212><1~Environment~0~100~110.9623~-241.4777~1~0~None~0~0, LightFixture><58.2365><638.2052><RedLight~17.32051~-10~88, SteamPipe><315.4314><440.7196><-24~-32, SteamPipe><312.4048><290.4959><-20~32, SteamPipe><456.434><203.7433><37~-20, SteamPipe><366.3163><218.9104><33~-29, SteamPipe><731.2867><196.5932><-31~12, SteamPipe><730.4486><193.9824><7~-16, 
+AmbientSounds: OMNI><AM_WIN-StrongWnd2.ogg><657.0994><641.1183><0.3586957><1, SPOT><SO_IND-HeatDuct.ogg><663.837><534.884><0.3913043><1><571.0003><451.1281><-178.3553><-214.3553><0><0.3065219, SPOT><SO_IND-Fridge.ogg><837.5656><388.4225><0.4021739><1><494.24><719.7839><-112.3553><-155.3553><0><0.3173914, SPOT><SO_IND-Turbine.ogg><660.0898><415.6197><0.4565217><1><615.166><-46.31265><-97.35535><-148.3553><0><0.2956523, 
+FadePalette: 17, 0.7608696

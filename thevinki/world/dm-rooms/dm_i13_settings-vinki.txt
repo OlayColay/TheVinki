@@ -1,0 +1,5 @@
+Palette: 26
+Effects: BrokenZeroG-0-30-30, ZeroG-1-20-20, 
+PlacedObjects: LightFixture><278.759><135.1768><RedLight~17.32051~-10~21, LightFixture><868.5253><138.8016><RedLight~17.32051~-10~0, LightFixture><200.515><561.0378><RedLight~17.32051~-10~0, SteamPipe><148.812><528.7224><-12~49, SteamPipe><147.2664><602.5724><-19~-13, SteamPipe><340.2896><50.17234><-14~-21, SteamPipe><343.9196><46.89415><22~-35, SteamPipe><251.864><55.83586><-17~-53, SteamPipe><949.098><28.25156><8~-15, SteamPipe><848.8089><42.80888><-10~-31, SteamPipe><-6.448181><426.9727><8~31, SteamPipe><127.7906><163.8042><-20~31, SteamPipe><134.4413><311.0905><-19~-16, SteamPipe><122.5751><409.2662><10~51, 
+AmbientSounds: OMNI><AM_IND-SuperStructure.ogg><799.3889><634.5837><0.3695652><1, OMNI><SO_SFX-Drowning.ogg><801.8589><561.3918><0.3913043><1, OMNI><SO_NAT-WindTunnel.ogg><797.2047><491.0552><0.2826087><1, 
+FadePalette: 10, 0.2934783

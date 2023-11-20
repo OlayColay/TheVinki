@@ -1,0 +1,5 @@
+DangerType: Flood
+Grime: 0.1956522
+Palette: 34
+AmbientSounds: SPOT><waterGurgleLOOP1.wav><824.5607><526.5594><0.2173913><1><461.5607><197.5594><-131.3553><-64.35535><0><0.1978262, SPOT><SO_IND-MechHum02.ogg><497.4251><540.9034><0.2282609><1><635.4251><305.9034><-158.3553><-83.35535><0><0.2195653, OMNI><AM_WAT-Sea01.ogg><654.1245><638.5935><0.01086957><0.1, OMNI><MSC-UnrelentingBreakage.ogg><370.9498><416.2405><0><0.1, OMNI><MSC-StructureStrain.ogg><377.3441><262.3235><0><0.1, OMNI><MSC-HeavyCreaking.ogg><369.8279><474.0658><0><0.1, 
+FadePalette: 8, 0.4673913

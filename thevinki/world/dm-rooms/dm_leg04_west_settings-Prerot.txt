@@ -1,0 +1,7 @@
+Template: DM_SettingsTemplate_Leg
+RainIntensity: 0.07608695
+Clouds: 1
+Effects: ElectricDeath-0.6195652-237-26, Fog-1-37-73, GreenSparks-0.1086956-324-91, ZeroGSpecks-1-33-135, BrokenZeroG-0-269-163, 
+PlacedObjects: LightFixture><979.6013><723.1085><RedLight~17.32051~-10~57, LightFixture><909.1367><1129.124><RedLight~17.32051~-10~28, LightFixture><71.23547><1426.435><RedLight~17.32051~-10~47, 
+AmbientSounds: OMNI><MSC-UnrelentingBreakage.ogg><479.9498><317.2405><0><1, OMNI><MSC-StructureStrain.ogg><697.3441><451.3235><0><1, OMNI><MSC-HeavyCreaking.ogg><486.8279><435.0658><0><1, 
+FadePalette: 17, 0.8478261, 0.8586956

@@ -1,0 +1,12 @@
+Template: DM_SettingsTemplate_Conflux
+WaveSpeed: 0.5
+WaveLength: 1
+WaveAmplitude: 0
+SecondWaveLength: 0.1666667
+SecondWaveAmplitude: 0
+Clouds: 0.4130435
+Palette: 24
+Effects: Darkness-0-278-130, Bloom-0.5869565-23-74, SSSwarmers-0.326087-270-75, ZeroGSpecks-0.1413043-278-22, ZeroG-1-24-114, BrokenZeroG-0-18-19, 
+PlacedObjects: WallMycelia><755.8358><96.38591><0~100, WallMycelia><805.504><312.6023><0~100, WallMycelia><335.3114><568.5762><0~100, WallMycelia><217.0208><126.6989><0~100, UniqueDataPearl><822.0134><339.1038><-396~29~0~0~DM~0, DevToken><617.4714><299.1223><2~-69~212.0001~-175~0~~~0~0~0~1, CoralStem><296.4489><312.9434><139~31, CoralStem><752.2699><293.551><-132~30, WallMycelia><283.4489><471.7286><4~119, SuperStructureFuses><245.5564><444.3003><41~66, CoralCircuit><478.8385><449.9294><2~58, CoralCircuit><473.5908><288.6288><0~50, CoralCircuit><412.5819><360.8584><-8~71, LightSource><466.3065><361.8006><0.5217391~White~-555~37~50~86.60254~1~0~None~0~0, LightSource><465.9657><362.0529><0.6739131~White~-452~-5~-88~-13.39746~1~0~None~0~0, 
+AmbientSounds: SPOT><SO_IND-Humm.ogg><713.8828><431.6495><0.5760869><0.6282609><480.8828><371.6495><-127.3553><-116.3553><0><0.3065219, SPOT><SO_SFX-Data4.ogg><691.4728><261.1982><0.2934783><1><279.4728><309.1982><72.64465><-58.35535><0><0.1978262, SPOT><SO_SFX-Data1.ogg><729.3171><532.8309><0.326087><1><774.3171><306.8309><-80.35535><-12.35535><0><0.2739132, SPOT><SO_SFX-Heartbeat2.ogg><755.3202><151.9125><0.4673913><1><463.3202><371.9125><-67.35535><-55.35535><0><0.328261, 
+FadePalette: 10, 0

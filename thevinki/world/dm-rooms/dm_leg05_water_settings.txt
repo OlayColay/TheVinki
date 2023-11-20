@@ -1,0 +1,3 @@
+Template: DM_SettingsTemplate_Leg
+Effects: ZeroG-1-30-30, BrokenZeroG-0-129-150, WaterFluxMaxLevel-0-383-135, WaterFluxMinLevel-0-377-231, WaterFluxFrequency-1-331-348, 
+PlacedObjects: MSArteryPush><240.6035><553.9272><0~100, MSArteryPush><248.453><682.4937><0~100, MSArteryPush><256.6526><863.8708><0~100, MSArteryPush><246.6899><1014.687><0~100, MSArteryPush><245.3256><1179.348><0~100, MSArteryPush><242.9555><1346.805><0~100, MSArteryPush><816.1214><176.8423><0~100, MSArteryPush><461.2294><647.9235><-9~129, MSArteryPush><797.125><222.1482><-236~25, MSArteryPush><484.8785><249.841><-188~15, MSArteryPush><275.1086><188.8307><-57~85, 

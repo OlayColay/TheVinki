@@ -1,0 +1,7 @@
+Template: DM_SettingsTemplate_Underhang
+RainIntensity: 0
+RumbleIntensity: 0.5108696
+Effects: BrokenZeroG-0-30-30, 
+PlacedObjects: WhiteToken><244.3029><462.7492><1~-92~0~0~0~Chatlog_DM1~White|Yellow|Red|Rivulet|Artificer|Saint|Gourmand~0~1~0~0, DevToken><1581.229><302.4123><0~-81~0~0~0~~~0~0~0~1, 
+AmbientSounds: OMNI><AM_WIN-StrongWnd2.ogg><655.205><560.6948><0.5><1, OMNI><AM_WIN-HowlingWnd.ogg><657.446><637.7101><0.4021739><1, SPOT><SO_IND-HeatDuct.ogg><834.6331><381.8993><0.3478261><1><769.0593><714.9611><-104.3553><-150.3553><0><0.4152175, SPOT><SO_IND-Fridge.ogg><647.3004><445.2617><0.25><1><378.3884><177.9818><-129.3553><-216.3553><0><0.3500001, SPOT><SO_IND-HVAC.ogg><838.8267><268.5653><0.3695652><1><1205.147><256.2801><-44.35535><-86.35535><0><0.1, SPOT><SO_IND-HVAC.ogg><836.9471><41.7836><0.3695652><1><1588.074><159.7914><-56.35535><-90.35535><0><0.1, SPOT><SO_IND-HVAC.ogg><836.3656><153.1481><0.3586957><1><2001.404><303.2686><-107.3553><-117.3553><0><0.1, 
+FadePalette: 17, 0.8043478, 0.7934783

@@ -1,0 +1,6 @@
+Template: DM_SettingsTemplate_Conflux
+Clouds: 0
+Effects: ZeroG-1-267-133, ZeroGSpecks-0.6956522-265-185, Contrast-0.02173913-10-128, FireFlies-1-270-19, SSSwarmers-0.1956522-265-74, BrokenZeroG-0-30-30, SunBlock-0-20-20, Darkness-0.3478261-249-236, 
+PlacedObjects: LightFixture><343.3096><432.3948><RedLight~-287.1528~31.72485~0, LightFixture><845.1998><256.2442><RedLight~-204.6795~-97~0, LightFixture><68.8485><212.6983><RedLight~17.32051~-10~32, WallMycelia><808.5153><365.9319><0~100, WallMycelia><152.3673><403.9712><0~100, WallMycelia><123.3763><261.845><0~100, WallMycelia><567.2678><357.1992><0~100, LightSource><449.5427><225.8517><0.2717822~Environment~-578~400~50~86.60254~0~0~None~0~0, SuperStructureFuses><853.9166><289.7143><105~45, SuperStructureFuses><212.9359><389.9366><120~18, 
+AmbientSounds: SPOT><SO_SFX-Data5.ogg><551.3685><517.4008><0.5><1><266.3685><402.4008><86.64465><8.644653><0><0.2086958, SPOT><SO_SFX-Data3.ogg><737.8757><516.1567><0.5><1><896.8757><318.1567><-35.35534><-35.35534><0><0.252174, SPOT><SO_IND-HeatDuct.ogg><734.1074><399.1687><0.4021739><1><11.10736><-26.83127><-35.35534><-35.35534><0><0.6434784, SPOT><SO_SFX-Celia.ogg><737.9832><276.3007><0.2173913><1><386.9832><649.3007><46.64465><-204.3553><0><0.502174, OMNI><AM_IND-SuperStructure.ogg><730.0787><638.8162><0.3695652><1, 
+FadePalette: 10, 0.7282609

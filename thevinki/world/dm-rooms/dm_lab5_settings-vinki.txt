@@ -1,0 +1,4 @@
+Template: DM_SettingsTemplate_Conflux
+Effects: Bloom-0.8586956-20-75, BrokenZeroG-0-16-15, ZeroG-1-47-130, 
+PlacedObjects: WallMycelia><292.0414><581.4541><0~100, WallMycelia><823.8529><603.8512><0~100, WallMycelia><687.6832><593.8304><0~100, WallMycelia><533.5671><592.5616><0~100, WallMycelia><129.6796><612.8382><-1~91, 
+FadePalette: 0, 0.08695652

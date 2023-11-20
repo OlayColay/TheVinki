@@ -1,0 +1,11 @@
+Template: DM_SettingsTemplate_Leg
+RainIntensity: 1
+WaveSpeed: 0.5
+WaveLength: 1
+WaveAmplitude: 1.873311E-34
+SecondWaveLength: 0.1666667
+SecondWaveAmplitude: 0
+Clouds: 1
+Effects: ZeroGSpecks-1-34-74, GreenSparks-0.2826087-34-120, ElectricDeath-0.6086956-273-21, BrokenZeroG-0-339-117, 
+AmbientSounds: OMNI><MSC-UnrelentingBreakage.ogg><593.9498><373.2405><0><1, OMNI><MSC-StructureStrain.ogg><625.3441><563.3235><0><1, OMNI><MSC-HeavyCreaking.ogg><373.8279><380.0658><0><1, 
+FadePalette: 17, 0.8043478

@@ -1,0 +1,4 @@
+Effects: BrokenZeroG-0-30-30, ZeroG-0.8369565-29-80, 
+PlacedObjects: ZapCoil><371.6194><532.5897><222~40, ZapCoil><365.3043><695.2084><234~42, ZapCoil><367.6349><187.3976><222~44, ZapCoil><364.3408><28.37102><236~38, LightFixture><496.4277><43.06349><ZapCoilLight~17.32051~-10~52, LightFixture><496.3577><561.1094><ZapCoilLight~11.3205~-32~51, LightFixture><434.592><711.4276><ZapCoilLight~19.3205~-42~47, LightFixture><484.451><217.0561><ZapCoilLight~17.32051~-10~45, 
+AmbientSounds: OMNI><AM_IND-SuperStructure.ogg><861.4431><643.3082><0.3695652><1, OMNI><AM_IND-Welder.ogg><867.3955><567.8295><0.1195652><0.726087, OMNI><AM_IND-Fabrik01.ogg><687.3671><644.8378><0.2391304><0.7847826, 
+FadePalette: 10, 0.6413044

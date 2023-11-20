@@ -1,0 +1,8 @@
+DangerType: Rain
+Clouds: 0.8586956
+Palette: 35
+EffectColorB: 6
+Effects: ElectricDeath-0-20-20, GreenSparks-0.3043478-254-196, ZeroGSpecks-1-250-252, BkgOnlyLightning-0.1521739-16-136, SilenceWater-0.4347826-258-304, Fog-0.4891304-13-77, 
+PlacedObjects: DangleFruit><562.5211><445.5511><0~0~2~3, DangleFruit><422.666><438.8618><0~0~2~3, DangleFruit><483.6453><404.8875><0~0~2~3, DangleFruit><440.5165><357.9493><0~0~2~3, ReliableSpear><612.4272><172.1862><, ReliableSpear><767.6041><162.1709><, ReliableSpear><745.5007><178.8001><, ReliableSpear><815.5405><215.1959><, ReliableSpear><846.3473><273.129><, NoSpearStickZone><126.4165><696.8182><0~100, NoSpearStickZone><740.624><682.1569><0~100, NoSpearStickZone><956.5305><416.4489><1~119, 
+AmbientSounds: OMNI><AM_WAT-Sea01.ogg><659.051><643.2695><0.01086957><0.1, OMNI><AM_RAIN-QuietThunder.ogg><742.6666><413.3893><0.3478261><1, OMNI><MSC-HeavyCreaking.ogg><438.8279><645.0658><0><0.1, OMNI><MSC-UnrelentingBreakage.ogg><370.9498><416.2405><0><0.1, OMNI><MSC-StructureStrain.ogg><413.3441><527.3235><0><0.1, 
+FadePalette: 10, 0.2065217

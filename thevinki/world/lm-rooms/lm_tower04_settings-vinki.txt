@@ -1,0 +1,7 @@
+RainIntensity: 1
+Clouds: 0.4456522
+Grime: 0.1521739
+Palette: 35
+Effects: ElectricDeath-0.01086957-256-307, Fog-0.4782609-7-23, GreenSparks-0.2173913-256-245, 
+AmbientSounds: OMNI><AM_WAT-Sea01.ogg><822.1245><562.5935><0.01086957><0.1, OMNI><MSC-UnrelentingBreakage.ogg><370.9498><416.2405><0><0.1, OMNI><MSC-StructureStrain.ogg><377.3441><262.3235><0><0.1, OMNI><MSC-HeavyCreaking.ogg><369.8279><474.0658><0><0.1, 
+FadePalette: 6, 0.4565217, 0.3478261, 0.3478261, 0.2717391

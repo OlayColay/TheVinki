@@ -1,0 +1,4 @@
+Effects: SSSwarmers-0.04347826-22-84, BrokenZeroG-0-30-30, ZeroG-1-20-20, 
+PlacedObjects: ZapCoil><243.1996><283.7616><48~116, ZapCoil><248.8356><511.8639><44~94, LightFixture><269.5755><564.5648><ZapCoilLight~17.32051~-10~31, LightFixture><269.6998><336.7576><ZapCoilLight~17.32051~-10~39, SuperStructureFuses><570.1503><209.118><118~164, LightSource><20.83014><-7.105591><0.6086956~Environment~126~306~-162~234.6025~0~0~None~0~0, LightSource><1096.985><331.8005><0.3043478~Environment~-548~-14~-216~-351.3975~0~0~None~0~0, WallMycelia><540.9865><281.3004><-156~-20, WallMycelia><518.3923><573.6686><0~100, CoralNeuron><266.303><177.5344><146~2, SuperStructureFuses><469.6971><621.8779><206~62, LightFixture><786.8234><31.90619><RedLight~17.32051~-10~0, InsectGroup><490.0129><120.0169><37~155~0~0~FireFly~0.5543478, 
+AmbientSounds: OMNI><AM_IND-SuperStructure.ogg><760.5882><648.5705><0.3695652><1, 
+FadePalette: 10, 1

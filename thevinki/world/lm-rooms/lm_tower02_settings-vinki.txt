@@ -1,0 +1,5 @@
+Palette: 35
+Effects: GreenSparks-0.173913-0-39, ElectricDeath-0.01086957-260-46, BkgOnlyLightning-0.1956522-262-0, Fog-0.3913043-6-136, 
+PlacedObjects: DangleFruit><1628.694><467.0503><-150~119~2~3, DangleFruit><1666.441><448.8089><-311~47~2~3, WhiteToken><1752.549><457.944><-28~78~-390~-173~0~Chatlog_LM1~White|Yellow|Red|Rivulet|Artificer|Saint|Gourmand~0~1~0~0, SeedCob><879.9355><283.9259><0~0~7~10, SeedCob><827.9169><318.3603><0~0~7~10, DeadSeedCob><875.6338><330.0872><, 
+AmbientSounds: OMNI><AM_RAIN-Rumbles.ogg><821.1138><467.8965><0.326087><1, OMNI><AM_RAIN-RollingThunder.ogg><814.6445><392.1699><0.3804348><1, OMNI><AM_WIN-MedWind.ogg><815.0605><317.314><0.3913043><1, OMNI><AM_WAT-Sea01.ogg><830.1245><551.5935><0.01086957><0.1, OMNI><MSC-UnrelentingBreakage.ogg><370.9498><416.2405><0><0.1, OMNI><MSC-StructureStrain.ogg><377.3441><262.3235><0><0.1, OMNI><MSC-HeavyCreaking.ogg><369.8279><474.0658><0><0.1, 
+FadePalette: 10, 0.07608695, 0.06521739, 0.05434782

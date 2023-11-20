@@ -1,0 +1,9 @@
+Template: DM_SettingsTemplate_Underhang
+RainIntensity: 0
+RumbleIntensity: 0.1304348
+Clouds: 0.0326087
+Grime: 0.2282609
+Effects: Lightning-0.4021739-10-71, BrokenZeroG-0-270-130, ZeroG-0.5760869-13-12, FakeGate-1-265-187, ElectricDeath-0.326087-274-7, BkgOnlyLightning-0.2934783-266-248, ExtraLoudThunder-0.7282609-270-66, Moth-0.1304348-268-302, 
+PlacedObjects: NoSpearStickZone><478.1694><252.067><-243~113, LightFixture><293.3471><535.321><RedLight~17.32051~-10~62, LightFixture><171.9515><23.68357><RedLight~17.32051~-10~0, LightFixture><1006.591><241.8233><RedLight~17.32051~-10~0, 
+AmbientSounds: OMNI><AM_ENV-LightWind.ogg><658.1634><645.9303><0.4673913><0.6869565, SPOT><AM_IND-Utility02.ogg><869.4351><128.3259><0.423913><1><980.4351><293.3259><-229.3553><-131.3553><0><0.2739132, SPOT><AM_IND-Utility02.ogg><57.0235><120.4486><0.4130435><1><-54.9765><284.4486><183.6447><-182.3553><0><0.3173913, SPOT><SO_IND-Deep50hz.ogg><826.5713><310.3398><0.4130435><1><467.5713><-60.66019><-132.3553><-44.35534><0><0.3391306, OMNI><AM_IND-SuperStructure.ogg><831.4434><642.5508><0.3695652><1, 
+FadePalette: 17, 0.8369565

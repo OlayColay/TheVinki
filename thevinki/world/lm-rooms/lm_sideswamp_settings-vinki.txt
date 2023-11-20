@@ -1,0 +1,16 @@
+RainIntensity: 0.7065217
+WaveSpeed: 0.5760869
+WaveLength: 0.8804348
+WaveAmplitude: 0.2934783
+SecondWaveLength: 0.3514494
+SecondWaveAmplitude: 0
+Clouds: 0.4021739
+Grime: 0.3913043
+BkgDroneVolume: 0
+Palette: 35
+EffectColorA: 12
+EffectColorB: 21
+Effects: Fog-0-20-20, GreenSparks-0.1304348-20-134, BkgOnlyLightning-1-264-196, ElectricDeath-0-268-250, BrokenZeroG-0.01086957-268-307, 
+PlacedObjects: NoSpearStickZone><505.3528><342.0631><11~182, DevToken><2183.185><274.0576><11~-96~0~0~0~~~0~0~0~1, 
+AmbientSounds: OMNI><AM_WAT-Sea01.ogg><655.3737><650.845><0.04347826><0.1, OMNI><AM_RAIN-RollingThunder.ogg><835.1448><574.5799><0.5><1, OMNI><AM_RAIN-Rumbles.ogg><834.4331><496.1696><0.5><1, OMNI><AM_ENV-LightWind.ogg><831.1455><642.5795><0.02173913><0.1, OMNI><AM_ENV-NatWind.ogg><666.2><491.7477><0.3586957><1, SPOT><AM_ENV-NatWind.ogg><461.9319><524.3331><0.3695652><1><203.8932><600.3694><-246.3553><-262.3553><0><1, OMNI><MSC-HeavyCreaking.ogg><369.8279><474.0658><0><0.1, OMNI><MSC-StructureStrain.ogg><377.3441><262.3235><0><0.1, OMNI><MSC-UnrelentingBreakage.ogg><370.9498><416.2405><0><0.1, 
+FadePalette: 10, 0.4673913, 0.5434783, 0.5978261, 0.7391304, 0.7608696, 0.7826087, 0.8043478, 0.8369565, 0.9347826, 1

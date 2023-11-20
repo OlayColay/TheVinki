@@ -1,0 +1,8 @@
+DangerType: Flood
+Clouds: 1
+Grime: 0.05434782
+BkgDroneVolume: 0
+Effects: ZeroG-1-30-30, SSMusic-0.1282609-27-80, BrokenZeroG-0-51-131, 
+PlacedObjects: SuperStructureFuses><431.1797><611.4373><112~72, LightFixture><577.5895><591.4288><RedLight~17.32051~-10~79, LightSource><226.556><123.442><0.1956522~Environment~630~272~50~86.60254~1~0~None~0~0, 
+AmbientSounds: OMNI><AM_IND-SuperStructure.ogg><828.4357><648.0743><0.3695652><1, OMNI><SO_WAT-LilDrips.ogg><830.2277><571.0513><0.2608696><1, SPOT><AM_SFX-RandomGods.ogg><765.3003><285.2396><0><1><843.3><-32.76038><-5.355347><36.64466><0><1, 
+FadePalette: 8, 0.4673913

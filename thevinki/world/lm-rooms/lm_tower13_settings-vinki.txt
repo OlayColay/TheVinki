@@ -1,0 +1,5 @@
+Palette: 35
+Effects: GreenSparks-0.1847826-6-13, ElectricDeath-0.01086957-266-87, Fog-0.3043478-10-134, 
+PlacedObjects: DangleFruit><254.8072><1238.692><0~0~2~3, DangleFruit><276.6619><1187.32><0~0~2~3, 
+AmbientSounds: OMNI><AM_RAIN-Rumbles.ogg><821.1138><467.8965><0.06521739><1, OMNI><AM_RAIN-RollingThunder.ogg><814.6445><392.1699><0.07608695><1, OMNI><AM_WIN-MedWind.ogg><815.0605><317.314><0.3913043><1, OMNI><AM_WAT-Sea01.ogg><830.1245><551.5935><0.01086957><0.1, OMNI><MSC-UnrelentingBreakage.ogg><370.9498><416.2405><0><0.1, OMNI><MSC-HeavyCreaking.ogg><369.8279><474.0658><0><0.1, OMNI><MSC-StructureStrain.ogg><377.3441><262.3235><0><0.1, 
+FadePalette: 6, 0.7391304, 0.6304348, 0.5434783, 0.4673913, 0.3043478, 0.2173913, 0.1086956

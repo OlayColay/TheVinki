@@ -1,0 +1,5 @@
+DangerType: Flood
+Grime: 0.1195652
+Palette: 34
+AmbientSounds: OMNI><MSC-UnrelentingBreakage.ogg><370.9498><416.2405><0><0.1, OMNI><MSC-StructureStrain.ogg><377.3441><262.3235><0><0.1, OMNI><MSC-HeavyCreaking.ogg><369.8279><474.0658><0><0.1, 
+FadePalette: 8, 0.3152174

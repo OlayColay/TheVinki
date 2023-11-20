@@ -1,0 +1,9 @@
+Template: DM_SettingsTemplate_Underhang
+RainIntensity: 0
+RumbleIntensity: 0.1499999
+Clouds: 0.25
+Grime: 0.2934783
+Effects: ElectricDeath-0.4456522-273-15, ZeroG-0.7065217-273-122, BrokenZeroG-0-18-16, Darkness-0-267-180, GreenSparks-0.7608696-20-130, Moth-0-262-238, 
+PlacedObjects: LightFixture><894.0187><1304.883><RedLight~-203.8354~85.26978~0, LightFixture><14.80343><1178.755><RedLight~17.32051~-10~0, LightFixture><342.0367><427.53><RedLight~17.32051~-10~0, LightFixture><854.1294><284.3401><RedLight~17.32051~-10~0, LightFixture><1762.926><1117.718><RedLight~-185.2473~50.66388~0, LightFixture><1788.589><1504.201><RedLight~-173.7894~-125.3743~0, LightFixture><348.1727><1506.605><RedLight~-242.8604~-131.0869~0, LightFixture><1209.989><587.9317><RedLight~33.36401~-81.98886~0, LightFixture><692.6839><820.5404><RedLight~17.32051~-10~0, LightFixture><1967.694><460.0575><RedLight~-285.6752~-49.99719~0, WallMycelia><1636.158><1050.858><-150~43, WallMycelia><1289.336><1309.301><122~85, WallMycelia><1011.98><1248.012><0~100, WallMycelia><426.6219><1439.509><0~100, WallMycelia><783.8352><1326.566><0~100, WallMycelia><342.583><855.8828><0~100, DangleFruit><1428.021><1252.433><40.01282~46.99445~1~8, DangleFruit><1458.603><1316.943><8.883484~42.05048~1~8, DangleFruit><1500.367><1203.582><19~45~1~8, DangleFruit><1486.491><1289.177><44.67407~27.74792~1~8, 
+AmbientSounds: SPOT><AM_WIN-HowlingWnd.ogg><837.7981><387.1941><0.4130435><0.7065217><1062.507><-14.89429><406.6447><365.6447><0><0.3173914, OMNI><AM_IND-SuperStructure.ogg><831.4434><642.5508><0.3695652><1, 
+FadePalette: 17, 0.8260869, 0.8152174, 0.8043478, 0.8152174
