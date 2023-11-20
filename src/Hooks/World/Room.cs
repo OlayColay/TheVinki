@@ -111,10 +111,15 @@ public static partial class Hooks
         {
             self.AddObject(new GraffitiTutorial(self));
         }
-        // Story GraffitiTutorial
+        // Story Graffiti Tutorial
         else if (self.abstractRoom?.name == "SS_D08")
         {
             self.AddObject(new StoryGraffitiTutorial(self));
+        }
+        // Grinding Tutorial
+        else if (self.abstractRoom?.name == "UW_H01" || self.abstractRoom?.name == "UW_H01VI")
+        {
+            self.AddObject(new GrindTutorial(self));
         }
     }
 }
