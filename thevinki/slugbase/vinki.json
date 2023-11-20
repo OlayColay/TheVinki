@@ -50,6 +50,6 @@
     "thevinki/super_jump": 1.25,
     "timeline_before": [ "Spear", "Red" ],
     "title_card": "intro_roll_vinki_0",
-    "world_state": [ "Spear", "Red" ]
+    "world_state": [ "vinki", "Spear", "Red" ]
   }
 }
