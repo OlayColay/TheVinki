@@ -40,8 +40,8 @@ public class GraffitiTutorial : UpdatableAndDeletable
 
         if (Vector2.Distance(playerPos, craftTriggerPos) <= triggerReach && nextPhase == Phase.Craft)
         {
-            string graffitiMode = KeyCodeTranslator.Translate(0, PlayerKeybind.Get("thevinki:graffiti").CurrentBinding(0));
-            string craft = KeyCodeTranslator.Translate(0, PlayerKeybind.Get("thevinki:craft").CurrentBinding(0));
+            string graffitiMode = Plugin.improvedInput ? KeyCodeTranslator.GetImprovedInputKeyName(0, "thevinki:graffiti") : "Up";
+            string craft = Plugin.improvedInput ? KeyCodeTranslator.GetImprovedInputKeyName(0, "thevinki:craft") : "Pickup";
             game.cameras.First().hud.textPrompt.AddMessage(
                 game.manager.rainWorld.inGameTranslator.Translate("Hold (" + graffitiMode + " + " + craft + ") while carrying a rock and colorful object to craft a Spray Can."),
                 0, 600, false, false
@@ -54,10 +54,14 @@ public class GraffitiTutorial : UpdatableAndDeletable
         }
         else if (Vector2.Distance(playerPos, sprayTriggerPos) <= triggerReach && nextPhase == Phase.Spray)
         {
-            string graffitiMode = KeyCodeTranslator.Translate(0, PlayerKeybind.Get("thevinki:graffiti").CurrentBinding(0));
-            string spray = KeyCodeTranslator.Translate(0, PlayerKeybind.Get("thevinki:spray").CurrentBinding(0));
+            string graffitiMode = Plugin.improvedInput ? KeyCodeTranslator.GetImprovedInputKeyName(0, "thevinki:graffiti") : "Up";
+            string spray = Plugin.improvedInput ? KeyCodeTranslator.GetImprovedInputKeyName(0, "thevinki:spray") : "Jump + Pickup";
             game.cameras.First().hud.textPrompt.AddMessage(
                 game.manager.rainWorld.inGameTranslator.Translate("Press (" + graffitiMode + " + " + spray + ") while carrying a Spray Can to spend a charge and spray graffiti."),
+                0, 600, false, false
+            );
+            game.cameras.First().hud.textPrompt.AddMessage(
+                game.manager.rainWorld.inGameTranslator.Translate("You can also damage some creatures by spraying them."),
                 0, 600, false, false
             );
             nextPhase = Phase.Throw;

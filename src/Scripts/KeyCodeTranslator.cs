@@ -1,11 +1,24 @@
-﻿using RWCustom;
+﻿using ImprovedInput;
+using RWCustom;
 using System;
 using UnityEngine;
 
 // Credit to ImprovedInput
 public class KeyCodeTranslator
 {
-	public static string Translate(int player, KeyCode key)
+    public static string GetImprovedInputKeyName(int player, string key)
+    {
+        try
+        {
+            return Translate(player, PlayerKeybind.Get(key).CurrentBinding(0));
+        }
+        catch
+        {
+            throw new Exception("ImprovedInput not found!");
+        }
+    }
+
+	private static string Translate(int player, KeyCode key)
     {
         var text = key.ToString();
         if (text.Length > 14 && text.Substring(0, 14) == "JoystickButton" && int.TryParse(text.Substring(14, text.Length - 14), out int btn))

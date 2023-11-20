@@ -37,7 +37,7 @@ public class GrindTutorial : UpdatableAndDeletable
 
         if (nextPhase == Phase.Grind)
         {
-            string grind = KeyCodeTranslator.Translate(0, PlayerKeybind.Get("thevinki:grind").CurrentBinding(0));
+            string grind = Plugin.improvedInput ? KeyCodeTranslator.GetImprovedInputKeyName(0, "thevinki:grind") : "Pickup";
             game.cameras.First().hud.textPrompt.AddMessage(
                 game.manager.rainWorld.inGameTranslator.Translate("Hold (" + grind + ") while moving atop a horizontal beam or climbing a vertical pole to grind."),
                 0, 600, false, false
@@ -54,7 +54,7 @@ public class GrindTutorial : UpdatableAndDeletable
         }
         else if (playerPos <= landTriggerPos && playerPos > coyoteTriggerPos && nextPhase == Phase.Land)
         {
-            string grind = KeyCodeTranslator.Translate(0, PlayerKeybind.Get("thevinki:grind").CurrentBinding(0));
+            string grind = Plugin.improvedInput ? KeyCodeTranslator.GetImprovedInputKeyName(0, "thevinki:grind") : "Pickup";
             game.cameras.First().hud.textPrompt.AddMessage(
                 game.manager.rainWorld.inGameTranslator.Translate("Hold (" + grind + ") while falling to catch a horizontal beam with your feet and continue grinding."),
                 0, 600, false, false
