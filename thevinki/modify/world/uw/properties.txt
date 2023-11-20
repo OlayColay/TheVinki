@@ -1,0 +1,3 @@
+[MERGE]
+Room_Attr: UW_H01VI: CicadaA-Forbidden,CicadaB-Forbidden,Scavenger-Stay,Overseer-Avoid,DropBug-Forbidden,Vulture-Forbidden,KingVulture-Forbidden,MirosVulture-Forbidden,ScavengerElite-Stay,
+[ENDMERGE]

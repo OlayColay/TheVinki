@@ -1,4 +1,0 @@
-[MERGE]
-RoomSpecificScriptActive: ON
-
-[ENDMERGE]
