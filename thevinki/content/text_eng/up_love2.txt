@@ -1,14 +1,10 @@
-sm5
+sm9b
 vk-angry
 
 "Dude, are you for real? Why would you toss me some drugs? Don't you know how gross they are? 
-I dream of a world where all slugcats are vibing with respect, choosing lives free from violence, drugs, and other sketchy stuff. 
+I dream of a world where all slugcats are vibing with respect, 
+choosing lives free from violence, drugs, and other sketchy stuff. 
 Being a dealer, man, you're totally contributing to the problem and need to be booted. 
-If you enjoy harmful chemicals so much, how about you enjoy this?"
+
 Uh oh, looks like this has gone very wrong.
-Before you can point out the irony of his vision of non-violence, your face is filled with lead paint.
-
-RESTART
-start.txt
-
-FADE
+up_love3.txt

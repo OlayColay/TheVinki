@@ -1,0 +1,14 @@
+vk1-flip
+fp1
+
+“Alright, no doubt, this time I'm not even gonna leave a blank space in this joint.
+ We're turning it into our own gallery, damn it!”
+He jumps to the next wall in the chamber, preparing to adorn it with another masterpiece. 
+He points his device at the wall and starts spraying, but quickly stops, as something seems to be off.
+"Oh snap! Looks like this spray can is totally tapped out. Yo, buddy, got anything rad to refill it? 
+Gotta keep the art vibes flowin'!"
+
+Give him one of the many pearls floating about.
+up_pearl.txt
+Give him the egg.
+up_egg.txt

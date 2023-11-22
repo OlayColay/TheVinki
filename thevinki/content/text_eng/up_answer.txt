@@ -6,7 +6,7 @@ vk-upset
 
 "i need to break into five pebbles walls"
 up_breakfp.txt
-"i need a soulm8"
+"i need a soulm8 uwu"
 up_soulmate.txt
 "i need your shoes"
 up_needshoes.txt

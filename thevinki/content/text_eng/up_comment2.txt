@@ -2,12 +2,10 @@ sm7
 vk-determined
 
 On your way through multiple hidden paths you never knew existed, you keep thinking about 
-that one phrase the orange slugcat said: “acidic garbage dumps.” There’s something about 
-that phrase that really irritates you.
-“Yo, Earth to my new lil bro, you good? You seem like you’re phasing out there. Be straight, 
-you were dreaming about trying out my lenses, am I right?”
+that one phrase the orange slugcat said: “acidic garbage dumps.” 
+There’s something about that phrase that really irritates you.
+“Yo, Earth to my new lil bro, you good? You seem like you’re phasing out there. 
+Be straight, you were dreaming about trying out my lenses, am I right?”
 
-“sure, I guess”
+“sure, i guess”
 up_comment3.txt
-
-FADE

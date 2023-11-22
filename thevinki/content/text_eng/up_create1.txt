@@ -1,8 +1,8 @@
 blush_anim_0.5
 vk-hype
 
-"No doubt! We gotta cruise over to Five Pebbles and drop this bomb creation on him. He's gonna be all
-'Whoa, that's radical!'"
+"No doubt! We gotta cruise over to Five Pebbles and drop this bomb creation on him. He's gonna be all"
+"Whoa, that's radical"
 
 Follow him to Five Pebbles.
 up_create2.txt

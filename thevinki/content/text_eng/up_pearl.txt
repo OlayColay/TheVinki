@@ -1,11 +1,9 @@
-sm5
+sm2
 fp1
 
 The slugcat accepts the pearl you give him and “crafts” with it. Suddenly, the robot speaks up.
-“Oh bother. It looks like a pair of invaders has destroyed one of my storage devices, and now I have to kill them. What a shame.”
-You reflect on your poor decision to steal from a godly robot before the white light surrounds you.
+“Oh bother. It looks like a pair of invaders has destroyed one of my storage devices. 
+Weren’t you taught in school that it is not a nice thing to do?”
 
-RESTART
-start.txt
-
-FADE
+"what is school?"
+up_pearl1.txt
