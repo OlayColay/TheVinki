@@ -4,7 +4,7 @@ vk-agony
 You create a touching piece of art that shows two slugcats facing the sunset background, 
 with their tails intertwined. You turn to the orange slugcat to see his reaction. 
 Unexpectedly, he looks more devastated than you could ever imagine a slugcat looking.
-"My bad, jabronie.” *SNIFF* “This painting is off the charts, but it's giving me major flashbacks to someone from back in the day."
+"My bad, jabronie." *SNIFF* "This painting is off the charts, but it's giving me major flashbacks to someone from back in the day."
 
 Cheer him up.
 up_love1.txt

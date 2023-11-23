@@ -1,7 +1,7 @@
 sm5
 fp1
 
-“Well then, I suppose I’ll have to kill both of you now. What a shame.”
+"Well then, I suppose I'll have to kill both of you now. What a shame."
 You reflect on your poor decision to steal from a godly robot before the white light surrounds you.
 
 RESTART

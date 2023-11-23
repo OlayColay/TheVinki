@@ -1,8 +1,8 @@
 sm9
 vk-upset
 
-“just trying to see if a little rock could break through the cosmic haze surrounding your brain”
-“My bad, didn't wanna seem like I'm dissin' you, but what's up? What do you need from me?”
+"just trying to see if a little rock could break through the cosmic haze surrounding your brain"
+"My bad, didn't wanna seem like I'm dissin' you, but what's up? What do you need from me?"
 
 "i need to break into five pebbles walls"
 up_breakfp.txt

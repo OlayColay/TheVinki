@@ -1,9 +1,9 @@
 sm2
 none
 
-Oh hey it’s bright again!
+Oh hey it's bright again!
 Not like it matters for you, because you only rely on your ears.
-By the way, it’s been quite long since you heard the grind sound.
+By the way, it's been quite long since you heard the grind sound.
 
 "those shoes will be mine"
 up_wantshoes3.txt

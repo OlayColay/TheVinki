@@ -398,3 +398,5 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+thevinki/content/text_eng/.vscode/ltex.dictionary.en-US.txt
+thevinki/content/text_eng/.vscode/ltex.disabledRules.en-US.txt

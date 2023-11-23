@@ -3,7 +3,7 @@ none
 
 You stand there dumbfounded. After all that effort to get his attention.
 He left and you feel like everything is pointless.
-You don’t feel anything - not even when the vulture grabs you.
+You don't feel anything - not even when the vulture grabs you.
 
 RESTART
 start.txt

@@ -1,10 +1,10 @@
 vk-determined-flip
 can
 
-You decide that it’s time to show the slugcat that you’re serious about your love for him. It’s time to give him the egg.
+You decide that it's time to show the slugcat that you're serious about your love for him. It's time to give him the egg.
 "Whoa, check this out! It's totally epic. This could be the raddest spray can ever! Let's do this, my dude!"
 He takes the egg and shoves it in his mouth, along with the empty can. When he gets the new can, it looks a bit strange.
-“Looks gnarly! Let’s give this bad boy a spin!”
+"Looks gnarly! Let's give this bad boy a spin!"
 
 Observe.
 up_egg1.txt

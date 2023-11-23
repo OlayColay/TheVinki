@@ -2,11 +2,11 @@ sm-nerd
 vk-noglasses
 
 You put them on, and suddenly you realize what was wrong this entire time. 
-You feel an unspeakably strong urge to correct him. You can’t help yourself.
-“Errrmmm, actually it’s not acidic. 
-The Digestion Zone contains several vats of microbial purposed organisms that break down material into their most basic forms.”
+You feel an unspeakably strong urge to correct him. You can't help yourself.
+"Errrmmm, actually it's not acidic. 
+The Digestion Zone contains several vats of microbial purposed organisms that break down material into their most basic forms."
 Silently, the slugcat takes the contraption back and slowly backs away.
-Yeah, there’s no saving this one.
+Yeah, there's no saving this one.
 
 RESTART
 start.txt

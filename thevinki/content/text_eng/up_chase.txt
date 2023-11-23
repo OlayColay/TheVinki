@@ -1,10 +1,10 @@
 sm5
 none
 
-You try to make it look like you’re someone to compete in speed and parkour skills, 
+You try to make it look like you're someone to compete in speed and parkour skills, 
 so you start performing sick flips and tricks.
-You keep doing that ‘till you parkour off the wall. Hanging on a tip of a sharp metal rail you shout out for help, 
-but it seems like the slugcat didn’t even see you at all, and he’s already too far away.
+You keep doing that 'till you parkour off the wall. Hanging on a tip of a sharp metal rail you shout out for help, 
+but it seems like the slugcat didn't even see you at all, and he's already too far away.
 You fall to your death, and the last thing you hear is cheap sfx of metal grinding.
 
 RESTART
