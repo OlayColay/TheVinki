@@ -5,12 +5,13 @@ using static SlugBase.Features.FeatureTypes;
 using System.Collections.Generic;
 using ImprovedInput;
 using System;
+using Menu;
 
 namespace Vinki
 {
     [BepInDependency("slime-cubed.slugbase")]
     [BepInDependency("dressmyslugcat", BepInDependency.DependencyFlags.SoftDependency)]
-    [BepInPlugin(MOD_ID, "The Vinki", "0.9.16")]
+    [BepInPlugin(MOD_ID, "The Vinki", "0.10.0")]
     class Plugin : BaseUnityPlugin
     {
         public const string MOD_ID = "olaycolay.thevinki";
@@ -39,7 +40,7 @@ namespace Vinki
             new Color?[6], new Color?[6], new Color?[6], new Color?[6],
             new Color?[6], new Color?[6], new Color?[6], new Color?[6]
         };
-
+        public static List<MenuDepthIllustration> rotatingGhost = new();
 
         public static readonly PlayerFeature<float> CoyoteBoost = PlayerFloat("thevinki/coyote_boost");
         public static readonly PlayerFeature<float> GrindXSpeed = PlayerFloat("thevinki/grind_x_speed");

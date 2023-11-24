@@ -1,11 +1,31 @@
 {
 	"id": "Ghost_Vinki",
-	"scene_folder": "scenes/slugcat - vinki",
+	"scene_folder": "scenes/ghost - vinki",
 	"images": [
-		{ "name": "Background", "pos": [492, 297], "depth": 3.7, "shader": "Basic" },
-		{ "name": "Grass 3",    "pos": [602, 264], "depth": 2.2, "shader": "Basic" },
-		{ "name": "Grass 2",    "pos": [446, 283], "depth": 2.0, "shader": "Basic" },
-		{ "name": "Grass 1",    "pos": [515, 265], "depth": 1.8, "shader": "Basic" }
+		{
+			"name": "rivulet - flat",
+			"pos": [ 330, -18 ],
+			"depth": -1,
+			"flatmode": true
+		},
+		{
+			"name": "rivulet bkg",
+			"pos": [ 330, -18 ],
+			"depth": 3.7,
+			"shader": "Normal"
+		},
+		{
+			"name": "rivulet a",
+			"pos": [ 557, 89 ],
+			"depth": 2.0,
+			"shader": "Normal"
+		},
+		{
+			"name": "rivulet b",
+			"pos": [ 574, 74 ],
+			"depth": 2.2,
+			"shader": "Normal"
+		},
 	],
 	"idle_depths": [ 2.8 ],
 	"glow_pos": [688, 484],

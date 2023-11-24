@@ -211,7 +211,7 @@ namespace Vinki
                 IsPostInit = true;
 
                 // Putting this hook here ensures that SlugBase's BuildScene hook goes first
-                On.Menu.MenuScene.BuildScene += MenuScene_BuildScene;
+                ApplyMenuSceneHooks();
                 On.ProcessManager.PostSwitchMainProcess += ProcessManager_PostSwitchMainProcess;
 
                 if (SlugBase.SaveData.SaveDataExtension.GetSlugBaseData(self.progression.miscProgressionData).TryGet("ShowVinkiTitleCard", out bool value) == false || value)

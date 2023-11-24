@@ -12,7 +12,8 @@ public static partial class Hooks
 {
     private static void ApplyMenuSceneHooks()
     {
-
+        On.Menu.MenuScene.BuildScene += MenuScene_BuildScene;
+        On.Menu.MenuScene.Update += MenuScene_Update;
     }
 
     private static void MenuScene_BuildScene(On.Menu.MenuScene.orig_BuildScene orig, MenuScene self)
@@ -24,7 +25,18 @@ public static partial class Hooks
             return;
         }
 
-        if (self.sceneID.ToString() == "Slugcat_Vinki")
+        if (self.sceneID.ToString() == "Ghost_Vinki")
+        {
+            // Find the ghost layers of the slugcat ghost scene
+            Plugin.rotatingGhost.Clear();
+            foreach (var image in self.depthIllustrations.Where(f => Path.GetFileNameWithoutExtension(f.fileName).StartsWith("rivulet a")))
+            {
+                image.sprite.anchorX = 0.5f;
+                image.sprite.anchorY = 0.5f;
+                Plugin.rotatingGhost.Add(image);
+            }
+        }
+        else if (self.sceneID.ToString() == "Slugcat_Vinki")
         {
             // Find the graffiti layers of the slugcat select scene
             List<MenuDepthIllustration> menuGraffitis = new List<MenuDepthIllustration>();
@@ -158,6 +170,26 @@ public static partial class Hooks
                     // TODO
                     //self.AddIllustration(GraffitiDialog.graffitiSpots[i]);
                 }
+            }
+        }
+    }
+
+    private static float rotateAmount = 1f;
+    private static void MenuScene_Update(On.Menu.MenuScene.orig_Update orig, MenuScene self)
+    {
+        orig(self);
+
+        if (self.sceneID == null)
+        {
+            return;
+        }
+
+        if (self.sceneID.ToString() == "Ghost_Vinki")
+        {
+            foreach(MenuDepthIllustration layer in Plugin.rotatingGhost)
+            {
+                Debug.Log("Rotating layer: " + layer.fileName);
+                layer.sprite.rotation += rotateAmount;
             }
         }
     }
