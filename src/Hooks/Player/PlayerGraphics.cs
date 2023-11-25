@@ -326,8 +326,6 @@ namespace Vinki
                     self.player.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan) != null) && 
                     ((self.player.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan).grabbed as SprayCan).Abstr.uses > 0));
 
-                sLeaser.sprites[vinki.glassesSprite].anchorX = sLeaser.sprites[9].anchorX;
-                sLeaser.sprites[vinki.glassesSprite].anchorY = sLeaser.sprites[9].anchorY;
                 sLeaser.sprites[vinki.tagIconSprite].rotation = 0f;
                 sLeaser.sprites[vinki.tagIconSprite].x = iconPos.x;
                 sLeaser.sprites[vinki.tagIconSprite].y = iconPos.y;
