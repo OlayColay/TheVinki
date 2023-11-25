@@ -24,7 +24,6 @@ public class StoryGraffitiTutorial : UpdatableAndDeletable
         miscSave = SlugBase.SaveData.SaveDataExtension.GetSlugBaseData(room.game.GetStorySession.saveState.miscWorldSaveData);
         miscSave.TryGet("StoryGraffitiTutorialPhase", out int nextPhaseInt);  // If there's nothing in the save, it should give 0
         nextPhase = (Phase)nextPhaseInt;
-        Debug.Log("Created StoryGraffitiTutorial at phase " + nextPhase.ToString());
     }
 
     public override void Update(bool eu)

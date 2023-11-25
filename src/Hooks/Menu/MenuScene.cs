@@ -188,7 +188,6 @@ public static partial class Hooks
         {
             foreach(MenuDepthIllustration layer in Plugin.rotatingGhost)
             {
-                Debug.Log("Rotating layer: " + layer.fileName);
                 layer.sprite.rotation += rotateAmount;
             }
         }

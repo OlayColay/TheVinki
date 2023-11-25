@@ -36,7 +36,7 @@ namespace Vinki
 
             if (isMoon)
             {
-                Debug.Log("Sprayed near Moon: " + imageName);
+                //Debug.Log("Sprayed near Moon: " + imageName);   
                 if (oracleBehavior.conversation != null)
                 {
                     oracleBehavior.conversation.paused = true;

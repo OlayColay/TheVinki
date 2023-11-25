@@ -25,7 +25,7 @@ namespace Vinki
                 gNum = UnityEngine.Random.Range(0, graffitis[slugcat].Count);
 
                 // Trigger Iterator dialogue if there's one in the room
-                Debug.Log("Room name: " + self.room.abstractRoom.name);
+                //Debug.Log("Room name: " + self.room.abstractRoom.name);
                 if (self.room.abstractRoom.name.Equals("DM_AI"))
                 {
                     Hooks.SprayNearIterator(true, SaveDataExtension.GetSlugBaseData(self.room.game.GetStorySession.saveState.miscWorldSaveData), graffitis[slugcat][gNum].imageName);
@@ -47,7 +47,6 @@ namespace Vinki
                 // If spraying the StoryGraffitiTutorial graffiti, move to the next phase
                 if (gNum == 2)
                 {
-                    Debug.Log("Spraying tutorial story graffiti");
                     miscSave.Set("StoryGraffitiTutorialPhase", 1);
                 }
 
@@ -175,7 +174,7 @@ namespace Vinki
                 // Get risk/reward speedboost when coyote jumping
                 if (coyote)
                 {
-                    Debug.Log("Coyote jump!");
+                    //Debug.Log("Coyote jump!");
                     self.mainBodyChunk.vel.x += coyoteBoost * self.slideDirection;
                     self.room.PlaySound(SoundID.Slugcat_Flip_Jump, self.mainBodyChunk, false, 3f, 1f);
                 }
