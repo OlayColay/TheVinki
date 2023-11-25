@@ -1,0 +1,153 @@
+GATE_UW_SS: -302.901><-1705.868><-193.3384><-1784.349><0><><48><35
+GATE_SS_UW: -747.1914><2180.56><-709.204><2046.368><2><><48><35
+SS_D08: -512.822><2242.343><-578.8348><2043.875><2><Five Pebbles><107><78
+SS_S04: -593.807><2070.688><-571.9958><1914.141><2><><48><35
+SS_E08: -397.7486><1949.913><-463.2363><1607.496><2><Five Pebbles><48><189
+SS_D07: -170.1915><1621.559><-468.2044><1455.37><2><><204><35
+SS_L01: 34.57876><1408.445><-22.51234><1230.911><0><Five Pebbles (General Systems Bus)><152><160
+SS_AI: 75.45146><1485.939><322.3786><1397.667><1><><48><36
+SS_E07: 43.57875><898.4485><81.48767><796.9109><0><Five Pebbles (General Systems Bus)><48><192
+SS_E06: 32.5787><561.4485><-130.5128><671.9109><0><Five Pebbles><252><35
+SS_C08: 240.5787><311.4483><102.4875><391.9108><0><Five Pebbles><152><35
+SS_A14VI: 995.5785><710.4479><808.4875><793.9109><0><Five Pebbles (Memory Conflux)><48><35
+SS_LAB13: 1156.578><711.4479><953.4875><791.9109><0><Five Pebbles (Memory Conflux)><48><35
+SS_A01: 1316.578><711.4479><1091.488><791.9109><0><Five Pebbles (Memory Conflux)><48><35
+SS_D02: 580.5787><534.4485><416.4877><586.9109><0><Five Pebbles (Memory Conflux)><104><78
+SS_LAB8: 829.579><587.4485><662.4875><672.9109><0><Five Pebbles (Memory Conflux)><48><35
+SS_LAB1: 993.5787><590.4485><812.4875><664.9109><0><Five Pebbles (Memory Conflux)><48><35
+SS_LAB2VI: 1155.578><586.4479><949.4875><662.9109><0><Five Pebbles (Memory Conflux)><48><35
+SS_LAB6: 1315.578><587.4479><1089.488><662.9109><0><Five Pebbles (Memory Conflux)><48><35
+SS_A17: 547.579><352.4483><453.4879><406.9108><0><Five Pebbles><48><35
+SS_E03: 543.579><-19.55163><450.4877><-47.08928><0><Five Pebbles><48><188
+SS_LAB7: 829.5787><469.4483><663.4875><531.9109><0><Five Pebbles (Memory Conflux)><48><35
+SS_LAB9: 995.579><469.4483><810.4875><530.9109><0><Five Pebbles (Memory Conflux)><48><35
+SS_LAB3VI: 1157.578><469.4482><950.4875><529.9109><0><Five Pebbles (Memory Conflux)><48><35
+SS_LAB12VI: 1314.578><470.4482><1087.488><529.9109><0><><48><35
+SS_LAB11VI: 831.5787><349.4483><659.4875><382.9108><0><><48><35
+SS_LAB10VI: 993.5787><351.4483><808.4875><382.9108><0><Five Pebbles (Research and Development)><48><35
+SS_LAB5VI: 1155.578><350.4483><949.4875><382.9108><0><Five Pebbles (Research and Development)><48><35
+SS_LAB4VI: 1312.578><351.4483><1088.488><381.9108><0><Five Pebbles (Research and Development)><48><35
+SS_E05VI: 1314.763><3.848054><1091.488><-61.08936><1><Five Pebbles (Research and Development)><48><188
+SS_I03: -587.421><578.4485><-469.5123><595.9109><0><Five Pebbles (Recursive Transform Array)><155><120
+SS_C07: -1393.422><587.4485><-894.5125><687.9109><0><Five Pebbles (Recursive Transform Array)><152><35
+SS_C03: -1706.422><447.4483><-1229.512><511.9108><0><Five Pebbles (Recursive Transform Array)><48><120
+SS_B02: -1215.422><216.4481><-830.5125><397.9108><0><Five Pebbles (Recursive Transform Array)><48><78
+SS_S05: -1057.136><280.8725><-655.5425><485.0281><0><><48><35
+SS_A16: -1708.422><223.4484><-1232.512><340.9108><0><Five Pebbles (Recursive Transform Array)><48><35
+SS_A03: -1701.422><116.4483><-1234.512><193.9108><0><Five Pebbles><48><35
+SS_A15: -1670.422><8.448355><-1221.512><25.91064><0><Five Pebbles><48><35
+SS_E02: -1210.422><3.448383><-1032.512><20.91065><0><Five Pebbles><255><35
+SS_A04: -1109.422><-259.5518><-756.5125><-92.08929><0><Five Pebbles><48><35
+SS_B06: -863.421><-310.5517><-646.5125><-128.0892><0><Five Pebbles><104><35
+SS_A11: -612.421><295.4483><-378.5123><280.9107><0><Five Pebbles (Recursive Transform Array)><48><35
+SS_D03: -627.4213><78.44811><-444.5123><24.91065><0><Five Pebbles (Recursive Transform Array)><104><76
+SS_D04: -550.4213><-417.5517><-389.5121><-238.0891><0><Five Pebbles><104><78
+SS_C04: 353.5787><-399.5517><222.4872><-181.0892><0><Five Pebbles><152><35
+SS_C06: -1662.422><-226.5517><-1227.512><-286.0892><0><Five Pebbles><48><120
+SS_H01: -1345.422><-515.5515><-1130.512><-471.0893><0><Five Pebbles><202><78
+SS_F02: -995.4215><-817.5515><-795.5125><-754.0891><0><Five Pebbles><104><120
+SS_S02: -1092.802><-574.0763><-706.3832><-438.176><1><><48><35
+SS_B03: -435.4213><-640.5515><-264.5121><-491.0893><0><Five Pebbles><48><78
+SS_E01: -439.4213><-814.5515><-467.5126><-671.0891><0><Five Pebbles><255><35
+SS_F01: -692.421><-1221.555><-542.5125><-1178.089><0><Five Pebbles><48><228
+SS_C02: -444.4213><-1377.555><-253.5122><-1283.089><0><Five Pebbles><48><121
+SS_I02: -378.4209><-1058.551><-327.5123><-970.0891><0><Five Pebbles><152><121
+SS_A10: -224.4213><-1261.555><-118.5128><-1377.089><0><Five Pebbles><48><35
+SS_A09: -236.4211><-1372.555><-124.5128><-1504.089><0><Five Pebbles><48><35
+SS_B01: -86.42129><-1434.555><47.48772><-1595.089><0><Five Pebbles><48><78
+SS_A08: -76.42142><-1602.555><51.48773><-1729.089><0><Five Pebbles><48><35
+SS_A19: -220.9688><-1601.723><-62.74565><-1730.609><0><Five Pebbles><48><35
+SS_S01: 15.58233><-1574.78><159.2636><-1726.744><0><><48><35
+SS_B05: 351.5791><-1383.555><51.48772><-1381.089><1><><104><35
+SS_D06VI: 668.5787><-1454.555><279.4877><-1470.089><1><Five Pebbles (Research and Development)><104><78
+SS_A18VI: 849.5787><-1280.555><459.4877><-1266.089><1><Five Pebbles (Research and Development)><48><35
+SS_F03VI: 999.579><-988.5504><590.4875><-1271.089><1><Five Pebbles (Research and Development)><48><228
+SS_B04VI: 1005.579><-523.5521><591.4875><-756.0891><1><Five Pebbles (Research and Development)><48><78
+SS_S03: 1005.79><-344.8191><577.5565><-423.8736><2><><48><35
+SS_A13: 990.579><-344.5517><583.4875><-549.0891><1><Five Pebbles (Research and Development)><48><35
+SS_E04VI: 330.5787><-812.5515><61.48775><-669.0891><0><><255><35
+SS_D05VI: 1240.578><-399.5517><744.4875><-635.0891><1><Five Pebbles (Research and Development)><104><78
+SS_LAB420VI: 829.6152><711.4469><954.3157><792.8971><0><Five Pebbles (Memory Conflux)
+OffScreenDen_SS: -509.421><514.4485><-148.5128><347.9107><1><Five Pebbles><0><0
+Connection: GATE_UW_SS,SS_A19,36,19,9,7,1,3
+Connection: GATE_SS_UW,SS_D08,45,9,5,10,0,2
+Connection: SS_D08,SS_S04,38,8,35,25,3,1
+Connection: SS_D08,SS_E08,80,43,12,185,3,1
+Connection: SS_E08,SS_D07,11,9,13,32,3,1
+Connection: SS_D07,SS_AI,188,5,28,33,3,1
+Connection: SS_L01,SS_AI,88,127,20,33,3,1
+Connection: SS_L01,SS_E07,76,10,22,187,3,1
+Connection: SS_E07,SS_E06,20,8,126,31,3,1
+Connection: SS_E06,SS_D02,248,31,3,74,0,2
+Connection: SS_E06,SS_I03,4,18,151,55,2,0
+Connection: SS_E06,SS_C08,123,3,4,30,3,1
+Connection: SS_C08,SS_A17,148,31,2,18,0,2
+Connection: SS_A14VI,SS_LAB13,43,31,9,31,0,2
+Connection: SS_A14VI,SS_LAB1,26,2,27,31,3,1
+Connection: SS_LAB13,SS_A01,43,31,2,31,0,2
+Connection: SS_A01,SS_LAB6,25,2,29,31,3,1
+Connection: SS_D02,SS_LAB8,101,46,4,6,0,2
+Connection: SS_LAB8,SS_LAB1,45,31,9,31,0,2
+Connection: SS_LAB8,SS_LAB7,25,2,29,31,3,1
+Connection: SS_LAB1,SS_LAB9,26,2,27,31,3,1
+Connection: SS_LAB2VI,SS_LAB6,43,31,9,31,0,2
+Connection: SS_LAB2VI,SS_LAB3VI,26,2,27,31,3,1
+Connection: SS_LAB6,SS_LAB12VI,26,1,27,31,3,1
+Connection: SS_A17,SS_LAB7,45,31,9,31,0,2
+Connection: SS_A17,SS_E03,42,2,44,184,3,1
+Connection: SS_E03,SS_C04,25,2,140,31,3,1
+Connection: SS_LAB7,SS_LAB9,43,3,8,3,0,2
+Connection: SS_LAB7,SS_LAB11VI,24,2,27,31,3,1
+Connection: SS_LAB3VI,SS_LAB12VI,43,3,8,3,0,2
+Connection: SS_LAB3VI,SS_LAB5VI,26,2,24,32,3,1
+Connection: SS_LAB12VI,SS_LAB4VI,24,2,27,32,3,1
+Connection: SS_LAB11VI,SS_LAB10VI,43,3,8,3,0,2
+Connection: SS_LAB10VI,SS_LAB5VI,43,31,9,31,0,2
+Connection: SS_LAB5VI,SS_LAB4VI,43,31,9,31,0,2
+Connection: SS_LAB4VI,SS_E05VI,8,3,3,185,2,1
+Connection: SS_E05VI,SS_D05VI,38,3,93,70,3,1
+Connection: SS_I03,SS_C07,2,63,147,17,2,0
+Connection: SS_I03,SS_A11,67,5,23,32,3,1
+Connection: SS_C07,SS_C03,4,18,45,108,2,0
+Connection: SS_C03,SS_B02,45,17,3,74,0,2
+Connection: SS_C03,SS_A16,40,10,41,31,0,1
+Connection: SS_B02,SS_S05,45,70,16,27,0,2
+Connection: SS_B02,SS_E02,23,5,125,32,3,1
+Connection: SS_A16,SS_A03,5,4,2,31,3,1
+Connection: SS_A03,SS_A15,46,3,36,32,3,1
+Connection: SS_A15,SS_E02,44,18,5,19,0,2
+Connection: SS_A15,SS_C06,24,3,21,113,3,1
+Connection: SS_E02,SS_D03,251,16,7,12,0,2
+Connection: SS_E02,SS_A04,139,1,2,31,3,1
+Connection: SS_A04,SS_B06,45,5,5,22,0,2
+Connection: SS_B06,SS_D04,98,15,4,72,0,2
+Connection: SS_A11,SS_D03,23,2,56,73,3,1
+Connection: SS_D03,SS_D04,94,5,90,75,3,1
+Connection: SS_D04,SS_C04,101,56,2,29,0,2
+Connection: SS_D04,SS_B03,88,9,22,74,3,1
+Connection: SS_C06,SS_H01,19,8,7,68,3,2
+Connection: SS_H01,SS_F02,184,5,18,115,3,1
+Connection: SS_F02,SS_S02,5,117,15,14,1,2
+Connection: SS_F02,SS_E01,101,54,5,16,0,2
+Connection: SS_F02,SS_F01,96,29,9,211,0,2
+Connection: SS_B03,SS_E01,22,7,126,32,3,1
+Connection: SS_E01,SS_E04VI,251,16,5,16,0,2
+Connection: SS_E01,SS_I02,126,4,54,118,3,1
+Connection: SS_F01,SS_C02,44,20,2,19,0,2
+Connection: SS_C02,SS_I02,44,110,74,12,1,3
+Connection: SS_I02,SS_A10,126,13,23,27,3,1
+Connection: SS_A10,SS_B05,44,20,4,22,0,2
+Connection: SS_A10,SS_A09,14,2,18,31,3,1
+Connection: SS_A09,SS_B01,43,19,3,61,0,2
+Connection: SS_B01,SS_A08,41,5,38,30,3,1
+Connection: SS_A08,SS_A19,3,13,39,13,2,0
+Connection: SS_A08,SS_S01,40,13,24,12,0,3
+Connection: SS_B05,SS_D06VI,96,28,6,73,0,2
+Connection: SS_D06VI,SS_A18VI,97,74,10,4,1,3
+Connection: SS_A18VI,SS_F03VI,43,21,3,20,0,2
+Connection: SS_F03VI,SS_B04VI,24,225,21,6,1,3
+Connection: SS_B04VI,SS_S03,21,74,21,12,1,3
+Connection: SS_B04VI,SS_A13,35,74,40,4,1,3
+Connection: SS_B04VI,SS_E04VI,3,65,251,19,2,0
+Connection: SS_B04VI,SS_D05VI,44,51,2,10,0,2
+Connection: SS_A13,SS_D05VI,40,32,4,72,1,2
