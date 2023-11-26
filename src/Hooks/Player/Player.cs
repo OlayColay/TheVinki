@@ -537,7 +537,7 @@ namespace Vinki
             VinkiPlayerData v = self.Vinki();
 
             // Update grindToggle if needed
-            if (self.JustPressed(ToggleGrind) && !IsPressingGraffiti(self))
+            if (self.JustPressed(ToggleGrind) && (!IsPressingGraffiti(self) || !VinkiConfig.UseGraffitiButton.Value))
             {
                 v.grindToggle = !v.grindToggle;
             }
@@ -668,7 +668,7 @@ namespace Vinki
 
         private static bool IsPressingGraffiti(Player self)
         {
-            return self.IsPressed(Graffiti) || (VinkiConfig.UpGraffiti.Value && self.input[0].y > 0f);
+            return self.IsPressed(Graffiti) || (VinkiConfig.UpGraffiti.Value && self.input[0].y > 0f) || !VinkiConfig.UseGraffitiButton.Value;
         }
 
         private static void SprayGraffitiInGame(Player self)
