@@ -459,6 +459,12 @@ namespace Vinki
                     self.animation = Player.AnimationIndex.HangFromBeam;
                 }
             }
+
+            // Don't swallow/spitup while grinding
+            if (v.isGrinding)
+            {
+                self.swallowAndRegurgitateCounter = 0;
+            }
         }
 
         private static void PlayGrindSound(Player self)
@@ -502,20 +508,23 @@ namespace Vinki
         private static void Player_Update(On.Player.orig_Update orig, Player self, bool eu)
         {
             // Spray a random graffiti, or tag a creature if there's one to tag
-            if (IsPressingGraffiti(self))
+            if (IsPressingGraffiti(self) || !improvedInput)
             {
                 if (self.JustPressed(Tag) && self.SlugCatClass == Enums.vinki && self.Vinki().tagableCreature != null)
                 {
+                    if (!improvedInput)
+                    {
+                        self.wantToJump = 0;
+                    }
                     TagCreature(self);
                 }
                 else if (self.JustPressed(Spray))
                 {
+                    if (!improvedInput)
+                    {
+                        self.wantToJump = 0;
+                    }
                     SprayGraffitiInGame(self);
-                }
-
-                if (!improvedInput)
-                {
-                    self.input[0].mp = false;
                 }
             }
 
@@ -741,7 +750,7 @@ namespace Vinki
                 (v.poisonedVictims[i].creature.State as HealthState).health -= v.poisonedVictims[i].damagePerTick;
             }
 
-            if (!IsPressingGraffiti(self) || (VinkiConfig.RequireSprayCans.Value && self.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan) == null) ||
+            if ((!IsPressingGraffiti(self) && improvedInput) || (VinkiConfig.RequireSprayCans.Value && self.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan) == null) ||
                 self.room == null)
             {
                 v.tagableCreature = null;

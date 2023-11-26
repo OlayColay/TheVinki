@@ -43,7 +43,7 @@ public class GraffitiTutorial : UpdatableAndDeletable
             string graffitiMode = Plugin.improvedInput ? KeyCodeTranslator.GetImprovedInputKeyName(0, "thevinki:graffiti") : "Up";
             string craft = Plugin.improvedInput ? KeyCodeTranslator.GetImprovedInputKeyName(0, "thevinki:craft") : "Pickup";
             game.cameras.First().hud.textPrompt.AddMessage(
-                game.manager.rainWorld.inGameTranslator.Translate("Hold (" + graffitiMode + " + " + craft + ") while carrying a rock and colorful object to craft a Spray Can."),
+                game.manager.rainWorld.inGameTranslator.Translate("Hold (" + graffitiMode + " + " + craft + ") while carrying a rock and colorful object (pearls, fruit, etc.) to craft a Spray Can."),
                 0, 600, false, false
             );
             game.cameras.First().hud.textPrompt.AddMessage(
@@ -54,12 +54,22 @@ public class GraffitiTutorial : UpdatableAndDeletable
         }
         else if (Vector2.Distance(playerPos, sprayTriggerPos) <= triggerReach && nextPhase == Phase.Spray)
         {
-            string graffitiMode = Plugin.improvedInput ? KeyCodeTranslator.GetImprovedInputKeyName(0, "thevinki:graffiti") : "Up";
+            string graffitiMode = Plugin.improvedInput ? KeyCodeTranslator.GetImprovedInputKeyName(0, "thevinki:graffiti") + " + " : "";
             string spray = Plugin.improvedInput ? KeyCodeTranslator.GetImprovedInputKeyName(0, "thevinki:spray") : "Jump + Pickup";
-            game.cameras.First().hud.textPrompt.AddMessage(
-                game.manager.rainWorld.inGameTranslator.Translate("Press (" + graffitiMode + " + " + spray + ") while carrying a Spray Can to spend a charge and spray graffiti."),
-                0, 600, false, false
-            );
+            if (Plugin.improvedInput)
+            {
+                game.cameras.First().hud.textPrompt.AddMessage(
+                    game.manager.rainWorld.inGameTranslator.Translate("Press (" + graffitiMode + spray + ") while carrying a Spray Can to spend a charge and spray graffiti."),
+                    0, 600, false, false
+                );
+            }
+            else
+            {
+                game.cameras.First().hud.textPrompt.AddMessage(
+                    game.manager.rainWorld.inGameTranslator.Translate("Press (" + spray + ") while in midair and carrying a Spray Can to spend a charge and spray graffiti."),
+                    0, 600, false, false
+                );
+            }
             game.cameras.First().hud.textPrompt.AddMessage(
                 game.manager.rainWorld.inGameTranslator.Translate("You can also damage some creatures by spraying them."),
                 0, 600, false, false

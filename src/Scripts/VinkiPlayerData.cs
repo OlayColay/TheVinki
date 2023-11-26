@@ -187,7 +187,7 @@ public static class PlayerExtension
                 return player.input[0].y == 1 && player.input[1].y != 1;
             case 3:
             case 5:
-                return player.wantToJump > 0 && player.input[0].pckp && !player.input[1].pckp;
+                return player.wantToJump > 0 && player.input[0].pckp;
         }
         return false;
     }
