@@ -3,29 +3,41 @@
 	"scene_folder": "scenes/ghost - vinki",
 	"images": [
 		{
-			"name": "rivulet - flat",
-			"pos": [ 330, -18 ],
+			"name": "Ghost Flat",
+			"pos": [ 0, 100 ],
 			"depth": -1,
 			"flatmode": true
 		},
 		{
-			"name": "rivulet bkg",
-			"pos": [ 330, -18 ],
+			"name": "Ghost Glow",
+			"pos": [ 0, 100 ],
 			"depth": 3.7,
-			"shader": "Normal"
+			"shader": "Basic"
 		},
 		{
-			"name": "rivulet a",
-			"pos": [ 557, 89 ],
-			"depth": 2.0,
-			"shader": "Normal"
+			"name": "Ghost Sparks",
+			"pos": [ 0, 100 ],
+			"depth": 3.4,
+			"shader": "Basic"
 		},
 		{
-			"name": "rivulet b",
-			"pos": [ 574, 74 ],
+			"name": "Ghost Vinki Trail",
+			"pos": [ 683, 484 ],
 			"depth": 2.2,
-			"shader": "Normal"
+			"shader": "Basic"
 		},
+		{
+			"name": "Ghost Vinki",
+			"pos": [ 683, 484 ],
+			"depth": 2.2,
+			"shader": "Basic"
+		},
+		{
+			"name": "Ghost Can",
+			"pos": [ 0, 100 ],
+			"depth": 2.0,
+			"shader": "Basic"
+		}
 	],
 	"idle_depths": [ 2.8 ],
 	"glow_pos": [688, 484],

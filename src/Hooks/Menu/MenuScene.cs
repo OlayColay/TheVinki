@@ -13,7 +13,7 @@ public static partial class Hooks
     private static void ApplyMenuSceneHooks()
     {
         On.Menu.MenuScene.BuildScene += MenuScene_BuildScene;
-        //On.Menu.MenuScene.Update += MenuScene_Update;
+        On.Menu.MenuScene.Update += MenuScene_Update;
     }
 
     private static void MenuScene_BuildScene(On.Menu.MenuScene.orig_BuildScene orig, MenuScene self)
@@ -29,7 +29,7 @@ public static partial class Hooks
         {
             // Find the ghost layers of the slugcat ghost scene
             Plugin.rotatingGhost.Clear();
-            foreach (var image in self.depthIllustrations.Where(f => Path.GetFileNameWithoutExtension(f.fileName).StartsWith("rivulet a")))
+            foreach (var image in self.depthIllustrations.Where(f => Path.GetFileNameWithoutExtension(f.fileName).StartsWith("Ghost Vinki")))
             {
                 image.sprite.anchorX = 0.5f;
                 image.sprite.anchorY = 0.5f;
