@@ -1,4 +1,6 @@
-﻿using On.DevInterface;
+﻿using Mono.Cecil.Cil;
+using MonoMod.Cil;
+using On.DevInterface;
 using SlugBase.SaveData;
 using System;
 using System.Linq;
@@ -52,6 +54,7 @@ public static partial class Hooks
     {
         On.CollectToken.GoldCol += CollectToken_GoldCol;
         On.CollectToken.Pop += CollectToken_Pop;
+        On.CollectToken.Update += CollectToken_Update;
 
         On.CollectToken.CollectTokenData.FromString += CollectTokenData_FromString;
 
@@ -90,6 +93,23 @@ public static partial class Hooks
 
             progData.Set(ext.GraffitiUnlock.ToString(), true);
             self.anythingUnlocked = true;
+        }
+    }
+
+    private static void CollectToken_Update(On.CollectToken.orig_Update orig, CollectToken self, bool eu)
+    {
+        orig(self, eu);
+
+        CollectTokenDataData ext = (self.placedObj.data as CollectToken.CollectTokenData).Vinki();
+
+        if (ext.vinkiToken && self.expand < 0f)
+        {
+            if (self.anythingUnlocked && self.room.game.cameras[0].hud != null && self.room.game.cameras[0].hud.textPrompt != null)
+            {
+                self.room.game.cameras[0].hud.textPrompt.messages.Clear();
+                self.room.game.cameras[0].hud.textPrompt.messageString = "";
+                self.room.game.cameras[0].hud.textPrompt.AddMessage(self.room.game.manager.rainWorld.inGameTranslator.Translate("New graffiti unlocked: ") + ext.tokenString, 20, 160, true, true);
+            }
         }
     }
 
