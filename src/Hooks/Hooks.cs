@@ -39,6 +39,7 @@ namespace Vinki
             ApplySleepAndDeathScreenHooks();
             ApplyMenuSceneHooks();
             ApplyLizardGraphicsHooks();
+            ApplyCollectTokenHooks();
         }
 
         // Load any resources, such as sprites or sounds
