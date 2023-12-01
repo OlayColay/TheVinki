@@ -1,0 +1,3 @@
+[MERGE]
+PlacedObjects: GoldToken><272.6761><207.0947><49~0~0~0~0~Spore Bombs~~0~0~0~0~vinki,
+[ENDMERGE]

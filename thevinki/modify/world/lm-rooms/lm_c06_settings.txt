@@ -1,0 +1,3 @@
+[MERGE]
+PlacedObjects: GoldToken><787.9519><366.2963><0~100~0~0~0~Jetfish Friend~~0~0~0~0~vinki,
+[ENDMERGE]

@@ -1,0 +1,3 @@
+[MERGE]
+PlacedObjects: GoldToken><3077.948><989.3563><97~-37~0~0~0~Miros Jaws~~0~0~0~0~vinki,
+[ENDMERGE]
