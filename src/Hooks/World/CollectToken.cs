@@ -3,6 +3,7 @@ using MonoMod.Cil;
 using On.DevInterface;
 using SlugBase.SaveData;
 using System;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
@@ -93,6 +94,7 @@ public static partial class Hooks
 
             progData.Set(ext.GraffitiUnlock.ToString(), true);
             self.anythingUnlocked = true;
+            UnlockGraffitiMidgame(ext.tokenString);
         }
     }
 
@@ -129,5 +131,50 @@ public static partial class Hooks
             return "Graffiti Token";
         }
         return orig(data);
+    }
+    private static void UnlockGraffitiMidgame(string fileName)
+    {
+        // Copy file to VinkiGraffiti
+        string unlockPath = AssetManager.ResolveDirectory("decals/Unlockables/");
+        fileName = Array.Find(Directory.GetFiles(unlockPath).Select(Path.GetFileNameWithoutExtension).ToArray(), (file) => file.EndsWith(fileName));
+        if (!Directory.Exists(unlockPath) || fileName == string.Empty)
+        {
+            throw new Exception("Could not find unlockable graffiti " + fileName + " in workshop files or local mods!");
+        }
+        if (File.Exists(AssetManager.ResolveDirectory("decals/VinkiGraffiti/vinki/") + fileName + ".png"))
+        {
+            throw new Exception("Graffiti already unlocked! " + fileName);
+        }
+        File.Copy(unlockPath + fileName + ".png", AssetManager.ResolveDirectory("decals/VinkiGraffiti/vinki/") + fileName + ".png");
+
+        PlacedObject.CustomDecalData decal = new PlacedObject.CustomDecalData(null);
+        decal.imageName = "VinkiGraffiti/vinki/" + fileName;
+        decal.fromDepth = 0.2f;
+
+        string parentDir = AssetManager.ResolveDirectory("decals/VinkiGraffiti/vinki");
+
+        // Get the image as a 2d texture so we can resize it to something manageable
+        Texture2D img = new Texture2D(2, 2);
+        byte[] tmpBytes = File.ReadAllBytes(parentDir + Path.DirectorySeparatorChar + fileName + ".png");
+        ImageConversion.LoadImage(img, tmpBytes);
+
+        // Get average color of image (to use for graffiti spray/smoke color)
+        Plugin.graffitiAvgColors["vinki"].Add(AverageColorFromTexture(img));
+
+        // Resize image to look good in game
+        int[] newSize = ResizeAndKeepAspectRatio(img.width, img.height, 150f * 150f);
+        img.Resize(newSize[0], newSize[1]);
+
+        decal.handles[0] = new Vector2(0f, img.height);
+        decal.handles[1] = new Vector2(img.width, img.height);
+        decal.handles[2] = new Vector2(img.width, 0f);
+
+        float halfWidth = img.width / 2f;
+        float halfHeight = img.height / 2f;
+        Plugin.graffitiOffsets["vinki"].Add(new Vector2(-halfWidth, -halfHeight));
+        Plugin.graffitis["vinki"].Add(decal);
+
+        // Flag that we have a new graffiti so that it's the next one we spray
+        Plugin.newGraffiti = true;
     }
 }

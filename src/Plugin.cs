@@ -34,6 +34,7 @@ namespace Vinki
         public static string storyGraffitiFolder = "decals/StorySpoilers";
         public static int storyGraffitiCount = 0;
         public static bool sleeping = false;
+        public static bool newGraffiti = false;
         public static Color?[][] jollyColors = new Color?[16][] {
             new Color?[6], new Color?[6], new Color?[6], new Color?[6],
             new Color?[6], new Color?[6], new Color?[6], new Color?[6],

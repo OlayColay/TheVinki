@@ -8,8 +8,6 @@ using static Vinki.Plugin;
 using System.Threading.Tasks;
 using DevInterface;
 using SlugBase.SaveData;
-using MoreSlugcats;
-using IL.MoreSlugcats;
 using Smoke;
 using System.Collections;
 
@@ -22,7 +20,15 @@ namespace Vinki
             string slugcat = graffitis.ContainsKey(self.slugcatStats.name.value) ? self.slugcatStats.name.value : SlugcatStats.Name.White.value;
             if (gNum < 0)
             {
-                gNum = UnityEngine.Random.Range(0, graffitis[slugcat].Count);
+                if (Plugin.newGraffiti && slugcat == "vinki")
+                {
+                    gNum = graffitis["vinki"].Count - 1;
+                    Plugin.newGraffiti = false;
+                }
+                else
+                {
+                    gNum = UnityEngine.Random.Range(0, graffitis[slugcat].Count);
+                }
 
                 // Trigger Iterator dialogue if there's one in the room
                 //Debug.Log("Room name: " + self.room.abstractRoom.name);
