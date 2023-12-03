@@ -1,0 +1,3 @@
+[MERGE]
+PlacedObjects: GoldToken><348.1318><546.493><-34~92~0~0~0~Holy Gooieduck~~0~0~0~0~vinki,
+[ENDMERGE]
