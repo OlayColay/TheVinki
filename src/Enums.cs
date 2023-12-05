@@ -73,6 +73,7 @@ public static class Enums
             values.AddEntry(Gooieducky.value);
             values.AddEntry(LeviathanJaws.value);
             values.AddEntry(LilMoon.value);
+            values.AddEntry(StolenFace.value);
         }
 
         public static readonly GraffitiUnlockID NoodleSpears = new("Noodle Spears", true);
@@ -98,6 +99,7 @@ public static class Enums
         public static readonly GraffitiUnlockID Gooieducky = new("Gooieducky", true);
         public static readonly GraffitiUnlockID LeviathanJaws = new("Leviathan Jaws", true);
         public static readonly GraffitiUnlockID LilMoon = new("Lil Moon", true);
+        public static readonly GraffitiUnlockID StolenFace = new("Stolen Face", true);
     }
 
     public static void RegisterValues()
