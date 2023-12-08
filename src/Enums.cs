@@ -66,7 +66,7 @@ public static class Enums
             values.AddEntry(Dandelions.value);
             values.AddEntry(Squidburger.value);
             values.AddEntry(SporeBombs.value);
-            values.AddEntry(Beehive.value);
+            values.AddEntry(AngryPinecone.value);
             values.AddEntry(OverseerKiss.value);
             values.AddEntry(CityView.value);
             values.AddEntry(NeuronDance.value);
@@ -74,6 +74,8 @@ public static class Enums
             values.AddEntry(LeviathanJaws.value);
             values.AddEntry(LilMoon.value);
             values.AddEntry(StolenFace.value);
+            values.AddEntry(GummyLizard.value);
+            values.AddEntry(WeaponPile.value);
         }
 
         public static readonly GraffitiUnlockID NoodleSpears = new("Noodle Spears", true);
@@ -92,7 +94,7 @@ public static class Enums
         public static readonly GraffitiUnlockID Dandelions = new("Dandelions", true);
         public static readonly GraffitiUnlockID Squidburger = new("Squidburger", true);
         public static readonly GraffitiUnlockID SporeBombs = new("Spore Bombs", true);
-        public static readonly GraffitiUnlockID Beehive = new("Beehive", true);
+        public static readonly GraffitiUnlockID AngryPinecone = new("Angry Pinecone", true);
         public static readonly GraffitiUnlockID OverseerKiss = new("Overseer Kiss", true);
         public static readonly GraffitiUnlockID CityView = new("City View", true);
         public static readonly GraffitiUnlockID NeuronDance = new("Neuron Dance", true);
@@ -100,6 +102,8 @@ public static class Enums
         public static readonly GraffitiUnlockID LeviathanJaws = new("Leviathan Jaws", true);
         public static readonly GraffitiUnlockID LilMoon = new("Lil Moon", true);
         public static readonly GraffitiUnlockID StolenFace = new("Stolen Face", true);
+        public static readonly GraffitiUnlockID GummyLizard = new("Gummy Lizard", true);
+        public static readonly GraffitiUnlockID WeaponPile = new("Weapon Pile", true);
     }
 
     public static void RegisterValues()
