@@ -238,20 +238,20 @@ namespace Vinki
                     case "VinkiGraffiti/vinki/Tsuno - Spore Bombs":
                         oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
                         oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Why would you draw a centipede next to this specific species of fungus? It is incredibly toxic to all insects!"), 10);
-                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("That poor creature… It appears to me they know that if their scared eyes are any indicator."), 10);
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("That poor creature... It appears to me they know that if their scared eyes are any indicator."), 10);
                         oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Poor little thing."), 0);
                         break;
                     case "VinkiGraffiti/vinki/Tsuno - Lilypuck Karma":
                         oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
-                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Oh… Huh. Those flowers definitely hold some resemblance to an ancient karma symbol, I wonder if it was intended?"), 10);
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Oh... Huh. Those flowers definitely hold some resemblance to an ancient karma symbol, I wonder if it was intended?"), 10);
                         oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("These flowers are a form of organic lighting for underground machinery, so I wonder where you saw them!"), 10);
                         oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("They are also very sharp, so I advise you to be careful next time you see them."), 0);
                         break;
                     case "VinkiGraffiti/vinki/Tsuno - Lil Moon":
                         oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
-                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("…Is that me? It is quite adorable, thank you!"), 10);
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("...Is that me? It is quite adorable, thank you!"), 10);
                         oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("I’m touched that you would take time out of your cycle just to draw my puppet, little friend."), 10);
-                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("However… I find it unfortunate that you had to paint it in such an unlucky spot. Maybe you could recreate it outside of my chamber next time?"), 0);
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("However... I find it unfortunate that you had to paint it in such an unlucky spot. Maybe you could recreate it outside of my chamber next time?"), 0);
                         break;
                     case "VinkiGraffiti/vinki/Tsuno - Stolen Face":
                         oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
@@ -281,12 +281,12 @@ namespace Vinki
                         oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("I believe that it is a pile of makeshift weapons, crafted by scavengers?"), 10);
                         oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Those beings are incredibly smart, but I can’t help but feel deeply concerned about the fact they have freely available explosives."), 10);
                         oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Hopefully, they won’t try to use them near any of my exposed systems."), 10);
-                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("…And hopefully, you won’t do so either, if you happen to trade them for any."), 0);
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("...And hopefully, you won’t do so either, if you happen to trade them for any."), 0);
                         oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("This image also reminds me of something else, but you shouldn't worry about it, as you likely wouldn't understand anyway. Just a coincidence, I believe."), 0);
                         break;
                     case "VinkiGraffiti/vinki/Tsuno - Gummy Lizard":
                         oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
-                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("This one looks both menacing and adorable at the same time! Is it a friend? Or an enemy? I wonder…"), 10);
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("This one looks both menacing and adorable at the same time! Is it a friend? Or an enemy? I wonder..."), 10);
                         oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("I surely hope that the liquid pouring from this poor lizard’s mouth is not meant to be void fluid, as that would surely be unpleasant for the creature."), 0);
                         break;
                 }
