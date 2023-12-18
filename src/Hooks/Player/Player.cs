@@ -771,11 +771,11 @@ namespace Vinki
             float maxY = boxCenter.y + boxRadius;
 
             // Find any creatures in the room within the box
-            foreach (var creature in self.room.abstractRoom.creatures.Select((absCreature) => absCreature.realizedCreature))
+            foreach (var creature in self.room.abstractRoom.creatures.Select((absCreature) => absCreature.realizedCreature).Where((c) => c != null))
             {
-                if (!creature.canBeHitByWeapons || creature.dead || creature == self || (creature is Lizard && (creature as Lizard).AI.friendTracker.friend != null) ||
+                if (creature is Spider || !creature.canBeHitByWeapons || creature.dead || creature == self || (creature is Lizard && (creature as Lizard).AI.friendTracker.friend != null) ||
                     creature is Fly || (creature is Centipede && (creature as Centipede).Small) || creature is Hazer || creature is VultureGrub || creature is SmallNeedleWorm ||
-                    (creature is Player && (creature as Player).abstractCreature.abstractAI != null) || creature is Leech || creature is Spider || creature is TubeWorm)
+                    (creature is Player && (creature as Player).abstractCreature.abstractAI != null) || creature is Leech || creature is TubeWorm)
                 {
                     continue;
                 }
