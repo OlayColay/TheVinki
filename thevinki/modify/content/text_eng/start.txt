@@ -1,4 +1,6 @@
-[ADD_6]
-[ADD_7]Up
-[ADD_7]up_start.txt
-[ADD_17]
+[FIND]Which direction to you head?
+[ADDAFTER]\n
+[FIND]North
+[ADDBEFORE_01]Up\nup_start.txt\n
+[FIND]RW_42 - Kayava
+[ADDBEFORE_01]\n
