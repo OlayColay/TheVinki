@@ -43,69 +43,6 @@ public static class Enums
         public static SoundID Grind1A = new SoundID("Vinki_Grind_LOOP", true);
     }
 
-    public class GraffitiUnlockID : ExtEnum<GraffitiUnlockID>
-    {
-        public GraffitiUnlockID(string value, bool register = false) : base(value, register) { }
-
-        public static void Init()
-        {
-            values = new ExtEnumType();
-            values.AddEntry(NoodleSpears.value);
-            values.AddEntry(TollSkull.value);
-            values.AddEntry(DropwigTheif.value);
-            values.AddEntry(PopPopSnails.value);
-            values.AddEntry(LilypuckKarma.value);
-            values.AddEntry(ScratchedVulture.value);
-            values.AddEntry(VultureRemote.value);
-            values.AddEntry(GarbageAlarm.value);
-            values.AddEntry(CrybabyMouse.value);
-            values.AddEntry(MirosJaws.value);
-            values.AddEntry(Batnip.value);
-            values.AddEntry(JetfishFriend.value);
-            values.AddEntry(Jellyfish.value);
-            values.AddEntry(Dandelions.value);
-            values.AddEntry(Squidburger.value);
-            values.AddEntry(SporeBombs.value);
-            values.AddEntry(AngryPinecone.value);
-            values.AddEntry(OverseerKiss.value);
-            values.AddEntry(CityView.value);
-            values.AddEntry(NeuronDance.value);
-            values.AddEntry(Gooieducky.value);
-            values.AddEntry(LeviathanJaws.value);
-            values.AddEntry(LilMoon.value);
-            values.AddEntry(StolenFace.value);
-            values.AddEntry(GummyLizard.value);
-            values.AddEntry(WeaponPile.value);
-        }
-
-        public static readonly GraffitiUnlockID NoodleSpears = new("Noodle Spears", true);
-        public static readonly GraffitiUnlockID TollSkull = new("Toll Skull", true);
-        public static readonly GraffitiUnlockID DropwigTheif = new("Dropwig Thief", true);
-        public static readonly GraffitiUnlockID PopPopSnails = new("Pop Pop Snails", true);
-        public static readonly GraffitiUnlockID LilypuckKarma = new("Lilypuck Karma", true);
-        public static readonly GraffitiUnlockID ScratchedVulture = new("Scratched Vulture", true);
-        public static readonly GraffitiUnlockID VultureRemote = new("Vulture Remote", true);
-        public static readonly GraffitiUnlockID GarbageAlarm = new("Garbage Alarm", true);
-        public static readonly GraffitiUnlockID CrybabyMouse = new("Crybaby Mouse", true);
-        public static readonly GraffitiUnlockID MirosJaws = new("Miros Jaws", true);
-        public static readonly GraffitiUnlockID Batnip = new("Batnip", true);
-        public static readonly GraffitiUnlockID JetfishFriend = new("Jetfish Friend", true);
-        public static readonly GraffitiUnlockID Jellyfish = new("Jellyfish", true);
-        public static readonly GraffitiUnlockID Dandelions = new("Dandelions", true);
-        public static readonly GraffitiUnlockID Squidburger = new("Squidburger", true);
-        public static readonly GraffitiUnlockID SporeBombs = new("Spore Bombs", true);
-        public static readonly GraffitiUnlockID AngryPinecone = new("Angry Pinecone", true);
-        public static readonly GraffitiUnlockID OverseerKiss = new("Overseer Kiss", true);
-        public static readonly GraffitiUnlockID CityView = new("City View", true);
-        public static readonly GraffitiUnlockID NeuronDance = new("Neuron Dance", true);
-        public static readonly GraffitiUnlockID Gooieducky = new("Gooieducky", true);
-        public static readonly GraffitiUnlockID LeviathanJaws = new("Leviathan Jaws", true);
-        public static readonly GraffitiUnlockID LilMoon = new("Lil Moon", true);
-        public static readonly GraffitiUnlockID StolenFace = new("Stolen Face", true);
-        public static readonly GraffitiUnlockID GummyLizard = new("Gummy Lizard", true);
-        public static readonly GraffitiUnlockID WeaponPile = new("Weapon Pile", true);
-    }
-
     public static void RegisterValues()
     {
         Color.Body = new PlayerColor("Body");

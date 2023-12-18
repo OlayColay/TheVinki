@@ -17,31 +17,6 @@ public class CollectTokenDataData
     public string tokenString = string.Empty;
 
     public static HSLColor GraffitiColor { get; } = new HSLColor(0.85f, 1f, 0.8f);
-
-    public Enums.GraffitiUnlockID GraffitiUnlock
-    {
-        get
-        {
-            if (!this.vinkiToken || this.tokenString == null || this.tokenString.Length < 1)
-            {
-                return null;
-            }
-            return new Enums.GraffitiUnlockID(this.tokenString, false);
-        }
-        set
-        {
-            if (!this.vinkiToken)
-            {
-                return;
-            }
-            if (value == null)
-            {
-                this.tokenString = string.Empty;
-                return;
-            }
-            this.tokenString = value.value;
-        }
-    }
 }
 public static class CollectTokenExtension
 {
@@ -83,16 +58,8 @@ public static partial class Hooks
 
         CollectTokenDataData ext = (self.placedObj.data as CollectToken.CollectTokenData).Vinki();
 
-        if (ext.vinkiToken && ext.GraffitiUnlock != null)
+        if (ext.vinkiToken)
         {
-            SlugBase.SaveData.SlugBaseSaveData progData = SaveDataExtension.GetSlugBaseData(self.room.game.rainWorld.progression.miscProgressionData);
-            if (progData.TryGet(ext.GraffitiUnlock.ToString(), out bool unlocked) || unlocked)
-            {
-                self.anythingUnlocked = false;
-                return;
-            }
-
-            progData.Set(ext.GraffitiUnlock.ToString(), true);
             self.anythingUnlocked = true;
             UnlockGraffitiMidgame(ext.tokenString);
         }
