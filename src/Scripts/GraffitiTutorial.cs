@@ -15,10 +15,9 @@ public class GraffitiTutorial : UpdatableAndDeletable
     }
     public Phase nextPhase { get; set; } = Phase.Craft;
     public Vector2 playerPos = Vector2.zero;
-    public Vector2 craftTriggerPos { get; } = new(742f, 842f);
-    public Vector2 sprayTriggerPos { get; } = new(190f, 1626f);
-    public Vector2 throwTriggerPos { get; } = new(742f, 2442f);
-    public float triggerReach = 100f;
+    public float craftTriggerPos { get; } = 842f;
+    public float sprayTriggerPos { get; } = 1626f;
+    public float throwTriggerPos { get; } = 2442f;
 
     public GraffitiTutorial(Room room)
     {
@@ -38,7 +37,7 @@ public class GraffitiTutorial : UpdatableAndDeletable
         //Debug.Log("Current player position: " + playerPos);
         var game = room.game;
 
-        if (Vector2.Distance(playerPos, craftTriggerPos) <= triggerReach && nextPhase == Phase.Craft)
+        if (playerPos.y >= craftTriggerPos && nextPhase == Phase.Craft)
         {
             string graffitiMode = Plugin.improvedInput ? KeyCodeTranslator.GetImprovedInputKeyName(0, "thevinki:graffiti") : "Up";
             string craft = Plugin.improvedInput ? KeyCodeTranslator.GetImprovedInputKeyName(0, "thevinki:craft") : "Pickup";
@@ -52,7 +51,7 @@ public class GraffitiTutorial : UpdatableAndDeletable
             );
             nextPhase = Phase.Spray;
         }
-        else if (Vector2.Distance(playerPos, sprayTriggerPos) <= triggerReach && nextPhase == Phase.Spray)
+        else if (playerPos.y >= sprayTriggerPos && nextPhase == Phase.Spray)
         {
             string graffitiMode = Plugin.improvedInput ? KeyCodeTranslator.GetImprovedInputKeyName(0, "thevinki:graffiti") + " + " : "";
             string spray = Plugin.improvedInput ? KeyCodeTranslator.GetImprovedInputKeyName(0, "thevinki:spray") : "Jump + Pickup";
@@ -76,7 +75,7 @@ public class GraffitiTutorial : UpdatableAndDeletable
             );
             nextPhase = Phase.Throw;
         }
-        else if (Vector2.Distance(playerPos, throwTriggerPos) <= triggerReach && nextPhase == Phase.Throw)
+        else if (playerPos.y >= throwTriggerPos && nextPhase == Phase.Throw)
         {
             game.cameras.First().hud.textPrompt.AddMessage(
                 game.manager.rainWorld.inGameTranslator.Translate("Throwing a Spray Can will create a large, non-lethal explosion of compressed paint."),
