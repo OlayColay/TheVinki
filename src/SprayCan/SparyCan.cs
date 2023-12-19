@@ -31,6 +31,8 @@ sealed class SprayCan : Weapon
     private float burn = 0f;
     private RoomPalette roomPalette = new RoomPalette();
 
+    public float gamerHue = 0f;
+
     public SprayCanAbstract Abstr { get; }
 
     public void InitiateBurn()
@@ -81,7 +83,7 @@ sealed class SprayCan : Weapon
         }
         if (base.Submersion >= 0.2f && room.waterObject.WaterIsLethal && burn == 0f)
         {
-            ignited = (Abstr.uses > 0);
+            ignited = (Abstr.uses > 0 && Abstr.uses <= 9000);
             base.buoyancy = 0.9f;
             base.firstChunk.vel *= 0.2f;
             burn = 0.8f + Random.value * 0.2f;
@@ -148,7 +150,7 @@ sealed class SprayCan : Weapon
         }
 
         // If there are no charges left, it should hit something like a Rock would
-        if (Abstr.uses == 0)
+        if (Abstr.uses == 0 || Abstr.uses > 9000)
         {
             return HitLikeRock(result, eu);
         }
@@ -176,11 +178,11 @@ sealed class SprayCan : Weapon
     {
         base.Thrown(thrownBy, thrownPos, firstFrameTraceFromPos, throwDir, frc, eu);
         Room room = this.room;
-        if (room != null && Abstr.uses > 0)
+        if (room != null && Abstr.uses > 0 && Abstr.uses <= 9000)
         {
             room.PlaySound(SoundID.Slugcat_Throw_Bomb, base.firstChunk);
         }
-        ignited = (Abstr.uses > 0);
+        ignited = (Abstr.uses > 0 && Abstr.uses <= 9000);
     }
 
     // Token: 0x06001A6B RID: 6763 RVA: 0x00205F1F File Offset: 0x0020411F
@@ -209,7 +211,7 @@ sealed class SprayCan : Weapon
             Explode(null);
             return;
         }
-        ignited = (Abstr.uses > 0);
+        ignited = (Abstr.uses > 0 && Abstr.uses <= 9000);
         InitiateBurn();
     }
 
@@ -272,6 +274,10 @@ sealed class SprayCan : Weapon
         {
             return false;
         }
+        else if (Abstr.uses > 9000)
+        {
+            return true;
+        }
         Abstr.uses--;
 
         UpdateColor();
@@ -287,7 +293,7 @@ sealed class SprayCan : Weapon
 
     private void Explode(BodyChunk hitChunk)
     {
-        if (Abstr.uses < 1 || base.slatedForDeletetion)
+        if (Abstr.uses < 1 || Abstr.uses > 9000 || base.slatedForDeletetion)
         {
             return;
         }
@@ -402,7 +408,20 @@ sealed class SprayCan : Weapon
             sLeaser.sprites[i].scaleX = num2 * Abstr.scaleX;
         }
 
-        sLeaser.sprites[0].color = Color.Lerp(Custom.HSL2RGB(Abstr.hue, Abstr.saturation, 0.55f), blackColor, darkness);
+        if (Abstr.uses > 9000)
+        {
+            gamerHue += 0.0025f;
+            if (gamerHue >= 1f)
+            {
+                gamerHue -= 1f;
+            }
+            sLeaser.sprites[0].color = new HSLColor(gamerHue, 0.9f, 0.6f).rgb;
+            Abstr.hue = gamerHue;
+        }
+        else
+        {
+            sLeaser.sprites[0].color = Color.Lerp(Custom.HSL2RGB(Abstr.hue, Abstr.saturation, 0.55f), blackColor, darkness);
+        }
 
         if (blink > 0 && Rand < 0.5f)
         {

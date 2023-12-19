@@ -655,6 +655,10 @@ namespace Vinki
             }
             if (abstractObjectType.ToString() == "SprayCan" && colorfulItems.ContainsKey(abstractObjectType2))
             {
+                if (colorfulItems[abstractObjectType2] > 9000)
+                {
+                    return 9001;
+                }
                 if ((a.grabbed as SprayCan).Abstr.uses >= 5)
                 {
                     return 0;
@@ -663,6 +667,10 @@ namespace Vinki
             }
             if (abstractObjectType2.ToString() == "SprayCan" && colorfulItems.ContainsKey(abstractObjectType))
             {
+                if (colorfulItems[abstractObjectType] > 9000)
+                {
+                    return 9001;
+                }
                 if ((b.grabbed as SprayCan).Abstr.uses >= 5)
                 {
                     return 0;

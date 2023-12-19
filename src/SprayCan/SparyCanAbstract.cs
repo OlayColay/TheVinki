@@ -21,7 +21,15 @@ sealed class SprayCanAbstract : AbstractPhysicalObject
         this.uses = uses;
         scaleX = 0.6f;
         scaleY = 0.6f;
-        Color.RGBToHSV(CanColors[uses], out hue, out saturation, out _);
+        if (uses <= 9000)
+        {
+            Color.RGBToHSV(CanColors[uses], out hue, out saturation, out _);
+        }
+        else
+        {
+            hue = 0f;
+            saturation = 0.9f;
+        }
     }
 
     public override void Realize()
