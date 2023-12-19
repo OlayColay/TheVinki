@@ -1,0 +1,3 @@
+[MERGE]
+PlacedObjects: GoldToken><1574.094><603.8746><32~42~0~0~0~Acid Bath~~0~0~0~0~vinki,
+[ENDMERGE]

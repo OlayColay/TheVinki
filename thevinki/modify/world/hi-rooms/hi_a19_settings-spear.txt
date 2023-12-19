@@ -1,3 +1,0 @@
-[MERGE]
-PlacedObjects: GoldToken><910.5872><403.1016><67~37~0~0~0~Garbage Alarm~~0~0~0~0~vinki,
-[ENDMERGE]

@@ -1,3 +1,0 @@
-[MERGE]
-PlacedObjects: GoldToken><721.5711><469.4722><31~-64~0~0~0~Weapon Pile~~0~0~0~0~vinki,
-[ENDMERGE]
