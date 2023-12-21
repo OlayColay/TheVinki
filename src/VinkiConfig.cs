@@ -144,13 +144,25 @@ namespace Vinki
             AddGraffiti(550f, "decals" + Path.DirectorySeparatorChar + "Unlockables", 3, false, 0, true);
             AddHoldButton(
                 "Unlock All Graffiti",
-                "Unlock every graffiti. Useful if your game is bugged or you had to reset your Graffiti folder",
+                "Unlock every graffiti. Useful if your game is bugged or you had to reset your Graffiti folder. Disable and re-enable MSC to update tokens.",
                 UnlockAllGraffiti,
                 0f,
                 200f,
                 120f,
                 color: Color.red,
-                3
+                3,
+                50f
+            );
+            AddHoldButton(
+                "Reset All Unlockables",
+                "Reset all unlockable graffitis to be locked from use. Disable and re-enable MSC to update tokens.",
+                LockAllGraffiti,
+                0f,
+                200f,
+                200f,
+                color: Color.red,
+                3,
+                350f
             );
 
             // Other Graffiti 1 tab
@@ -274,9 +286,9 @@ namespace Vinki
             });
         }
 
-        private void AddHoldButton(string displayName, string description, OnSignalHandler action, float y, float width, float fillTime = 80f, Color? color = null, int tab = 0)
+        private void AddHoldButton(string displayName, string description, OnSignalHandler action, float y, float width, float fillTime = 80f, Color? color = null, int tab = 0, float x = 150f)
         {
-            OpHoldButton holdButton = new OpHoldButton(new Vector2((tab == 0) ? 150f : 200f, y), new Vector2(width, 30f), Translate(displayName), fillTime)
+            OpHoldButton holdButton = new OpHoldButton(new Vector2(x, y), new Vector2(width, 30f), Translate(displayName), fillTime)
             {
                 description = Translate(description),
                 colorEdge = color ?? MenuColorEffect.rgbMediumGrey
@@ -319,6 +331,28 @@ namespace Vinki
             foreach (OpImage img in Tabs[3].items.Where((item) => item is OpImage))
             {
                 img.color = Color.white;
+            }
+        }
+
+        private void LockAllGraffiti(UIfocusable trigger)
+        {
+            string folderPath = AssetManager.ResolveDirectory("decals/VinkiGraffiti/vinki");
+            // Get all the filenames from Unlockables
+            var unlockables = Directory.EnumerateFiles(AssetManager.ResolveDirectory("decals/Unlockables"), "*.*", SearchOption.AllDirectories).Select(Path.GetFileName);
+            // Remove all the files that were unlocked
+            foreach (string fileName in unlockables)
+            {
+                string filePath = Path.Combine(folderPath, fileName);
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                }
+            }
+            Hooks.LoadGraffiti();
+
+            foreach (OpImage img in Tabs[3].items.Where((item) => item is OpImage))
+            {
+                img.color = Color.black;
             }
         }
 
