@@ -31,7 +31,6 @@ public static partial class Hooks
         On.CollectToken.GoldCol += CollectToken_GoldCol;
         On.CollectToken.Pop += CollectToken_Pop;
         On.CollectToken.Update += CollectToken_Update;
-        On.CollectToken.AvailableToPlayer += CollectToken_AvailableToPlayer;
 
         On.CollectToken.CollectTokenData.FromString += CollectTokenData_FromString;
 
@@ -81,22 +80,6 @@ public static partial class Hooks
                 self.room.game.cameras[0].hud.textPrompt.AddMessage(self.room.game.manager.rainWorld.inGameTranslator.Translate("New graffiti unlocked: ") + ext.tokenString, 20, 160, true, true);
             }
         }
-    }
-
-    private static bool CollectToken_AvailableToPlayer(On.CollectToken.orig_AvailableToPlayer orig, CollectToken self)
-    {
-        CollectTokenDataData ext = (self.placedObj.data as CollectToken.CollectTokenData).Vinki();
-
-        if (!ext.vinkiToken)
-        {
-            return orig(self);
-        }
-
-        // Attempt to find the graffiti in the vinki graffiti folder. If it's not there, the token be available
-        string unlockedPath = AssetManager.ResolveDirectory("decals/VinkiGraffiti/vinki/");
-        string fileName = Array.Find(Directory.GetFiles(unlockedPath).Select(Path.GetFileNameWithoutExtension).ToArray(), (file) => file.EndsWith(ext.tokenString));
-        Debug.Log("Found graffiti: " + fileName);
-        return fileName == null || fileName == string.Empty;
     }
 
     private static void CollectTokenData_FromString(On.CollectToken.CollectTokenData.orig_FromString orig, CollectToken.CollectTokenData self, string s)

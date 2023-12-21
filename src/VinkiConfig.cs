@@ -144,7 +144,7 @@ namespace Vinki
             AddGraffiti(550f, "decals" + Path.DirectorySeparatorChar + "Unlockables", 3, false, 0, true);
             AddHoldButton(
                 "Unlock All Graffiti",
-                "Unlock every graffiti. Useful if your game is bugged or you had to reset your Graffiti folder. Disable and re-enable MSC to update tokens.",
+                "Unlock every graffiti. Useful if your game is bugged or you had to reset your Graffiti folder.",
                 UnlockAllGraffiti,
                 0f,
                 200f,
@@ -155,7 +155,7 @@ namespace Vinki
             );
             AddHoldButton(
                 "Reset All Unlockables",
-                "Reset all unlockable graffitis to be locked from use. Disable and re-enable MSC to update tokens.",
+                "Reset all unlockable graffitis to be locked from use.",
                 LockAllGraffiti,
                 0f,
                 200f,

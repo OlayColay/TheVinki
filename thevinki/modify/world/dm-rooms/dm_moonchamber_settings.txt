@@ -1,3 +1,3 @@
 [MERGE]
-PlacedObjects: GoldToken><1712.398><3309.078><82~-188~0~0~0~Moon Slugcat~~0~0~0~0~vinki,
+PlacedObjects: GoldToken><1712.398><3309.078><82~-188~0~0~0~Slugcat Moon~~0~0~0~0~vinki,
 [ENDMERGE]
