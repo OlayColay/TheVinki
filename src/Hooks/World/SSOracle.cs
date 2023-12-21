@@ -461,7 +461,7 @@ namespace Vinki
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("I suppose their life might be better with freedom, although I can't help but wonder what their quality of life is like, outside of their initial purpose."), 0);
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Poor creatures. And yet... They survived for so long."), 0);
                     break;
-                case "VinkiGraffiti/vinki/Tsuno - Dropwig Theif":
+                case "VinkiGraffiti/vinki/Tsuno - Dropwig Thief":
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Ah... Did those creatures steal your tools, and you felt the need to immortalize them forever?"), 0);
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("They are known for picking up items and food they find, not to use, but to lure unlucky scavengers into a trap. They use their incredibly heavy bodies to drop onto their prey and stun it, before injecting it with venom!"), 0);
@@ -497,7 +497,7 @@ namespace Vinki
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("The spores they squirt out were said to have an overwhelming odor, which works as great repellent for the carnivorous colonies of stationary worm species."), 0);
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Is that what you were trying to depict? If yes, I suppose you succeeded."), 0);
                     break;
-                case "VinkiGraffiti/vinki/Tsuno - Golden Skull":
+                case "VinkiGraffiti/vinki/Tsuno - Gold Skull":
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Do you know the meaning of the symbol you just painted?"), 0);
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("In this particular context, it means that the creature on the art piece is violent and dangerous, as it wishes harm upon you."), 0);
@@ -645,6 +645,49 @@ namespace Vinki
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("I'm quite confused by this art piece, I apologize. It appears that you do not approve of the use of mushrooms."), 0);
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("They can indeed become dangerous after repeated ingestion, but I wonder why you dislike them so strongly. Do you not enjoy their taste?"), 0);
+                    break;
+                case "VinkiGraffiti/vinki/Tsuno - Pop Pop Snails":
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("It is a depiction of a species of aquatic snail that lives in the watery areas under my can. They have a very unusual ability to let out a burst of energy, which might stun any nearby creature."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Are the golden lines around them a depiction of that process?"), 0);
+                    break;
+                case "VinkiGraffiti/vinki/Tsuno - Living Paintbrush":
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Is it a hazer? I truly hope you are not planning on using their ink to create your paintings, as it is significantly more difficult to remove than your current painting materials."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("...Please do not take this as a suggestion."), 0);
+                    break;
+                case "VinkiGraffiti/vinki/Tsuno - Acid Bath":
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("This is... Concerning."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Please do not swim in any chemicals you might find inside or outside our structures, little friend! While the cycle will let you wake right back up again, it is truly an unpleasant way to go."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Please be careful."), 0);
+                    break;
+                case "VinkiGraffiti/vinki/Tsuno - Vulture Remote":
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("It is a depiction of a vulture grub, summoning multiple vultures."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Those two beings are truly interesting. Did you know they have a close symbiotic relationship? You depicted it, so of course you must be at least aware of it."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("When one of them gets grabbed, it will emit a laser, which causes any nearby vulture to be aware of a potential meal and fly over to check!"), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("If they find no meal, however, they will grab and eat the grub, which is truly unfortunate for the grub."), 0);
+                    break;
+                case "VinkiGraffiti/vinki/Tsuno - Slugcat Moon":
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Is... Is it me?"), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("As one of you?"), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("While I appreciate the thought, I must deeply apologize, as I am unfortunately a completely different organism. "), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("My puppet might look mildly similar to you - which I truly do not see - but it is not my actual body. It is simply what I was given to express myself and speak to my creators directly."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("My true body is this entire structure that you are walking through, which might be difficult for you to comprehend."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("I'm sorry I cannot be one of you, little friend."), 0);
+                    break;
+                case "VinkiGraffiti/vinki/Tsuno - Questionable Centipede":
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("It is a red centipede, looking at a pearl. From the color, I can tell that it is the aggressive kind."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("I would advise you to avoid coming near them, as they can be quite dangerous to a little creature such as you!"), 0);
+                    break;
+                case "VinkiGraffiti/vinki/Tsuno - Loud Pebbles":
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("...I truly do not understand your insistence on drawing Five Pebbles with those ears."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("You are aware that neither of us have ears, aren't you? I do not see any reason why you would continue painting him with those elements."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Unless you managed to find some... Questionable outfits, left behind by our creators, and used them as an inspiration. In that case, please find different inspirations."), 0);
                     break;
             }
         }
