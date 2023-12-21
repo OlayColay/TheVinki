@@ -22,6 +22,7 @@ namespace Vinki
         public static Configurable<bool> GlassesOverDMS;
         public static Configurable<bool> TagDamageJolly;
         public static Configurable<bool> UseGraffitiButton;
+        public static Configurable<bool> UseGraffitiSelector;
 
         public VinkiConfig()
         {
@@ -60,6 +61,10 @@ namespace Vinki
             UseGraffitiButton = config.Bind("useGraffitiButton", true, new ConfigurableInfo("Use the Graffiti Mode button when crafting, spraying, and tagging. Disable if you have custom bindings and don't like having to press two buttons to perform these abilities.", tags: new object[]
             {
                 "Require Graffiti Mode Button for Controls"
+            }));
+            UseGraffitiSelector = config.Bind("useGraffitiSelector", true, new ConfigurableInfo("When inputting the Spray input, show the Graffiti Selection menu instead of spraying a random design", tags: new object[]
+            {
+                "Use Graffiti Selection Menu"
             }));
         }
 
@@ -112,6 +117,7 @@ namespace Vinki
             AddCheckbox(GlassesOverDMS, 200f);
             AddCheckbox(TagDamageJolly, 160f);
             AddCheckbox(UseGraffitiButton, 120f);
+            AddCheckbox(UseGraffitiSelector, 80f);
 
             // Credits tab
             AddDivider(593f, 1);
