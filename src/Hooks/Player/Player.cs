@@ -10,7 +10,6 @@ using DevInterface;
 using SlugBase.SaveData;
 using Smoke;
 using System.Collections;
-using Menu;
 
 namespace Vinki
 {
@@ -718,28 +717,14 @@ namespace Vinki
 
             if (!VinkiConfig.RequireSprayCans.Value)
             {
-                if (VinkiConfig.UseGraffitiSelector.Value)
-                {
-                    GraffitiSelector.Initiate(self, self.room.game.manager, self.room.game);
-                }
-                else
-                {
-                    _ = SprayGraffiti(self, gNum: gNum);
-                }
+                _ = SprayGraffiti(self, gNum: gNum);
             }
             else
             {
                 var grasp = self.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan);
                 if (grasp != null && (grasp.grabbed as SprayCan).TryUse())
                 {
-                    if (VinkiConfig.UseGraffitiSelector.Value)
-                    {
-                        GraffitiSelector.Initiate(self, self.room.game.manager, self.room.game);
-                    }
-                    else
-                    {
-                        _ = SprayGraffiti(self, gNum: gNum);
-                    }
+                    _ = SprayGraffiti(self, gNum: gNum);
                 }
             }
         }
