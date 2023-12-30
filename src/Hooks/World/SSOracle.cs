@@ -268,6 +268,10 @@ namespace Vinki
             {
                 self.LoadEventsFromFile(8675309);
             }
+            else if (id == Enums.DMOracle.Vinki_DMConvoSecondMeet)
+            {
+                self.LoadEventsFromFile(420, Enums.vinki, false, 0);
+            }
             else
             {
                 orig(self);
@@ -709,42 +713,51 @@ namespace Vinki
                 // If this is visit 3+ to Moon
                 met = (base.oracle.room.game.rainWorld.ExpeditionMode || base.oracle.room.game.GetStorySession.saveState.miscWorldSaveData.smPearlTagged);
                 SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(base.oracle.room.game.GetStorySession.saveState.miscWorldSaveData);
-                if (miscSave.TryGet("MetMoonTwice", out bool met2) && met2)
+                if (miscSave.TryGet("MetMoonTwice", out int met2))
                 {
-                    float rand = Random.value;
-                    if (rand < 0.2f)
+                    if (met2 > 1)
                     {
-                        base.dialogBox.NewMessage(base.Translate("Hello, " + owner.NameForPlayer(false) + "."), 0);
-                        base.dialogBox.NewMessage(base.Translate("It is good to see you again, even if I have nothing to give you."), 0);
-                    }
-                    else if (rand < 0.4f)
-                    {
-                        base.dialogBox.NewMessage(base.Translate("Hello again, " + owner.NameForPlayer(false) + "."), 0);
-                        base.dialogBox.NewMessage(base.Translate("How have you been?"), 0);
-                    }
-                    else if (rand < 0.6f)
-                    {
-                        base.dialogBox.NewMessage(base.Translate("Ah... " + owner.NameForPlayer(false) + ", you're back!"), 0);
-                    }
-                    else if (rand < 0.8f)
-                    {
-                        base.dialogBox.NewMessage(base.Translate("Hello, " + owner.NameForPlayer(false) + ". You're here again."), 0);
+                        float rand = Random.value;
+                        if (rand < 0.2f)
+                        {
+                            base.dialogBox.NewMessage(base.Translate("Hello, " + owner.NameForPlayer(false) + "."), 0);
+                            base.dialogBox.NewMessage(base.Translate("It is good to see you again, even if I have nothing to give you."), 0);
+                        }
+                        else if (rand < 0.4f)
+                        {
+                            base.dialogBox.NewMessage(base.Translate("Hello again, " + owner.NameForPlayer(false) + "."), 0);
+                            base.dialogBox.NewMessage(base.Translate("How have you been?"), 0);
+                        }
+                        else if (rand < 0.6f)
+                        {
+                            base.dialogBox.NewMessage(base.Translate("Ah... " + owner.NameForPlayer(false) + ", you're back!"), 0);
+                        }
+                        else if (rand < 0.8f)
+                        {
+                            base.dialogBox.NewMessage(base.Translate("Hello, " + owner.NameForPlayer(false) + ". You're here again."), 0);
+                        }
+                        else
+                        {
+                            base.dialogBox.NewMessage(base.Translate("Hello again, " + owner.NameForPlayer(false) + "."), 0);
+                        }
                     }
                     else
                     {
-                        base.dialogBox.NewMessage(base.Translate("Hello again, " + owner.NameForPlayer(false) + "."), 0);
+                        base.dialogBox.NewMessage(base.Translate("Welcome back unusual creature."), 0);
+                        base.dialogBox.NewMessage(base.Translate("It seems to me like you were quite busy with your work, and yet you still made some time to visit me."), 0);
+                        base.dialogBox.NewMessage(base.Translate("I wonder what is it that you want? Is it just to say hello?"), 0);
+                        base.dialogBox.NewMessage(base.Translate("Feel free to visit anytime you wish, little creature. I don't mind."), 0);
                     }
+                    miscSave.Set("MetMoonTwice", met2 + 1);
                     return;
                 }
 
                 // If this is a return visit to Moon
                 if (met)
                 {
-                    base.dialogBox.NewMessage(base.Translate("Welcome back unusual creature."), 0);
-                    base.dialogBox.NewMessage(base.Translate("It seems to me like you were quite busy with your work, and yet you still made some time to visit me."), 0);
-                    base.dialogBox.NewMessage(base.Translate("I wonder what is it that you want? Is it just to say hello?"), 0);
-                    base.dialogBox.NewMessage(base.Translate("Feel free to visit anytime you wish, little creature. I don't mind."), 0);
-                    miscSave.Set("MetMoonTwice", true);
+                    convoID = Enums.DMOracle.Vinki_DMConvoSecondMeet;
+                    owner.InitateConversation(convoID, this);
+                    miscSave.Set("MetMoonTwice", 1);
                 }
             }
 
