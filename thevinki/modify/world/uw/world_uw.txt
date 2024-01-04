@@ -9,4 +9,28 @@ END CONDITIONAL LINKS
 ROOMS
 UW_H01VI : UW_C07, UW_A12
 END ROOMS
+
+CREATURES
+(Spear,vinki)OFFSCREEN : 0-KingVulture-1, 0-Vulture-2, 0-MirosVulture-2, 0-Scavenger-8, 0-EliteScavenger-3-{Night}
+(X-Spear,Inv,vinki)UW_C01 : 2-Tube-2, 4-Daddy
+(Spear,vinki)UW_C01 : 2-Tube-2, 3-BigSpider, 4-Cyan
+(Spear,vinki)UW_E02 : 4-SpitterSpider, 3-White, 6-Mimic
+(X-Red,Artificer,Spear,Inv,vinki)UW_E02 : 6-Mimic
+(X-Spear,vinki)UW_F01 : 4-White, 5-White, 2-BigSpider-{Night}, 4-CicadaB-2-{PreCycle}, 3-CicadaA-5-{PreCycle}
+(Spear,vinki)UW_F01 : 3-Mimic-{12}, 4-White, 5-White, 2-BigSpider-{Night}, 4-CicadaB-2-{PreCycle}, 3-CicadaA-5-{PreCycle}
+(Red,Artificer,Spear,vinki)UW_C04 : 3-White-{Mean:0.7}, 5-Tube-2
+(X-Red,Artificer,Spear,Inv,vinki)UW_C04 : 5-Tube-2
+(X-Red,Artificer,Spear,Inv,vinki)UW_D06 : 3-Tube-2
+(Red,Artificer,Spear,Inv,vinki)UW_D06 : 3-Tube
+(Spear,vinki)UW_D04 : 3-Dropbug, 4-Blue, 5-SpitterSpider, 6-Tube, 7-Tube
+(Red,Artificer,Spear,Inv,vinki)UW_J01 : 3-Cyan-{Ignorecycle}, 4-Cyan, 5-Cyan-{Ignorecycle}, 6-Cyan-2
+(Red,Artificer,Spear,vinki)UW_E03 : 8-White-{Mean:1.0}, 3-SpitterSpider, 4-BigSpider-2, 5-BigSpider, 6-BigSpider, 7-SpitterSpider, 9-SpitterSpider
+(Spear,vinki)UW_D03 : 2-Cyan-2, 3-White-{Mean:-0.05}
+(Artificer,Spear,vinki)LINEAGE : UW_D02 : 4 : Dropbug-0.5, White-{Mean:1.0}-0
+(Spear,vinki)UW_E04 : 3-White, 5-Blue, 6-Tube, 7-Tube
+(Artificer,Spear,vinki)UW_A09 : 4-White-{Mean:0.7}
+(Artificer,Spear,vinki)LINEAGE : UW_D07 : 4 : NONE-0.4, Dropbug-0
+(Spear,Inv,vinki)UW_A01 : 3-Dropbug
+(Spear,vinki)UW_J02 : 16-Yellow, 19-Yellow, 17-Yellow-2, 13-Tube, 14-Tube
+END CREATURES
 [ENDMERGE]
