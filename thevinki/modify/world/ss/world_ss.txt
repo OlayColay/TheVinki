@@ -59,17 +59,4 @@ SS_F03VI : SS_B04VI, SS_A18VI, DISCONNECTED : PERF_HEAVY
 SS_A18VI : SS_F03VI, SS_D06VI
 SS_D06VI : SS_A18VI, SS_B05
 END ROOMS
-CREATURES
-(X-Spear,Inv,vinki)SS_C02 : 3-Daddy-{Ignorecycle}
-(Spear,vinki)SS_C02 : 3-Inspector-{Ignorecycle}
-SS_F03VI : 3-Inspector-{Ignorecycle}
-SS_D06VI : 2-Inspector-{Ignorecycle}
-SS_E05VI : 2-Inspector-{Ignorecycle}
-SS_LAB2VI : 2-Inspector-{Ignorecycle}
-(X-Spear,Inv,vinki)SS_I02 : 8-Daddy-{Ignorecycle}
-(Spear,Artificer,vinki)SS_I02 : 8-Inspector-{Ignorecycle}
-(X-Red,Spear,Artificer,Inv,vinki)SS_H01 : 4-Daddy-{Ignorecycle}
-(X-Red,Spear,Artificer,Inv,vinki)SS_F02 : 4-Daddy-{Ignorecycle}
-(Spear,Artificer,vinki)SS_F02 : 4-Inspector-{Ignorecycle}
-END CREATURES
 [ENDMERGE]
