@@ -33,6 +33,7 @@ public class VinkiPlayerData
     public int rainPodsSprite;
     public int glassesSprite;
     public int tagIconSprite;
+    public int stripesSprite;
     public int tagLag = 0;
     public float tagIconSize = 0f;
 
@@ -84,7 +85,6 @@ public class VinkiPlayerData
         Graphics.CopyTexture(Plugin.TailTexture, tailTexture);
 
         Plugin.MapTextureColor(tailTexture, 255, StripesColor, false);
-        Plugin.MapTextureColor(tailTexture, 0, BodyColor);
 
         if (playerRef.TryGetTarget(out var player))
         {

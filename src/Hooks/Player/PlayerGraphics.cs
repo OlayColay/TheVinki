@@ -20,6 +20,7 @@ namespace Vinki
             On.PlayerGraphics.ctor += PlayerGraphics_ctor;
             On.PlayerGraphics.InitiateSprites += PlayerGraphics_InitiateSprites;
             On.PlayerGraphics.AddToContainer += PlayerGraphics_AddToContainer;
+            On.PlayerGraphics.ApplyPalette += PlayerGraphics_ApplyPallete;
             On.PlayerGraphics.DrawSprites += PlayerGraphics_DrawSprites;
             On.PlayerGraphics.Update += PlayerGraphics_Update;
             On.PlayerGraphics.JollyUniqueColorMenu += PlayerGraphics_JollyUniqueColorMenu;
@@ -125,14 +126,16 @@ namespace Vinki
             }
 
             vinki.tagIconSprite = sLeaser.sprites.Length;
-            vinki.glassesSprite = vinki.tagIconSprite + 1;
+            vinki.stripesSprite = vinki.tagIconSprite + 1;
+            vinki.glassesSprite = vinki.stripesSprite + 1;
             vinki.rainPodsSprite = vinki.glassesSprite + 1;
             vinki.shoesSprite = vinki.rainPodsSprite + 1;
             self.Tag().affectedSprites = new int[0];
 
-            Array.Resize(ref sLeaser.sprites, sLeaser.sprites.Length + 1);
+            Array.Resize(ref sLeaser.sprites, sLeaser.sprites.Length + 2);
             sLeaser.sprites[vinki.tagIconSprite] = new FSprite("TagIcon");
             sLeaser.sprites[vinki.tagIconSprite].isVisible = false;
+            sLeaser.sprites[vinki.stripesSprite] = new TriangleMesh("Futile_White", (sLeaser.sprites[2] as TriangleMesh).triangles, false);
 
             if (!ModManager.ActiveMods.Exists((ModManager.Mod mod) => mod.id == "dressmyslugcat"))
             {
@@ -169,7 +172,7 @@ namespace Vinki
                 }
             }
 
-            if (sLeaser.sprites[2] is TriangleMesh tail && vinki.TailAtlas.elements != null && vinki.TailAtlas.elements.Count > 0)
+            if (sLeaser.sprites[vinki.stripesSprite] is TriangleMesh tail && vinki.TailAtlas.elements != null && vinki.TailAtlas.elements.Count > 0)
             {
                 tail.element = vinki.TailAtlas.elements[0];
                 for (var i = tail.vertices.Length - 1; i >= 0; i--)
@@ -239,7 +242,20 @@ namespace Vinki
 
                 //-- Tail goes behind hips
                 sLeaser.sprites[2].MoveBehindOtherNode(sLeaser.sprites[1]);
+                sLeaser.sprites[vinki.stripesSprite].MoveBehindOtherNode(sLeaser.sprites[1]);
+                midgroundContainer.AddChild(sLeaser.sprites[vinki.stripesSprite]);
             }
+        }
+
+        private static void PlayerGraphics_ApplyPallete(On.PlayerGraphics.orig_ApplyPalette orig, PlayerGraphics self, RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, RoomPalette palette)
+        {
+            orig(self, sLeaser, rCam, palette);
+            if (!self.player.IsVinki(out var vinki) || sLeaser.sprites.Length <= vinki.tagIconSprite)
+            {
+                return;
+            }
+
+            sLeaser.sprites[vinki.stripesSprite].color = vinki.StripesColor;
         }
 
         private static void PlayerGraphics_DrawSprites(On.PlayerGraphics.orig_DrawSprites orig, PlayerGraphics self, RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, float timeStacker, Vector2 camPos)
@@ -258,8 +274,6 @@ namespace Vinki
             Color glassesColor = GetCustomVinkiColor(self.player.JollyOption.playerNumber, 5);
             Color shoesColor = GetCustomVinkiColor(self.player.JollyOption.playerNumber, 4);
             Color rainPodsColor = GetCustomVinkiColor(self.player.JollyOption.playerNumber, 3);
-
-            sLeaser.sprites[2].color = Color.white;
 
             // RainPods
             var headSpriteName = sLeaser.sprites[3].element.name;
@@ -336,6 +350,19 @@ namespace Vinki
                 vinki.tagIconSize = Mathf.Clamp01(tagReady ? vinki.tagIconSize + 0.05f : vinki.tagIconSize - 0.05f);
                 sLeaser.sprites[vinki.tagIconSprite].scale = Mathf.Lerp(0f, 0.25f, vinki.tagIconSize);
                 sLeaser.sprites[vinki.tagIconSprite].isVisible = tagReady || vinki.tagIconSize > 0f;
+            }
+
+            // Tail Stripes
+            if (sLeaser.sprites.Length > vinki.stripesSprite && sLeaser.sprites[vinki.stripesSprite] is TriangleMesh tail)
+            {
+                tail.vertices = (sLeaser.sprites[2] as TriangleMesh).vertices;
+                tail.scaleX = sLeaser.sprites[2].scaleX;
+                tail.scaleY = sLeaser.sprites[2].scaleY;
+                tail.rotation = sLeaser.sprites[2].rotation;
+                tail.anchorX = sLeaser.sprites[2].anchorX;
+                tail.anchorY = sLeaser.sprites[2].anchorY;
+                tail.x = sLeaser.sprites[2].x;
+                tail.y = sLeaser.sprites[2].y;
             }
         }
 
