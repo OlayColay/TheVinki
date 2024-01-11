@@ -146,9 +146,7 @@ namespace Vinki
             }
 
             // Add the story graffitis
-            AddGraffiti("5P", "Story", new("SS_AI", new Vector2(650, 200)));
-            AddGraffiti("5P_stretched", "Story", new("SS_AI", new Vector2(520, 400)));
-            AddGraffiti("test", "Story", new("SS_D08", new Vector2(300, 250)));
+            AddGraffitiObjectives();
         }
 
         private static void AddGraffiti(string image, string slugcat, KeyValuePair<string, Vector2>? storyGraffitiRoomPos = null)
@@ -200,6 +198,24 @@ namespace Vinki
             float halfHeight = img.height / 2f;
             graffitiOffsets[slugcat].Add(new Vector2(-halfWidth, -halfHeight));
             graffitis[slugcat].Add(decal);
+        }
+
+        private static void AddGraffitiObjectives()
+        {
+            foreach (var file in Directory.EnumerateFiles(AssetManager.ResolveDirectory("decals/ObjectiveLocations")))
+            {
+                JsonObject json = JsonAny.Parse(File.ReadAllText(file)).AsObject();
+                foreach (JsonAny req in json["required"].AsList())
+                {
+                    JsonObject obj = req.AsObject();
+                    AddGraffiti(obj.GetString("name"), "Story", new(obj.GetString("room"), JsonUtils.ToVector2(obj["position"])));
+                }
+                foreach (JsonAny req in json["optional"].AsList())
+                {
+                    JsonObject obj = req.AsObject();
+                    AddGraffiti(obj.GetString("name"), "Story", new(obj.GetString("room"), JsonUtils.ToVector2(obj["position"])));
+                }
+            }
         }
 
         public static bool IsPostInit;

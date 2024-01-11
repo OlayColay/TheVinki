@@ -1,0 +1,22 @@
+{
+    "required": [
+
+    ],
+    "optional": [
+        {
+            "name": "5P",
+            "room": "SS_AI",
+            "position": [ 650, 200 ]
+        },
+        {
+            "name": "5P_stretched",
+            "room": "SS_AI",
+            "position": [ 520, 400 ]
+        },
+        {
+            "name": "Caterators",
+            "room": "SS_D08",
+            "position": [ 300, 250 ]
+        }
+    ]
+}
