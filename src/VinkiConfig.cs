@@ -348,6 +348,15 @@ namespace Vinki
                     File.Delete(filePath);
                 }
             }
+            var graffitis = Directory.EnumerateFiles(folderPath, "*.*", SearchOption.AllDirectories).Select(Path.GetFileName);
+            // Remove added files from other mods
+            foreach (string fileName in graffitis)
+            {
+                if (!fileName.Contains(" - "))
+                {
+                    File.Delete(Path.Combine(folderPath, fileName));
+                }
+            }
             Hooks.LoadGraffiti();
 
             foreach (OpImage img in Tabs[3].items.Where((item) => item is OpImage))

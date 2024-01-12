@@ -164,7 +164,16 @@ namespace Vinki
             if (storyGraffitiRoomPos.HasValue)
             {
                 filePath = AssetManager.ResolveFilePath(storyGraffitiFolder + '/' + Path.GetFileNameWithoutExtension(image) + ".png");
-                decal.imageName = "StorySpoilers/" + Path.GetFileNameWithoutExtension(image);
+                // If the image name can't be found, then it should just be in the normal decals folder
+                if (File.Exists(filePath))
+                {
+                    decal.imageName = "StorySpoilers/" + Path.GetFileNameWithoutExtension(image);
+                }
+                else
+                {
+                    filePath = AssetManager.ResolveFilePath("decals/" + Path.GetFileNameWithoutExtension(image) + ".png");
+                    decal.imageName = Path.GetFileNameWithoutExtension(image);
+                }
                 storyGraffitiRoomPositions.Add(graffitis["Story"].Count, storyGraffitiRoomPos.Value);
                 storyGraffitiCount++;
             }
