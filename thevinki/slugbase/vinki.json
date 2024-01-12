@@ -3,6 +3,11 @@
   "name": "The Vinki",
   "description": "Play as an angsty teen wearing rail-grinding shoes and spraying graffiti to enact revenge on 5P.",
   "features": {
+    "alignments": {
+      "Scavengers": {
+        "like": 0.5
+      }
+    },
     "color": "d2701d",
     "custom_colors": [
       {
