@@ -40,6 +40,7 @@ namespace Vinki
             ApplyMenuSceneHooks();
             ApplyLizardGraphicsHooks();
             ApplyCollectTokenHooks();
+            ApplyExpeditionHooks();
         }
 
         // Load any resources, such as sprites or sounds

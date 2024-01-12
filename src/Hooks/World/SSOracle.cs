@@ -711,11 +711,11 @@ namespace Vinki
                 owner.getToWorking = 1f;
 
                 // If this is visit 3+ to Moon
-                met = (base.oracle.room.game.rainWorld.ExpeditionMode || base.oracle.room.game.GetStorySession.saveState.miscWorldSaveData.smPearlTagged);
+                met = (base.oracle.room.game.GetStorySession.saveState.miscWorldSaveData.smPearlTagged || base.oracle.room.game.rainWorld.ExpeditionMode);
                 SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(base.oracle.room.game.GetStorySession.saveState.miscWorldSaveData);
-                if (miscSave.TryGet("MetMoonTwice", out int met2))
+                if (miscSave.TryGet("MetMoonTwice", out int met2) || base.oracle.room.game.rainWorld.ExpeditionMode)
                 {
-                    if (met2 > 1)
+                    if (met2 > 1 || base.oracle.room.game.rainWorld.ExpeditionMode)
                     {
                         float rand = Random.value;
                         if (rand < 0.2f)
