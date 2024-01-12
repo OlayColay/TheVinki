@@ -144,9 +144,6 @@ namespace Vinki
                     AddGraffiti(image, new DirectoryInfo(parent).Name);
                 }
             }
-
-            // Add the story graffitis
-            AddGraffitiObjectives();
         }
 
         private static void AddGraffiti(string image, string slugcat, KeyValuePair<string, Vector2>? storyGraffitiRoomPos = null)
@@ -202,19 +199,11 @@ namespace Vinki
 
         private static void AddGraffitiObjectives()
         {
-            foreach (var file in Directory.EnumerateFiles(AssetManager.ResolveDirectory("decals/ObjectiveLocations")))
+            JsonList json = JsonAny.Parse(File.ReadAllText(AssetManager.ResolveFilePath("VinkiObjectives.txt"))).AsList();
+            foreach (JsonAny objective in json)
             {
-                JsonObject json = JsonAny.Parse(File.ReadAllText(file)).AsObject();
-                foreach (JsonAny req in json["required"].AsList())
-                {
-                    JsonObject obj = req.AsObject();
-                    AddGraffiti(obj.GetString("name"), "Story", new(obj.GetString("room"), JsonUtils.ToVector2(obj["position"])));
-                }
-                foreach (JsonAny req in json["optional"].AsList())
-                {
-                    JsonObject obj = req.AsObject();
-                    AddGraffiti(obj.GetString("name"), "Story", new(obj.GetString("room"), JsonUtils.ToVector2(obj["position"])));
-                }
+                JsonObject obj = objective.AsObject();
+                AddGraffiti(obj.GetString("name"), "Story", new(obj.GetString("room"), JsonUtils.ToVector2(obj["position"])));
             }
         }
 
@@ -236,6 +225,9 @@ namespace Vinki
                     Debug.Log("Enabled vinki title card: " + value ?? "null");
                     IL.Menu.IntroRoll.ctor += IntroRoll_ctor;
                 }
+
+                // Add the story graffitis
+                AddGraffitiObjectives();
             }
             catch (Exception ex)
             {

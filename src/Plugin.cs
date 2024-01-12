@@ -17,12 +17,8 @@ namespace Vinki
         public const string MOD_ID = "olaycolay.thevinki";
         
         public static bool introPlayed = false;
-        public static bool[] storyGraffitisSprayed = { 
-            false, false, false
-        };
-        public static bool[] storyGraffitisOnMap = {
-            false, false, false
-        };
+        public static int[] storyGraffitisSprayed = new int[] {};
+        public static int[] storyGraffitisOnMap = new int[] {};
         public static Texture2D TailTexture;
         public static Dictionary<string, List<PlacedObject.CustomDecalData>> graffitis = new();
         public static Dictionary<string, List<Vector2>> graffitiOffsets = new();

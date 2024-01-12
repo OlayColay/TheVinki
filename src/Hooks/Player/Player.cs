@@ -43,11 +43,14 @@ namespace Vinki
 
                 // Save that we sprayed this story graffiti
                 SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(self.room.game.GetStorySession.saveState.miscWorldSaveData);
-                if (miscSave.TryGet("StoryGraffitisSprayed", out bool[] sprd))
+                if (miscSave.TryGet("StoryGraffitisSprayed", out int[] sprd))
                 {
                     storyGraffitisSprayed = sprd;
                 }
-                storyGraffitisSprayed[gNum] = true;
+                if (!storyGraffitisSprayed.Contains(gNum))
+                {
+                    storyGraffitisSprayed.Append(gNum);
+                }
                 miscSave.Set("StoryGraffitisSprayed", storyGraffitisSprayed);
 
                 // If spraying the StoryGraffitiTutorial graffiti, move to the next phase
@@ -690,7 +693,7 @@ namespace Vinki
             var storyGraffitisInRoom = Plugin.storyGraffitiRoomPositions.Where(e => e.Value.Key == self.room.abstractRoom.name);
             SlugBaseSaveData miscWorldSave;
             bool storyGraffitisExist = false;
-            bool[] sprayedGNums = null;
+            int[] sprayedGNums = null;
             if (self.room.game.GetStorySession != null)
             {
                 miscWorldSave = SaveDataExtension.GetSlugBaseData(self.room.game.GetStorySession.saveState.miscWorldSaveData);
@@ -702,7 +705,7 @@ namespace Vinki
             foreach (var storyGraffiti in storyGraffitisInRoom)
             {
                 var graf = Plugin.graffitis["Story"][storyGraffiti.Key];
-                if (graf != null && (!storyGraffitisExist || !sprayedGNums[storyGraffiti.Key]))
+                if (graf != null && (!storyGraffitisExist || !sprayedGNums.Contains(storyGraffiti.Key)))
                 {
                     Vector2 grafRadius = graf.handles[1] / 2f;
                     Vector2 grafPos = storyGraffiti.Value.Value;
