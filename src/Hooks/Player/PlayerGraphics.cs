@@ -126,21 +126,21 @@ namespace Vinki
             }
 
             vinki.tagIconSprite = sLeaser.sprites.Length;
-            vinki.stripesSprite = vinki.tagIconSprite + 1;
-            vinki.glassesSprite = vinki.stripesSprite + 1;
-            vinki.rainPodsSprite = vinki.glassesSprite + 1;
+            vinki.glassesSprite = vinki.tagIconSprite + 1;
+            vinki.stripesSprite = vinki.glassesSprite + 1;
+            vinki.rainPodsSprite = vinki.stripesSprite + 1;
             vinki.shoesSprite = vinki.rainPodsSprite + 1;
             self.Tag().affectedSprites = new int[0];
 
-            Array.Resize(ref sLeaser.sprites, sLeaser.sprites.Length + 2);
+            Array.Resize(ref sLeaser.sprites, sLeaser.sprites.Length + 1);
             sLeaser.sprites[vinki.tagIconSprite] = new FSprite("TagIcon");
             sLeaser.sprites[vinki.tagIconSprite].isVisible = false;
-            sLeaser.sprites[vinki.stripesSprite] = new TriangleMesh("Futile_White", (sLeaser.sprites[2] as TriangleMesh).triangles, false);
 
             if (!ModManager.ActiveMods.Exists((ModManager.Mod mod) => mod.id == "dressmyslugcat"))
             {
-                Array.Resize(ref sLeaser.sprites, sLeaser.sprites.Length + 3);
+                Array.Resize(ref sLeaser.sprites, sLeaser.sprites.Length + 4);
 
+                sLeaser.sprites[vinki.stripesSprite] = new TriangleMesh("Futile_White", (sLeaser.sprites[2] as TriangleMesh).triangles, false);
                 sLeaser.sprites[vinki.shoesSprite] = new FSprite("ShoesA0");
                 sLeaser.sprites[vinki.rainPodsSprite] = new FSprite("RainPodsA0");
                 sLeaser.sprites[vinki.glassesSprite] = new FSprite("GlassesA0");
@@ -172,7 +172,7 @@ namespace Vinki
                 }
             }
 
-            if (sLeaser.sprites[vinki.stripesSprite] is TriangleMesh tail && vinki.TailAtlas.elements != null && vinki.TailAtlas.elements.Count > 0)
+            if (sLeaser.sprites.Length > vinki.stripesSprite && sLeaser.sprites[vinki.stripesSprite] is TriangleMesh tail && vinki.TailAtlas.elements != null && vinki.TailAtlas.elements.Count > 0)
             {
                 tail.element = vinki.TailAtlas.elements[0];
                 for (var i = tail.vertices.Length - 1; i >= 0; i--)
@@ -241,9 +241,12 @@ namespace Vinki
                 }
 
                 //-- Tail goes behind hips
-                sLeaser.sprites[2].MoveBehindOtherNode(sLeaser.sprites[1]);
-                sLeaser.sprites[vinki.stripesSprite].MoveBehindOtherNode(sLeaser.sprites[1]);
-                midgroundContainer.AddChild(sLeaser.sprites[vinki.stripesSprite]);
+                if (sLeaser.sprites.Length > vinki.stripesSprite)
+                {
+                    sLeaser.sprites[2].MoveBehindOtherNode(sLeaser.sprites[1]);
+                    sLeaser.sprites[vinki.stripesSprite].MoveBehindOtherNode(sLeaser.sprites[1]);
+                    midgroundContainer.AddChild(sLeaser.sprites[vinki.stripesSprite]);
+                }
             }
         }
 
@@ -255,7 +258,10 @@ namespace Vinki
                 return;
             }
 
-            sLeaser.sprites[vinki.stripesSprite].color = vinki.StripesColor;
+            if (sLeaser.sprites.Length > vinki.stripesSprite)
+            {
+                sLeaser.sprites[vinki.stripesSprite].color = vinki.StripesColor;
+            }
         }
 
         private static void PlayerGraphics_DrawSprites(On.PlayerGraphics.orig_DrawSprites orig, PlayerGraphics self, RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, float timeStacker, Vector2 camPos)
@@ -460,6 +466,15 @@ namespace Vinki
             if (DressMySlugcat.Customization.For(player) != null && DressMySlugcat.Customization.For(player).CustomSprite("FACE") != null)
             {
                 return DressMySlugcat.Customization.For(player).CustomSprite("FACE").SpriteSheetID;
+            }
+            return null;
+        }
+
+        private static string GetDMSTailSprite(Player player)
+        {
+            if (DressMySlugcat.Customization.For(player) != null && DressMySlugcat.Customization.For(player).CustomSprite("TAIL") != null)
+            {
+                return DressMySlugcat.Customization.For(player).CustomSprite("TAIL").SpriteSheetID;
             }
             return null;
         }
