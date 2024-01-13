@@ -163,7 +163,7 @@ public static partial class Hooks
             }
             miscSave.Set("StoryGraffitisOnMap", Plugin.storyGraffitisOnMap);
 
-            for (int i = 0; i < GraffitiDialog.graffitiSpots.Length; i++)
+            for (int i = 0; i < Plugin.storyGraffitisSprayed.Length; i++)
             {
                 if (Plugin.storyGraffitisOnMap.Contains(Plugin.storyGraffitisSprayed[i]))
                 {
