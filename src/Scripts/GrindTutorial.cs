@@ -1,4 +1,6 @@
 ﻿using ImprovedInput;
+using Mono.Cecil.Cil;
+using SlugBase.SaveData;
 using System.Linq;
 using UnityEngine;
 
@@ -76,6 +78,8 @@ public class GrindTutorial : UpdatableAndDeletable
                 100, 600, false, false
             );
             nextPhase = Phase.End;
+            SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(room.game.rainWorld.progression.currentSaveState.miscWorldSaveData);
+            miscSave.Set("GrindTutorialCompleted", true);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ImprovedInput;
+using SlugBase.SaveData;
 using System.Linq;
 using UnityEngine;
 
@@ -50,6 +51,7 @@ public class StoryGraffitiTutorial : UpdatableAndDeletable
                 100, 600, false, false
             );
             nextPhase = Phase.End;
+            miscSave.Set("StoryGraffitiTutorialPhase", (int)Phase.Explore);
         }
         else if (Vector2.Distance(playerPos, triggerPos) <= triggerReach && nextPhase == Phase.Explore)
         {
@@ -65,8 +67,8 @@ public class StoryGraffitiTutorial : UpdatableAndDeletable
             //    game.manager.rainWorld.inGameTranslator.Translate("Access the Quest Map screen while hibernating to view hints of where to paint next."),
             //    100, 600, false, false
             //);
-            miscSave.Set("StoryGraffitiTutorialPhase", (int)Phase.End);
             nextPhase = Phase.End;
+            miscSave.Set("StoryGraffitiTutorialPhase", (int)nextPhase);
         }
     }
 }

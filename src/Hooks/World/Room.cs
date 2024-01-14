@@ -50,7 +50,7 @@ public static partial class Hooks
                     PlacedObject placedObject = new PlacedObject(PlacedObject.Type.CustomDecal, decalData);
                     placedObject.pos = new Vector2(placedGraffitis[self.name][i].x, placedGraffitis[self.name][i].y);
                     self.realizedRoom.AddObject(new CustomDecal(placedObject));
-                } 
+                }
             }
             else if (VinkiConfig.DeleteGraffiti.Value)
             {
@@ -82,14 +82,20 @@ public static partial class Hooks
         var storyGraffitisInRoom = Plugin.storyGraffitiRoomPositions.Where(e => e.Value.Key == self.abstractRoom.name);
         var miscWorldSave = SaveDataExtension.GetSlugBaseData(self.game.GetStorySession.saveState.miscWorldSaveData);
         bool storyGraffitisHaveBeenSprayed = miscWorldSave.TryGet("StoryGraffitisSprayed", out int[] sprayedGNums);
-        foreach (var storyGraffiti in storyGraffitisInRoom)
+
+        // Disable holograms for story graffiti tutorial room after they've been sprayed and erased by 5P already
+        if (self.abstractRoom?.name != "SS_D08" || !miscWorldSave.TryGet("StoryGraffitiTutorialPhase", out int i) || i < (int)StoryGraffitiTutorial.Phase.Explore)
         {
-            if ((!storyGraffitisHaveBeenSprayed || !sprayedGNums.Contains(storyGraffiti.Key)) && storyGraffiti.Key != 1)
+            foreach (var storyGraffiti in storyGraffitisInRoom)
             {
-                GraffitiHolder graffitiHolder = new GraffitiHolder(Plugin.graffitis["Story"][storyGraffiti.Key], storyGraffiti.Value, self, storyGraffiti.Key);
-                self.AddObject(graffitiHolder);
+                if ((!storyGraffitisHaveBeenSprayed || !sprayedGNums.Contains(storyGraffiti.Key)) && storyGraffiti.Key != 1)
+                {
+                    GraffitiHolder graffitiHolder = new GraffitiHolder(Plugin.graffitis["Story"][storyGraffiti.Key], storyGraffiti.Value, self, storyGraffiti.Key);
+                    self.AddObject(graffitiHolder);
+                }
             }
         }
+
     }
 
     private static void RoomSpecificScript_AddRoomSpecificScript(On.RoomSpecificScript.orig_AddRoomSpecificScript orig, Room self)
@@ -106,18 +112,19 @@ public static partial class Hooks
             return;
         }
 
+        SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(self.game.rainWorld.progression.currentSaveState.miscWorldSaveData);
         // Graffiti Tutorial
-        else if (self.abstractRoom?.name == "SS_E08" && self.game.rainWorld.progression.currentSaveState.cycleNumber == 0)
+        if (self.abstractRoom?.name == "SS_E08" && self.game.rainWorld.progression.currentSaveState.cycleNumber == 0)
         {
             self.AddObject(new GraffitiTutorial(self));
         }
         // Story Graffiti Tutorial
-        else if (self.abstractRoom?.name == "SS_D08")
+        else if (self.abstractRoom?.name == "SS_D08" && (!miscSave.TryGet("StoryGraffitiTutorialPhase", out int i) || i < (int)StoryGraffitiTutorial.Phase.End))
         {
             self.AddObject(new StoryGraffitiTutorial(self));
         }
         // Grinding Tutorial
-        else if (self.abstractRoom?.name == "UW_H01" || self.abstractRoom?.name == "UW_H01VI")
+        else if ((self.abstractRoom?.name == "UW_H01" || self.abstractRoom?.name == "UW_H01VI") && (!miscSave.TryGet("StoryGraffitiTutorialPhase", out bool b) || !b))
         {
             self.AddObject(new GrindTutorial(self));
         }
