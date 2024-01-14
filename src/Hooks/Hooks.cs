@@ -12,9 +12,12 @@ using System.Runtime.CompilerServices;
 using MonoMod.Cil;
 using Mono.Cecil.Cil;
 using SlugBase;
+using BepInEx;
+using DressMySlugcat;
 
 namespace Vinki
 {
+    [BepInDependency("dressmyslugcat", BepInDependency.DependencyFlags.SoftDependency)]
     public static partial class Hooks
     {
         public static void ApplyInit()
@@ -238,6 +241,13 @@ namespace Vinki
 
                 // Add the story graffitis
                 AddGraffitiObjectives();
+
+                //-- You can have the DMS sprite setup in a separate method and only call it if DMS is loaded
+                //-- With this the mod will still work even if DMS isn't installed
+                if (ModManager.ActiveMods.Any(mod => mod.id == "dressmyslugcat"))
+                {
+                    SetupDMSSprites();
+                }
             }
             catch (Exception ex)
             {
@@ -257,6 +267,34 @@ namespace Vinki
             catch
             {
                 throw new Exception("Improved Input enabled but also not enabled???");
+            }
+        }
+
+        private static void SetupDMSSprites()
+        {
+            //-- The ID of the spritesheet we will be using as the default sprites for our slugcat
+            var sheetID = "olaycolay.thevinki";
+
+            //-- Each player slot (0, 1, 2, 3) can be customized individually
+            for (int i = 0; i < 4; i++)
+            {
+                SpriteDefinitions.AddSlugcatDefault(new Customization()
+                {
+                    //-- Make sure to use the same ID as the one used for our slugcat
+                    Slugcat = Enums.vinki.ToString(),
+                    PlayerNumber = i,
+                    CustomSprites = new List<CustomSprite>
+                    {
+                        //-- You can customize which spritesheet and color each body part will use
+                        new CustomSprite() { Sprite = "HEAD", SpriteSheetID = sheetID + i },
+                        new CustomSprite() { Sprite = "FACE", SpriteSheetID = sheetID + i },
+                        new CustomSprite() { Sprite = "BODY", SpriteSheetID = sheetID + i },
+                        new CustomSprite() { Sprite = "ARMS", SpriteSheetID = sheetID + i },
+                        new CustomSprite() { Sprite = "HIPS", SpriteSheetID = sheetID + i },
+                        new CustomSprite() { Sprite = "LEGS", SpriteSheetID = sheetID + i },
+                        new CustomSprite() { Sprite = "TAIL", SpriteSheetID = sheetID + i }
+                    },
+                });
             }
         }
 

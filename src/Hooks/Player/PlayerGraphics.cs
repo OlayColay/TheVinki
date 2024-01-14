@@ -262,6 +262,18 @@ namespace Vinki
             {
                 sLeaser.sprites[vinki.stripesSprite].color = vinki.StripesColor;
             }
+
+            // Set color to white if DMS is on (so that skins show the correct color)
+            if (ModManager.ActiveMods.Any(mod => mod.id == "dressmyslugcat"))
+            {
+                for (int i = 0; i < sLeaser.sprites.Length; i++)
+                {
+                    if (i != 11)
+                    {
+                        sLeaser.sprites[i].color = Color.white;
+                    }
+                }
+            }
         }
 
         private static void PlayerGraphics_DrawSprites(On.PlayerGraphics.orig_DrawSprites orig, PlayerGraphics self, RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, float timeStacker, Vector2 camPos)
