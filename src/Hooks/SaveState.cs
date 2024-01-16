@@ -49,6 +49,12 @@ public static partial class Hooks
 
     private static bool PlayerProgression_MiscProgressionData_GetTokenCollected(On.PlayerProgression.MiscProgressionData.orig_GetTokenCollected_string_bool orig, PlayerProgression.MiscProgressionData self, string tokenString, bool sandbox)
     {
+        // If the current slugcat isn't Vinki and the option is disabled, disable the token
+        if (!VinkiConfig.TokensInEveryCampaign.Value && self.currentlySelectedSinglePlayerSlugcat != Enums.vinki)
+        {
+            return true;
+        }
+
         // Is this string in the Unlockables graffiti folder?
         string unlockablesPath = AssetManager.ResolveDirectory("decals/Unlockables/");
         string fileName = Array.Find(Directory.GetFiles(unlockablesPath).Select(Path.GetFileNameWithoutExtension).ToArray(), (file) => file.EndsWith(tokenString));
