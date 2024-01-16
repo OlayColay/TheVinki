@@ -287,7 +287,7 @@ namespace Vinki
                     {
                         //-- You can customize which spritesheet and color each body part will use
                         new CustomSprite() { Sprite = "HEAD", SpriteSheetID = sheetID + i },
-                        new CustomSprite() { Sprite = "FACE", SpriteSheetID = sheetID + i },
+                        //new CustomSprite() { Sprite = "FACE", SpriteSheetID = sheetID + i },
                         new CustomSprite() { Sprite = "BODY", SpriteSheetID = sheetID + i },
                         new CustomSprite() { Sprite = "ARMS", SpriteSheetID = sheetID + i },
                         new CustomSprite() { Sprite = "HIPS", SpriteSheetID = sheetID + i },

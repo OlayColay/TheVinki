@@ -224,8 +224,11 @@ namespace Vinki
 
                 //-- Glasses go in front of face
                 sLeaser.sprites[vinki.glassesSprite].RemoveFromContainer();
-                midgroundContainer.AddChild(sLeaser.sprites[vinki.glassesSprite]);
-                sLeaser.sprites[vinki.glassesSprite].MoveInFrontOfOtherNode(sLeaser.sprites[9]);
+                if (!ModManager.ActiveMods.Exists((ModManager.Mod mod) => mod.id == "dressmyslugcat") || VinkiConfig.GlassesOverDMS.Value)
+                {
+                    midgroundContainer.AddChild(sLeaser.sprites[vinki.glassesSprite]);
+                    sLeaser.sprites[vinki.glassesSprite].MoveInFrontOfOtherNode(sLeaser.sprites[9]);
+                }
 
                 if (sLeaser.sprites.Length > vinki.shoesSprite)
                 {
