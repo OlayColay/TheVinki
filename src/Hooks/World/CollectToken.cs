@@ -1,5 +1,6 @@
 ﻿using Mono.Cecil.Cil;
 using MonoMod.Cil;
+using MonoMod.RuntimeDetour;
 using On.DevInterface;
 using SlugBase.SaveData;
 using System;
@@ -16,7 +17,7 @@ public class CollectTokenDataData
     public bool vinkiToken = false;
     public string tokenString = string.Empty;
 
-    public static HSLColor GraffitiColor { get; } = new HSLColor(0.85f, 1f, 0.8f);
+    public static HSLColor GraffitiColor { get; } = new HSLColor(0.93f, 1f, 0.8f);
 }
 public static class CollectTokenExtension
 {
@@ -28,7 +29,7 @@ public static partial class Hooks
 {
     private static void ApplyCollectTokenHooks()
     {
-        On.CollectToken.GoldCol += CollectToken_GoldCol;
+        new Hook(typeof(CollectToken).GetProperty(nameof(CollectToken.TokenColor), System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance).GetGetMethod(), CollectToken_get_TokenColor);
         On.CollectToken.Pop += CollectToken_Pop;
         On.CollectToken.Update += CollectToken_Update;
 
@@ -37,11 +38,12 @@ public static partial class Hooks
         On.DevInterface.TokenRepresentation.TokenName += TokenRepresentation_TokenName;
     }
 
-    private static Color CollectToken_GoldCol(On.CollectToken.orig_GoldCol orig, CollectToken self, float g)
+    public delegate Color orig_TokenColor(CollectToken self);
+    private static Color CollectToken_get_TokenColor(orig_TokenColor orig, CollectToken self)
     {
         if (self.placedObj.data is not CollectToken.CollectTokenData)
         {
-            return orig(self, g);
+            return orig(self);
         }
 
         CollectToken.CollectTokenData data = (self.placedObj.data as CollectToken.CollectTokenData);
@@ -49,7 +51,7 @@ public static partial class Hooks
         {
             return CollectTokenDataData.GraffitiColor.rgb;
         }
-        return orig(self, g);
+        return orig(self);
     }
 
     private static void CollectToken_Pop(On.CollectToken.orig_Pop orig, CollectToken self, Player player)
