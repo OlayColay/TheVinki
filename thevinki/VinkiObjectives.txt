@@ -13,5 +13,10 @@
         "name": "Caterators",
         "room": "SS_D08",
         "position": [ 300, 250 ]
+    },
+    {
+        "name": "True Victory",
+        "room": "DM_AI",
+        "position": [ 490, 350 ]
     }
 ]

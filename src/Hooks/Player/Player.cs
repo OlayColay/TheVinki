@@ -29,13 +29,6 @@ namespace Vinki
                 {
                     gNum = UnityEngine.Random.Range(0, graffitis[slugcat].Count);
                 }
-
-                // Trigger Iterator dialogue if there's one in the room
-                //Debug.Log("Room name: " + self.room.abstractRoom.name);
-                if (self.room.abstractRoom.name.Equals("DM_AI"))
-                {
-                    Hooks.SprayNearIterator(true, SaveDataExtension.GetSlugBaseData(self.room.game.GetStorySession.saveState.miscWorldSaveData), graffitis[slugcat][gNum].imageName);
-                }
             }
             else
             {
@@ -62,6 +55,12 @@ namespace Vinki
                 (self.room.drawableObjects.Find((x) => x is GraffitiHolder && (x as GraffitiHolder).gNum == gNum) as GraffitiHolder)?.RemoveFromRoom();
             }
             Debug.Log("Spraying " + slugcat + " #" + gNum + "\tsize: " + graffitis[slugcat][gNum].handles[1].ToString());
+
+            // Trigger Iterator dialogue if there's one in the room
+            if (self.room.abstractRoom.name.Equals("DM_AI"))
+            {
+                Hooks.SprayNearIterator(true, SaveDataExtension.GetSlugBaseData(self.room.game.GetStorySession.saveState.miscWorldSaveData), graffitis[slugcat][gNum].imageName);
+            }
 
             Vector2 sprayPos = (slugcat == "Story" && storyGraffitiRoomPositions.ContainsKey(gNum)) ? storyGraffitiRoomPositions[gNum].Value : self.mainBodyChunk.pos;
             Room room = self.room;

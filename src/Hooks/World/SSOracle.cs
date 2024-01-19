@@ -381,6 +381,18 @@ namespace Vinki
             // Graffiti specific dialogue
             switch (imageName)
             {
+                case "StorySpoilers/True Victory":
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("...Oh. That is an incredibly detailed piece of artwork, I see."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("As much as I am still quite unhappy about you painting on my chamber walls... I can’t help but admire your skill and determination, little friend."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("You likely spent a lot of time learning how to draw all those creatures, and your perseverance alone is incredibly admirable!"), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Especially considering that you had to spend enough time near all of those dangerous predators to learn how they look... Truly admirable."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("You must’ve traveled and seen quite a lot in your life, didn’t you?"), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("I feel so incredibly regretful about having to erase it, even if I need my walls clean..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("...Would you like me to immortalize it for you? I could take a picture and print it inside a pearl for you. You might not be able to read it, but if you give it to me, I could project the mural a second time through holograms."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("That seems like a good idea, doesn’t it?"), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Come back next cycle, and I will have it done by then."), 0);
+                    break;
                 case "VinkiGraffiti/vinki/Beep - 5P or QT":
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("That is... surely an interesting piece of art. Although I would highly prefer not to see it. As Five Pebbles' senior and close neighbor, it feels disrespectful to have such images of him on my chamber walls."), 0);
