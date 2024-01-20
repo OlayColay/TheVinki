@@ -24,6 +24,9 @@ namespace Vinki
         public static Configurable<bool> UseGraffitiButton;
         public static Configurable<bool> TokensInEveryCampaign;
 
+        private static OpHoldButton unlockButton;
+        private static OpHoldButton lockButton;
+
         public VinkiConfig()
         {
             RequireSprayCans = config.Bind("requireSprayCans", true, new ConfigurableInfo("Requires a spray can to spray graffiti (craft one with a rock and a colorful item).", tags: new object[]
@@ -148,7 +151,7 @@ namespace Vinki
 
             // Vinki Graffiti Unlockables tab
             AddGraffiti(550f, "decals" + Path.DirectorySeparatorChar + "Unlockables", 3, false, 0, true);
-            AddHoldButton(
+            unlockButton = AddHoldButton(
                 "Unlock All Graffiti",
                 "Unlock every graffiti. Useful if your game is bugged or you had to reset your Graffiti folder.",
                 UnlockAllGraffiti,
@@ -159,7 +162,8 @@ namespace Vinki
                 3,
                 50f
             );
-            AddHoldButton(
+            unlockButton.greyedOut = Hooks.AllGraffitiUnlocked();
+            lockButton = AddHoldButton(
                 "Reset All Unlockables",
                 "Reset all unlockable graffitis to be locked from use.",
                 LockAllGraffiti,
@@ -170,6 +174,7 @@ namespace Vinki
                 3,
                 350f
             );
+            lockButton.greyedOut = !Hooks.AnyGraffitiUnlocked();
 
             // Other Graffiti 1 tab
             AddSubtitle(580f, "Monk", 4);
@@ -292,7 +297,7 @@ namespace Vinki
             });
         }
 
-        private void AddHoldButton(string displayName, string description, OnSignalHandler action, float y, float width, float fillTime = 80f, Color? color = null, int tab = 0, float x = 150f)
+        private OpHoldButton AddHoldButton(string displayName, string description, OnSignalHandler action, float y, float width, float fillTime = 80f, Color? color = null, int tab = 0, float x = 150f)
         {
             OpHoldButton holdButton = new OpHoldButton(new Vector2(x, y), new Vector2(width, 30f), Translate(displayName), fillTime)
             {
@@ -305,6 +310,8 @@ namespace Vinki
             {
                 holdButton
             });
+
+            return holdButton;
         }
 
         private void RestoreDefaultGraffiti(UIfocusable trigger)
@@ -327,6 +334,11 @@ namespace Vinki
 
         private void UnlockAllGraffiti(UIfocusable trigger)
         {
+            // Show the lock button
+            unlockButton.greyedOut = true;
+            lockButton.greyedOut = false;
+            unlockButton._filled = 0f;
+
             //Copy all the files & Replaces any files with the same name
             foreach (string newPath in Directory.GetFiles(AssetManager.ResolveDirectory("decals/Unlockables"), "*.*", SearchOption.AllDirectories))
             {
@@ -342,6 +354,11 @@ namespace Vinki
 
         private void LockAllGraffiti(UIfocusable trigger)
         {
+            // Show the unlock button
+            unlockButton.greyedOut = false;
+            lockButton.greyedOut = true;
+            lockButton._filled = 0f;
+
             string folderPath = AssetManager.ResolveDirectory("decals/VinkiGraffiti/vinki");
             // Get all the filenames from Unlockables
             var unlockables = Directory.EnumerateFiles(AssetManager.ResolveDirectory("decals/Unlockables"), "*.*", SearchOption.AllDirectories).Select(Path.GetFileName);
