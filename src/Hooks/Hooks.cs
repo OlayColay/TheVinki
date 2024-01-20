@@ -425,5 +425,11 @@ namespace Vinki
                 });
             }
         }
+
+        private static bool AllGraffitiUnlocked()
+        {
+            // Return true if all of the graffiti in Unlockables is contained within VinkiGraffiti
+            return Directory.EnumerateFiles(AssetManager.ResolveDirectory("decals/Unlockables"), "*.*").All(img => Directory.EnumerateFiles(AssetManager.ResolveDirectory("decals/VinkiGraffiti/vinki"), "*.*").Contains(img));
+        }
     }
 }
