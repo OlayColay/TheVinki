@@ -98,7 +98,7 @@ namespace Vinki
                     miscSave.Set("MoonSprayTimes", moonSprayTimes + 1);
                 }
 
-                GraffitiSpecificDialogue(imageName);
+                GraffitiSpecificDialogue(imageName, miscSave);
 
                 if (oracleBehavior.conversation != null)
                 {
@@ -376,7 +376,7 @@ namespace Vinki
             }
         }
 
-        private static void GraffitiSpecificDialogue(string imageName)
+        private static void GraffitiSpecificDialogue(string imageName, SlugBaseSaveData miscSave)
         {
             // Graffiti specific dialogue
             switch (imageName)
@@ -392,6 +392,7 @@ namespace Vinki
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("...Would you like me to immortalize it for you? I could take a picture and print it inside a pearl for you. You might not be able to read it, but if you give it to me, I could project the mural a second time through holograms."), 0);
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("That seems like a good idea, doesn’t it?"), 0);
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Come back next cycle, and I will have it done by then."), 0);
+                    miscSave.Set("SpawnUnlockablePearl", 1);
                     break;
                 case "VinkiGraffiti/vinki/Beep - 5P or QT":
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
@@ -722,10 +723,18 @@ namespace Vinki
                 this.owner.TurnOffSSMusic(true);
                 owner.getToWorking = 1f;
 
-                // If this is visit 3+ to Moon
+                // If this is picking up the pearl, or visit 3+ to Moon
                 met = (base.oracle.room.game.GetStorySession.saveState.miscWorldSaveData.smPearlTagged || base.oracle.room.game.rainWorld.ExpeditionMode);
                 SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(base.oracle.room.game.GetStorySession.saveState.miscWorldSaveData);
-                if (miscSave.TryGet("MetMoonTwice", out int met2) || base.oracle.room.game.rainWorld.ExpeditionMode)
+                if (miscSave.TryGet("SpawnUnlockablePearl", out int phase) && phase == 1)
+                {
+                    base.dialogBox.NewMessage(base.Translate("Hello, little friend!"), 0);
+                    base.dialogBox.NewMessage(base.Translate("I have the pearl for you, with your mural safely stored within it."), 0);
+                    base.dialogBox.NewMessage(base.Translate("If you would like to see it again, just hand me the pearl, and I will project it once again."), 0);
+                    miscSave.Set("SpawnUnlockablePearl", 2);
+                    return;
+                }
+                else if (miscSave.TryGet("MetMoonTwice", out int met2) || base.oracle.room.game.rainWorld.ExpeditionMode)
                 {
                     if (met2 > 1 || base.oracle.room.game.rainWorld.ExpeditionMode)
                     {

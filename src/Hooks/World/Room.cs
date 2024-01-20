@@ -1,7 +1,9 @@
 ﻿using SlugBase.SaveData;
+using SprayCans;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using UnityEngine;
 
 namespace Vinki;
@@ -95,7 +97,6 @@ public static partial class Hooks
                 }
             }
         }
-
     }
 
     private static void RoomSpecificScript_AddRoomSpecificScript(On.RoomSpecificScript.orig_AddRoomSpecificScript orig, Room self)
@@ -127,6 +128,19 @@ public static partial class Hooks
         else if ((self.abstractRoom?.name == "UW_H01" || self.abstractRoom?.name == "UW_H01VI") && (!miscSave.TryGet("StoryGraffitiTutorialPhase", out bool b) || !b))
         {
             self.AddObject(new GrindTutorial(self));
+        }
+        // Spawn pearl and disable hologram
+        else if (self.abstractRoom?.name == "DM_AI")
+        {
+            int phase;
+            if (miscSave.TryGet("SpawnUnlockablePearl", out phase) && phase == 1)
+            {
+                var abstr = new DataPearl.AbstractDataPearl(self.world, AbstractPhysicalObject.AbstractObjectType.DataPearl, null, new WorldCoordinate(self.abstractRoom.index, 250, 250, 0), self.game.GetNewID(),
+                    -1, -1, null, new DataPearl.AbstractDataPearl.DataPearlType("Vinki_Pearl_1", true));
+                abstr.Realize();
+                self.abstractRoom.AddEntity(abstr);
+                self.AddObject(abstr.realizedObject);
+            }
         }
     }
 }
