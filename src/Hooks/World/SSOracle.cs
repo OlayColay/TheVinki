@@ -12,6 +12,7 @@ using Random = UnityEngine.Random;
 using SlugBase.SaveData;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace Vinki
 {
@@ -141,10 +142,27 @@ namespace Vinki
                             DataPearl.AbstractDataPearl.DataPearlType dataPearlType = self.inspectPearl.AbstractPearl.dataPearlType;
                             Debug.Log(str + ((dataPearlType != null) ? dataPearlType.ToString() : null));
                         }
+                        if (self.inspectPearl.AbstractPearl.dataPearlType.value == "Vinki_Pearl_1")
+                        {
+                            _ = ShowImage(self);
+                        }
                         break;
                     }
                 }
             }
+        }
+
+        private static async Task ShowImage(SSOracleBehavior self)
+        {
+            await Task.Delay(12000);
+
+            self.oracle.room.PlaySound(SoundID.SS_AI_Image, 0f, 1f, 1f);
+            ProjectedImage image = self.oracle.myScreen.AddImage("True Victory");
+            image.pos = new Vector2(490, 350);
+            image.setAlpha = 0.9f;
+            await Task.Delay(11000);
+
+            self.oracle.myScreen.RemoveImage("True Victory");
         }
 
         private static void SSOracleBehavior_SeePlayer(On.SSOracleBehavior.orig_SeePlayer orig, SSOracleBehavior self)
