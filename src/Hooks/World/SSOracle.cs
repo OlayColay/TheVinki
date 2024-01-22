@@ -114,8 +114,26 @@ namespace Vinki
             On.SSOracleBehavior.SeePlayer += SSOracleBehavior_SeePlayer;
             On.SSOracleBehavior.NewAction += SSOracleBehavior_NewAction;
             On.SSOracleBehavior.Update += SSOracleBehavior_Update;
+            On.SSOracleBehavior.UpdateStoryPearlCollection += SSOracleBehavior_UpdateStoryPearlCollection;
 
             On.SSOracleBehavior.PebblesConversation.AddEvents += PebblesConversation_AddEvents;
+        }
+
+        private static void SSOracleBehavior_UpdateStoryPearlCollection(On.SSOracleBehavior.orig_UpdateStoryPearlCollection orig, SSOracleBehavior self)
+        {
+            DataPearl.AbstractDataPearl vPearl;
+            if ((vPearl = self.readDataPearlOrbits.Find((pearl) => pearl.dataPearlType.value == "Vinki_Pearl_1")) != null)
+            {
+                if (!self.readPearlGlyphs.ContainsKey(vPearl))
+                {
+                    self.readPearlGlyphs.Add(vPearl, new GlyphLabel(vPearl.realizedObject.firstChunk.pos, GlyphLabel.RandomString(1, 1, 12842 + vPearl.dataPearlType.Index, false)));
+                    self.oracle.room.AddObject(self.readPearlGlyphs[vPearl]);
+                }
+            }
+            else
+            {
+                orig(self);
+            }
         }
 
         private static void SSOracleBehavior_Update(On.SSOracleBehavior.orig_Update orig, SSOracleBehavior self, bool eu)
