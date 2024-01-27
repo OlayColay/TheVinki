@@ -130,10 +130,7 @@ namespace Vinki
                     self.oracle.room.AddObject(self.readPearlGlyphs[vPearl]);
                 }
             }
-            else
-            {
-                orig(self);
-            }
+            orig(self);
         }
 
         private static void SSOracleBehavior_Update(On.SSOracleBehavior.orig_Update orig, SSOracleBehavior self, bool eu)
@@ -850,6 +847,20 @@ namespace Vinki
                         owner.InitateConversation(Enums.DMOracle.Vinki_DMConvoFirstMeet, this);
                     }
                     if (owner.inActionCounter > 80 && (owner.conversation == null || (owner.conversation != null && owner.conversation.id == Enums.DMOracle.Vinki_DMConvoFirstMeet && owner.conversation.slatedForDeletion)))
+                    {
+                        owner.UnlockShortcuts();
+                        owner.conversation = null;
+                        owner.getToWorking = 1f;
+                        met = base.oracle.room.game.GetStorySession.saveState.miscWorldSaveData.smPearlTagged = true;
+                    }
+                    return;
+                }
+                else if (owner.oracle.room.game.StoryCharacter == Enums.vinki && owner.action == Enums.DMOracle.Vinki_DMActionGeneral && owner.conversation?.id == Enums.DMOracle.Vinki_DMConvoSecondMeet)
+                {
+                    owner.LockShortcuts();
+                    owner.movementBehavior = SSOracleBehavior.MovementBehavior.KeepDistance;
+                    //owner.gravOn = true;
+                    if (owner.inActionCounter > 80 && (owner.conversation == null || (owner.conversation != null && owner.conversation.slatedForDeletion)))
                     {
                         owner.UnlockShortcuts();
                         owner.conversation = null;
