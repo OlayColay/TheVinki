@@ -692,11 +692,16 @@ namespace Vinki
             var storyGraffitisInRoom = Plugin.storyGraffitiRoomPositions.Where(e => e.Value.Key == self.room.abstractRoom.name);
             SlugBaseSaveData miscWorldSave;
             bool storyGraffitisExist = false;
+            bool hologramsExist = false;
             int[] sprayedGNums = null;
             if (self.room.game.GetStorySession != null)
             {
                 miscWorldSave = SaveDataExtension.GetSlugBaseData(self.room.game.GetStorySession.saveState.miscWorldSaveData);
                 storyGraffitisExist = miscWorldSave.TryGet("StoryGraffitisSprayed", out sprayedGNums);
+                if (storyGraffitisExist) 
+                {
+                    hologramsExist = HologramsEnabledInRoom(self.room, miscWorldSave);
+                }
             }
             int gNum = -1;
 
@@ -704,7 +709,7 @@ namespace Vinki
             foreach (var storyGraffiti in storyGraffitisInRoom)
             {
                 var graf = Plugin.graffitis["Story"][storyGraffiti.Key];
-                if (graf != null && (!storyGraffitisExist || !sprayedGNums.Contains(storyGraffiti.Key)))
+                if (graf != null && (!storyGraffitisExist || !sprayedGNums.Contains(storyGraffiti.Key)) && hologramsExist)
                 {
                     Vector2 grafRadius = graf.handles[1] / 2f;
                     Vector2 grafPos = storyGraffiti.Value.Value;

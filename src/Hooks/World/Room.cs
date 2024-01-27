@@ -84,11 +84,9 @@ public static partial class Hooks
         var storyGraffitisInRoom = Plugin.storyGraffitiRoomPositions.Where(e => e.Value.Key == self.abstractRoom.name);
         var miscWorldSave = SaveDataExtension.GetSlugBaseData(self.game.GetStorySession.saveState.miscWorldSaveData);
         bool storyGraffitisHaveBeenSprayed = miscWorldSave.TryGet("StoryGraffitisSprayed", out int[] sprayedGNums);
-        bool enableHologamsInRoom = (self.abstractRoom?.name != "SS_D08" || !miscWorldSave.TryGet("StoryGraffitiTutorialPhase", out int i) || i < (int)StoryGraffitiTutorial.Phase.Explore) &&
-            (self.abstractRoom?.name != "DM_AI" || ((!miscWorldSave.TryGet("SpawnUnlockablePearl", out int j) || j < 1) && Hooks.AllGraffitiUnlocked()));
 
         // Disable holograms for story graffiti tutorial room after they've been sprayed and erased by 5P already
-        if (enableHologamsInRoom)
+        if (HologramsEnabledInRoom(self, miscWorldSave))
         {
             foreach (var storyGraffiti in storyGraffitisInRoom)
             {
@@ -99,6 +97,12 @@ public static partial class Hooks
                 }
             }
         }
+    }
+
+    public static bool HologramsEnabledInRoom(Room self, SlugBaseSaveData miscWorldSave)
+    {
+        return (self.abstractRoom?.name != "SS_D08" || !miscWorldSave.TryGet("StoryGraffitiTutorialPhase", out int i) || i < (int)StoryGraffitiTutorial.Phase.Explore) &&
+            (self.abstractRoom?.name != "DM_AI" || ((!miscWorldSave.TryGet("SpawnUnlockablePearl", out int j) || j < 1) && Hooks.AllGraffitiUnlocked()));
     }
 
     private static void RoomSpecificScript_AddRoomSpecificScript(On.RoomSpecificScript.orig_AddRoomSpecificScript orig, Room self)

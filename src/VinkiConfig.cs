@@ -384,7 +384,10 @@ namespace Vinki
 
             foreach (OpImage img in Tabs[3].items.Where((item) => item is OpImage))
             {
-                img.color = Color.black;
+                if (img.sprite.element.name != "Tsuno - 一True Victory一")
+                {
+                    img.color = Color.black;
+                }
             }
         }
 
@@ -426,7 +429,7 @@ namespace Vinki
                     // Hide graffiti if not unlocked yet
                     if (unlockables)
                     {
-                        thumbnails[i].color = vinkiNames.Contains(names[i]) ? Color.white : Color.black;
+                        thumbnails[i].color = (vinkiNames.Contains(names[i]) || names[i] == "Tsuno - 一True Victory一") ? Color.white : Color.black;
                     }
 
                     int separator = names[i].LastIndexOf(" - ");

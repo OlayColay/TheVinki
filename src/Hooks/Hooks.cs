@@ -363,7 +363,11 @@ namespace Vinki
             //Copy all the files & Replaces any files with the same name
             foreach (string newPath in Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories))
             {
-                File.Copy(newPath, newPath.Replace(sourcePath, targetPath), true);
+                // Make sure not to copy the final unlockable graffiti
+                if (Path.GetFileNameWithoutExtension(newPath) != "Tsuno - 一True Victory一")
+                {
+                    File.Copy(newPath, newPath.Replace(sourcePath, targetPath), true);
+                }
             }
         }
 
@@ -429,13 +433,49 @@ namespace Vinki
         public static bool AllGraffitiUnlocked()
         {
             // Return true if all of the graffiti in Unlockables is contained within VinkiGraffiti
-            return Directory.EnumerateFiles(AssetManager.ResolveDirectory("decals/Unlockables"), "*.*").All(img => Directory.EnumerateFiles(AssetManager.ResolveDirectory("decals/VinkiGraffiti/vinki"), "*.*").Contains(img));
+            string[] files1 = Directory.GetFiles(AssetManager.ResolveDirectory("decals/Unlockables"), "*", SearchOption.AllDirectories).Select(Path.GetFileName).ToArray();
+            string[] files2 = Directory.GetFiles(AssetManager.ResolveDirectory("decals/VinkiGraffiti/vinki"), "*", SearchOption.AllDirectories).Select(Path.GetFileName).ToArray();
+
+            IEnumerable<string> difference = files1.Except(files2);
+
+            if (!difference.Any())
+            {
+                Debug.Log("All files in Unlockables are also contained in VinkiGraffiti/vinki.");
+                return true;
+            }
+            else
+            {
+                Debug.Log("The following files in Unlockables are not contained in VinkiGraffiti/vinki:");
+                foreach (string file in difference)
+                {
+                    Debug.Log(file);
+                }
+                return false;
+            }
         }
 
         public static bool AnyGraffitiUnlocked()
         {
             // Return true if any of the graffiti in Unlockables is contained within VinkiGraffiti
-            return Directory.EnumerateFiles(AssetManager.ResolveDirectory("decals/Unlockables"), "*.*").Any(img => Directory.EnumerateFiles(AssetManager.ResolveDirectory("decals/VinkiGraffiti/vinki"), "*.*").Contains(img));
+            string[] sourceFiles = Directory.GetFiles(AssetManager.ResolveDirectory("decals/Unlockables"), "*", SearchOption.AllDirectories);
+            string[] targetFiles = Directory.GetFiles(AssetManager.ResolveDirectory("decals/VinkiGraffiti/vinki"), "*", SearchOption.AllDirectories);
+
+            IEnumerable<string> commonFiles = sourceFiles.Select(Path.GetFileName).Intersect(targetFiles.Select(Path.GetFileName));
+
+            if (commonFiles.Any())
+            {
+                Debug.Log("The following files are present in both directories:");
+                foreach (string file in commonFiles)
+                {
+                    Debug.Log(file);
+                }
+                return true;
+            }
+            else
+            {
+                Debug.Log("No common files found.");
+                return false;
+            }
         }
     }
 }
