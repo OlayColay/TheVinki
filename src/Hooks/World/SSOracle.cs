@@ -109,6 +109,55 @@ namespace Vinki
             }
         }
 
+        public static void CraftNearMoon(Player player)
+        {
+            Creature.Grasp pearlGrasp;
+            if ((pearlGrasp = player.grasps.FirstOrDefault((Creature.Grasp grasp) => grasp?.grabbed is DataPearl)) == null)
+            {
+                return;
+            }
+
+            DataPearl pearl = pearlGrasp.grabbed as DataPearl;
+            SlugBaseSaveData miscWorldSave = SaveDataExtension.GetSlugBaseData(player.room.game.GetStorySession.saveState.miscWorldSaveData);
+
+            if (pearl.AbstractPearl.dataPearlType.value == "Vinki_Pearl_1")
+            {
+                oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("...Ah. I see you did not appreciate my gift for you."), -10);
+                oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("I will accept your choice, though. It is not my place to judge, as disrespectful as it felt to my efforts."), 0);
+                miscWorldSave.Set("VinkiPearlCrushed", true);
+            }
+            else if (player.room.physicalObjects[0].Where((PhysicalObject obj) => obj is PebblesPearl).Count() <= 1)
+            {
+                oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("...What have you done?!"), -10);
+                oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("So much data lost... Please leave."), -10);
+                oracleBehavior.conversation = null;
+                return;
+            }
+            else if (pearl is PebblesPearl)
+            {
+                int crushedPearlCount = 0;
+                if (!miscWorldSave.TryGet("MoonPearlCrushCount", out crushedPearlCount) || crushedPearlCount < 1)
+                {
+                    oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("...Little creature? Could you not use my data pearls to create your tools? I might not miss one or two, but I would like to save the information which is held within them."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Maybe you could find some empty pearls outside of my chamber, or use something else?"), -10);
+                }
+                else if (crushedPearlCount == 1)
+                {
+                    oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("Little creature. I asked you once, please do not use my pearls as painting supplies. Losing data is very unpleasant, please find other materials."), 0);
+                }
+                else
+                {
+                    oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("Please stop destroying my data pearls. Find other materials."), -10);
+                }
+                miscWorldSave.Set("MoonPearlCrushCount", crushedPearlCount + 1);
+            }
+
+            if (oracleBehavior.conversation != null)
+            {
+                oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("As for what I was saying before you rudely interrupted me..."), -10);
+            }
+        }
+
         // Add hooks
         private static void ApplySSOracleHooks()
         {
@@ -171,6 +220,11 @@ namespace Vinki
         private static async Task ShowImage(SSOracleBehavior self)
         {
             await Task.Delay(12000);
+
+            if (SaveDataExtension.GetSlugBaseData(self.oracle.room.game.GetStorySession.saveState.miscWorldSaveData).TryGet("VinkiPearlCrushed", out bool crushed) && crushed)
+            {
+                return;
+            }
 
             self.oracle.room.PlaySound(SoundID.SS_AI_Image, 0f, 1f, 1f);
             ProjectedImage image = self.oracle.myScreen.AddImage("True Victory");

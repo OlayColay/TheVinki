@@ -566,6 +566,12 @@ namespace Vinki
                             (self.graphicsModule as PlayerGraphics).swallowing = 20;
                         }
 
+                        // If crafting in Moon's room, it could trigger some of her dialogue
+                        if (self.room?.abstractRoom?.name == "DM_AI")
+                        {
+                            CraftNearMoon(self);
+                        }
+
                         var tilePosition = self.room.GetTilePosition(self.mainBodyChunk.pos);
                         var pos = new WorldCoordinate(self.room.abstractRoom.index, tilePosition.x, tilePosition.y, 0);
                         var abstr = new SprayCanAbstract(self.room.world, pos, self.room.game.GetNewID(), sprayCount);
