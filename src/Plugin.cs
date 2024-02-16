@@ -30,7 +30,6 @@ namespace Vinki
         public static string storyGraffitiFolder = "decals/StorySpoilers";
         public static int storyGraffitiCount = 0;
         public static bool sleeping = false;
-        public static bool newGraffiti = false;
         public static Color?[][] jollyColors = new Color?[16][] {
             new Color?[6], new Color?[6], new Color?[6], new Color?[6],
             new Color?[6], new Color?[6], new Color?[6], new Color?[6],
@@ -51,6 +50,8 @@ namespace Vinki
         public static bool improvedInput;
         public static Array improvedControls;
         public static readonly int Grind = 0, ToggleGrind = 1, Graffiti = 2, Spray = 3, Craft = 4, Tag = 5;
+
+        public static int[] queuedGNums = new int[16] {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
 
         // Add hooks
         public void OnEnable()

@@ -17,10 +17,11 @@ namespace Vinki
             string slugcat = graffitis.ContainsKey(self.slugcatStats.name.value) ? self.slugcatStats.name.value : SlugcatStats.Name.White.value;
             if (gNum < 0)
             {
-                if (Plugin.newGraffiti && slugcat == "vinki")
+                // If not spraying a story graffiti, check if we've queued a specific graffiti from the selection menu
+                if (Plugin.queuedGNums[self.JollyOption.playerNumber] != -1)
                 {
-                    gNum = graffitis["vinki"].Count - 1;
-                    Plugin.newGraffiti = false;
+                    gNum = Plugin.queuedGNums[self.JollyOption.playerNumber];
+                    Plugin.queuedGNums[self.JollyOption.playerNumber] = -1;
                 }
                 else
                 {
@@ -723,7 +724,7 @@ namespace Vinki
                         break;
                     }
                 }
-            }
+            }  
 
             if (!VinkiConfig.RequireSprayCans.Value)
             {

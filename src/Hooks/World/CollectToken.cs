@@ -152,8 +152,5 @@ public static partial class Hooks
         float halfHeight = img.height / 2f;
         Plugin.graffitiOffsets["vinki"].Add(new Vector2(-halfWidth, -halfHeight));
         Plugin.graffitis["vinki"].Add(decal);
-
-        // Flag that we have a new graffiti so that it's the next one we spray
-        Plugin.newGraffiti = true;
     }
 }

@@ -65,7 +65,7 @@ namespace Menu
             {
                 for (int x = 50; x < Screen.width - 300; x += 100)
                 {
-                    graffitiButtons[i] = new GraffitiButton(this, pages[0], graffitiFiles[i], "SELECT " + graffitiFiles[i], new Vector2(x, y));
+                    graffitiButtons[i] = new GraffitiButton(this, pages[0], graffitiFiles[i], "SELECT " + i, new Vector2(x, y));
                     pages[0].subObjects.Add(graffitiButtons[i]);
 
                     i++;
@@ -108,7 +108,10 @@ namespace Menu
             }
             else if (message.StartsWith("SELECT "))
             {
+                int gNum = int.Parse(message.Substring(7));
+                Debug.Log("Selecting " + Plugin.graffitis[players[currentPlayer].SlugCatClass.ToString()][gNum].imageName);
 
+                Plugin.queuedGNums[currentPlayer] = gNum;
             }
             else if (message.StartsWith("PLAYER "))
             {
