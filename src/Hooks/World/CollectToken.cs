@@ -132,18 +132,10 @@ public static partial class Hooks
 
         // Get the image as a 2d texture so we can resize it to something manageable
         Texture2D img = new Texture2D(2, 2);
-        if (File.Exists(parentDir + Path.DirectorySeparatorChar + filePath + ".png"))
-        {
-            decal.imageName = "VinkiGraffiti/vinki/" + filePath;
-            byte[] tmpBytes = File.ReadAllBytes(parentDir + Path.DirectorySeparatorChar + filePath + ".png");
-            ImageConversion.LoadImage(img, tmpBytes);
-        }
-        else
-        {
-            decal.imageName = "VinkiGraffiti/vinki/" + fileName;
-            byte[] tmpBytes = File.ReadAllBytes(parentDir + Path.DirectorySeparatorChar + fileName + ".png");
-            ImageConversion.LoadImage(img, tmpBytes);
-        }
+        decal.imageName = "VinkiGraffiti/vinki/" + filePath;
+        byte[] tmpBytes = File.ReadAllBytes(parentDir + Path.DirectorySeparatorChar + filePath + ".png");
+        ImageConversion.LoadImage(img, tmpBytes);
+        Futile.atlasManager.LoadImage("decals/" + decal.imageName);
 
         // Get average color of image (to use for graffiti spray/smoke color)
         Plugin.graffitiAvgColors["vinki"].Add(AverageColorFromTexture(img));

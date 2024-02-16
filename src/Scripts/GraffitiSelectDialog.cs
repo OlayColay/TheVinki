@@ -8,11 +8,9 @@ namespace Menu
 {
     public class GraffitiSelectDialog : Dialog
     {
-        public GraffitiSelectDialog(ProcessManager manager, Vector2 cancelButtonPos) : base(manager)
+        public GraffitiSelectDialog(ProcessManager manager, Vector2 cancelButtonPos, RainWorldGame game) : base(manager)
         {
             float[] screenOffsets = Custom.GetScreenOffsets();
-            leftAnchor = screenOffsets[0];
-            rightAnchor = screenOffsets[1];
             pages[0].pos = new Vector2(0.01f, 0f);
             Page page = pages[0];
             page.pos.y = page.pos.y + 2000f;
@@ -23,22 +21,55 @@ namespace Menu
             opening = true;
             targetAlpha = 1f;
 
+            players = game.Players.Select(abs => abs.realizedCreature as Player).ToArray();
+            playerButtons = new SimpleButton[players.Length];
+
+            for (int i = 0; i < playerButtons.Length; i++)
+            {
+                playerButtons[i] = new SimpleButton(this, pages[0], base.Translate("PLAYER " + (i+1)), "PLAYER " + i, new Vector2(cancelButtonPos.x, Screen.height - 50 - 40*i), new Vector2(cancelButtonWidth, 30f));
+                pages[0].subObjects.Add(playerButtons[i]);
+            }
+
             PopulateGraffitiButtons();
         }
 
         private void PopulateGraffitiButtons()
         {
-            string[] graffitiFiles = Plugin.graffitis["vinki"].Select(g => "decals/" + g.imageName).ToArray();
+            // First delete any graffiti buttons on screen
+            pages[0].subObjects.ForEach(delegate (MenuObject obj) 
+            { 
+                if (obj is GraffitiButton) 
+                { 
+                    obj.RemoveSprites(); 
+                } 
+            });
+            for (int j = 0; j < graffitiButtons?.Length; j++)
+            {
+                pages[0].RemoveSubObject(graffitiButtons[j]);
+                graffitiButtons[j] = null;
+            }
+
+            string[] graffitiFiles;
+            if (Plugin.graffitis.ContainsKey(players[currentPlayer].SlugCatClass.ToString()))
+            {
+                graffitiFiles = Plugin.graffitis[players[currentPlayer].SlugCatClass.ToString()].Select(g => "decals/" + g.imageName).ToArray();
+            }
+            else
+            {
+                graffitiFiles = Plugin.graffitis["White"].Select(g => "decals/" + g.imageName).ToArray();
+            }
+            graffitiButtons = new GraffitiButton[graffitiFiles.Length];
+
             int i = 0;
             for (int y = Screen.height - 100; y > 100; y -= 100)
             {
-                for (int x = 100; x < Screen.width - 100; x += 100)
+                for (int x = 50; x < Screen.width - 300; x += 100)
                 {
-                    GraffitiButton grafButton = new(this, pages[0], graffitiFiles[i], "SELECT RANDOM", new Vector2(x, y));
-                    pages[0].subObjects.Add((grafButton));
+                    graffitiButtons[i] = new GraffitiButton(this, pages[0], graffitiFiles[i], "SELECT " + graffitiFiles[i], new Vector2(x, y));
+                    pages[0].subObjects.Add(graffitiButtons[i]);
 
                     i++;
-                    if (i >= graffitiFiles.Length)
+                    if (i >= graffitiButtons.Length)
                     {
                         return;
                     }
@@ -75,6 +106,15 @@ namespace Menu
                 closing = true;
                 targetAlpha = 0f;
             }
+            else if (message.StartsWith("SELECT "))
+            {
+
+            }
+            else if (message.StartsWith("PLAYER "))
+            {
+                currentPlayer = (int)char.GetNumericValue(message[7]);
+                PopulateGraffitiButtons();
+            }
         }
 
         public override void Update()
@@ -100,9 +140,8 @@ namespace Menu
         }
 
         public SimpleButton cancelButton;
-
-        public float leftAnchor;
-        public float rightAnchor;
+        public SimpleButton[] playerButtons;
+        public GraffitiButton[] graffitiButtons;
 
         public bool opening;
         public bool closing;
@@ -112,5 +151,8 @@ namespace Menu
 
         public float uAlpha;
         public float targetAlpha;
+
+        public Player[] players;
+        public int currentPlayer = 0;
     }
 }
