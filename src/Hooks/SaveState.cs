@@ -1,8 +1,5 @@
-﻿using Fisobs.Core;
-using RWCustom;
-using SlugBase.SaveData;
+﻿using RWCustom;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 

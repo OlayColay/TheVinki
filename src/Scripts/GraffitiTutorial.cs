@@ -1,5 +1,4 @@
-﻿using ImprovedInput;
-using System.Linq;
+﻿using System.Linq;
 using UnityEngine;
 
 namespace Vinki;

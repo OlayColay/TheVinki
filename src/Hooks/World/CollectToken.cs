@@ -1,8 +1,5 @@
-﻿using Mono.Cecil.Cil;
-using MonoMod.Cil;
-using MonoMod.RuntimeDetour;
+﻿using MonoMod.RuntimeDetour;
 using On.DevInterface;
-using SlugBase.SaveData;
 using System;
 using System.IO;
 using System.Linq;

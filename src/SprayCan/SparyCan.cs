@@ -1,7 +1,5 @@
-﻿using IL.Smoke;
-using RWCustom;
+﻿using RWCustom;
 using UnityEngine;
-using Smoke;
 using MoreSlugcats;
 
 namespace SprayCans;

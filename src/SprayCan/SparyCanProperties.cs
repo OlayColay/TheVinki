@@ -1,5 +1,4 @@
 ﻿using Fisobs.Properties;
-using System.Linq;
 
 namespace SprayCans;
 

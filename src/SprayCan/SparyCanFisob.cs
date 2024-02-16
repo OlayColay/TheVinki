@@ -2,7 +2,6 @@
 using Fisobs.Items;
 using Fisobs.Properties;
 using Fisobs.Sandbox;
-using SprayCans;
 
 namespace SprayCans;
 

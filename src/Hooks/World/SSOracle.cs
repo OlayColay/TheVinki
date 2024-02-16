@@ -1,17 +1,13 @@
-﻿using System;
-using System.Linq;
-using static Vinki.Plugin;
+﻿using System.Linq;
 using static Conversation;
 using static SSOracleBehavior;
 using UnityEngine;
 using MoreSlugcats;
 using RWCustom;
-using System.Diagnostics.Eventing.Reader;
 using SprayCans;
 using Random = UnityEngine.Random;
 using SlugBase.SaveData;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.IO;
 

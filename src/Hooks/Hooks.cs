@@ -7,8 +7,6 @@ using SprayCans;
 using Fisobs.Core;
 using MoreSlugcats;
 using static Vinki.Plugin;
-using MonoMod.Utils;
-using System.Runtime.CompilerServices;
 using MonoMod.Cil;
 using Mono.Cecil.Cil;
 using SlugBase;

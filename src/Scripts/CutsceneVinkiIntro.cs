@@ -1,15 +1,11 @@
-﻿using System;
-using System.Linq;
-using MoreSlugcats;
-using RWCustom;
+﻿using System.Linq;
 using SprayCans;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Vinki
 {
-	// Token: 0x020002E9 RID: 745
-	public class CutsceneVinkiIntro : UpdatableAndDeletable
+    // Token: 0x020002E9 RID: 745
+    public class CutsceneVinkiIntro : UpdatableAndDeletable
 	{
 		// Token: 0x06002094 RID: 8340 RVA: 0x0028D648 File Offset: 0x0028B848
 		public CutsceneVinkiIntro(Room room)
