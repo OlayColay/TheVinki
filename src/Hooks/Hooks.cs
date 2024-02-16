@@ -184,6 +184,9 @@ namespace Vinki
             else
             {
                 filePath = graffitiFolder + "/" + slugcat + "/" + Path.GetFileNameWithoutExtension(image) + ".png";
+
+                // Add to futile atlas for sprite to show in graffiti selector
+                Futile.atlasManager.LoadImage("decals/" + decal.imageName);
             }
 
             // Get the image as a 2d texture so we can resize it to something manageable

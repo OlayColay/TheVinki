@@ -31,12 +31,20 @@ namespace Menu
 
         private void PopulateGraffitiButtons()
         {
-            for (int y = 100; y < Screen.height - 100; y += 100)
+            string[] graffitiFiles = Plugin.graffitis["vinki"].Select(g => "decals/" + g.imageName).ToArray();
+            int i = 0;
+            for (int y = Screen.height - 100; y > 100; y -= 100)
             {
                 for (int x = 100; x < Screen.width - 100; x += 100)
                 {
-                    GraffitiButton grafButton = new(this, pages[0], "Sandbox_Randomize", "SELECT RANDOM", new Vector2(x, y));
+                    GraffitiButton grafButton = new(this, pages[0], graffitiFiles[i], "SELECT RANDOM", new Vector2(x, y));
                     pages[0].subObjects.Add((grafButton));
+
+                    i++;
+                    if (i >= graffitiFiles.Length)
+                    {
+                        return;
+                    }
                 }
             }
         }

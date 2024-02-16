@@ -31,6 +31,9 @@ namespace Menu
             this.subObjects.Add(this.roundedRect);
             this.symbolSprite = new FSprite(symbolName, true);
             this.Container.AddChild(this.symbolSprite);
+
+            float newScale = 70f / Mathf.Max(symbolSprite.width, symbolSprite.height);
+            symbolSprite.scale = newScale;
         }
 
         // Token: 0x06002C9A RID: 11418 RVA: 0x00369850 File Offset: 0x00367A50
@@ -46,9 +49,7 @@ namespace Menu
         public override void GrafUpdate(float timeStacker)
         {
             base.GrafUpdate(timeStacker);
-            float num = 0.5f - 0.5f * Mathf.Sin(Mathf.Lerp(this.buttonBehav.lastSin, this.buttonBehav.sin, timeStacker) / 30f * 3.1415927f * 2f);
-            num *= this.buttonBehav.sizeBump;
-            this.symbolSprite.color = (this.buttonBehav.greyedOut ? Menu.MenuRGB(Menu.MenuColors.VeryDarkGrey) : Color.Lerp(base.MyColor(timeStacker), Menu.MenuRGB(Menu.MenuColors.VeryDarkGrey), num));
+            this.symbolSprite.color = (this.buttonBehav.greyedOut ? Menu.MenuRGB(Menu.MenuColors.VeryDarkGrey) : base.MyColor(timeStacker));
             this.symbolSprite.x = this.DrawX(timeStacker) + base.DrawSize(timeStacker).x / 2f;
             this.symbolSprite.y = this.DrawY(timeStacker) + base.DrawSize(timeStacker).y / 2f;
             Color color = Color.Lerp(Menu.MenuRGB(Menu.MenuColors.Black), Menu.MenuRGB(Menu.MenuColors.White), Mathf.Lerp(this.buttonBehav.lastFlash, this.buttonBehav.flash, timeStacker));
