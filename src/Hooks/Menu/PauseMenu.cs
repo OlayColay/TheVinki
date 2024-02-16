@@ -12,7 +12,7 @@ namespace Vinki;
 
 public class PauseMenuData
 {
-    public GraffitiMenu graffitiMenu;
+    public GraffitiSelectDialog graffitiMenu;
     public SimpleButton graffitiMenuButton;
     public bool graffitiMenuMode = false;
 }
@@ -77,7 +77,7 @@ public static partial class Hooks
         Debug.Log("We are Vinki");
         if (message == "SELECT GRAFFITI")
         {
-            GraffitiDialog dialog = new GraffitiDialog(self.manager, self.continueButton.pos);
+            GraffitiSelectDialog dialog = new GraffitiSelectDialog(self.manager, self.continueButton.pos);
             self.manager.ShowDialog(dialog);
             self.PlaySound(SoundID.MENU_Switch_Page_In);
         }

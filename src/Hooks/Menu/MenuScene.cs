@@ -133,13 +133,13 @@ public static partial class Hooks
                 self.AddIllustration(new MenuDepthIllustration(self.menu, self, self.sceneFolder, "wip_overseer", new Vector2(0f, -64f), 2f, MenuDepthIllustration.MenuShader.Basic));
             }
 
-            GraffitiDialog.graffitiSpots = new MenuDepthIllustration[]
+            GraffitiQuestDialog.graffitiSpots = new MenuDepthIllustration[]
             {
                 new MenuDepthIllustration(self.menu, self, self.sceneFolder, "graffiti_ss", new Vector2(750, 550), 4f, MenuDepthIllustration.MenuShader.Basic),
                 new MenuDepthIllustration(self.menu, self, self.sceneFolder, "graffiti_ss", new Vector2(800, 560), 4.5f, MenuDepthIllustration.MenuShader.Basic),
                 new MenuDepthIllustration(self.menu, self, self.sceneFolder, "graffiti_test", new Vector2(650, 580), 6f, MenuDepthIllustration.MenuShader.Basic)
             };
-            GraffitiDialog.graffitiSlapping = new int[GraffitiDialog.graffitiSpots.Length];
+            GraffitiQuestDialog.graffitiSlapping = new int[GraffitiQuestDialog.graffitiSpots.Length];
 
             // Save that we sprayed self story graffiti
             SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(self.menu.manager.rainWorld.progression.currentSaveState.miscWorldSaveData);
@@ -153,11 +153,11 @@ public static partial class Hooks
             }
             for (int i = 0; i < Plugin.storyGraffitisSprayed.Length; i++)
             {
-                GraffitiDialog.graffitiSpots[i].alpha = Plugin.storyGraffitisOnMap.Contains(Plugin.storyGraffitisSprayed[i]) ? 1f : 0f;
+                GraffitiQuestDialog.graffitiSpots[i].alpha = Plugin.storyGraffitisOnMap.Contains(Plugin.storyGraffitisSprayed[i]) ? 1f : 0f;
                 if (!Plugin.storyGraffitisOnMap.Contains(Plugin.storyGraffitisSprayed[i]))
                 {
-                    GraffitiDialog.graffitiSlapping[i] = (int)GraffitiDialog.slapLength;
-                    GraffitiDialog.graffitiSpots[i].sprite.scale = 0.1f;
+                    GraffitiQuestDialog.graffitiSlapping[i] = (int)GraffitiQuestDialog.slapLength;
+                    GraffitiQuestDialog.graffitiSpots[i].sprite.scale = 0.1f;
                     Plugin.storyGraffitisOnMap.Append(Plugin.storyGraffitisSprayed[i]);
                 }
             }
@@ -168,7 +168,7 @@ public static partial class Hooks
                 if (Plugin.storyGraffitisOnMap.Contains(Plugin.storyGraffitisSprayed[i]))
                 {
                     // TODO
-                    //self.AddIllustration(GraffitiDialog.graffitiSpots[i]);
+                    //self.AddIllustration(GraffitiQuestDialog.graffitiSpots[i]);
                 }
             }
         }

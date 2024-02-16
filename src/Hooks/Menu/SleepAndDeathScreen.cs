@@ -56,7 +56,7 @@ public static partial class Hooks
 
         if (message == "QUEST MAP")
         {
-            GraffitiDialog dialog = new GraffitiDialog(self.manager, self.continueButton.pos);
+            GraffitiQuestDialog dialog = new GraffitiQuestDialog(self.manager, self.continueButton.pos);
             self.manager.ShowDialog(dialog);
             self.PlaySound(SoundID.MENU_Switch_Page_In);
         }
@@ -70,7 +70,7 @@ public static partial class Hooks
     {
         //if (nextProcess is GraffitiDreamScreen)
         //{
-        //    (nextProcess as GraffitiDialog).GetDataFromGame(null);
+        //    (nextProcess as GraffitiQuestDialog).GetDataFromGame(null);
         //}
         orig(self, nextProcess);
     }
