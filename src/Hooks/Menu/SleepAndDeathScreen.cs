@@ -27,7 +27,7 @@ public static partial class Hooks
 
         questButton = new SimpleButton(self, self.pages[0], self.Translate("QUEST MAP"), "QUEST MAP", new Vector2(self.ContinueAndExitButtonsXPos - 460f - self.manager.rainWorld.options.SafeScreenOffset.x, Mathf.Max(self.manager.rainWorld.options.SafeScreenOffset.y, 15f)), new Vector2(110f, 30f));
         self.pages[0].subObjects.Add(questButton);
-        questButton.black = (false ? 1f : 0f);
+        questButton.black = 0f;
     }
 
     private static void SleepAndDeathScreen_Update(On.Menu.SleepAndDeathScreen.orig_Update orig, SleepAndDeathScreen self)
