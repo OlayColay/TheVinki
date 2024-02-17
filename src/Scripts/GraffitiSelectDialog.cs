@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using RWCustom;
+using SlugBase.DataTypes;
 using UnityEngine;
 using Vinki;
 
@@ -46,7 +47,6 @@ namespace Menu
             for (int j = 0; j < graffitiButtons?.Length; j++)
             {
                 pages[0].RemoveSubObject(graffitiButtons[j]);
-                graffitiButtons[j] = null;
             }
 
             string[] graffitiFiles;
@@ -58,14 +58,21 @@ namespace Menu
             {
                 graffitiFiles = Plugin.graffitis["White"].Select(g => "decals/" + g.imageName).ToArray();
             }
-            graffitiButtons = new GraffitiButton[graffitiFiles.Length];
+            graffitiButtons = new GraffitiButton[graffitiFiles.Length+1];
 
             int i = 0;
             for (int y = Screen.height - 100; y > 100; y -= 100)
             {
                 for (int x = 50; x < Screen.width - 300; x += 100)
                 {
-                    graffitiButtons[i] = new GraffitiButton(this, pages[0], graffitiFiles[i], "SELECT " + i, new Vector2(x, y));
+                    if (i == 0)
+                    {
+                        graffitiButtons[i] = new GraffitiButton(this, pages[0], "Sandbox_Randomize", "SHUFFLE", new Vector2(x, y));
+                    }
+                    else
+                    {
+                        graffitiButtons[i] = new GraffitiButton(this, pages[0], graffitiFiles[i-1], "SELECT " + i, new Vector2(x, y));
+                    }
                     pages[0].subObjects.Add(graffitiButtons[i]);
 
                     i++;
@@ -75,6 +82,13 @@ namespace Menu
                     }
                 }
             }
+
+            // Initiate selected button's color
+            foreach (GraffitiButton b in graffitiButtons)
+            {
+                b.roundedRect.borderColor = null;
+            }
+            graffitiButtons[Plugin.queuedGNums[currentPlayer]+1].roundedRect.borderColor = MenuColor(MenuColors.White);
         }
 
         private static float GetCancelButtonWidth(InGameTranslator.LanguageID lang)
@@ -108,15 +122,45 @@ namespace Menu
             }
             else if (message.StartsWith("SELECT "))
             {
-                int gNum = int.Parse(message.Substring(7));
+                int gNum = int.Parse(message.Substring(7)) - 1;
                 Debug.Log("Selecting " + Plugin.graffitis[players[currentPlayer].SlugCatClass.ToString()][gNum].imageName);
+                PlaySound(SoundID.MENU_Button_Standard_Button_Pressed);
 
                 Plugin.queuedGNums[currentPlayer] = gNum;
+
+                // Color selected button
+                foreach (GraffitiButton b in graffitiButtons)
+                {
+                    b.roundedRect.borderColor = null;
+                }
+                graffitiButtons[gNum+1].roundedRect.borderColor = MenuColor(MenuColors.White);
             }
             else if (message.StartsWith("PLAYER "))
             {
+                PlaySound(SoundID.MENU_Button_Standard_Button_Pressed);
+
                 currentPlayer = (int)char.GetNumericValue(message[7]);
                 PopulateGraffitiButtons();
+
+                // Color selected player
+                //foreach (SimpleButton b in playerButtons)
+                //{
+                //    b.InterpColor(Color.white);
+                //}
+                //playerButtons[currentPlayer].InterpColor(players[currentPlayer].JollyOption.bodyColor);
+            }
+            else if (message == "SHUFFLE")
+            {
+                PlaySound(SoundID.MENU_Button_Standard_Button_Pressed);
+
+                Plugin.queuedGNums[currentPlayer] = -1;
+
+                // Color selected button
+                foreach (GraffitiButton b in graffitiButtons)
+                {
+                    b.roundedRect.borderColor = null;
+                }
+                graffitiButtons[0].roundedRect.borderColor = MenuColor(MenuColors.White);
             }
         }
 
@@ -143,8 +187,8 @@ namespace Menu
         }
 
         public SimpleButton cancelButton;
-        public SimpleButton[] playerButtons;
         public GraffitiButton[] graffitiButtons;
+        public SimpleButton[] playerButtons;
 
         public bool opening;
         public bool closing;

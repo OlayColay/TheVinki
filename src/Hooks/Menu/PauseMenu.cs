@@ -8,7 +8,6 @@ public class PauseMenuData
 {
     public GraffitiSelectDialog graffitiMenu;
     public SimpleButton graffitiMenuButton;
-    public bool graffitiMenuMode = false;
 }
 public static class PauseMenuExtension
 {
@@ -57,22 +56,26 @@ public static partial class Hooks
             data.graffitiMenuButton.buttonBehav.greyedOut = self.continueButton.buttonBehav.greyedOut;
             data.graffitiMenuButton.black = self.continueButton.black;
         }
+
+        if (self.wantToContinue && self.manager.sideProcesses.Contains(data.graffitiMenu))
+        {
+            data.graffitiMenu.Singal(self.pages[0], "CLOSE");
+        }
     }
 
     private static void PauseMenu_Singal(On.Menu.PauseMenu.orig_Singal orig, PauseMenu self, MenuObject sender, string message)
     {
-        Debug.Log("PauseMenu Singal: " + message);
         if (self.game.GetStorySession?.saveState.saveStateNumber != Enums.vinki || message == null)
         {
             orig(self, sender, message);
             return;
         }
 
-        Debug.Log("We are Vinki");
         if (message == "SELECT GRAFFITI")
         {
-            GraffitiSelectDialog dialog = new GraffitiSelectDialog(self.manager, self.continueButton.pos, self.game);
-            self.manager.ShowDialog(dialog);
+            PauseMenuData data = self.VinkiData();
+            data.graffitiMenu = new GraffitiSelectDialog(self.manager, self.continueButton.pos, self.game);
+            self.manager.ShowDialog(data.graffitiMenu);
             self.PlaySound(SoundID.MENU_Switch_Page_In);
         }
         else
