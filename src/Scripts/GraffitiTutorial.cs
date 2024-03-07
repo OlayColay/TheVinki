@@ -12,7 +12,7 @@ public class GraffitiTutorial : UpdatableAndDeletable
         Throw,
         End
     }
-    public Phase nextPhase { get; set; } = Phase.Craft;
+    public Phase nextPhase = Phase.Craft;
     public Vector2 playerPos = Vector2.zero;
     public float craftTriggerPos { get; } = 842f;
     public float sprayTriggerPos { get; } = 1626f;
@@ -33,7 +33,7 @@ public class GraffitiTutorial : UpdatableAndDeletable
         }
 
         playerPos = room.PlayersInRoom.First().mainBodyChunk.pos;
-        //Debug.Log("Current player position: " + playerPos);
+        //Debug.Log("Current player position: " + playerPos + "\tnextPhase: " + nextPhase.ToString());
         var game = room.game;
 
         if (playerPos.y >= craftTriggerPos && nextPhase == Phase.Craft)

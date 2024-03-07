@@ -552,6 +552,7 @@ namespace Vinki
             else if (self.IsPressed(Craft) && IsPressingGraffiti(self))
             {
                 int sprayCount = CanCraftSprayCan(self.grasps[0], self.grasps[1]);
+                //Debug.Log("Crafted spray count: " + sprayCount);
                 if (sprayCount > 0)
                 {
                     v.craftCounter++;
@@ -630,38 +631,44 @@ namespace Vinki
 
         private static int CanCraftSprayCan(Creature.Grasp a, Creature.Grasp b)
         {
-            // You can craft while moving if you're not grinding
-            if (a == null || b == null || (a.grabber as Player).Vinki().isGrinding)
+            //Debug.Log("CRAFTING: " + (a == null ? "nothing" : a.grabbed.abstractPhysicalObject.type.ToString()) + " + " + (b == null ? "nothing" : b.grabbed.abstractPhysicalObject.type.ToString()));
+            // You can craft while moving
+            if (a == null || a.grabbed == null || b == null || b.grabbed == null)
             {
+                //Debug.Log("Item 1 or 2 is null");
                 return 0;
             }
 
-            AbstractPhysicalObject.AbstractObjectType abstractObjectType = a.grabbed.abstractPhysicalObject.type;
-            AbstractPhysicalObject.AbstractObjectType abstractObjectType2 = b.grabbed.abstractPhysicalObject.type;
+            AbstractPhysicalObject.AbstractObjectType abstractObjectTypeA = a.grabbed.abstractPhysicalObject.type;
+            AbstractPhysicalObject.AbstractObjectType abstractObjectTypeB = b.grabbed.abstractPhysicalObject.type;
 
-            if (abstractObjectType == AbstractPhysicalObject.AbstractObjectType.Rock &&
-                colorfulItems.ContainsKey(abstractObjectType2))
+            if (abstractObjectTypeA == AbstractPhysicalObject.AbstractObjectType.Rock &&
+                colorfulItems.ContainsKey(abstractObjectTypeB))
             {
-                return colorfulItems[abstractObjectType2];
+                //Debug.Log("Item 1 is rock and Item 2 is " + abstractObjectTypeB.ToString() + " and worth " + colorfulItems[abstractObjectTypeB]);
+                return colorfulItems[abstractObjectTypeB];
             }
-            if (abstractObjectType2 == AbstractPhysicalObject.AbstractObjectType.Rock &&
-                colorfulItems.ContainsKey(abstractObjectType))
+            if (abstractObjectTypeB == AbstractPhysicalObject.AbstractObjectType.Rock &&
+                colorfulItems.ContainsKey(abstractObjectTypeA))
             {
-                return colorfulItems[abstractObjectType];
+                //Debug.Log("Item 2 is rock and Item 1 is " + abstractObjectTypeA.ToString() + " and worth " + colorfulItems[abstractObjectTypeA]);
+                return colorfulItems[abstractObjectTypeA];
             }
 
             // Upgrade Spray Can
-            if (abstractObjectType.ToString() == "SprayCan" && abstractObjectType2.ToString() == "SprayCan")
+            if (a.grabbed is SprayCan && b.grabbed is SprayCan)
             {
+                //Debug.Log("Crafting two cans with uses: " + (a.grabbed as SprayCan).Abstr.uses + " and " + (b.grabbed as SprayCan).Abstr.uses);
                 if ((a.grabbed as SprayCan).Abstr.uses >= 5 || (b.grabbed as SprayCan).Abstr.uses >= 5)
                 {
                     return 0;
                 }
                 return Math.Min(5, (a.grabbed as SprayCan).Abstr.uses + (b.grabbed as SprayCan).Abstr.uses);
             }
-            if (abstractObjectType.ToString() == "SprayCan" && colorfulItems.ContainsKey(abstractObjectType2))
+            if (a.grabbed is SprayCan && colorfulItems.ContainsKey(abstractObjectTypeB))
             {
-                if (colorfulItems[abstractObjectType2] > 9000)
+                //Debug.Log("Crafting first hand can with uses: " + (a.grabbed as SprayCan).Abstr.uses + " and " + abstractObjectTypeB.ToString() + " worth " + colorfulItems[abstractObjectTypeB]);
+                if (colorfulItems[abstractObjectTypeB] > 9000)
                 {
                     return 9001;
                 }
@@ -669,11 +676,12 @@ namespace Vinki
                 {
                     return 0;
                 }
-                return Math.Min(5, (a.grabbed as SprayCan).Abstr.uses + colorfulItems[abstractObjectType2]);
+                return Math.Min(5, (a.grabbed as SprayCan).Abstr.uses + colorfulItems[abstractObjectTypeB]);
             }
-            if (abstractObjectType2.ToString() == "SprayCan" && colorfulItems.ContainsKey(abstractObjectType))
+            if (b.grabbed is SprayCan && colorfulItems.ContainsKey(abstractObjectTypeA))
             {
-                if (colorfulItems[abstractObjectType] > 9000)
+                //Debug.Log("Crafting second hand can with uses: " + (b.grabbed as SprayCan).Abstr.uses + " and " + abstractObjectTypeA.ToString() + " worth " + colorfulItems[abstractObjectTypeA]);
+                if (colorfulItems[abstractObjectTypeA] > 9000)
                 {
                     return 9001;
                 }
@@ -681,8 +689,9 @@ namespace Vinki
                 {
                     return 0;
                 }
-                return Math.Min(5, (b.grabbed as SprayCan).Abstr.uses + colorfulItems[abstractObjectType]);
+                return Math.Min(5, (b.grabbed as SprayCan).Abstr.uses + colorfulItems[abstractObjectTypeA]);
             }
+            //Debug.Log("None of the cases are covered");
             return 0;
         }
 
@@ -694,13 +703,12 @@ namespace Vinki
         private static void SprayGraffitiInGame(Player self)
         {
             var storyGraffitisInRoom = Plugin.storyGraffitiRoomPositions.Where(e => e.Value.Key == self.room.abstractRoom.name);
-            SlugBaseSaveData miscWorldSave;
+            SlugBaseSaveData miscWorldSave = SaveDataExtension.GetSlugBaseData(self.room.game.GetStorySession.saveState.miscWorldSaveData);
             bool storyGraffitisExist = false;
             bool hologramsExist = false;
             int[] sprayedGNums = null;
             if (self.room.game.GetStorySession != null)
             {
-                miscWorldSave = SaveDataExtension.GetSlugBaseData(self.room.game.GetStorySession.saveState.miscWorldSaveData);
                 storyGraffitisExist = miscWorldSave.TryGet("StoryGraffitisSprayed", out sprayedGNums);
                 if (storyGraffitisExist) 
                 {
@@ -720,7 +728,14 @@ namespace Vinki
                     if (self.mainBodyChunk.pos.x >= grafPos.x - grafRadius.x && self.mainBodyChunk.pos.x <= grafPos.x + grafRadius.x &&
                         self.mainBodyChunk.pos.y >= grafPos.y - grafRadius.y && self.mainBodyChunk.pos.y <= grafPos.y + grafRadius.y)
                     {
-                        gNum = storyGraffiti.Key; 
+                        gNum = storyGraffiti.Key;
+
+                        // Progress story graffiti tutorial if it's the right room
+                        if (storyGraffiti.Value.Key == "SS_D08")
+                        { 
+                            miscWorldSave.Set("StoryGraffitiTutorialPhase", (int)StoryGraffitiTutorial.Phase.Explore);
+                        }
+
                         break;
                     }
                 }

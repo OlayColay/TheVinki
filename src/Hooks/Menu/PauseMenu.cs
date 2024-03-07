@@ -51,7 +51,7 @@ public static partial class Hooks
         }
 
         PauseMenuData data = self.VinkiData();
-        if (questButton != null)
+        if (questButton != null && self.continueButton != null && self.continueButton.buttonBehav != null)
         {
             data.graffitiMenuButton.buttonBehav.greyedOut = self.continueButton.buttonBehav.greyedOut;
             data.graffitiMenuButton.black = self.continueButton.black;

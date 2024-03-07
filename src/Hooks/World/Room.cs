@@ -83,10 +83,13 @@ public static partial class Hooks
         bool storyGraffitisHaveBeenSprayed = miscWorldSave.TryGet("StoryGraffitisSprayed", out int[] sprayedGNums);
 
         // Disable holograms for story graffiti tutorial room after they've been sprayed and erased by 5P already
+        Debug.Log("Checking if holograms are enabled in " + self.abstractRoom.name);
         if (HologramsEnabledInRoom(self, miscWorldSave))
         {
+            Debug.Log(storyGraffitisInRoom.Count() + " holograms are enabled");
             foreach (var storyGraffiti in storyGraffitisInRoom)
             {
+                Debug.Log("Hologram: " + storyGraffiti.Key);
                 if ((!storyGraffitisHaveBeenSprayed || !sprayedGNums.Contains(storyGraffiti.Key)) && storyGraffiti.Key != 1)
                 {
                     GraffitiHolder graffitiHolder = new GraffitiHolder(Plugin.graffitis["Story"][storyGraffiti.Key], storyGraffiti.Value, self, storyGraffiti.Key);
@@ -98,7 +101,8 @@ public static partial class Hooks
 
     public static bool HologramsEnabledInRoom(Room self, SlugBaseSaveData miscWorldSave)
     {
-        return (self.abstractRoom?.name != "SS_D08" || !miscWorldSave.TryGet("StoryGraffitiTutorialPhase", out int i) || i < (int)StoryGraffitiTutorial.Phase.Explore) &&
+        //Debug.Log("HologramsEnabledInRoom: " + self.abstractRoom.name + " " + (!miscWorldSave.TryGet("SpawnUnlockablePearl", out int k) ? k : "null") + " " + Hooks.AllGraffitiUnlocked());
+        return (self.abstractRoom?.name != "SS_D08" || !miscWorldSave.TryGet("StoryGraffitiTutorialPhase", out int i) || i < (int)StoryGraffitiTutorial.Phase.End) &&
             (self.abstractRoom?.name != "DM_AI" || ((!miscWorldSave.TryGet("SpawnUnlockablePearl", out int j) || j < 1) && Hooks.AllGraffitiUnlocked()));
     }
 
@@ -111,10 +115,10 @@ public static partial class Hooks
             return;
         }
 
-        if (!self.abstractRoom.firstTimeRealized)
-        {
-            return;
-        }
+        //if (!self.abstractRoom.firstTimeRealized)
+        //{
+        //    return;
+        //}
 
         SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(self.game.rainWorld.progression.currentSaveState.miscWorldSaveData);
         // Graffiti Tutorial
@@ -128,7 +132,7 @@ public static partial class Hooks
             self.AddObject(new StoryGraffitiTutorial(self));
         }
         // Grinding Tutorial
-        else if ((self.abstractRoom?.name == "UW_H01" || self.abstractRoom?.name == "UW_H01VI") && (!miscSave.TryGet("StoryGraffitiTutorialPhase", out bool b) || !b))
+        else if ((self.abstractRoom?.name == "UW_H01" || self.abstractRoom?.name == "UW_H01VI") && (!miscSave.TryGet("GrindTutorialCompleted", out bool b) || !b))
         {
             self.AddObject(new GrindTutorial(self));
         }

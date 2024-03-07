@@ -49,7 +49,6 @@ public class StoryGraffitiTutorial : UpdatableAndDeletable
                 100, 600, false, false
             );
             nextPhase = Phase.End;
-            miscSave.Set("StoryGraffitiTutorialPhase", (int)Phase.Explore);
         }
         else if (Vector2.Distance(playerPos, triggerPos) <= triggerReach && nextPhase == Phase.Explore)
         {
