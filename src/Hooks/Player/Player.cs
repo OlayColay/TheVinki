@@ -703,43 +703,44 @@ namespace Vinki
         private static void SprayGraffitiInGame(Player self)
         {
             var storyGraffitisInRoom = Plugin.storyGraffitiRoomPositions.Where(e => e.Value.Key == self.room.abstractRoom.name);
-            SlugBaseSaveData miscWorldSave = SaveDataExtension.GetSlugBaseData(self.room.game.GetStorySession.saveState.miscWorldSaveData);
             bool storyGraffitisExist = false;
             bool hologramsExist = false;
             int[] sprayedGNums = null;
+            int gNum = -1;
+
             if (self.room.game.GetStorySession != null)
             {
+                SlugBaseSaveData miscWorldSave = SaveDataExtension.GetSlugBaseData(self.room.game.GetStorySession.saveState.miscWorldSaveData);
                 storyGraffitisExist = miscWorldSave.TryGet("StoryGraffitisSprayed", out sprayedGNums);
                 if (storyGraffitisExist) 
                 {
                     hologramsExist = HologramsEnabledInRoom(self.room, miscWorldSave);
                 }
-            }
-            int gNum = -1;
 
-            // Check if we are in the right place to spray a story graffiti
-            foreach (var storyGraffiti in storyGraffitisInRoom)
-            {
-                var graf = Plugin.graffitis["Story"][storyGraffiti.Key];
-                if (graf != null && (!storyGraffitisExist || !sprayedGNums.Contains(storyGraffiti.Key)) && hologramsExist)
+                // Check if we are in the right place to spray a story graffiti
+                foreach (var storyGraffiti in storyGraffitisInRoom)
                 {
-                    Vector2 grafRadius = graf.handles[1] / 2f;
-                    Vector2 grafPos = storyGraffiti.Value.Value;
-                    if (self.mainBodyChunk.pos.x >= grafPos.x - grafRadius.x && self.mainBodyChunk.pos.x <= grafPos.x + grafRadius.x &&
-                        self.mainBodyChunk.pos.y >= grafPos.y - grafRadius.y && self.mainBodyChunk.pos.y <= grafPos.y + grafRadius.y)
+                    var graf = Plugin.graffitis["Story"][storyGraffiti.Key];
+                    if (graf != null && (!storyGraffitisExist || !sprayedGNums.Contains(storyGraffiti.Key)) && hologramsExist)
                     {
-                        gNum = storyGraffiti.Key;
+                        Vector2 grafRadius = graf.handles[1] / 2f;
+                        Vector2 grafPos = storyGraffiti.Value.Value;
+                        if (self.mainBodyChunk.pos.x >= grafPos.x - grafRadius.x && self.mainBodyChunk.pos.x <= grafPos.x + grafRadius.x &&
+                            self.mainBodyChunk.pos.y >= grafPos.y - grafRadius.y && self.mainBodyChunk.pos.y <= grafPos.y + grafRadius.y)
+                        {
+                            gNum = storyGraffiti.Key;
 
-                        // Progress story graffiti tutorial if it's the right room
-                        if (storyGraffiti.Value.Key == "SS_D08")
-                        { 
-                            miscWorldSave.Set("StoryGraffitiTutorialPhase", (int)StoryGraffitiTutorial.Phase.Explore);
+                            // Progress story graffiti tutorial if it's the right room
+                            if (storyGraffiti.Value.Key == "SS_D08")
+                            { 
+                                miscWorldSave.Set("StoryGraffitiTutorialPhase", (int)StoryGraffitiTutorial.Phase.Explore);
+                            }
+
+                            break;
                         }
-
-                        break;
                     }
-                }
-            }  
+                }  
+            }
 
             if (!VinkiConfig.RequireSprayCans.Value)
             {

@@ -212,7 +212,7 @@ namespace Vinki
             graffitis[slugcat].Add(decal);
         }
 
-        private static void AddGraffitiObjectives()
+        public static void AddGraffitiObjectives()
         {
             JsonList json = JsonAny.Parse(File.ReadAllText(AssetManager.ResolveFilePath("VinkiObjectives.txt"))).AsList();
             foreach (JsonAny objective in json)
