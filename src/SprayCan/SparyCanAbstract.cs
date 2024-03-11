@@ -34,7 +34,7 @@ sealed class SprayCanAbstract : AbstractPhysicalObject
     public override void Realize()
     {
         base.Realize();
-        if (realizedObject == null)
+        if (realizedObject == null && !Room.offScreenDen)
             realizedObject = new SprayCan(this, Room.realizedRoom.MiddleOfTile((pos != null) ? pos.Tile : new RWCustom.IntVector2(0,0)), Vector2.zero);
     }
 

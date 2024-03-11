@@ -320,6 +320,7 @@ namespace Vinki
             trigger.held = false;
 
             Hooks.LoadGraffiti();
+            Hooks.AddGraffitiObjectives();
         }
 
         private void ResetGraffitiFolder(UIfocusable trigger)
@@ -341,6 +342,7 @@ namespace Vinki
                 File.Copy(newPath, newPath.Replace(AssetManager.ResolveDirectory("decals/Unlockables"), AssetManager.ResolveDirectory("decals/VinkiGraffiti/vinki")), true);
             }
             Hooks.LoadGraffiti();
+            Hooks.AddGraffitiObjectives();
 
             foreach (OpImage img in Tabs[3].items.Where((item) => item is OpImage))
             {
@@ -377,6 +379,7 @@ namespace Vinki
                 }
             }
             Hooks.LoadGraffiti();
+            Hooks.AddGraffitiObjectives();
 
             foreach (OpImage img in Tabs[3].items.Where((item) => item is OpImage))
             {

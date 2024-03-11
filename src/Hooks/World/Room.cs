@@ -83,13 +83,10 @@ public static partial class Hooks
         bool storyGraffitisHaveBeenSprayed = miscWorldSave.TryGet("StoryGraffitisSprayed", out int[] sprayedGNums);
 
         // Disable holograms for story graffiti tutorial room after they've been sprayed and erased by 5P already
-        Debug.Log("Checking if holograms are enabled in " + self.abstractRoom.name);
         if (HologramsEnabledInRoom(self, miscWorldSave))
         {
-            Debug.Log(storyGraffitisInRoom.Count() + " holograms are enabled");
             foreach (var storyGraffiti in storyGraffitisInRoom)
             {
-                Debug.Log("Hologram: " + storyGraffiti.Key);
                 if ((!storyGraffitisHaveBeenSprayed || !sprayedGNums.Contains(storyGraffiti.Key)) && storyGraffiti.Key != 1)
                 {
                     GraffitiHolder graffitiHolder = new GraffitiHolder(Plugin.graffitis["Story"][storyGraffiti.Key], storyGraffiti.Value, self, storyGraffiti.Key);
