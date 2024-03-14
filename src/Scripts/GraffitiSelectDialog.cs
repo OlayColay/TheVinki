@@ -12,6 +12,7 @@ namespace Menu
         public GraffitiSelectDialog(ProcessManager manager, Vector2 cancelButtonPos, RainWorldGame game) : base(manager)
         {
             float[] screenOffsets = Custom.GetScreenOffsets();
+            GraffitiStartPos = new Vector2(50f, Screen.height - 100f);
             pages[0].pos = new Vector2(0.01f, 0f);
             Page page = pages[0];
             page.pos.y = page.pos.y + 2000f;
@@ -58,37 +59,52 @@ namespace Menu
             {
                 graffitiFiles = Plugin.graffitis["White"].Select(g => "decals/" + g.imageName).ToArray();
             }
-            graffitiButtons = new GraffitiButton[graffitiFiles.Length+1];
+            graffitiButtons = new GraffitiButton[Math.Min(GraffitiPerPage, graffitiFiles.Length - (currentPage * GraffitiPerPage))];
 
-            int i = 0;
-            for (int y = Screen.height - 100; y > 100; y -= 100)
+            int gNum = currentPage * GraffitiPerPage;
+            float yPos = GraffitiStartPos.y;
+            for (int i = 0; i < GraffitiPerRow && gNum < graffitiFiles.Length; i++)
             {
-                for (int x = 50; x < Screen.width - 300; x += 100)
+                float xPos = GraffitiStartPos.x;
+                for (int j = 0; j < GraffitiPerCol && gNum < graffitiFiles.Length; j++) 
                 {
-                    if (i == 0)
-                    {
-                        graffitiButtons[i] = new GraffitiButton(this, pages[0], "Sandbox_Randomize", "SHUFFLE", new Vector2(x, y));
-                    }
-                    else
-                    {
-                        graffitiButtons[i] = new GraffitiButton(this, pages[0], graffitiFiles[i-1], "SELECT " + i, new Vector2(x, y));
-                    }
-                    pages[0].subObjects.Add(graffitiButtons[i]);
-
-                    i++;
-                    if (i >= graffitiButtons.Length)
-                    {
-                        return;
-                    }
+                    graffitiButtons[i * GraffitiPerRow + j] = new GraffitiButton(this, pages[0], graffitiFiles[gNum], "SELECT " + gNum, new Vector2(xPos, yPos));
+                    pages[0].subObjects.Add(graffitiButtons[i * GraffitiPerRow + j]);
+                    xPos += GraffitiSpacing;
+                    gNum++;
                 }
+                yPos -= GraffitiSpacing;
             }
+
+            //int i = 0;
+            //for (int y = Screen.height - 100; y > 100; y -= 100)
+            //{
+            //    for (int x = 50; x < Screen.width - 300; x += 100)
+            //    {
+            //        if (i == 0)
+            //        {
+            //            graffitiButtons[i] = new GraffitiButton(this, pages[0], "Sandbox_Randomize", "SHUFFLE", new Vector2(x, y));
+            //        }
+            //        else
+            //        {
+            //            graffitiButtons[i] = new GraffitiButton(this, pages[0], graffitiFiles[i-1], "SELECT " + i, new Vector2(x, y));
+            //        }
+            //        pages[0].subObjects.Add(graffitiButtons[i]);
+
+            //        i++;
+            //        if (i >= graffitiButtons.Length)
+            //        {
+            //            return;
+            //        }
+            //    }
+            //}
 
             // Initiate selected button's color
-            foreach (GraffitiButton b in graffitiButtons)
-            {
-                b.roundedRect.borderColor = null;
-            }
-            graffitiButtons[Plugin.queuedGNums[currentPlayer]+1].roundedRect.borderColor = MenuColor(MenuColors.White);
+            //foreach (GraffitiButton b in graffitiButtons)
+            //{
+            //    b.roundedRect.borderColor = null;
+            //}
+            //graffitiButtons[Plugin.queuedGNums[currentPlayer]+1].roundedRect.borderColor = MenuColor(MenuColors.White);
         }
 
         private static float GetCancelButtonWidth(InGameTranslator.LanguageID lang)
@@ -122,7 +138,7 @@ namespace Menu
             }
             else if (message.StartsWith("SELECT "))
             {
-                int gNum = int.Parse(message.Substring(7)) - 1;
+                int gNum = int.Parse(message.Substring(7));
                 Debug.Log("Selecting " + Plugin.graffitis[players[currentPlayer].SlugCatClass.ToString()][gNum].imageName);
                 PlaySound(SoundID.MENU_Button_Standard_Button_Pressed);
 
@@ -133,7 +149,7 @@ namespace Menu
                 {
                     b.roundedRect.borderColor = null;
                 }
-                graffitiButtons[gNum+1].roundedRect.borderColor = MenuColor(MenuColors.White);
+                graffitiButtons[gNum].roundedRect.borderColor = MenuColor(MenuColors.White);
             }
             else if (message.StartsWith("PLAYER "))
             {
@@ -201,5 +217,14 @@ namespace Menu
 
         public Player[] players;
         public int currentPlayer = 0;
+
+        public int curPage = 0;
+
+        public readonly static int GraffitiPerRow = 4;
+        public readonly static int GraffitiPerCol = 4;
+        public readonly static int GraffitiPerPage = GraffitiPerRow * GraffitiPerCol;
+
+        public readonly Vector2 GraffitiStartPos;
+        public readonly static float GraffitiSpacing = 100f;
     }
 }
