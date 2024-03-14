@@ -22,6 +22,22 @@ namespace Vinki
         {
             On.RainWorld.OnModsInit += Extras.WrapInit(LoadResources);
             On.RainWorld.PostModsInit += RainWorld_PostModsInit;
+
+            if (debugMode)
+            {
+                On.RainWorldGame.ctor += RainWorldGame_ctor;
+            }
+        }
+
+        private static void RainWorldGame_ctor(On.RainWorldGame.orig_ctor orig, RainWorldGame self, ProcessManager manager)
+        {
+            orig(self, manager);
+
+            Enums.RegisterValues();
+            ApplyHooks();
+
+            LoadResources(self.rainWorld);
+            RainWorld_PostModsInit((_) => { }, self.rainWorld);
         }
 
         // Add hooks
@@ -38,18 +54,45 @@ namespace Vinki
             ApplyJollyCoopHooks();
             ApplySaveStateHooks();
             ApplySleepAndDeathScreenHooks();
-            ApplyMenuSceneHooks();
             ApplyLizardGraphicsHooks();
             ApplyCollectTokenHooks();
             ApplyExpeditionHooks();
             ApplyPauseMenuHooks();
         }
 
+        public static void RemoveHooks()
+        {
+            On.RainWorld.OnModsInit -= Extras.WrapInit(LoadResources);
+            On.RainWorld.PostModsInit -= RainWorld_PostModsInit;
+            On.RainWorldGame.ctor -= RainWorldGame_ctor;
+
+            RemovePlayerHooks();
+            RemovePlayerGraphicsHooks();
+            RemoveShelterDoorHooks();
+            RemoveSSOracleHooks();
+            RemoveRoomHooks();
+            RemoveJollyCoopHooks();
+            RemoveSaveStateHooks();
+            RemoveSleepAndDeathScreenHooks();
+            RemoveLizardGraphicsHooks();
+            RemoveCollectTokenHooks();
+            RemoveExpeditionHooks();
+            RemovePauseMenuHooks();
+
+            RemoveMenuSceneHooks();
+
+            On.ProcessManager.PostSwitchMainProcess -= ProcessManager_PostSwitchMainProcess;
+            IL.Menu.IntroRoll.ctor -= IntroRoll_ctor;
+        }
+
         // Load any resources, such as sprites or sounds
         private static void LoadResources(RainWorld rainWorld)
         {
-            Enums.RegisterValues();
-            ApplyHooks();
+            if (!debugMode)
+            {
+                Enums.RegisterValues();
+                ApplyHooks();
+            }
 
             SlugBase.SaveData.SlugBaseSaveData progSaveData = SlugBase.SaveData.SaveDataExtension.GetSlugBaseData(rainWorld.progression.miscProgressionData);
             VinkiConfig.ShowVinkiTitleCard.OnChange += () => progSaveData.Set("ShowVinkiTitleCard", VinkiConfig.ShowVinkiTitleCard.Value);

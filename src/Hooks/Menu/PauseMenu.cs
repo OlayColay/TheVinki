@@ -25,6 +25,12 @@ public static partial class Hooks
         On.Menu.PauseMenu.Update += PauseMenu_Update;
         On.Menu.PauseMenu.Singal += PauseMenu_Singal;
     }
+    private static void RemovePauseMenuHooks()
+    {
+        On.Menu.PauseMenu.ctor -= PauseMenu_ctor;
+        On.Menu.PauseMenu.Update -= PauseMenu_Update;
+        On.Menu.PauseMenu.Singal -= PauseMenu_Singal;
+    }
 
     private static void PauseMenu_ctor(On.Menu.PauseMenu.orig_ctor orig, PauseMenu self, ProcessManager manager, RainWorldGame game)
     {

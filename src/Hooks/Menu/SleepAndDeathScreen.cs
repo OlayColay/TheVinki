@@ -11,7 +11,15 @@ public static partial class Hooks
         On.Menu.SleepAndDeathScreen.Singal += SleepAndDeathScreen_Singal;
         On.Menu.SleepAndDeathScreen.CommunicateWithUpcomingProcess += SleepAndDeathScreen_CommunicateWithUpcomingProcess;
         On.Menu.SleepAndDeathScreen.UpdateInfoText += SleepAndDeathScreen_UpdateInfoText;
-	}
+    }
+    private static void RemoveSleepAndDeathScreenHooks()
+    {
+        On.Menu.SleepAndDeathScreen.ctor -= SleepAndDeathScreen_ctor;
+        On.Menu.SleepAndDeathScreen.Update -= SleepAndDeathScreen_Update;
+        On.Menu.SleepAndDeathScreen.Singal -= SleepAndDeathScreen_Singal;
+        On.Menu.SleepAndDeathScreen.CommunicateWithUpcomingProcess -= SleepAndDeathScreen_CommunicateWithUpcomingProcess;
+        On.Menu.SleepAndDeathScreen.UpdateInfoText -= SleepAndDeathScreen_UpdateInfoText;
+    }
 
     private static SimpleButton questButton;
     private static void SleepAndDeathScreen_ctor(On.Menu.SleepAndDeathScreen.orig_ctor orig, SleepAndDeathScreen self, ProcessManager manager, ProcessManager.ProcessID ID)

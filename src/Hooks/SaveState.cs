@@ -16,6 +16,16 @@ public static partial class Hooks
         };
         On.PlayerProgression.MiscProgressionData.GetTokenCollected_string_bool += PlayerProgression_MiscProgressionData_GetTokenCollected;
     }
+    private static void RemoveSaveStateHooks()
+    {
+        On.SaveState.GetStoryDenPosition -= SaveState_GetStoryDenPosition;
+
+        On.PlayerProgression.WipeSaveState -= (On.PlayerProgression.orig_WipeSaveState orig, PlayerProgression self, SlugcatStats.Name name) => {
+            if (name == Enums.vinki) Plugin.introPlayed = false;
+            orig(self, name);
+        };
+        On.PlayerProgression.MiscProgressionData.GetTokenCollected_string_bool -= PlayerProgression_MiscProgressionData_GetTokenCollected;
+    }
 
     private static string SaveState_GetStoryDenPosition(On.SaveState.orig_GetStoryDenPosition orig, SlugcatStats.Name slugcat, out bool isVanilla)
     {

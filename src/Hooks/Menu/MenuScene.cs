@@ -13,6 +13,11 @@ public static partial class Hooks
         On.Menu.MenuScene.BuildScene += MenuScene_BuildScene;
         On.Menu.MenuScene.Update += MenuScene_Update;
     }
+    private static void RemoveMenuSceneHooks()
+    {
+        On.Menu.MenuScene.BuildScene -= MenuScene_BuildScene;
+        On.Menu.MenuScene.Update -= MenuScene_Update;
+    }
 
     private static void MenuScene_BuildScene(On.Menu.MenuScene.orig_BuildScene orig, MenuScene self)
     {

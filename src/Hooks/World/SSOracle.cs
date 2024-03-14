@@ -164,6 +164,15 @@ namespace Vinki
 
             On.SSOracleBehavior.PebblesConversation.AddEvents += PebblesConversation_AddEvents;
         }
+        private static void RemoveSSOracleHooks()
+        {
+            On.SSOracleBehavior.SeePlayer -= SSOracleBehavior_SeePlayer;
+            On.SSOracleBehavior.NewAction -= SSOracleBehavior_NewAction;
+            On.SSOracleBehavior.Update -= SSOracleBehavior_Update;
+            On.SSOracleBehavior.UpdateStoryPearlCollection -= SSOracleBehavior_UpdateStoryPearlCollection;
+
+            On.SSOracleBehavior.PebblesConversation.AddEvents -= PebblesConversation_AddEvents;
+        }
 
         private static void SSOracleBehavior_UpdateStoryPearlCollection(On.SSOracleBehavior.orig_UpdateStoryPearlCollection orig, SSOracleBehavior self)
         {

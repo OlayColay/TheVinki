@@ -26,6 +26,18 @@ namespace Vinki
             On.PlayerGraphics.LoadJollyColorsFromOptions += PlayerGraphics_LoadJollyColorsFromOptions;
             On.PlayerGraphics.PopulateJollyColorArray += PlayerGraphics_PopulateJollyColorsArray;
         }
+        private static void RemovePlayerGraphicsHooks()
+        {
+            On.PlayerGraphics.ctor -= PlayerGraphics_ctor;
+            On.PlayerGraphics.InitiateSprites -= PlayerGraphics_InitiateSprites;
+            On.PlayerGraphics.AddToContainer -= PlayerGraphics_AddToContainer;
+            On.PlayerGraphics.ApplyPalette -= PlayerGraphics_ApplyPallete;
+            On.PlayerGraphics.DrawSprites -= PlayerGraphics_DrawSprites;
+            On.PlayerGraphics.Update -= PlayerGraphics_Update;
+            On.PlayerGraphics.JollyUniqueColorMenu -= PlayerGraphics_JollyUniqueColorMenu;
+            On.PlayerGraphics.LoadJollyColorsFromOptions -= PlayerGraphics_LoadJollyColorsFromOptions;
+            On.PlayerGraphics.PopulateJollyColorArray -= PlayerGraphics_PopulateJollyColorsArray;
+        }
 
         private static void PlayerGraphics_PopulateJollyColorsArray(On.PlayerGraphics.orig_PopulateJollyColorArray orig, SlugcatStats.Name reference)
         {

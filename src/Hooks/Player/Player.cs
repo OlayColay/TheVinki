@@ -101,6 +101,14 @@ namespace Vinki
             On.Player.JollyUpdate += Player_JollyUpdate;
             On.Player.CanBeSwallowed += Player_CanBeSwallowed;
         }
+        private static void RemovePlayerHooks()
+        {
+            On.Player.Jump -= Player_Jump;
+            On.Player.MovementUpdate -= Player_Move;
+            On.Player.Update -= Player_Update;
+            On.Player.JollyUpdate -= Player_JollyUpdate;
+            On.Player.CanBeSwallowed -= Player_CanBeSwallowed;
+        }
 
         private static void Player_JollyUpdate(On.Player.orig_JollyUpdate orig, Player self, bool eu)
         {
@@ -144,8 +152,7 @@ namespace Vinki
 
             orig(self);
 
-            if (!SuperJump.TryGet(self, out float power) || !CoyoteBoost.TryGet(self, out var coyoteBoost) ||
-                self.SlugCatClass != Enums.vinki)
+            if (self.SlugCatClass != Enums.vinki)
             {
                 return;
             }
@@ -181,7 +188,7 @@ namespace Vinki
                 if (coyote)
                 {
                     //Debug.Log("Coyote jump!");
-                    self.mainBodyChunk.vel.x += coyoteBoost * self.slideDirection;
+                    self.mainBodyChunk.vel.x += Enums.Movement.CoyoteBoost * self.slideDirection;
                     self.room.PlaySound(SoundID.Slugcat_Flip_Jump, self.mainBodyChunk, false, 3f, 1f);
                 }
                 else
@@ -189,7 +196,7 @@ namespace Vinki
                     self.room.PlaySound(SoundID.Slugcat_Flip_Jump, self.mainBodyChunk, false, 1f, 1f);
                 }
 
-                self.jumpBoost *= power + (coyote ? 0.2f : 0f);
+                self.jumpBoost *= Enums.Movement.SuperJump + (coyote ? 0.2f : 0f);
                 self.animation = Player.AnimationIndex.Flip;
                 self.slideCounter = 0;
 
@@ -210,10 +217,7 @@ namespace Vinki
         {
             orig(self, eu);
 
-            if (!GrindXSpeed.TryGet(self, out var grindXSpeed) || !NormalXSpeed.TryGet(self, out var normalXSpeed) ||
-                !GrindYSpeed.TryGet(self, out var grindYSpeed) || !NormalYSpeed.TryGet(self, out var normalYSpeed) ||
-                !SparkColor.TryGet(self, out var sparkColor) || !GrindVineSpeed.TryGet(self, out var grindVineSpeed) ||
-                self.SlugCatClass != Enums.vinki)
+            if (self.SlugCatClass != Enums.vinki)
             {
                 return;
             }
@@ -276,8 +280,8 @@ namespace Vinki
             {
                 v.isGrindingH = v.isGrindingV = v.isGrindingNoGrav = v.isGrindingVine = false;
                 v.vineAtFeet = null;
-                self.slugcatStats.runspeedFac = normalXSpeed;
-                self.slugcatStats.poleClimbSpeedFac = normalYSpeed;
+                self.slugcatStats.runspeedFac = Enums.Movement.NormalXSpeed;
+                self.slugcatStats.poleClimbSpeedFac = Enums.Movement.NormalYSpeed;
                 return;
             }
 
@@ -334,11 +338,11 @@ namespace Vinki
                     float dot = vineDir.normalized.x * v.lastXDirection;
                     if (dot > 0f)
                     {
-                        vineAtFeet.floatPos += grindVineSpeed / self.room.climbableVines.TotalLength(vineAtFeet.vine);
+                        vineAtFeet.floatPos += Enums.Movement.GrindVineSpeed / self.room.climbableVines.TotalLength(vineAtFeet.vine);
                     }
                     else
                     {
-                        vineAtFeet.floatPos -= grindVineSpeed / self.room.climbableVines.TotalLength(vineAtFeet.vine);
+                        vineAtFeet.floatPos -= Enums.Movement.GrindVineSpeed / self.room.climbableVines.TotalLength(vineAtFeet.vine);
                     }
 
                     // Fall off the vine if reached the end
@@ -356,7 +360,7 @@ namespace Vinki
                 }
                 else
                 {
-                    self.bodyChunks[1].vel.x = grindXSpeed * v.lastXDirection;
+                    self.bodyChunks[1].vel.x = Enums.Movement.GrindXSpeed * v.lastXDirection;
                 }
                 
                 // Sparks from grinding
@@ -367,8 +371,8 @@ namespace Vinki
                     Vector2 a = RWCustom.Custom.RNV();
                     a.x = Mathf.Abs(a.x) * -v.lastXDirection;
                     a.y = Mathf.Abs(a.y);
-                    self.room.AddObject(new Spark(pos, a * Mathf.Lerp(4f, 30f, UnityEngine.Random.value), sparkColor, null, 2, 4));
-                    self.room.AddObject(new Spark(posB, a * Mathf.Lerp(4f, 30f, UnityEngine.Random.value), sparkColor, null, 2, 4));
+                    self.room.AddObject(new Spark(pos, a * Mathf.Lerp(4f, 30f, UnityEngine.Random.value), Enums.SparkColor, null, 2, 4));
+                    self.room.AddObject(new Spark(posB, a * Mathf.Lerp(4f, 30f, UnityEngine.Random.value), Enums.SparkColor, null, 2, 4));
                 }
 
                 // Looping grind sound
@@ -376,7 +380,7 @@ namespace Vinki
             }
             else
             {
-                self.slugcatStats.runspeedFac = normalXSpeed;
+                self.slugcatStats.runspeedFac = Enums.Movement.NormalXSpeed;
             }
 
             // Grind if holding Grind on a pole (vertical beam or 0G beam or vine)
@@ -389,7 +393,7 @@ namespace Vinki
                 // Handle vine grinding
                 if (v.isGrindingVine)
                 {
-                    self.vineClimbCursor = grindVineSpeed * Vector2.ClampMagnitude(
+                    self.vineClimbCursor = Enums.Movement.GrindVineSpeed * Vector2.ClampMagnitude(
                         self.vineClimbCursor + v.lastVineDir * Custom.LerpMap(Vector2.Dot(v.lastVineDir, self.vineClimbCursor.normalized), -1f, 1f, 10f, 3f), 30f
                     );
                     Vector2 a6 = self.room.climbableVines.OnVinePos(self.vinePos);
@@ -414,12 +418,12 @@ namespace Vinki
                     // Handle 0G horizontal beam grinding
                     if (v.isGrindingNoGrav && self.room.GetTile(self.mainBodyChunk.pos).horizontalBeam)
                     {
-                        self.bodyChunks[0].vel.x = grindYSpeed * v.lastXDirection;
+                        self.bodyChunks[0].vel.x = Enums.Movement.GrindYSpeed * v.lastXDirection;
                     }
                     else
                     {
                         // This works in gravity and no gravity
-                        self.bodyChunks[0].vel.y = grindYSpeed * v.lastYDirection;
+                        self.bodyChunks[0].vel.y = Enums.Movement.GrindYSpeed * v.lastYDirection;
                     }
                 }
 
@@ -432,8 +436,8 @@ namespace Vinki
                     a.x = Mathf.Abs(a.x) * v.lastXDirection;
                     a.y = Mathf.Abs(a.y) * -v.lastYDirection;
                     Vector2 b = new Vector2(-a.x, a.y);
-                    self.room.AddObject(new Spark(pos, a * Mathf.Lerp(4f, 30f, UnityEngine.Random.value), sparkColor, null, 2, 4));
-                    self.room.AddObject(new Spark(posB, b * Mathf.Lerp(4f, 30f, UnityEngine.Random.value), sparkColor, null, 2, 4));
+                    self.room.AddObject(new Spark(pos, a * Mathf.Lerp(4f, 30f, UnityEngine.Random.value), Enums.SparkColor, null, 2, 4));
+                    self.room.AddObject(new Spark(posB, b * Mathf.Lerp(4f, 30f, UnityEngine.Random.value), Enums.SparkColor, null, 2, 4));
                 }
 
                 // Looping grind sound
@@ -441,7 +445,7 @@ namespace Vinki
             }
             else
             {
-                self.slugcatStats.poleClimbSpeedFac = normalYSpeed;
+                self.slugcatStats.poleClimbSpeedFac = Enums.Movement.NormalYSpeed;
             }
 
             // Catch beam with feet if not holding down

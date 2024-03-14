@@ -5,9 +5,14 @@ public static partial class Hooks
 {
 	public static void ApplyExpeditionHooks()
 	{
-        On.Expedition.NeuronDeliveryChallenge.ValidForThisSlugcat += NeuronDeliveryChallenge_ValidForThisSlugcat;
-        On.Expedition.PearlDeliveryChallenge.Update += PearlDeliveryChallenge_Update;
-	}
+        NeuronDeliveryChallenge.ValidForThisSlugcat += NeuronDeliveryChallenge_ValidForThisSlugcat;
+        PearlDeliveryChallenge.Update += PearlDeliveryChallenge_Update;
+    }
+    public static void RemoveExpeditionHooks()
+    {
+        NeuronDeliveryChallenge.ValidForThisSlugcat -= NeuronDeliveryChallenge_ValidForThisSlugcat;
+        PearlDeliveryChallenge.Update -= PearlDeliveryChallenge_Update;
+    }
 
     private static bool NeuronDeliveryChallenge_ValidForThisSlugcat(NeuronDeliveryChallenge.orig_ValidForThisSlugcat orig, Expedition.NeuronDeliveryChallenge self, SlugcatStats.Name slugcat)
     {

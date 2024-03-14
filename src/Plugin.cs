@@ -15,6 +15,8 @@ namespace Vinki
     class Plugin : BaseUnityPlugin
     {
         public const string MOD_ID = "olaycolay.thevinki";
+
+        public static bool debugMode = true;
         
         public static bool introPlayed = false;
         public static int[] storyGraffitisSprayed = new int[] {};
@@ -38,15 +40,6 @@ namespace Vinki
         };
         public static List<MenuDepthIllustration> rotatingGhost = new();
 
-        public static readonly PlayerFeature<float> CoyoteBoost = PlayerFloat("thevinki/coyote_boost");
-        public static readonly PlayerFeature<float> GrindXSpeed = PlayerFloat("thevinki/grind_x_speed");
-        public static readonly PlayerFeature<float> GrindVineSpeed = PlayerFloat("thevinki/grind_vine_speed");
-        public static readonly PlayerFeature<float> GrindYSpeed = PlayerFloat("thevinki/grind_y_speed");
-        public static readonly PlayerFeature<float> NormalXSpeed = PlayerFloat("thevinki/normal_x_speed");
-        public static readonly PlayerFeature<float> NormalYSpeed = PlayerFloat("thevinki/normal_y_speed");
-        public static readonly PlayerFeature<float> SuperJump = PlayerFloat("thevinki/super_jump");
-        public static readonly PlayerFeature<Color> SparkColor = PlayerColor("thevinki/spark_color");
-
         public static bool improvedInput;
         public static Array improvedControls;
         public static readonly int Grind = 0, ToggleGrind = 1, Graffiti = 2, Spray = 3, Craft = 4, Tag = 5;
@@ -56,7 +49,16 @@ namespace Vinki
         // Add hooks
         public void OnEnable()
         {
+            Debug.Log("OnEnable\n" + StackTraceUtility.ExtractStackTrace());
             Hooks.ApplyInit();
+        }
+
+        public void OnDisable()
+        {
+            Debug.Log("OnDisable\n" + StackTraceUtility.ExtractStackTrace());
+            if (debugMode) {
+                Hooks.RemoveHooks();
+            };
         }
 
         public static void SetImprovedInput()

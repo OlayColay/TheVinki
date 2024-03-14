@@ -5,10 +5,23 @@ namespace Vinki;
 
 public static class Enums
 {
-    public static SlugcatStats.Name vinki = new(nameof(vinki), false);
-    public static ProcessManager.ProcessID GraffitiQuest = new(nameof(GraffitiQuest), false);
-    public static string vinkiStr = nameof(vinki);
-    public static MenuScene.SceneID GraffitiMap = new MenuScene.SceneID(nameof(GraffitiMap), true);
+    public static readonly SlugcatStats.Name vinki = new(nameof(vinki), false);
+    public static readonly ProcessManager.ProcessID GraffitiQuest = new(nameof(GraffitiQuest), false);
+    public static readonly string vinkiStr = nameof(vinki);
+    public static readonly MenuScene.SceneID GraffitiMap = new MenuScene.SceneID(nameof(GraffitiMap), true);
+
+    public static readonly UnityEngine.Color SparkColor = new UnityEngine.Color32(0xd1, 0xfa, 0xff, 0xff);
+
+    public static class Movement
+    {
+        public static readonly float CoyoteBoost = 5f;
+        public static readonly float GrindVineSpeed = 6.25f;
+        public static readonly float GrindXSpeed = 7.5f;
+        public static readonly float GrindYSpeed = 7.5f;
+        public static readonly float NormalXSpeed = 1.3f;
+        public static readonly float NormalYSpeed = 1.3f;
+        public static readonly float SuperJump = 1.25f;
+    }
 
     public static class SSOracle
     {

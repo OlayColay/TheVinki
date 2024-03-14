@@ -1,4 +1,5 @@
 ﻿using MonoMod.RuntimeDetour;
+using MonoMod.RuntimeDetour.HookGen;
 using On.DevInterface;
 using System;
 using System.IO;
@@ -33,6 +34,16 @@ public static partial class Hooks
         On.CollectToken.CollectTokenData.FromString += CollectTokenData_FromString;
 
         On.DevInterface.TokenRepresentation.TokenName += TokenRepresentation_TokenName;
+    }
+    private static void RemoveCollectTokenHooks()
+    {
+        HookEndpointManager.Remove(typeof(CollectToken).GetProperty(nameof(CollectToken.TokenColor), System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance).GetGetMethod(), CollectToken_get_TokenColor);
+        On.CollectToken.Pop -= CollectToken_Pop;
+        On.CollectToken.Update -= CollectToken_Update;
+
+        On.CollectToken.CollectTokenData.FromString -= CollectTokenData_FromString;
+
+        On.DevInterface.TokenRepresentation.TokenName -= TokenRepresentation_TokenName;
     }
 
     public delegate Color orig_TokenColor(CollectToken self);

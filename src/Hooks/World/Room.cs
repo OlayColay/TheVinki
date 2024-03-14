@@ -16,6 +16,14 @@ public static partial class Hooks
 
         On.RoomSpecificScript.AddRoomSpecificScript += RoomSpecificScript_AddRoomSpecificScript;
     }
+    private static void RemoveRoomHooks()
+    {
+        On.AbstractRoom.RealizeRoom -= AbstractRoom_RealizeRoom;
+
+        On.Room.Loaded -= Room_Loaded;
+
+        On.RoomSpecificScript.AddRoomSpecificScript -= RoomSpecificScript_AddRoomSpecificScript;
+    }
 
     private static void AbstractRoom_RealizeRoom(On.AbstractRoom.orig_RealizeRoom orig, AbstractRoom self, World world, RainWorldGame game)
     {

@@ -9,7 +9,12 @@ public static partial class Hooks
 	{
 		On.LizardGraphics.InitiateSprites += LizardGraphics_InitiateSprites;
         On.LizardGraphics.DrawSprites += LizardGraphics_DrawSprites;
-	}
+    }
+    private static void RemoveLizardGraphicsHooks()
+    {
+        On.LizardGraphics.InitiateSprites -= LizardGraphics_InitiateSprites;
+        On.LizardGraphics.DrawSprites -= LizardGraphics_DrawSprites;
+    }
 
     private static void LizardGraphics_InitiateSprites(On.LizardGraphics.orig_InitiateSprites orig, LizardGraphics self, RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam)
     {

@@ -10,6 +10,7 @@ public static partial class Hooks
     private static MenuIllustration[] rainPodsSymbol = new MenuIllustration[16];
     private static MenuIllustration[] shoesSymbol = new MenuIllustration[16];
     private static MenuIllustration[] glassesSymbol = new MenuIllustration[16];
+
     private static void ApplyJollyCoopHooks()
     {
         On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.ctor += Vinki_Jolly_ctor;
@@ -20,6 +21,17 @@ public static partial class Hooks
         On.JollyCoop.JollyMenu.JollyPlayerSelector.GetPupButtonOffName += Vinki_Jolly_Name;
         //On.JollyCoop.JollyMenu.JollyPlayerSelector.Update += Vinki_Jolly_Update;
         On.JollyCoop.JollyMenu.JollyPlayerSelector.GrafUpdate += Vinki_Jolly_GrafUpdate;
+    }
+    private static void RemoveJollyCoopHooks()
+    {
+        On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.ctor -= Vinki_Jolly_ctor;
+        On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.HasUniqueSprite -= Vinki_Jolly_Sprite;
+        On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.LoadIcon -= Vinki_Jolly_LoadIcon;
+        On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.Update -= Vinki_Jolly_PupUpdate;
+
+        On.JollyCoop.JollyMenu.JollyPlayerSelector.GetPupButtonOffName -= Vinki_Jolly_Name;
+        //On.JollyCoop.JollyMenu.JollyPlayerSelector.Update -= Vinki_Jolly_Update;
+        On.JollyCoop.JollyMenu.JollyPlayerSelector.GrafUpdate -= Vinki_Jolly_GrafUpdate;
     }
 
     private static void Vinki_Jolly_PupUpdate(On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.orig_Update orig, SymbolButtonTogglePupButton self)
