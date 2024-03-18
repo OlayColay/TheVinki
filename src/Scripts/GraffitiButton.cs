@@ -23,7 +23,7 @@ namespace Menu
         }
 
         // Token: 0x06002C99 RID: 11417 RVA: 0x003697D0 File Offset: 0x003679D0
-        public GraffitiButton(Menu menu, MenuObject owner, string symbolName, string singalText, Vector2 pos) : base(menu, owner, pos, new Vector2(74f, 74f))
+        public GraffitiButton(Menu menu, MenuObject owner, string symbolName, string singalText, Vector2 pos) : base(menu, owner, pos, new Vector2(99f, 99f))
         {
             signalText = singalText;
             roundedRect = new RoundedRect(menu, this, new Vector2(0f, 0f), size, true);
@@ -31,7 +31,7 @@ namespace Menu
             symbolSprite = new FSprite(symbolName, true);
             Container.AddChild(symbolSprite);
 
-            float newScale = 70f / Mathf.Max(symbolSprite.width, symbolSprite.height);
+            float newScale = 90f / Mathf.Max(symbolSprite.width, symbolSprite.height);
             symbolSprite.scale = newScale;
         }
 

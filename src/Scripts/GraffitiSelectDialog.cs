@@ -12,25 +12,39 @@ namespace Menu
         public GraffitiSelectDialog(ProcessManager manager, Vector2 cancelButtonPos, RainWorldGame game) : base(manager)
         {
             float[] screenOffsets = Custom.GetScreenOffsets();
-            GraffitiStartPos = new Vector2(50f, Screen.height - 100f);
+            GraffitiStartPos = new Vector2(200f, Screen.height - 250f);
             pages[0].pos = new Vector2(0.01f, 0f);
             Page page = pages[0];
             page.pos.y = page.pos.y + 2000f;
 
+            // Background rects
+            roundedRects[0] = new(this, page, new Vector2(175f, 60f), new Vector2(475f, 645f), true);
+            page.subObjects.Add(roundedRects[0]);
+
+            // Cancel button
             float cancelButtonWidth = GetCancelButtonWidth(base.CurrLang);
-            cancelButton = new SimpleButton(this, pages[0], base.Translate("CLOSE"), "CLOSE", cancelButtonPos, new Vector2(cancelButtonWidth, 30f));
-            pages[0].subObjects.Add(cancelButton);
+            cancelButton = new SimpleButton(this, page, base.Translate("CLOSE"), "CLOSE", cancelButtonPos, new Vector2(cancelButtonWidth, 30f));
+            page.subObjects.Add(cancelButton);
             opening = true;
             targetAlpha = 1f;
 
+            // Player buttons
             players = game.Players.Select(abs => abs.realizedCreature as Player).ToArray();
             playerButtons = new SimpleButton[players.Length];
 
             for (int i = 0; i < playerButtons.Length; i++)
             {
-                playerButtons[i] = new SimpleButton(this, pages[0], base.Translate("PLAYER " + (i+1)), "PLAYER " + i, new Vector2(cancelButtonPos.x, Screen.height - 50 - 40*i), new Vector2(cancelButtonWidth, 30f));
-                pages[0].subObjects.Add(playerButtons[i]);
+                playerButtons[i] = new SimpleButton(this, page, base.Translate("PLAYER " + (i+1)), "PLAYER " + i, new Vector2(cancelButtonPos.x, Screen.height - 50 - 40*i), new Vector2(cancelButtonWidth, 30f));
+                page.subObjects.Add(playerButtons[i]);
             }
+
+            // Page switch buttons
+            nextButton = new(this, page, "NEXT PAGE", new Vector2(530f, 635f), 1);
+            page.subObjects.Add(nextButton);
+            prevButton = new(this, page, "PREV PAGE", new Vector2(250f, 635f), 3);
+            page.subObjects.Add(prevButton);
+            pageLabel = new(this, page, "PAGE X/Y", new Vector2(250f, 635f), new Vector2(335f, 50f), true);
+            page.subObjects.Add(pageLabel);
 
             PopulateGraffitiButtons();
         }
@@ -59,22 +73,27 @@ namespace Menu
             {
                 graffitiFiles = Plugin.graffitis["White"].Select(g => "decals/" + g.imageName).ToArray();
             }
-            graffitiButtons = new GraffitiButton[Math.Min(GraffitiPerPage, graffitiFiles.Length - (currentPage * GraffitiPerPage))];
+            graffitiButtons = new GraffitiButton[Math.Min(GraffitiPerPage, graffitiFiles.Length - (curGPage * GraffitiPerPage))];
 
-            int gNum = currentPage * GraffitiPerPage;
+            int gNum = curGPage * GraffitiPerPage;
             float yPos = GraffitiStartPos.y;
-            for (int i = 0; i < GraffitiPerRow && gNum < graffitiFiles.Length; i++)
+            for (int i = 0; i < NumRows && gNum < graffitiFiles.Length; i++)
             {
                 float xPos = GraffitiStartPos.x;
-                for (int j = 0; j < GraffitiPerCol && gNum < graffitiFiles.Length; j++) 
+                for (int j = 0; j < NumCols && gNum < graffitiFiles.Length; j++) 
                 {
-                    graffitiButtons[i * GraffitiPerRow + j] = new GraffitiButton(this, pages[0], graffitiFiles[gNum], "SELECT " + gNum, new Vector2(xPos, yPos));
-                    pages[0].subObjects.Add(graffitiButtons[i * GraffitiPerRow + j]);
+                    graffitiButtons[i * NumCols + j] = new GraffitiButton(this, pages[0], graffitiFiles[gNum], "SELECT " + gNum, new Vector2(xPos, yPos));
+                    pages[0].subObjects.Add(graffitiButtons[i * NumCols + j]);
                     xPos += GraffitiSpacing;
                     gNum++;
                 }
                 yPos -= GraffitiSpacing;
             }
+
+            pageCount = (int)Math.Ceiling((float)graffitiFiles.Length / GraffitiPerPage);
+            nextButton.buttonBehav.greyedOut = ((curGPage + 1) >= pageCount);
+            prevButton.buttonBehav.greyedOut = (curGPage == 0);
+            pageLabel.text = Translate("PAGE") + ' ' + (curGPage+1) + '/' + pageCount;
 
             //int i = 0;
             //for (int y = Screen.height - 100; y > 100; y -= 100)
@@ -104,7 +123,11 @@ namespace Menu
             //{
             //    b.roundedRect.borderColor = null;
             //}
-            //graffitiButtons[Plugin.queuedGNums[currentPlayer]+1].roundedRect.borderColor = MenuColor(MenuColors.White);
+            int queuedGNum = Plugin.queuedGNums[currentPlayer];
+            if (queuedGNum >= curGPage * GraffitiPerPage && queuedGNum < (curGPage + 1) * GraffitiPerPage)
+            {
+                graffitiButtons[queuedGNum % GraffitiPerPage].roundedRect.borderColor = MenuColor(MenuColors.White);
+            }
         }
 
         private static float GetCancelButtonWidth(InGameTranslator.LanguageID lang)
@@ -149,13 +172,14 @@ namespace Menu
                 {
                     b.roundedRect.borderColor = null;
                 }
-                graffitiButtons[gNum].roundedRect.borderColor = MenuColor(MenuColors.White);
+                graffitiButtons[gNum % GraffitiPerPage].roundedRect.borderColor = MenuColor(MenuColors.White);
             }
             else if (message.StartsWith("PLAYER "))
             {
                 PlaySound(SoundID.MENU_Button_Standard_Button_Pressed);
 
                 currentPlayer = (int)char.GetNumericValue(message[7]);
+                curGPage = 0;
                 PopulateGraffitiButtons();
 
                 // Color selected player
@@ -178,10 +202,16 @@ namespace Menu
                 }
                 graffitiButtons[0].roundedRect.borderColor = MenuColor(MenuColors.White);
             }
+            else if (message.EndsWith("PAGE"))
+            {
+                curGPage += message.StartsWith("NEXT") ? 1 : -1;
+                PopulateGraffitiButtons();
+            }
         }
 
         public override void Update()
         {
+            Debug.Log("Selectables: " + pages[0].selectables.Count() + "\tSubObjects: " + pages[0].subObjects.Count());
             base.Update();
             lastAlpha = currentAlpha;
             currentAlpha = Mathf.Lerp(currentAlpha, targetAlpha, 0.2f);
@@ -202,9 +232,13 @@ namespace Menu
             }
         }
 
+        public RoundedRect[] roundedRects = new RoundedRect[2];
         public SimpleButton cancelButton;
         public GraffitiButton[] graffitiButtons;
         public SimpleButton[] playerButtons;
+        public BigArrowButton nextButton;
+        public BigArrowButton prevButton;
+        public MenuLabel pageLabel;
 
         public bool opening;
         public bool closing;
@@ -218,13 +252,14 @@ namespace Menu
         public Player[] players;
         public int currentPlayer = 0;
 
-        public int curPage = 0;
+        public int curGPage = 0;
+        public int pageCount = 1;
 
-        public readonly static int GraffitiPerRow = 4;
-        public readonly static int GraffitiPerCol = 4;
-        public readonly static int GraffitiPerPage = GraffitiPerRow * GraffitiPerCol;
+        public readonly static int NumRows = 5;
+        public readonly static int NumCols = 4;
+        public readonly static int GraffitiPerPage = NumRows * NumCols;
 
         public readonly Vector2 GraffitiStartPos;
-        public readonly static float GraffitiSpacing = 100f;
+        public readonly static float GraffitiSpacing = 110f;
     }
 }
