@@ -52,10 +52,12 @@ public static partial class Hooks
                     placedGraffitis[self.name][i].cyclePlaced + VinkiConfig.GraffitiFadeTime.Value >= thisCycle)
                 {
                     // Spawn the graffiti
-                    PlacedObject.CustomDecalData decalData = new PlacedObject.CustomDecalData(null);
+                    PlacedObject.CustomDecalData decalData = new(null);
                     decalData.FromString(placedGraffitis[self.name][i].data);
-                    PlacedObject placedObject = new PlacedObject(PlacedObject.Type.CustomDecal, decalData);
-                    placedObject.pos = new Vector2(placedGraffitis[self.name][i].x, placedGraffitis[self.name][i].y);
+                    PlacedObject placedObject = new(PlacedObject.Type.CustomDecal, decalData)
+                    {
+                        pos = new Vector2(placedGraffitis[self.name][i].x, placedGraffitis[self.name][i].y)
+                    };
                     self.realizedRoom.AddObject(new CustomDecal(placedObject));
                 }
             }
@@ -97,7 +99,7 @@ public static partial class Hooks
             {
                 if ((!storyGraffitisHaveBeenSprayed || !sprayedGNums.Contains(storyGraffiti.Key)) && storyGraffiti.Key != 1)
                 {
-                    GraffitiHolder graffitiHolder = new GraffitiHolder(Plugin.graffitis["Story"][storyGraffiti.Key], storyGraffiti.Value, self, storyGraffiti.Key);
+                    GraffitiHolder graffitiHolder = new(Plugin.graffitis["Story"][storyGraffiti.Key], storyGraffiti.Value, self, storyGraffiti.Key);
                     self.AddObject(graffitiHolder);
                 }
             }

@@ -118,16 +118,16 @@ namespace Vinki
 			bool thrw = false;
 			if (phase == CutsceneVinkiIntro.Phase.PlayerRun)
 			{
-				int[] array2 = new int[]
-				{
-					250,
+				int[] array2 =
+                [
+                    250,
 					95,
 					4,
 					70,
 					4,
 					15,
 					120
-				};
+				];
 				if (cutsceneTimer < 30)
 				{
 					pckp = true;
@@ -229,16 +229,16 @@ namespace Vinki
 			}
 
 			// Token: 0x04003ED4 RID: 16084
-			public static readonly Phase Init = new Phase("Init", true);
+			public static readonly Phase Init = new("Init", true);
 
 			// Token: 0x04003ED5 RID: 16085
-			public static readonly Phase PlayerRun = new Phase("PlayerRun", true);
+			public static readonly Phase PlayerRun = new("PlayerRun", true);
 
 			// Token: 0x04003ED7 RID: 16087
-			public static readonly Phase Wait = new Phase("Wait", true);
+			public static readonly Phase Wait = new("Wait", true);
 
 			// Token: 0x04003ED8 RID: 16088
-			public static readonly Phase End = new Phase("End", true);
+			public static readonly Phase End = new("End", true);
 		}
 
 		// Token: 0x0200078C RID: 1932

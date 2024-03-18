@@ -126,13 +126,13 @@ namespace Vinki
 
             if (!ModManager.MSC)
             {
-                self.Tag().affectedSprites = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 10 };
+                self.Tag().affectedSprites = [0, 1, 2, 3, 4, 5, 6, 7, 8, 10];
                 return;
             }
 
             if (!self.player.IsVinki(out var vinki))
             {
-                self.Tag().affectedSprites = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 12 };
+                self.Tag().affectedSprites = [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 12];
                 return;
             }
 
@@ -141,11 +141,13 @@ namespace Vinki
             vinki.stripesSprite = vinki.glassesSprite + 1;
             vinki.rainPodsSprite = vinki.stripesSprite + 1;
             vinki.shoesSprite = vinki.rainPodsSprite + 1;
-            self.Tag().affectedSprites = new int[0];
+            self.Tag().affectedSprites = [];
 
             Array.Resize(ref sLeaser.sprites, sLeaser.sprites.Length + 1);
-            sLeaser.sprites[vinki.tagIconSprite] = new FSprite("TagIcon");
-            sLeaser.sprites[vinki.tagIconSprite].isVisible = false;
+            sLeaser.sprites[vinki.tagIconSprite] = new FSprite("TagIcon")
+            {
+                isVisible = false
+            };
 
             if (!ModManager.ActiveMods.Exists((ModManager.Mod mod) => mod.id == "dressmyslugcat"))
             {

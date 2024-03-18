@@ -51,7 +51,7 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
     public Vector2 vel;
     public Vector2[] trail;
     public Vector2[,] lines;
-    public Vector2[] glassesPoints = new Vector2[4] { new Vector2(-22f, 22f), new Vector2(10f, -10f), new Vector2(22f, 22f), new Vector2(-10f, -10f) };
+    public Vector2[] glassesPoints = [new Vector2(-22f, 22f), new Vector2(10f, -10f), new Vector2(22f, 22f), new Vector2(-10f, -10f)];
     public Vector2[] boundsPoints = new Vector2[4];
     private float glitch;
     private float lastGlitch;
@@ -67,7 +67,7 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
     private float lastExpand;
     private StaticSoundLoop soundLoop;
     private StaticSoundLoop glitchLoop;
-    public Color TokenColor = new Color(1f, 0.5f, 0f);
+    public Color TokenColor = new(1f, 0.5f, 0f);
     public int gNum;
 
     public GraffitiHolder(PlacedObject.CustomDecalData graffitiData, KeyValuePair<string, Vector2> graffitiPosition, Room room, int gNum)
@@ -231,8 +231,10 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
     public void InitiateSprites(RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam)
     {
         sLeaser.sprites = new FSprite[TotalSprites];
-        sLeaser.sprites[LightSprite] = new FSprite("Futile_White", true);
-        sLeaser.sprites[LightSprite].shader = rCam.game.rainWorld.Shaders["FlatLight"];
+        sLeaser.sprites[LightSprite] = new FSprite("Futile_White", true)
+        {
+            shader = rCam.game.rainWorld.Shaders["FlatLight"]
+        };
         sLeaser.sprites[GoldSprite] = new FSprite("Futile_White", true);
         if (sprayable)
         {
@@ -243,13 +245,17 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
         {
             sLeaser.sprites[GoldSprite].shader = rCam.game.rainWorld.Shaders["GoldenGlow"];
         }
-        sLeaser.sprites[MainSprite] = new FSprite("JetFishEyeA", true);
-        sLeaser.sprites[MainSprite].shader = rCam.game.rainWorld.Shaders["Hologram"];
+        sLeaser.sprites[MainSprite] = new FSprite("JetFishEyeA", true)
+        {
+            shader = rCam.game.rainWorld.Shaders["Hologram"]
+        };
         for (int i = 0; i < lines.GetLength(0); i++)
         {
-            sLeaser.sprites[LineSprite(i)] = new FSprite("pixel", true);
-            sLeaser.sprites[LineSprite(i)].anchorY = 0f;
-            sLeaser.sprites[LineSprite(i)].shader = rCam.game.rainWorld.Shaders["Hologram"];
+            sLeaser.sprites[LineSprite(i)] = new FSprite("pixel", true)
+            {
+                anchorY = 0f,
+                shader = rCam.game.rainWorld.Shaders["Hologram"]
+            };
         }
         AddToContainer(sLeaser, rCam, null);
     }

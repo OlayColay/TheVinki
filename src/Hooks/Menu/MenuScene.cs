@@ -42,11 +42,7 @@ public static partial class Hooks
         else if (self.sceneID.ToString() == "Slugcat_Vinki")
         {
             // Find the graffiti layers of the slugcat select scene
-            List<MenuDepthIllustration> menuGraffitis = new List<MenuDepthIllustration>();
-            foreach (var image in self.depthIllustrations.Where(f => Path.GetFileNameWithoutExtension(f.fileName).StartsWith("Graffiti - ")))
-            {
-                menuGraffitis.Add(image);
-            }
+            List<MenuDepthIllustration> menuGraffitis = [.. self.depthIllustrations.Where(f => Path.GetFileNameWithoutExtension(f.fileName).StartsWith("Graffiti - "))];
 
             // Randomize which graffiti shows
             int randGraffiti = UnityEngine.Random.Range(0, menuGraffitis.Count);
@@ -62,7 +58,7 @@ public static partial class Hooks
         else if (self.sceneID.ToString() == "Sleep_Vinki")
         {
             // Find the item layers of the slugcat select scene
-            List<MenuDepthIllustration> sleepItems = new List<MenuDepthIllustration>();
+            List<MenuDepthIllustration> sleepItems = [];
             foreach (MenuDepthIllustration image in self.depthIllustrations.Where(f => Path.GetFileNameWithoutExtension(f.fileName).StartsWith("Item - ")))
             {
                 image.alpha = 0f;
@@ -82,11 +78,7 @@ public static partial class Hooks
             Plugin.shelterItems.Clear();
 
             // Find the graffiti layers of the slugcat select scene
-            List<MenuDepthIllustration> menuGraffitis = new List<MenuDepthIllustration>();
-            foreach (var image in self.depthIllustrations.Where(f => Path.GetFileNameWithoutExtension(f.fileName).StartsWith("Graffiti - ")))
-            {
-                menuGraffitis.Add(image);
-            }
+            List<MenuDepthIllustration> menuGraffitis = [.. self.depthIllustrations.Where(f => Path.GetFileNameWithoutExtension(f.fileName).StartsWith("Graffiti - "))];
 
             // Randomize which graffiti shows
             int randGraffiti = UnityEngine.Random.Range(0, menuGraffitis.Count - 1);
@@ -101,11 +93,7 @@ public static partial class Hooks
             }
 
             // Find the doodle layers of the slugcat select scene
-            List<MenuDepthIllustration> menuDoodles = new List<MenuDepthIllustration>();
-            foreach (var image in self.depthIllustrations.Where(f => Path.GetFileNameWithoutExtension(f.fileName).StartsWith("Doodle - ")))
-            {
-                menuDoodles.Add(image);
-            }
+            List<MenuDepthIllustration> menuDoodles = [.. self.depthIllustrations.Where(f => Path.GetFileNameWithoutExtension(f.fileName).StartsWith("Doodle - "))];
 
             // Randomize which doodle shows
             int randDoodles = UnityEngine.Random.Range(0, menuDoodles.Count);
@@ -136,12 +124,12 @@ public static partial class Hooks
                 self.AddIllustration(new MenuDepthIllustration(self.menu, self, self.sceneFolder, "wip_overseer", new Vector2(0f, -64f), 2f, MenuDepthIllustration.MenuShader.Basic));
             }
 
-            GraffitiQuestDialog.graffitiSpots = new MenuDepthIllustration[]
-            {
+            GraffitiQuestDialog.graffitiSpots =
+            [
                 new MenuDepthIllustration(self.menu, self, self.sceneFolder, "graffiti_ss", new Vector2(750, 550), 4f, MenuDepthIllustration.MenuShader.Basic),
                 new MenuDepthIllustration(self.menu, self, self.sceneFolder, "graffiti_ss", new Vector2(800, 560), 4.5f, MenuDepthIllustration.MenuShader.Basic),
                 new MenuDepthIllustration(self.menu, self, self.sceneFolder, "graffiti_test", new Vector2(650, 580), 6f, MenuDepthIllustration.MenuShader.Basic)
-            };
+            ];
             GraffitiQuestDialog.graffitiSlapping = new int[GraffitiQuestDialog.graffitiSpots.Length];
 
             // Save that we sprayed self story graffiti

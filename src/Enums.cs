@@ -8,7 +8,7 @@ public static class Enums
     public static readonly SlugcatStats.Name vinki = new(nameof(vinki), false);
     public static readonly ProcessManager.ProcessID GraffitiQuest = new(nameof(GraffitiQuest), false);
     public static readonly string vinkiStr = nameof(vinki);
-    public static readonly MenuScene.SceneID GraffitiMap = new MenuScene.SceneID(nameof(GraffitiMap), true);
+    public static readonly MenuScene.SceneID GraffitiMap = new(nameof(GraffitiMap), true);
 
     public static readonly UnityEngine.Color SparkColor = new UnityEngine.Color32(0xd1, 0xfa, 0xff, 0xff);
 
@@ -54,7 +54,7 @@ public static class Enums
 
     public static class Sound
     {
-        public static SoundID Grind1A = new SoundID("Vinki_Grind_LOOP", true);
+        public static SoundID Grind1A = new("Vinki_Grind_LOOP", true);
     }
 
     public static void RegisterValues()

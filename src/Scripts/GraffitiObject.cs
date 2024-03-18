@@ -46,7 +46,7 @@ public class GraffitiObject : CustomDecal
             // Add this graffiti to the dictionary
             if (!placedGraffitis.ContainsKey(roomId))
             {
-                placedGraffitis[roomId] = new();
+                placedGraffitis[roomId] = [];
             }
             placedGraffitis[roomId].Add(serializableGraffiti);
 

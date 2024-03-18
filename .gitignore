@@ -401,3 +401,6 @@ FodyWeavers.xsd
 thevinki/content/text_eng/.vscode/ltex.dictionary.en-US.txt
 thevinki/content/text_eng/.vscode/ltex.disabledRules.en-US.txt
 /thevinki/decals/VinkiGraffiti
+/WorkshopUploader
+NStrip.exe
+/Workshop

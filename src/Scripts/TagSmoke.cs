@@ -73,12 +73,8 @@ public class TagSmoke : PositionedSmokeEmitter
     }
 
     // Token: 0x02000867 RID: 2151
-    public new class SmokeSegment : HyrbidSmokeSegment
+    public new class SmokeSegment(float hue) : HyrbidSmokeSegment()
     {
-        public SmokeSegment(float hue) : base()
-        {
-            this.hue = hue;
-        }
 
         // Token: 0x06004078 RID: 16504 RVA: 0x00485191 File Offset: 0x00483391
         public override void Reset(SmokeSystem newOwner, Vector2 pos, Vector2 vel, float lifeTime)
@@ -105,13 +101,13 @@ public class TagSmoke : PositionedSmokeEmitter
                 v *= 0.5f + 0.5f / Mathf.Pow(v.magnitude, 0.5f);
             }
             v += SmokeSystem.PerlinWind(p, rm) * 2f;
-            if (rm.readyForAI && rm.aimap.getAItile(p).terrainProximity < 3)
+            if (rm.readyForAI && rm.aimap.getTerrainProximity(p) < 3)
             {
-                int terrainProximity = rm.aimap.getAItile(p).terrainProximity;
-                Vector2 vector = default(Vector2);
+                int terrainProximity = rm.aimap.getTerrainProximity(p);
+                Vector2 vector = default;
                 for (int i = 0; i < 8; i++)
                 {
-                    if (rm.aimap.getAItile(p + Custom.eightDirections[i].ToVector2() * 20f).terrainProximity > terrainProximity)
+                    if (rm.aimap.getTerrainProximity(p + Custom.eightDirections[i].ToVector2() * 20f) > terrainProximity)
                     {
                         vector += Custom.eightDirections[i].ToVector2();
                     }
@@ -186,6 +182,6 @@ public class TagSmoke : PositionedSmokeEmitter
         // Token: 0x040043CD RID: 17357
         public float power;
 
-        public float hue;
+        public float hue = hue;
     }
 }

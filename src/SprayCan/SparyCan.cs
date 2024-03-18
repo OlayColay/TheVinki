@@ -1,6 +1,8 @@
 ﻿using RWCustom;
 using UnityEngine;
 using MoreSlugcats;
+using System.Linq;
+using Smoke;
 
 namespace SprayCans;
 
@@ -27,7 +29,7 @@ sealed class SprayCan : Weapon
     private Color earthColor;
     private bool ignited;
     private float burn = 0f;
-    private RoomPalette roomPalette = new RoomPalette();
+    private RoomPalette roomPalette = new();
 
     public float gamerHue = 0f;
 
@@ -129,7 +131,7 @@ sealed class SprayCan : Weapon
     public override void TerrainImpact(int chunk, IntVector2 direction, float speed, bool firstContact)
     {
         base.TerrainImpact(chunk, direction, speed, firstContact);
-        if (floorBounceFrames > 0 && (direction.x == 0 || room.GetTile(base.firstChunk.pos).Terrain == Room.Tile.TerrainType.Slope))
+        if (floorBounceFrames > 0 && (direction.x == 0))
         {
             return;
         }
@@ -233,11 +235,11 @@ sealed class SprayCan : Weapon
 
         UpdateColor();
 
-        bodyChunks = new[] { new BodyChunk(this, 0, pos + vel, 4 * (Abstr.scaleX + Abstr.scaleY), 0.35f) { goThroughFloors = true } };
+        bodyChunks = [new BodyChunk(this, 0, pos + vel, 4 * (Abstr.scaleX + Abstr.scaleY), 0.35f) { goThroughFloors = true }];
         bodyChunks[0].lastPos = bodyChunks[0].pos;
         bodyChunks[0].vel = vel;
 
-        bodyChunkConnections = new BodyChunkConnection[0];
+        bodyChunkConnections = [];
         airFriction = 0.999f;
         gravity = 0.9f;
         bounce = 0.6f;
@@ -350,7 +352,7 @@ sealed class SprayCan : Weapon
                 smoke = new Smoke.BombSmoke(room, vector, null, smokeColor);
                 roomPalette.blackColor = roomPalette.fogColor = smokeColor;
                 room.AddObject(smoke);
-                foreach (Smoke.BombSmoke.ThickSmokeSegment particle in smoke.particles)
+                foreach (Smoke.BombSmoke.ThickSmokeSegment particle in smoke.particles.Cast<BombSmoke.ThickSmokeSegment>())
                 {
                     particle.ApplyPalette(null, null, roomPalette);
                 }

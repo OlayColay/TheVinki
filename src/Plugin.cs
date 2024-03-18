@@ -11,40 +11,40 @@ namespace Vinki
 {
     [BepInDependency("slime-cubed.slugbase")]
     [BepInDependency("dressmyslugcat", BepInDependency.DependencyFlags.SoftDependency)]
-    [BepInPlugin(MOD_ID, "The Vinki", "0.11.5")]
+    [BepInPlugin(MOD_ID, "The Vinki", "0.11.6")]
     class Plugin : BaseUnityPlugin
     {
         public const string MOD_ID = "olaycolay.thevinki";
 
-        public static bool debugMode = true;
+        public static bool debugMode = false;
         
         public static bool introPlayed = false;
-        public static int[] storyGraffitisSprayed = new int[] {};
-        public static int[] storyGraffitisOnMap = new int[] {};
+        public static int[] storyGraffitisSprayed = [];
+        public static int[] storyGraffitisOnMap = [];
         public static Texture2D TailTexture;
-        public static Dictionary<string, List<PlacedObject.CustomDecalData>> graffitis = new();
-        public static Dictionary<string, List<Vector2>> graffitiOffsets = new();
-        public static Dictionary<string, List<Color>> graffitiAvgColors = new();
-        public static List<string> shelterItems = new List<string>();
-        public static Dictionary<int, KeyValuePair<string, Vector2>> storyGraffitiRoomPositions = new();
-        public static Dictionary<AbstractPhysicalObject.AbstractObjectType, int> colorfulItems = new Dictionary<AbstractPhysicalObject.AbstractObjectType, int>();
+        public static Dictionary<string, List<PlacedObject.CustomDecalData>> graffitis = [];
+        public static Dictionary<string, List<Vector2>> graffitiOffsets = [];
+        public static Dictionary<string, List<Color>> graffitiAvgColors = [];
+        public static List<string> shelterItems = [];
+        public static Dictionary<int, KeyValuePair<string, Vector2>> storyGraffitiRoomPositions = [];
+        public static Dictionary<AbstractPhysicalObject.AbstractObjectType, int> colorfulItems = [];
         public static string graffitiFolder = "decals/VinkiGraffiti";
         public static string storyGraffitiFolder = "decals/StorySpoilers";
         public static int storyGraffitiCount = 0;
         public static bool sleeping = false;
-        public static Color?[][] jollyColors = new Color?[16][] {
+        public static Color?[][] jollyColors = [
             new Color?[6], new Color?[6], new Color?[6], new Color?[6],
             new Color?[6], new Color?[6], new Color?[6], new Color?[6],
             new Color?[6], new Color?[6], new Color?[6], new Color?[6],
             new Color?[6], new Color?[6], new Color?[6], new Color?[6]
-        };
-        public static List<MenuDepthIllustration> rotatingGhost = new();
+        ];
+        public static List<MenuDepthIllustration> rotatingGhost = [];
 
         public static bool improvedInput;
         public static Array improvedControls;
         public static readonly int Grind = 0, ToggleGrind = 1, Graffiti = 2, Spray = 3, Craft = 4, Tag = 5;
 
-        public static int[] queuedGNums = new int[16] {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
+        public static int[] queuedGNums = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
 
         // Add hooks
         public void OnEnable()

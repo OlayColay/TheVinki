@@ -194,15 +194,17 @@ namespace Vinki
 
         private static void AddGraffiti(string image, string slugcat, KeyValuePair<string, Vector2>? storyGraffitiRoomPos = null)
         {
-            PlacedObject.CustomDecalData decal = new PlacedObject.CustomDecalData(null);
-            decal.imageName = "VinkiGraffiti/" + slugcat + "/" + Path.GetFileNameWithoutExtension(image);
-            decal.fromDepth = 0.2f;
+            PlacedObject.CustomDecalData decal = new(null)
+            {
+                imageName = "VinkiGraffiti/" + slugcat + "/" + Path.GetFileNameWithoutExtension(image),
+                fromDepth = 0.2f
+            };
 
             if (!graffitis.ContainsKey(slugcat))
             {
-                graffitiOffsets[slugcat] = new();
-                graffitis[slugcat] = new();
-                graffitiAvgColors[slugcat] = new();
+                graffitiOffsets[slugcat] = [];
+                graffitis[slugcat] = [];
+                graffitiAvgColors[slugcat] = [];
             }
 
             string filePath;
@@ -231,7 +233,7 @@ namespace Vinki
             }
 
             // Get the image as a 2d texture so we can resize it to something manageable
-            Texture2D img = new Texture2D(2, 2);
+            Texture2D img = new(2, 2);
             byte[] tmpBytes = File.ReadAllBytes(filePath);
             ImageConversion.LoadImage(img, tmpBytes);
 
@@ -328,17 +330,17 @@ namespace Vinki
                     //-- Make sure to use the same ID as the one used for our slugcat
                     Slugcat = Enums.vinki.ToString(),
                     PlayerNumber = i,
-                    CustomSprites = new List<CustomSprite>
-                    {
+                    CustomSprites =
+                    [
                         //-- You can customize which spritesheet and color each body part will use
-                        new CustomSprite() { Sprite = "HEAD", SpriteSheetID = sheetID + i },
+                        new() { Sprite = "HEAD", SpriteSheetID = sheetID + i },
                         //new CustomSprite() { Sprite = "FACE", SpriteSheetID = sheetID + i },
-                        new CustomSprite() { Sprite = "BODY", SpriteSheetID = sheetID + i },
-                        new CustomSprite() { Sprite = "ARMS", SpriteSheetID = sheetID + i },
-                        new CustomSprite() { Sprite = "HIPS", SpriteSheetID = sheetID + i },
-                        new CustomSprite() { Sprite = "LEGS", SpriteSheetID = sheetID + i },
-                        new CustomSprite() { Sprite = "TAIL", SpriteSheetID = sheetID + i }
-                    },
+                        new() { Sprite = "BODY", SpriteSheetID = sheetID + i },
+                        new() { Sprite = "ARMS", SpriteSheetID = sheetID + i },
+                        new() { Sprite = "HIPS", SpriteSheetID = sheetID + i },
+                        new() { Sprite = "LEGS", SpriteSheetID = sheetID + i },
+                        new() { Sprite = "TAIL", SpriteSheetID = sheetID + i }
+                    ],
                 });
             }
         }
@@ -392,7 +394,7 @@ namespace Vinki
             int w = Mathf.RoundToInt(new_width); // round to the nearest integer
             int h = Mathf.RoundToInt(new_height - (w - new_width)); // adjust the rounded width with height 
 
-            return new int[] { w, h };
+            return [w, h];
         }
 
         public static void CopyFilesRecursively(string sourcePath, string targetPath)

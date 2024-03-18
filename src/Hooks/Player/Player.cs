@@ -72,17 +72,19 @@ namespace Vinki
 
             for (int i = 0; i < smokes; i++)
             {
-                PlacedObject graffiti = new PlacedObject(PlacedObject.Type.CustomDecal, graffitis[slugcat][gNum])
+                PlacedObject graffiti = new(PlacedObject.Type.CustomDecal, graffitis[slugcat][gNum])
                 {
                     pos = sprayPos + graffitiOffsets[slugcat][gNum]
                 };
 
-                Vector2 smokePos = new Vector2(
+                Vector2 smokePos = new(
                     sprayPos.x + UnityEngine.Random.Range(graffitiOffsets[slugcat][gNum].x, -graffitiOffsets[slugcat][gNum].x),
                     sprayPos.y + UnityEngine.Random.Range(graffitiOffsets[slugcat][gNum].y, -graffitiOffsets[slugcat][gNum].y));
-                var smoke = new Explosion.ExplosionSmoke(smokePos, Vector2.zero, 2f);
-                smoke.lifeTime = 15f;
-                smoke.life = 2f;
+                var smoke = new Explosion.ExplosionSmoke(smokePos, Vector2.zero, 2f)
+                {
+                    lifeTime = 15f,
+                    life = 2f
+                };
                 room.AddObject(smoke);
                 smoke.colorA = graffitiAvgColors[slugcat][gNum];
                 smoke.colorB = Color.gray;
@@ -428,14 +430,14 @@ namespace Vinki
                 }
 
                 // Sparks from grinding
-                Vector2 pos = new Vector2(self.room.MiddleOfTile(self.PlayerGraphics().legs.pos).x, self.PlayerGraphics().legs.pos.y);
+                Vector2 pos = new(self.room.MiddleOfTile(self.PlayerGraphics().legs.pos).x, self.PlayerGraphics().legs.pos.y);
                 Vector2 posB = pos + new Vector2(0f, -3f);
                 for (int j = 0; j < 2; j++)
                 {
                     Vector2 a = RWCustom.Custom.RNV();
                     a.x = Mathf.Abs(a.x) * v.lastXDirection;
                     a.y = Mathf.Abs(a.y) * -v.lastYDirection;
-                    Vector2 b = new Vector2(-a.x, a.y);
+                    Vector2 b = new(-a.x, a.y);
                     self.room.AddObject(new Spark(pos, a * Mathf.Lerp(4f, 30f, UnityEngine.Random.value), Enums.SparkColor, null, 2, 4));
                     self.room.AddObject(new Spark(posB, b * Mathf.Lerp(4f, 30f, UnityEngine.Random.value), Enums.SparkColor, null, 2, 4));
                 }

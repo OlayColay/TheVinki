@@ -136,13 +136,15 @@ public static partial class Hooks
             File.Copy(unlockPath + filePath + ".png", AssetManager.ResolveDirectory("decals/VinkiGraffiti/vinki/") + filePath + ".png");
         }
 
-        PlacedObject.CustomDecalData decal = new PlacedObject.CustomDecalData(null);
-        decal.fromDepth = 0.2f;
+        PlacedObject.CustomDecalData decal = new(null)
+        {
+            fromDepth = 0.2f
+        };
 
         string parentDir = AssetManager.ResolveDirectory("decals/VinkiGraffiti/vinki");
 
         // Get the image as a 2d texture so we can resize it to something manageable
-        Texture2D img = new Texture2D(2, 2);
+        Texture2D img = new(2, 2);
         decal.imageName = "VinkiGraffiti/vinki/" + filePath;
         byte[] tmpBytes = File.ReadAllBytes(parentDir + Path.DirectorySeparatorChar + filePath + ".png");
         ImageConversion.LoadImage(img, tmpBytes);
