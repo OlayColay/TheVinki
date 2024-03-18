@@ -12,14 +12,20 @@ namespace Menu
         public GraffitiSelectDialog(ProcessManager manager, Vector2 cancelButtonPos, RainWorldGame game) : base(manager)
         {
             float[] screenOffsets = Custom.GetScreenOffsets();
-            GraffitiStartPos = new Vector2(200f, Screen.height - 250f);
+            GraffitiStartPos = new Vector2(100f, Screen.height - 250f);
             pages[0].pos = new Vector2(0.01f, 0f);
             Page page = pages[0];
             page.pos.y = page.pos.y + 2000f;
 
             // Background rects
-            roundedRects[0] = new(this, page, new Vector2(175f, 60f), new Vector2(475f, 645f), true);
+            roundedRects[0] = new(this, page, new Vector2(75f, 60f), new Vector2(475f, 645f), true);
             page.subObjects.Add(roundedRects[0]);
+            roundedRects[1] = new(this, page, new Vector2(620f, 230f), new Vector2(475f, 475f), true);
+            page.subObjects.Add(roundedRects[1]);
+
+            // Preview sprite
+            previewSprite = new FSprite();
+            roundedRects[1].Container.AddChild(previewSprite);
 
             // Cancel button
             float cancelButtonWidth = GetCancelButtonWidth(base.CurrLang);
@@ -39,11 +45,11 @@ namespace Menu
             }
 
             // Page switch buttons
-            nextButton = new(this, page, "NEXT PAGE", new Vector2(530f, 635f), 1);
+            nextButton = new(this, page, "NEXT PAGE", new Vector2(430f, 635f), 1);
             page.subObjects.Add(nextButton);
-            prevButton = new(this, page, "PREV PAGE", new Vector2(250f, 635f), 3);
+            prevButton = new(this, page, "PREV PAGE", new Vector2(150f, 635f), 3);
             page.subObjects.Add(prevButton);
-            pageLabel = new(this, page, "PAGE X/Y", new Vector2(250f, 635f), new Vector2(335f, 50f), true);
+            pageLabel = new(this, page, "PAGE X/Y", new Vector2(150f, 635f), new Vector2(335f, 50f), true);
             page.subObjects.Add(pageLabel);
 
             PopulateGraffitiButtons();
@@ -130,6 +136,17 @@ namespace Menu
             }
         }
 
+        private void UpdatePreview(string spritePath)
+        {
+            previewSprite.RemoveFromContainer();
+            previewSprite = new(spritePath);
+            float newScale = 465f / Mathf.Max(previewSprite.width, previewSprite.height);
+            previewSprite.scale = newScale;
+            previewSprite.x = roundedRects[1].DrawX(1f) + (roundedRects[1].size.x / 2);
+            previewSprite.y = roundedRects[1].DrawY(1f) + (roundedRects[1].size.y / 2);
+            roundedRects[1].Container.AddChild(previewSprite);
+        }
+
         private static float GetCancelButtonWidth(InGameTranslator.LanguageID lang)
         {
             float result = 120f;
@@ -173,6 +190,9 @@ namespace Menu
                     b.roundedRect.borderColor = null;
                 }
                 graffitiButtons[gNum % GraffitiPerPage].roundedRect.borderColor = MenuColor(MenuColors.White);
+
+                // Update graffiti preview
+                UpdatePreview("decals/" + Plugin.graffitis[players[currentPlayer].SlugCatClass.ToString()][gNum].imageName);
             }
             else if (message.StartsWith("PLAYER "))
             {
@@ -254,6 +274,8 @@ namespace Menu
 
         public int curGPage = 0;
         public int pageCount = 1;
+
+        public FSprite previewSprite;
 
         public readonly static int NumRows = 5;
         public readonly static int NumCols = 4;
