@@ -27,6 +27,10 @@ namespace Menu
             previewSprite = new FSprite();
             roundedRects[1].Container.AddChild(previewSprite);
 
+            // Preview label
+            previewLabel = new(this, page, "", new Vector2(620f, 180f), new Vector2(475f, 50f), true);
+            page.subObjects.Add(previewLabel);
+
             // Cancel button
             float cancelButtonWidth = GetCancelButtonWidth(base.CurrLang);
             cancelButton = new SimpleButton(this, page, base.Translate("CLOSE"), "CLOSE", cancelButtonPos, new Vector2(cancelButtonWidth, 30f));
@@ -145,6 +149,9 @@ namespace Menu
             previewSprite.x = roundedRects[1].DrawX(1f) + (roundedRects[1].size.x / 2);
             previewSprite.y = roundedRects[1].DrawY(1f) + (roundedRects[1].size.y / 2);
             roundedRects[1].Container.AddChild(previewSprite);
+
+            Debug.Log("Preview: " + spritePath);
+            previewLabel.text = spritePath.Substring(spritePath.LastIndexOf("/") + 1);
         }
 
         private static float GetCancelButtonWidth(InGameTranslator.LanguageID lang)
@@ -276,6 +283,7 @@ namespace Menu
         public int pageCount = 1;
 
         public FSprite previewSprite;
+        public MenuLabel previewLabel;
 
         public readonly static int NumRows = 5;
         public readonly static int NumCols = 4;
