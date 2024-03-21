@@ -15,9 +15,9 @@ namespace Menu
         {
             float[] screenOffsets = Custom.GetScreenOffsets();
             GraffitiStartPos = new Vector2(100f, Screen.height - 250f);
-            pages[0].pos = new Vector2(0.01f, 0f);
+            pages[0].pos = new Vector2(100f, 25f);
             Page page = pages[0];
-            page.pos.y = page.pos.y + 2000f;
+            page.pos.y += 2000f;
 
             // Background rects
             roundedRects[0] = new(this, page, new Vector2(75f, 60f), new Vector2(475f, 645f), true);
@@ -35,7 +35,7 @@ namespace Menu
 
             // Cancel button
             float cancelButtonWidth = GetCancelButtonWidth(base.CurrLang);
-            cancelButton = new SimpleButton(this, page, base.Translate("CLOSE"), "CLOSE", cancelButtonPos, new Vector2(cancelButtonWidth, 30f));
+            cancelButton = new SimpleButton(this, page, base.Translate("CLOSE"), "CLOSE", cancelButtonPos - page.pos + new Vector2(0f, 2025f), new Vector2(cancelButtonWidth, 30f));
             page.subObjects.Add(cancelButton);
             opening = true;
             targetAlpha = 1f;
@@ -50,10 +50,10 @@ namespace Menu
             //}
             playerButtons = new BigSimpleButton[players.Length];
             playerSprites = new MenuIllustration[players.Length];
-            float spacing = players.Length > 4 ? 75f : 129f;
+            float spacing = players.Length > 4 ? 75f : 114f;
             Vector2 buttonSize = players.Length > 4 ? new(50f, 50f) : new(89f, 89f);
-            float playersY = players.Length > 8 ? 100f : 60f;
-            float playersX = 620f;
+            float playersY = players.Length > 8 ? 100f : 75f;
+            float playersX = 640f;
             bool defaultColors = Custom.rainWorld.options.jollyColorMode == Options.JollyColorMode.DEFAULT;
             for (int i = 0; i < players.Length; i++)
             {
