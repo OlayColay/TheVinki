@@ -79,12 +79,24 @@ namespace Menu
             }
 
             // Page switch buttons
-            nextButton = new(this, page, "NEXT PAGE", new Vector2(430f, 635f), 1);
+            nextButton = new(this, page, "NEXT PAGE", new Vector2(405f, 635f), 1);
             page.subObjects.Add(nextButton);
-            prevButton = new(this, page, "PREV PAGE", new Vector2(150f, 635f), 3);
+            prevButton = new(this, page, "PREV PAGE", new Vector2(175f, 635f), 3);
             page.subObjects.Add(prevButton);
             pageLabel = new(this, page, "PAGE X/Y", new Vector2(150f, 635f), new Vector2(335f, 50f), true);
             page.subObjects.Add(pageLabel);
+
+            // Shuffle button
+            shuffleButton = new(this, page, "SHUFFLE", new Vector2(115f, 635f), 0);
+            shuffleButton.symbolSprite.element = Futile.atlasManager.GetElementWithName("vinki_mediashuffle");
+            shuffleButton.symbolSprite.scale = 0.9f;
+            page.subObjects.Add(shuffleButton);
+
+            // Repeat button
+            repeatButton = new(this, page, "REPEAT", new Vector2(465f, 635f), 0);
+            repeatButton.symbolSprite.element = Futile.atlasManager.GetElementWithName("vinki_mediarepeat");
+            repeatButton.symbolSprite.scale = 0.9f;
+            page.subObjects.Add(repeatButton);
 
             PopulateGraffitiButtons();
         }
@@ -168,11 +180,29 @@ namespace Menu
             {
                 graffitiButtons[queuedGNum % GraffitiPerPage].roundedRect.borderColor = MenuColor(MenuColors.White);
             }
+
+            if (Plugin.queuedGNums[currentPlayer] == -1)
+            {
+                shuffleButton.roundedRect.borderColor = MenuColor(MenuColors.White);
+                repeatButton.buttonBehav.greyedOut = true;
+            }
+            else
+            {
+                shuffleButton.roundedRect.borderColor = null;
+                repeatButton.buttonBehav.greyedOut = false;
+            }
         }
 
         private void UpdatePreview(string spritePath)
         {
             previewSprite.RemoveFromContainer();
+
+            if (spritePath == "")
+            {
+                previewLabel.text = this.Translate("Shuffling between designs randomly");
+                return;
+            }
+
             previewSprite = new(spritePath);
             float newScale = 465f / Mathf.Max(previewSprite.width, previewSprite.height);
             previewSprite.scale = newScale;
@@ -226,6 +256,8 @@ namespace Menu
                     b.roundedRect.borderColor = null;
                 }
                 graffitiButtons[gNum % GraffitiPerPage].roundedRect.borderColor = MenuColor(MenuColors.White);
+                shuffleButton.roundedRect.borderColor = null;
+                repeatButton.buttonBehav.greyedOut = false;
 
                 // Update graffiti preview
                 UpdatePreview("decals/" + Plugin.graffitis[players[currentPlayer].SlugCatClass.ToString()][gNum].imageName);
@@ -244,22 +276,42 @@ namespace Menu
                 //    b.InterpColor(Color.white);
                 //}
                 //playerButtons[currentPlayer].InterpColor(players[currentPlayer].JollyOption.bodyColor);
+
+                int gNum = Plugin.queuedGNums[currentPlayer];
+                UpdatePreview(gNum == -1 ? "" : "decals/" + Plugin.graffitis[players[currentPlayer].SlugCatClass.ToString()][gNum].imageName);
             }
             else if (message == "SHUFFLE")
             {
                 PlaySound(SoundID.MENU_Button_Standard_Button_Pressed);
 
                 Plugin.queuedGNums[currentPlayer] = -1;
+                Plugin.repeatGraffiti[currentPlayer] = false;
 
                 // Color selected button
                 foreach (GraffitiButton b in graffitiButtons)
                 {
                     b.roundedRect.borderColor = null;
                 }
-                graffitiButtons[0].roundedRect.borderColor = MenuColor(MenuColors.White);
+                repeatButton.roundedRect.borderColor = null;
+                shuffleButton.roundedRect.borderColor = MenuColor(MenuColors.White);
+
+                repeatButton.buttonBehav.greyedOut = true;
+
+                UpdatePreview("");
+            }
+            else if (message == "REPEAT")
+            {
+                PlaySound(SoundID.MENU_Button_Standard_Button_Pressed);
+
+                Plugin.repeatGraffiti[currentPlayer] = !Plugin.repeatGraffiti[currentPlayer];
+
+                // Color selected button
+                repeatButton.roundedRect.borderColor = Plugin.repeatGraffiti[currentPlayer] ? MenuColor(MenuColors.White) : null;
             }
             else if (message.EndsWith("PAGE"))
             {
+                PlaySound(SoundID.MENU_Button_Standard_Button_Pressed);
+
                 curGPage += message.StartsWith("NEXT") ? 1 : -1;
                 PopulateGraffitiButtons();
             }
@@ -296,6 +348,8 @@ namespace Menu
         public MenuIllustration[] playerSprites;
         public BigArrowButton nextButton;
         public BigArrowButton prevButton;
+        public BigArrowButton shuffleButton;
+        public BigArrowButton repeatButton;
         public MenuLabel pageLabel;
 
         public bool opening;

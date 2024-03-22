@@ -147,6 +147,7 @@ namespace Vinki
             Futile.atlasManager.LoadAtlas("atlases/rainpods");
             Futile.atlasManager.LoadAtlas("atlases/shoes");
             Futile.atlasManager.LoadAtlas("atlases/TagIcon");
+            Futile.atlasManager.LoadAtlas("atlases/vinki_expedition");
             Futile.atlasManager.LoadImage("atlases/icon_SprayCan");
             Futile.atlasManager.LoadImage("decals/QUESTIONMARK");
 

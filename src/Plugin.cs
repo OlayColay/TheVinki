@@ -11,7 +11,7 @@ namespace Vinki
 {
     [BepInDependency("slime-cubed.slugbase")]
     [BepInDependency("dressmyslugcat", BepInDependency.DependencyFlags.SoftDependency)]
-    [BepInPlugin(MOD_ID, "The Vinki", "0.11.6")]
+    [BepInPlugin(MOD_ID, "The Vinki", "0.11.7")]
     class Plugin : BaseUnityPlugin
     {
         public const string MOD_ID = "olaycolay.thevinki";
@@ -45,6 +45,7 @@ namespace Vinki
         public static readonly int Grind = 0, ToggleGrind = 1, Graffiti = 2, Spray = 3, Craft = 4, Tag = 5;
 
         public static int[] queuedGNums = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
+        public static bool[] repeatGraffiti = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
 
         // Add hooks
         public void OnEnable()

@@ -21,7 +21,10 @@ namespace Vinki
                 if (Plugin.queuedGNums[self.JollyOption.playerNumber] != -1)
                 {
                     gNum = Plugin.queuedGNums[self.JollyOption.playerNumber];
-                    Plugin.queuedGNums[self.JollyOption.playerNumber] = -1;
+                    if (!Plugin.repeatGraffiti[self.JollyOption.playerNumber])
+                    {
+                        Plugin.queuedGNums[self.JollyOption.playerNumber] = -1;
+                    }
                 }
                 else
                 {
