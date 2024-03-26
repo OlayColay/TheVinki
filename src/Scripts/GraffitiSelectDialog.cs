@@ -86,13 +86,13 @@ namespace Menu
             // Shuffle button
             shuffleButton = new(this, page, "SHUFFLE", new Vector2(115f, 635f), 0);
             shuffleButton.symbolSprite.element = Futile.atlasManager.GetElementWithName("vinki_mediashuffle");
-            shuffleButton.symbolSprite.scale = 0.9f;
+            shuffleButton.symbolSprite.scale = 0.85f;
             page.subObjects.Add(shuffleButton);
 
             // Repeat button
             repeatButton = new(this, page, "REPEAT", new Vector2(465f, 635f), 0);
             repeatButton.symbolSprite.element = Futile.atlasManager.GetElementWithName("vinki_mediarepeat");
-            repeatButton.symbolSprite.scale = 0.9f;
+            repeatButton.symbolSprite.scale = 0.85f;
             page.subObjects.Add(repeatButton);
 
             PopulateGraffitiButtons();
