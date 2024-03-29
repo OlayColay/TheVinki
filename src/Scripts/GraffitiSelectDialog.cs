@@ -50,16 +50,16 @@ namespace Menu
             //}
             playerButtons = new BigSimpleButton[players.Length];
             playerSprites = new MenuIllustration[players.Length];
-            float spacing = players.Length > 4 ? 75f : 114f;
+            float spacing = players.Length > 4 ? 61f : 114f;
             Vector2 buttonSize = players.Length > 4 ? new(50f, 50f) : new(89f, 89f);
-            float playersY = players.Length > 8 ? 100f : 75f;
-            float playersX = 640f;
+            float playersY = players.Length > 4 ? 125f : 75f;
+            float playersX = players.Length > 4 ? 620f : 640f;
             bool defaultColors = Custom.rainWorld.options.jollyColorMode == Options.JollyColorMode.DEFAULT;
             for (int i = 0; i < players.Length; i++)
             {
                 Color color = PlayerGraphics.SlugcatColor((players[i].State as PlayerState).slugcatCharacter);
                 bool isVanilla = players[i].SlugCatClass == SlugcatStats.Name.White || players[i].SlugCatClass == SlugcatStats.Name.Yellow || players[i].SlugCatClass == SlugcatStats.Name.Red;
-                playerButtons[i] = new(this, page, "", "PLAYER " + i, new Vector2(playersX + (spacing * (i % 4)), playersY - (i > 4 ? 75f : 0f)), buttonSize, FLabelAlignment.Center, false);
+                playerButtons[i] = new(this, page, "", "PLAYER " + i, new Vector2(playersX + (spacing * (i % 8)), playersY - (i >= 8 ? spacing : 0f)), buttonSize, FLabelAlignment.Center, false);
                 string path = string.Concat(
                     [
                         "MultiplayerPortrait",
@@ -71,9 +71,9 @@ namespace Menu
                 playerSprites[i] = new(this, page, "", path, playerButtons[i].pos + playerButtons[i].size / 2f, true, true
                 )
                 {
-                    color = (defaultColors && !isVanilla) ? Color.white : color,
-                    size = buttonSize
+                    color = (defaultColors && !isVanilla) ? Color.white : color
                 };
+                playerSprites[i].sprite.scale = players.Length > 4 ? 0.5f : 1f;
                 page.subObjects.Add(playerButtons[i]);
                 page.subObjects.Add(playerSprites[i]);
             }
@@ -265,7 +265,7 @@ namespace Menu
             {
                 PlaySound(SoundID.MENU_Button_Standard_Button_Pressed);
 
-                currentPlayer = (int)char.GetNumericValue(message[7]);
+                currentPlayer = int.Parse(message.Substring(7));
                 curGPage = 0;
                 PopulateGraffitiButtons();
 
@@ -309,7 +309,7 @@ namespace Menu
                 // Color selected button
                 repeatButton.roundedRect.borderColor = Plugin.repeatGraffiti[currentPlayer] ? MenuColor(MenuColors.White) : null;
 
-                previewLabel.text = this.Translate(Plugin.repeatGraffiti[currentPlayer] ? "Spraying this design repeatedly" : "Spraying this design then shuffling");
+                previewLabel.text = this.Translate(Plugin.repeatGraffiti[currentPlayer] ? "Spraying this design repeatedly" : "Spraying this design once then shuffling");
             }
             else if (message.EndsWith("PAGE"))
             {
