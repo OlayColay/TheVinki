@@ -111,10 +111,7 @@ sealed class SprayCan : Weapon
         }
         else
         {
-            if (smoke != null)
-            {
-                smoke.Destroy();
-            }
+            smoke?.Destroy();
             smoke = null;
         }
         if (burn > 0f)
@@ -152,7 +149,7 @@ sealed class SprayCan : Weapon
         // If there are no charges left, it should hit something like a Rock would
         if (Abstr.uses == 0 || Abstr.uses > 9000)
         {
-            return HitLikeRock(result, eu);
+            return HitLikeRock(result);
         }
 
         vibrate = 20;
@@ -221,10 +218,7 @@ sealed class SprayCan : Weapon
         base.HitByExplosion(hitFac, explosion, hitChunk);
         if (Random.value < hitFac)
         {
-            if (thrownBy == null)
-            {
-                thrownBy = explosion.killTagHolder;
-            }
+            thrownBy ??= explosion.killTagHolder;
             InitiateBurn();
         }
     }
@@ -328,7 +322,7 @@ sealed class SprayCan : Weapon
         {
             room.AddObject(new ScavengerBomb.BombFragment(vector, Custom.DegToVec(((float)l + Random.value) / 6f * 360f) * Mathf.Lerp(18f, 38f, Random.value)));
         }
-        room.ScreenMovement(new Vector2?(vector), default(Vector2), 0.3f * Abstr.uses);
+        room.ScreenMovement(new Vector2?(vector), default, 0.3f * Abstr.uses);
         for (int m = 0; m < abstractPhysicalObject.stuckObjects.Count; m++)
         {
             abstractPhysicalObject.stuckObjects[m].Deactivate();
@@ -370,9 +364,9 @@ sealed class SprayCan : Weapon
             smoke.stationary = true;
             smoke.DisconnectSmoke();
         }
-        else if (smoke != null)
+        else
         {
-            smoke.Destroy();
+            smoke?.Destroy();
         }
         Destroy();
     }
@@ -452,7 +446,7 @@ sealed class SprayCan : Weapon
         return Color.HSVToRGB(Random.Range(0f, 1f), 1f, 1f);
     }
 
-    private bool HitLikeRock(SharedPhysics.CollisionResult result, bool eu)
+    private bool HitLikeRock(SharedPhysics.CollisionResult result)
     {
         if (thrownBy is Scavenger && (thrownBy as Scavenger).AI != null)
         {

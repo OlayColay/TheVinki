@@ -199,7 +199,6 @@ namespace Menu
 
             if (spritePath == "")
             {
-                previewLabel.text = this.Translate("Shuffling between designs randomly");
                 return;
             }
 
@@ -279,6 +278,7 @@ namespace Menu
 
                 int gNum = Plugin.queuedGNums[currentPlayer];
                 UpdatePreview(gNum == -1 ? "" : "decals/" + Plugin.graffitis[players[currentPlayer].SlugCatClass.ToString()][gNum].imageName);
+                previewLabel.text = players[currentPlayer].JollyOption.customPlayerName ?? this.Translate("Player " + (currentPlayer + 1));
             }
             else if (message == "SHUFFLE")
             {
@@ -297,6 +297,7 @@ namespace Menu
 
                 repeatButton.buttonBehav.greyedOut = true;
 
+                previewLabel.text = this.Translate("Shuffling between designs randomly");
                 UpdatePreview("");
             }
             else if (message == "REPEAT")
@@ -307,6 +308,8 @@ namespace Menu
 
                 // Color selected button
                 repeatButton.roundedRect.borderColor = Plugin.repeatGraffiti[currentPlayer] ? MenuColor(MenuColors.White) : null;
+
+                previewLabel.text = this.Translate(Plugin.repeatGraffiti[currentPlayer] ? "Spraying this design repeatedly" : "Spraying this design then shuffling");
             }
             else if (message.EndsWith("PAGE"))
             {

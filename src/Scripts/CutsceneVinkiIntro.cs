@@ -47,10 +47,7 @@ namespace Vinki
 						player.bodyChunks[j].HardSetPosition(room.MiddleOfTile(28, 34));
 					}
 					playerPosCorrect = true;
-					if (player.graphicsModule != null)
-					{
-						player.graphicsModule.Reset();
-					}
+					player.graphicsModule?.Reset();
 					startController = new StartController(this);
 					player.controller = startController;
 					player.standing = true;

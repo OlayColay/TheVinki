@@ -29,14 +29,13 @@ public static partial class Hooks
     {
         orig(self, world, game);
 
-        Dictionary<string, List<GraffitiObject.SerializableGraffiti>> placedGraffitis;
         if (game.GetStorySession == null)
         {
             return;
         }
 
         SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(world.game.GetStorySession.saveState.miscWorldSaveData);
-        if (!miscSave.TryGet("PlacedGraffitis", out placedGraffitis) || !placedGraffitis.ContainsKey(self.name))
+        if (!miscSave.TryGet("PlacedGraffitis", out Dictionary<string, List<GraffitiObject.SerializableGraffiti>> placedGraffitis) || !placedGraffitis.ContainsKey(self.name))
         {
             return;
         }
@@ -146,8 +145,7 @@ public static partial class Hooks
         // Spawn pearl and disable hologram
         else if (self.abstractRoom?.name == "DM_AI")
         {
-            int phase;
-            if (miscSave.TryGet("SpawnUnlockablePearl", out phase) && phase == 1)
+            if (miscSave.TryGet("SpawnUnlockablePearl", out int phase) && phase == 1)
             {
                 var abstr = new DataPearl.AbstractDataPearl(self.world, AbstractPhysicalObject.AbstractObjectType.DataPearl, null, new WorldCoordinate(self.abstractRoom.index, 250, 250, 0), self.game.GetNewID(),
                     -1, -1, null, new DataPearl.AbstractDataPearl.DataPearlType("Vinki_Pearl_1", true));

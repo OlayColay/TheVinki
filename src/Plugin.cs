@@ -16,7 +16,7 @@ namespace Vinki
     {
         public const string MOD_ID = "olaycolay.thevinki";
 
-        public static bool debugMode = false;
+        public static bool debugMode = true;
         
         public static bool introPlayed = false;
         public static int[] storyGraffitisSprayed = [];

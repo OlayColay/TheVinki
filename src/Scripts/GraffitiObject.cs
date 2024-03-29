@@ -40,8 +40,7 @@ public class GraffitiObject : CustomDecal
         SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(save.miscWorldSaveData);
 
         // Graffitis are indexed by room
-        Dictionary<string, List<SerializableGraffiti>> placedGraffitis;
-        if (miscSave.TryGet("PlacedGraffitis", out placedGraffitis))
+        if (miscSave.TryGet("PlacedGraffitis", out Dictionary<string, List<SerializableGraffiti>> placedGraffitis))
         {
             // Add this graffiti to the dictionary
             if (!placedGraffitis.ContainsKey(roomId))

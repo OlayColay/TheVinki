@@ -93,7 +93,7 @@ namespace Vinki
                 smoke.colorB = Color.gray;
 
                 await Task.Delay(100);
-                room.AddObject(new GraffitiObject(graffiti, room.game.GetStorySession != null ? room.game.GetStorySession.saveState : null, gNum, room.abstractRoom.name));
+                room.AddObject(new GraffitiObject(graffiti, room.game.GetStorySession?.saveState, gNum, room.abstractRoom.name));
             }
         }
 
@@ -307,7 +307,7 @@ namespace Vinki
             );
             if (!isGrindingAtopVine && goodVineState)
             {
-                vineAtFeet = self.room.climbableVines != null ? self.room.climbableVines.VineOverlap(self.bodyChunks[1].pos, self.bodyChunks[1].rad + 5f) : null;
+                vineAtFeet = self.room.climbableVines?.VineOverlap(self.bodyChunks[1].pos, self.bodyChunks[1].rad + 5f);
                 isGrindingAtopVine = (vineAtFeet != null);
 
                 // First frame of grinding on vine
@@ -901,10 +901,7 @@ namespace Vinki
                 }
             }
 
-            if(v.tagSmoke != null)
-            {
-                v.tagSmoke.RemoveFromRoom();
-            }
+            v.tagSmoke?.RemoveFromRoom();
 
             v.tagSmoke = new TagSmoke(self.room, source, v.tagableCreature);
             self.room.AddObject(v.tagSmoke);

@@ -39,8 +39,7 @@ namespace Vinki
                 {
                     oracleBehavior.conversation.paused = true;
                     oracleBehavior.restartConversationAfterCurrentDialoge = true;
-                    int moonInterruptTimes;
-                    if (!miscSave.TryGet("MoonInterruptTimes", out moonInterruptTimes) || moonInterruptTimes == 0)
+                    if (!miscSave.TryGet("MoonInterruptTimes", out int moonInterruptTimes) || moonInterruptTimes == 0)
                     {
                         oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("Were you even listening to me? It appears to me that you find painting in my chamber more interesting than my words, I suppose. I would appreciate it if you did not interrupt me in the future, little friend."), 0);
                     }
@@ -68,8 +67,7 @@ namespace Vinki
                 }
                 else
                 {
-                    int moonSprayTimes;
-                    if (!miscSave.TryGet("MoonSprayTimes", out moonSprayTimes) || moonSprayTimes == 0)
+                    if (!miscSave.TryGet("MoonSprayTimes", out int moonSprayTimes) || moonSprayTimes == 0)
                     {
                         oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("Ah... I would appreciate you not painting over my chamber walls. Feel free to do so outside of it, but I require clear walls to project holographic graphs over. Your art, as beautiful as it is, might distort my projections."), 0);
                     }
@@ -131,8 +129,7 @@ namespace Vinki
             }
             else if (pearl is PebblesPearl)
             {
-                int crushedPearlCount = 0;
-                if (!miscWorldSave.TryGet("MoonPearlCrushCount", out crushedPearlCount) || crushedPearlCount < 1)
+                if (!miscWorldSave.TryGet("MoonPearlCrushCount", out int crushedPearlCount) || crushedPearlCount < 1)
                 {
                     oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("...Little creature? Could you not use my data pearls to create your tools? I might not miss one or two, but I would like to save the information which is held within them."), 0);
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Maybe you could find some empty pearls outside of my chamber, or use something else?"), -10);
@@ -210,7 +207,7 @@ namespace Vinki
                         {
                             string str = "---------- INSPECT PEARL TRIGGERED: ";
                             DataPearl.AbstractDataPearl.DataPearlType dataPearlType = self.inspectPearl.AbstractPearl.dataPearlType;
-                            Debug.Log(str + ((dataPearlType != null) ? dataPearlType.ToString() : null));
+                            Debug.Log(str + (dataPearlType?.ToString()));
                         }
                         if (self.inspectPearl.AbstractPearl.dataPearlType.value == "Vinki_Pearl_1")
                         {
@@ -948,7 +945,7 @@ namespace Vinki
                 {
                     base.player.mainBodyChunk.vel *= Custom.LerpMap((float)base.inActionCounter, 0f, 30f, 1f, 0.95f);
                     base.player.bodyChunks[1].vel *= Custom.LerpMap((float)base.inActionCounter, 0f, 30f, 1f, 0.95f);
-                    base.player.mainBodyChunk.vel += Custom.DirVec(base.player.mainBodyChunk.pos, holdPlayerPos) * Mathf.Lerp(0.5f, Custom.LerpMap(Vector2.Distance(base.player.mainBodyChunk.pos, holdPlayerPos), 30f, 150f, 2.5f, 7f), base.oracle.room.gravity) * Mathf.InverseLerp(0f, 10f, (float)base.inActionCounter) * Mathf.InverseLerp(0f, 30f, Vector2.Distance(base.player.mainBodyChunk.pos, holdPlayerPos));
+                    base.player.mainBodyChunk.vel += Custom.DirVec(base.player.mainBodyChunk.pos, HoldPlayerPos) * Mathf.Lerp(0.5f, Custom.LerpMap(Vector2.Distance(base.player.mainBodyChunk.pos, HoldPlayerPos), 30f, 150f, 2.5f, 7f), base.oracle.room.gravity) * Mathf.InverseLerp(0f, 10f, (float)base.inActionCounter) * Mathf.InverseLerp(0f, 30f, Vector2.Distance(base.player.mainBodyChunk.pos, HoldPlayerPos));
                 }
                 else
                 {
@@ -961,7 +958,7 @@ namespace Vinki
                 }
             }
 
-            private Vector2 holdPlayerPos
+            private Vector2 HoldPlayerPos
             {
                 get
                 {
