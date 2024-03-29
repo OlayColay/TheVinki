@@ -18,11 +18,12 @@ namespace Menu
             pages[0].pos = new Vector2(100f, 25f);
             Page page = pages[0];
             page.pos.y += 2000f;
+            players = game.Players.Select(abs => abs.realizedCreature as Player).ToArray();
 
             // Background rects
             roundedRects[0] = new(this, page, new Vector2(75f, 60f), new Vector2(475f, 645f), true);
             page.subObjects.Add(roundedRects[0]);
-            roundedRects[1] = new(this, page, new Vector2(620f, 230f), new Vector2(475f, 475f), true);
+            roundedRects[1] = new(this, page, new Vector2(620f, players.Length > 1 ? 230f : 150f), new Vector2(475f, 475f), true);
             page.subObjects.Add(roundedRects[1]);
 
             // Preview sprite
@@ -30,7 +31,7 @@ namespace Menu
             roundedRects[1].Container.AddChild(previewSprite);
 
             // Preview label
-            previewLabel = new(this, page, "", new Vector2(620f, 180f), new Vector2(475f, 50f), true);
+            previewLabel = new(this, page, "", new Vector2(620f, players.Length > 1 ? 180f : 100f), new Vector2(475f, 50f), true);
             page.subObjects.Add(previewLabel);
 
             // Cancel button
@@ -41,41 +42,37 @@ namespace Menu
             targetAlpha = 1f;
 
             // Player buttons
-            players = game.Players.Select(abs => abs.realizedCreature as Player).ToArray();
-            //playerButtons = new SimpleButton[players.Length];
-            //for (int i = 0; i < playerButtons.Length; i++)
-            //{
-            //    playerButtons[i] = new SimpleButton(this, page, base.Translate("PLAYER " + (i+1)), "PLAYER " + i, new Vector2(cancelButtonPos.x, Screen.height - 50 - 40*i), new Vector2(cancelButtonWidth, 30f));
-            //    page.subObjects.Add(playerButtons[i]);
-            //}
-            playerButtons = new BigSimpleButton[players.Length];
-            playerSprites = new MenuIllustration[players.Length];
-            float spacing = players.Length > 4 ? 61f : 114f;
-            Vector2 buttonSize = players.Length > 4 ? new(50f, 50f) : new(89f, 89f);
-            float playersY = players.Length > 4 ? 125f : 75f;
-            float playersX = players.Length > 4 ? 620f : 640f;
-            bool defaultColors = Custom.rainWorld.options.jollyColorMode == Options.JollyColorMode.DEFAULT;
-            for (int i = 0; i < players.Length; i++)
+            if (players.Length > 1)
             {
-                Color color = PlayerGraphics.SlugcatColor((players[i].State as PlayerState).slugcatCharacter);
-                bool isVanilla = players[i].SlugCatClass == SlugcatStats.Name.White || players[i].SlugCatClass == SlugcatStats.Name.Yellow || players[i].SlugCatClass == SlugcatStats.Name.Red;
-                playerButtons[i] = new(this, page, "", "PLAYER " + i, new Vector2(playersX + (spacing * (i % 8)), playersY - (i >= 8 ? spacing : 0f)), buttonSize, FLabelAlignment.Center, false);
-                string path = string.Concat(
-                    [
-                        "MultiplayerPortrait",
+                playerButtons = new BigSimpleButton[players.Length];
+                playerSprites = new MenuIllustration[players.Length];
+                float spacing = players.Length > 4 ? 61f : 114f;
+                Vector2 buttonSize = players.Length > 4 ? new(50f, 50f) : new(89f, 89f);
+                float playersY = players.Length > 4 ? 125f : 75f;
+                float playersX = players.Length > 4 ? 620f : 640f;
+                bool defaultColors = Custom.rainWorld.options.jollyColorMode == Options.JollyColorMode.DEFAULT;
+                for (int i = 0; i < players.Length; i++)
+                {
+                    Color color = PlayerGraphics.SlugcatColor((players[i].State as PlayerState).slugcatCharacter);
+                    bool isVanilla = players[i].SlugCatClass == SlugcatStats.Name.White || players[i].SlugCatClass == SlugcatStats.Name.Yellow || players[i].SlugCatClass == SlugcatStats.Name.Red;
+                    playerButtons[i] = new(this, page, "", "PLAYER " + i, new Vector2(playersX + (spacing * (i % 8)), playersY - (i >= 8 ? spacing : 0f)), buttonSize, FLabelAlignment.Center, false);
+                    string path = string.Concat(
+                        [
+                            "MultiplayerPortrait",
                         (defaultColors && !isVanilla) ? "41" : "01",
                         "-",
                         players[i].SlugCatClass.value
-                    ]);
-                //Custom.Log("MultiplayerPortrait: " + path);
-                playerSprites[i] = new(this, page, "", path, playerButtons[i].pos + playerButtons[i].size / 2f, true, true
-                )
-                {
-                    color = (defaultColors && !isVanilla) ? Color.white : color
-                };
-                playerSprites[i].sprite.scale = players.Length > 4 ? 0.5f : 1f;
-                page.subObjects.Add(playerButtons[i]);
-                page.subObjects.Add(playerSprites[i]);
+                        ]);
+                    //Custom.Log("MultiplayerPortrait: " + path);
+                    playerSprites[i] = new(this, page, "", path, playerButtons[i].pos + playerButtons[i].size / 2f, true, true
+                    )
+                    {
+                        color = (defaultColors && !isVanilla) ? Color.white : color
+                    };
+                    playerSprites[i].sprite.scale = players.Length > 4 ? 0.5f : 1f;
+                    page.subObjects.Add(playerButtons[i]);
+                    page.subObjects.Add(playerSprites[i]);
+                }
             }
 
             // Page switch buttons
