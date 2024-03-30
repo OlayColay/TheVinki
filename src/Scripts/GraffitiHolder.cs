@@ -60,13 +60,13 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
     public float sinCounter2;
     //public PlacedObject placedObj;
     private bool displayBounds;
-    private bool contract = false;
+    private readonly bool contract = false;
     private float power;
     private float lastPower;
-    private float expand = 0;
+    private readonly float expand = 0;
     private float lastExpand;
-    private StaticSoundLoop soundLoop;
-    private StaticSoundLoop glitchLoop;
+    private readonly StaticSoundLoop soundLoop;
+    private readonly StaticSoundLoop glitchLoop;
     public Color TokenColor = new(1f, 0.5f, 0f);
     public int gNum;
 

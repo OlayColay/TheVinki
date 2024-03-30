@@ -13,7 +13,7 @@ public class StoryGraffitiTutorial : UpdatableAndDeletable
     }
     public Phase nextPhase = Phase.Spray;
     public Vector2 playerPos = Vector2.zero;
-    public Vector2 triggerPos { get; } = Vector2.zero;
+    public Vector2 TriggerPos { get; } = Vector2.zero;
     public float triggerReach = 1000f;
     public SlugBase.SaveData.SlugBaseSaveData miscSave;
 
@@ -46,7 +46,7 @@ public class StoryGraffitiTutorial : UpdatableAndDeletable
         //Debug.Log("Current player position: " + playerPos);
         var game = room.game;
 
-        if (Vector2.Distance(playerPos, triggerPos) <= triggerReach && nextPhase == Phase.Spray)
+        if (Vector2.Distance(playerPos, TriggerPos) <= triggerReach && nextPhase == Phase.Spray)
         {
             game.cameras.First().hud.textPrompt.AddMessage(
                 game.manager.rainWorld.inGameTranslator.Translate("The hologram-like visions show where you need to spray in order to pursue your goal."),
@@ -58,7 +58,7 @@ public class StoryGraffitiTutorial : UpdatableAndDeletable
             );
             nextPhase = Phase.End;
         }
-        else if (Vector2.Distance(playerPos, triggerPos) <= triggerReach && nextPhase == Phase.Explore)
+        else if (Vector2.Distance(playerPos, TriggerPos) <= triggerReach && nextPhase == Phase.Explore)
         {
             game.cameras.First().hud.textPrompt.AddMessage(
                 game.manager.rainWorld.inGameTranslator.Translate("It appears that Five Pebbles might not tolerate your graffiti being anywhere near him. Search for better spots elsewhere."),

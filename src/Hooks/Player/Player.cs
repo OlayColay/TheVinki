@@ -152,7 +152,7 @@ namespace Vinki
                 return;
             }
 
-            bool coyote = isCoyoteJumping(self);
+            bool coyote = IsCoyoteJumping(self);
             v.canCoyote = 0;
 
             orig(self);
@@ -171,7 +171,7 @@ namespace Vinki
 
                 // Get num multiplier
                 float num = Mathf.Lerp(1f, 1.15f, self.Adrenaline);
-                if (self.grasps[0] != null && self.HeavyCarry(self.grasps[0].grabbed) && !(self.grasps[0].grabbed is Cicada))
+                if (self.grasps[0] != null && self.HeavyCarry(self.grasps[0].grabbed) && self.grasps[0].grabbed is not Cicada)
                 {
                     num += Mathf.Min(Mathf.Max(0f, self.grasps[0].grabbed.TotalMass - 0.2f) * 1.5f, 1.3f);
                 }
@@ -209,7 +209,7 @@ namespace Vinki
             }
         }
 
-        private static bool isCoyoteJumping(Player self)
+        private static bool IsCoyoteJumping(Player self)
         {
             VinkiPlayerData v = self.Vinki();
             //Debug.Log("Last animation: " + v.lastAnimation.ToString() + "\t Can coyote jump: " + v.canCoyote +
@@ -359,7 +359,7 @@ namespace Vinki
                     else
                     {
                         v.vineAtFeet = vineAtFeet;
-                        Vector2 grindDir = (self.room.climbableVines.OnVinePos(vineAtFeet) - self.bodyChunks[1].pos).normalized;
+                        //Vector2 grindDir = (self.room.climbableVines.OnVinePos(vineAtFeet) - self.bodyChunks[1].pos).normalized;
                         self.room.climbableVines.PushAtVine(vineAtFeet, (oldPos - self.room.climbableVines.OnVinePos(vineAtFeet)) * 0.05f);
                     }
                 }
@@ -765,8 +765,8 @@ namespace Vinki
             }
         }
 
-        private static float boxRadius = 45f;
-        private static float boxOffset = 45f;
+        private static readonly float boxRadius = 45f;
+        private static readonly float boxOffset = 45f;
         private static void CheckForTagging(Player self, VinkiPlayerData v)
         {
             // Wait before being able to tag again

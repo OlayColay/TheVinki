@@ -7,9 +7,9 @@ namespace Vinki;
 
 public static partial class Hooks
 {
-    private static MenuIllustration[] rainPodsSymbol = new MenuIllustration[16];
-    private static MenuIllustration[] shoesSymbol = new MenuIllustration[16];
-    private static MenuIllustration[] glassesSymbol = new MenuIllustration[16];
+    private static readonly MenuIllustration[] rainPodsSymbol = new MenuIllustration[16];
+    private static readonly MenuIllustration[] shoesSymbol = new MenuIllustration[16];
+    private static readonly MenuIllustration[] glassesSymbol = new MenuIllustration[16];
 
     private static void ApplyJollyCoopHooks()
     {

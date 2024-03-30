@@ -25,7 +25,7 @@ public class GraffitiObject : CustomDecal
     }
 
     private SerializableGraffiti serializableGraffiti;
-	private int cyclePlaced = 0;
+	private readonly int cyclePlaced = 0;
 
     public GraffitiObject(PlacedObject placedObject, SaveState save, int gNum, string roomId) : base(placedObject)
     {

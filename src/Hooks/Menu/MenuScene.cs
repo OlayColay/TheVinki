@@ -165,7 +165,7 @@ public static partial class Hooks
         }
     }
 
-    private static float rotateAmount = 1f;
+    private static readonly float rotateAmount = 1f;
     private static void MenuScene_Update(On.Menu.MenuScene.orig_Update orig, MenuScene self)
     {
         orig(self);

@@ -254,7 +254,7 @@ namespace Vinki
 			}
 
 			// Token: 0x04003ED9 RID: 16089
-			private CutsceneVinkiIntro owner;
+			private readonly CutsceneVinkiIntro owner;
 		}
 	}
 }

@@ -23,6 +23,8 @@ namespace Vinki
         private static OpHoldButton unlockButton;
         private static OpHoldButton lockButton;
 
+        private int currentVinkiPage = 0;
+
         public VinkiConfig()
         {
             RequireSprayCans = config.Bind("requireSprayCans", true, new ConfigurableInfo("Requires a spray can to spray graffiti (craft one with a rock and a colorful item).", tags:
@@ -141,12 +143,12 @@ namespace Vinki
                 "Abigail    banba fan    Doop    goof    JayDee    Nico    Rae    Sadman    skrybl    Sunbloom    SunnyBeam\n",
             1);
 
-            // Vinki Graffiti 1 tab
-            AddSubtitle(580f, "Vinki", 2);
-            AddGraffiti(525f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "vinki", 2);
+            // Vinki Graffiti tab
+            AddGraffiti(550f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "vinki", 2);
+            AddPageButtons(2);
 
             // Vinki Graffiti Unlockables tab
-            AddGraffiti(550f, "decals" + Path.DirectorySeparatorChar + "Unlockables", 3, false, 0, true);
+            AddGraffiti(550f, "decals" + Path.DirectorySeparatorChar + "Unlockables", 3, false, true);
             unlockButton = AddHoldButton(
                 "Unlock All Graffiti",
                 "Unlock every graffiti. Useful if your game is bugged or you had to reset your Graffiti folder.",
@@ -295,6 +297,42 @@ namespace Vinki
             ]);
         }
 
+        private void AddPageButtons(int tab)
+        {
+            OpSimpleButton nextButton = new(new Vector2(350f, 0f), new Vector2(200f, 30f), Translate("Next Page"));
+            OpSimpleButton prevButton = new(new Vector2(50f, 0f), new Vector2(200f, 30f), Translate("Last Page"));
+            int namesLength = 0;
+
+            if (tab == 2)
+            {
+                namesLength = Directory.EnumerateFiles(AssetManager.ResolveDirectory("decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "vinki"), "*.png", SearchOption.AllDirectories).Count();
+            }
+
+            nextButton.OnClick += (_) =>
+            {
+                if (tab == 2)
+                {
+                    currentVinkiPage++;
+                    RegenerateVinkiGraffitiPage();
+                }
+            };
+            prevButton.OnClick += (_) =>
+            {
+                if (tab == 2)
+                {
+                    currentVinkiPage--;
+                    RegenerateVinkiGraffitiPage();
+                }
+            };
+            nextButton.greyedOut = currentVinkiPage * 30 + 30 >= namesLength;
+            prevButton.greyedOut = currentVinkiPage == 0;
+
+            Tabs[tab].AddItems([
+                nextButton,
+                prevButton
+            ]);
+        }
+
         private OpHoldButton AddHoldButton(string displayName, string description, OnSignalHandler action, float y, float width, float fillTime = 80f, Color? color = null, int tab = 0, float x = 150f)
         {
             OpHoldButton holdButton = new(new Vector2(x, y), new Vector2(width, 30f), Translate(displayName), fillTime)
@@ -393,7 +431,7 @@ namespace Vinki
         }
 
         private static readonly int imgHeight = 50;
-        private float AddGraffiti(float yStart, string folderPath, int tab, bool hidden = false, int startAt = 0, bool unlockables = false)
+        private float AddGraffiti(float yStart, string folderPath, int tab, bool hidden = false, bool unlockables = false)
         {
             var names = Directory.EnumerateFiles(AssetManager.ResolveDirectory(folderPath), "*.png", SearchOption.AllDirectories).ToArray()
                 .Select(Path.GetFileNameWithoutExtension).ToArray();
@@ -418,7 +456,7 @@ namespace Vinki
                 .Select(Path.GetFileNameWithoutExtension).ToArray();
 
             float y = yStart;
-            for (int i = startAt; i < startAt + 30 && i < thumbnails.Length; y-=imgHeight+45)
+            for (int i = currentVinkiPage * 30; i < currentVinkiPage * 30 + 30 && i < thumbnails.Length; y-=imgHeight+45)
             {
                 for (float x = 25f; x <= 525f && i < thumbnails.Length; x += 125f,i++)
                 {
@@ -448,6 +486,13 @@ namespace Vinki
             }
 
             return y;
+        }
+
+        private void RegenerateVinkiGraffitiPage()
+        {
+            Tabs[2].RemoveItems(Tabs[2].items.ToArray());
+            AddGraffiti(555f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "vinki", 2);
+            AddPageButtons(2);
         }
     }
 }
