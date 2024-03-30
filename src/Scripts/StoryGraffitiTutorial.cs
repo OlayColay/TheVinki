@@ -22,7 +22,15 @@ public class StoryGraffitiTutorial : UpdatableAndDeletable
         this.room = room;
         miscSave = SlugBase.SaveData.SaveDataExtension.GetSlugBaseData(room.game.GetStorySession.saveState.miscWorldSaveData);
         miscSave.TryGet("StoryGraffitiTutorialPhase", out int nextPhaseInt);  // If there's nothing in the save, it should give 0
-        nextPhase = (Phase)nextPhaseInt;
+        if (nextPhaseInt == 0)
+        {
+            miscSave.TryGet("StoryGraffitiSprayed", out int[] sprd);
+            nextPhase = sprd != null && sprd.Contains(2) ? Phase.Explore : Phase.Spray;
+        }
+        else
+        {
+            nextPhase = (Phase)nextPhaseInt;
+        }
     }
 
     public override void Update(bool eu)
