@@ -58,6 +58,7 @@ namespace Vinki
             ApplyCollectTokenHooks();
             ApplyExpeditionHooks();
             ApplyPauseMenuHooks();
+            ApplyGhostHooks();
         }
 
         public static void RemoveHooks()
@@ -78,6 +79,7 @@ namespace Vinki
             RemoveCollectTokenHooks();
             RemoveExpeditionHooks();
             RemovePauseMenuHooks();
+            RemoveGhostHooks();
 
             RemoveMenuSceneHooks();
 
@@ -411,11 +413,7 @@ namespace Vinki
             //Copy all the files & Replaces any files with the same name
             foreach (string newPath in Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories))
             {
-                // Make sure not to copy the final unlockable graffiti
-                if (Path.GetFileNameWithoutExtension(newPath) != "Tsuno - 一True Victory一")
-                {
-                    File.Copy(newPath, newPath.Replace(sourcePath, targetPath), true);
-                }
+                File.Copy(newPath, newPath.Replace(sourcePath, targetPath), true);
             }
         }
 

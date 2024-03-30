@@ -483,7 +483,6 @@ namespace Vinki
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("That seems like a good idea, doesn’t it?"), 0);
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Come back next cycle, and I will have it done by then."), 0);
                     miscSave.Set("SpawnUnlockablePearl", 1);
-                    File.Copy(AssetManager.ResolveFilePath("decals/StorySpoilers/True Victory.png"), AssetManager.ResolveDirectory("decals/Unlockables/") + "Tsuno - 一True Victory一.png", true);
                     break;
                 case "VinkiGraffiti/vinki/Beep - 5P or QT":
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
