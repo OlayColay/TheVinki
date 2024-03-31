@@ -1,4 +1,5 @@
 ﻿using Menu;
+using System;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
@@ -21,20 +22,22 @@ public static partial class Hooks
     // Add hooks
     private static void ApplyPauseMenuHooks()
     {
-        On.Menu.PauseMenu.ctor += PauseMenu_ctor;
+        On.Menu.PauseMenu.SpawnExitContinueButtons += PauseMenu_SpawnExitContinueButtons;
+        On.Menu.PauseMenu.SpawnConfirmButtons += PauseMenu_SpawnConfirmButtons;
         On.Menu.PauseMenu.Update += PauseMenu_Update;
         On.Menu.PauseMenu.Singal += PauseMenu_Singal;
     }
+
     private static void RemovePauseMenuHooks()
     {
-        On.Menu.PauseMenu.ctor -= PauseMenu_ctor;
+        On.Menu.PauseMenu.SpawnExitContinueButtons -= PauseMenu_SpawnExitContinueButtons;
         On.Menu.PauseMenu.Update -= PauseMenu_Update;
         On.Menu.PauseMenu.Singal -= PauseMenu_Singal;
     }
 
-    private static void PauseMenu_ctor(On.Menu.PauseMenu.orig_ctor orig, PauseMenu self, ProcessManager manager, RainWorldGame game)
+    private static void PauseMenu_SpawnExitContinueButtons(On.Menu.PauseMenu.orig_SpawnExitContinueButtons orig, PauseMenu self)
     {
-        orig(self, manager, game);
+        orig(self);
 
         if (self.game.GetStorySession?.saveState.saveStateNumber != Enums.vinki)
         {
@@ -45,6 +48,19 @@ public static partial class Hooks
         data.graffitiMenuButton = new SimpleButton(self, self.pages[0], self.Translate("SELECT GRAFFITI"), "SELECT GRAFFITI", new Vector2(self.ContinueAndExitButtonsXPos - 460f - self.manager.rainWorld.options.SafeScreenOffset.x, Mathf.Max(self.manager.rainWorld.options.SafeScreenOffset.y, 15f)), new Vector2(110f, 30f));
         self.pages[0].subObjects.Add(data.graffitiMenuButton);
         data.graffitiMenuButton.black = 0f;
+    }
+
+    private static void PauseMenu_SpawnConfirmButtons(On.Menu.PauseMenu.orig_SpawnConfirmButtons orig, PauseMenu self)
+    {
+        orig(self);
+
+        PauseMenuData data = self.VinkiData();
+        if (data.graffitiMenuButton != null)
+        {
+            data.graffitiMenuButton.RemoveSprites();
+            self.pages[0].RemoveSubObject(data.graffitiMenuButton);
+        }
+        data.graffitiMenuButton = null;
     }
 
     private static void PauseMenu_Update(On.Menu.PauseMenu.orig_Update orig, Menu.PauseMenu self)

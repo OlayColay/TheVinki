@@ -239,6 +239,7 @@ namespace Menu
             {
                 closing = true;
                 targetAlpha = 0f;
+                this.PlaySound(SoundID.MENU_Switch_Page_Out);
             }
             else if (message.StartsWith("SELECT "))
             {
