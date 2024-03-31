@@ -14,11 +14,11 @@ namespace Menu
         public GraffitiSelectDialog(ProcessManager manager, Vector2 cancelButtonPos, RainWorldGame game) : base(manager)
         {
             float[] screenOffsets = Custom.GetScreenOffsets();
-            GraffitiStartPos = new Vector2(100f, Screen.height - 250f);
+            GraffitiStartPos = new Vector2(100f, manager.rainWorld.screenSize.y - 250f);
             pages[0].pos = new Vector2(100f, 25f);
             Page page = pages[0];
             page.pos.y += 2000f;
-            players = game.Players.Select(abs => abs.realizedCreature as Player).ToArray();
+            players = game.Players.Where(abs => abs.realizedCreature != null && abs.realizedCreature is Player).Select(abs => abs.realizedCreature as Player).ToArray();
 
             // Background rects
             roundedRects[0] = new(this, page, new Vector2(75f, 60f), new Vector2(475f, 645f), true);
@@ -226,6 +226,8 @@ namespace Menu
             {
                 uAlpha = Mathf.Pow(Mathf.Max(0f, Mathf.Lerp(lastAlpha, currentAlpha, timeStacker)), 1.5f);
                 darkSprite.alpha = uAlpha * 0.95f;
+                previewSprite.x = roundedRects[1].DrawX(1f) + (roundedRects[1].size.x / 2);
+                previewSprite.y = roundedRects[1].DrawY(1f) + (roundedRects[1].size.y / 2);
             }
             pages[0].pos.y = Mathf.Lerp(manager.rainWorld.options.ScreenSize.y + 100f, 0.01f, (uAlpha < 0.999f) ? uAlpha : 1f);
         }
