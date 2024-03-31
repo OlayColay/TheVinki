@@ -131,7 +131,7 @@ namespace Vinki
             AddSubtitle(410f, "Cursed Art", 1);
             AddText(390f, "Beep    Bluzai    MagicaJaphet    MaxDubstep    OlayColay", 1);
             AddSubtitle(350f, "Level Editing", 1);
-            AddText(330f, "TarnishedPotato    Xim", 1);
+            AddText(330f, "JayDee   TarnishedPotato    Xim", 1);
             AddSubtitle(290f, "Music", 1);
             AddText(270f, "MaxDubstep", 1);
             AddSubtitle(230f, "Sound Effects", 1);
