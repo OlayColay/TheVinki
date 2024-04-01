@@ -24,6 +24,7 @@ namespace Vinki
         private static OpHoldButton lockButton;
 
         private int currentVinkiPage = 0;
+        private int currentOtherPage = 0;
 
         public VinkiConfig()
         {
@@ -85,8 +86,7 @@ namespace Vinki
                 new OpTab(this, "Credits"),
                 new OpTab(this, "Vinki Graffiti"),
                 new OpTab(this, "Unlockables"),
-                new OpTab(this, "Other Graf. 1"),
-                new OpTab(this, "Other Graf. 2"),
+                new OpTab(this, "Other Graffiti"),
             ];
 
             // Options tab
@@ -145,8 +145,7 @@ namespace Vinki
             1);
 
             // Vinki Graffiti tab
-            AddGraffiti(550f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "vinki", 2);
-            AddPageButtons(2);
+            RegenerateVinkiGraffitiPage();
 
             // Vinki Graffiti Unlockables tab
             AddGraffiti(550f, "decals" + Path.DirectorySeparatorChar + "Unlockables", 3, false, true);
@@ -175,29 +174,8 @@ namespace Vinki
             );
             lockButton.greyedOut = !Hooks.AnyGraffitiUnlocked();
 
-            // Other Graffiti 1 tab
-            AddSubtitle(580f, "Monk", 4);
-            float curY = AddGraffiti(525f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Yellow", 4);
-            AddSubtitle(curY + 30f, "Survivor", 4);
-            curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "White", 4);
-            AddSubtitle(curY + 30f, "Hunter", 4);
-            curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Red", 4);
-            AddSubtitle(curY + 30f, "Gourmand", 4);
-            curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Gourmand", 4);
-            AddSubtitle(curY + 30f, "Artificer", 4);
-            curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Artificer", 4);
-
-            // Other Graffiti 2 tab
-            AddSubtitle(580f, "Rivulet", 5);
-            curY = AddGraffiti(525f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Rivulet", 5);
-            AddSubtitle(curY + 30f, "Spearmaster", 5);
-            curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Spear", 5);
-            AddSubtitle(curY + 30f, "Saint", 5);
-            curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Saint", 5);
-            AddSubtitle(curY + 30f, "???", 5);
-            curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Inv", 5, true);
-            AddSubtitle(curY + 30f, "Misc.", 5);
-            curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "Scenes", 5);
+            // Other Graffiti tab
+            RegenerateOtherGraffitiPage();
         }
 
         // Combines two flipped 'LinearGradient200's together to make a fancy looking divider.
@@ -302,31 +280,38 @@ namespace Vinki
         {
             OpSimpleButton nextButton = new(new Vector2(350f, 0f), new Vector2(200f, 30f), Translate("Next Page"));
             OpSimpleButton prevButton = new(new Vector2(50f, 0f), new Vector2(200f, 30f), Translate("Last Page"));
-            int namesLength = 0;
 
             if (tab == 2)
             {
-                namesLength = Directory.EnumerateFiles(AssetManager.ResolveDirectory("decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "vinki"), "*.png", SearchOption.AllDirectories).Count();
-            }
-
-            nextButton.OnClick += (_) =>
-            {
-                if (tab == 2)
+                int namesLength = Directory.EnumerateFiles(AssetManager.ResolveDirectory("decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "vinki"), "*.png", SearchOption.AllDirectories).Count();
+                nextButton.OnClick += (_) =>
                 {
                     currentVinkiPage++;
                     RegenerateVinkiGraffitiPage();
-                }
-            };
-            prevButton.OnClick += (_) =>
-            {
-                if (tab == 2)
+                };
+                prevButton.OnClick += (_) =>
                 {
                     currentVinkiPage--;
                     RegenerateVinkiGraffitiPage();
-                }
-            };
-            nextButton.greyedOut = currentVinkiPage * 30 + 30 >= namesLength;
-            prevButton.greyedOut = currentVinkiPage == 0;
+                };
+                nextButton.greyedOut = currentVinkiPage * 30 + 30 >= namesLength;
+                prevButton.greyedOut = currentVinkiPage == 0;
+            }
+            else if (tab == 4)
+            {
+                nextButton.OnClick += (_) =>
+                {
+                    currentOtherPage++;
+                    RegenerateOtherGraffitiPage();
+                };
+                prevButton.OnClick += (_) =>
+                {
+                    currentOtherPage--;
+                    RegenerateOtherGraffitiPage();
+                };
+                nextButton.greyedOut = currentOtherPage >= 2;
+                prevButton.greyedOut = currentOtherPage == 0;
+            }
 
             Tabs[tab].AddItems([
                 nextButton,
@@ -457,7 +442,8 @@ namespace Vinki
                 .Select(Path.GetFileNameWithoutExtension).ToArray();
 
             float y = yStart;
-            for (int i = currentVinkiPage * 30; i < currentVinkiPage * 30 + 30 && i < thumbnails.Length; y-=imgHeight+45)
+            int currentPage = tab == 2 ? currentVinkiPage : 0;
+            for (int i = currentPage * 30; i < currentPage * 30 + 30 && i < thumbnails.Length; y-=imgHeight+45)
             {
                 for (float x = 25f; x <= 525f && i < thumbnails.Length; x += 125f,i++)
                 {
@@ -494,6 +480,44 @@ namespace Vinki
             Tabs[2].RemoveItems(Tabs[2].items.ToArray());
             AddGraffiti(555f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "vinki", 2);
             AddPageButtons(2);
+        }
+
+        private void RegenerateOtherGraffitiPage()
+        {
+            Tabs[4].RemoveItems(Tabs[4].items.ToArray());
+            float curY = 500f;
+            switch (currentOtherPage)
+            {
+                case 0:
+                    AddSubtitle(curY + 30f, "Monk", 4);
+                    curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Yellow", 4);
+                    AddSubtitle(curY + 30f, "Survivor", 4);
+                    curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "White", 4);
+                    AddSubtitle(curY + 30f, "Hunter", 4);
+                    curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Red", 4);
+                    AddSubtitle(curY + 30f, "Watcher", 4);
+                    curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Night", 4);
+                    break;
+                case 1:
+                    AddSubtitle(curY + 30f, "Artificer", 4);
+                    curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Artificer", 4);
+                    AddSubtitle(curY + 30f, "Gourmand", 4);
+                    curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Gourmand", 4);
+                    AddSubtitle(curY + 30f, "Rivulet", 4);
+                    curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Rivulet", 4);
+                    AddSubtitle(curY + 30f, "Spearmaster", 4);
+                    AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Spear", 4);
+                    break;
+                case 2:
+                    AddSubtitle(curY + 30f, "Saint", 4);
+                    curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Saint", 4);
+                    AddSubtitle(curY + 30f, "???", 4);
+                    curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Inv", 4, true);
+                    AddSubtitle(curY + 30f, "Misc.", 4);
+                    AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "Scenes", 4);
+                    break;
+            }
+            AddPageButtons(4);
         }
     }
 }
