@@ -39,7 +39,8 @@ public static partial class Hooks
     {
         orig(self);
 
-        if (self.game.GetStorySession?.saveState.saveStateNumber != Enums.vinki)
+        //if (self.game.GetStorySession?.saveState.saveStateNumber != Enums.vinki)
+        if (self.game.IsArenaSession)
         {
             return;
         }
@@ -67,7 +68,8 @@ public static partial class Hooks
     {
         orig(self);
 
-        if (self.game.GetStorySession?.saveState.saveStateNumber != Enums.vinki)
+        //if (self.game.GetStorySession?.saveState.saveStateNumber != Enums.vinki)
+        if (self.game.IsArenaSession)
         {
             return;
         }
@@ -87,7 +89,8 @@ public static partial class Hooks
 
     private static void PauseMenu_Singal(On.Menu.PauseMenu.orig_Singal orig, PauseMenu self, MenuObject sender, string message)
     {
-        if (self.game.GetStorySession?.saveState.saveStateNumber != Enums.vinki || message == null)
+        //if (self.game.GetStorySession?.saveState.saveStateNumber != Enums.vinki || message == null)
+        if (self.game.IsArenaSession)
         {
             orig(self, sender, message);
             return;
