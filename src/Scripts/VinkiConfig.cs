@@ -320,7 +320,7 @@ namespace Vinki
                     currentOtherPage--;
                     RegenerateOtherGraffitiPage();
                 };
-                nextButton.greyedOut = currentOtherPage >= 2;
+                nextButton.greyedOut = currentOtherPage >= 3;
                 prevButton.greyedOut = currentOtherPage == 0;
             }
 
@@ -526,6 +526,10 @@ namespace Vinki
                     curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Inv", 4, true);
                     AddSubtitle(curY + 30f, "Misc.", 4);
                     AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "Scenes", 4);
+                    break;
+                case 3:
+                    AddSubtitle(curY + 30f, "Escort", 4);
+                    AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "EscortMe", 4);
                     break;
             }
             AddPageButtons(4);
