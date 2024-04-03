@@ -37,9 +37,29 @@ namespace Vinki
             [
                 "Require Spray Cans for Tagging"
             ]));
+            UseGraffitiButton = config.Bind("useGraffitiButton", true, new ConfigurableInfo("Use the Graffiti Mode button when crafting, spraying, and tagging. Disable if you have custom bindings and don't like having to press two buttons to perform these abilities.", tags:
+            [
+                "Require Graffiti Mode Button for Controls"
+            ]));
             UpGraffiti = config.Bind("upGraffiti", true, new ConfigurableInfo("Use the Up direction for Graffiti Mode (in addition to the normal binding).", tags:
             [
                 "Use Up as Graffiti Mode"
+            ]));
+            TagDamageJolly = config.Bind("tagDamageJolly", false, new ConfigurableInfo("Tagging a player while in Jolly Coop does damage.", tags:
+            [
+                "Tagging Damages Jolly Players"
+            ]));
+            TokensInEveryCampaign = config.Bind("tokensInEveryCampaign", false, new ConfigurableInfo("Be able to collect the unlockable graffiti tokens in campaigns besides Vinki's (excluding Saint)", tags:
+            [
+                "Graffiti Tokens in Any Campaign"
+            ]));
+            ShowVinkiTitleCard = config.Bind("showVinkiTitleCard", true, new ConfigurableInfo("Always show one of the Vinki title cards when starting the game. This replaces other title cards, and the mod must be high in the mod order on the left to work!", tags:
+            [
+                "Always Show Vinki Title Cards"
+            ]));
+            GlassesOverDMS = config.Bind("glassesOverDMS", true, new ConfigurableInfo("Wear Vinki's glasses on top of the current DMS skin for Vinki. Only works if you have DMS enabled.", tags:
+            [
+                "Wear Glasses Over DMS Skin"
             ]));
             GraffitiFadeTime = config.Bind("graffitiFadeTime", 5, new ConfigurableInfo("How many cycles sprayed graffiti should last (excludes story-related graffiti). Use -1 for infinite cycles.", new ConfigAcceptableRange<int>(-1, 999), tags:
             [
@@ -52,26 +72,6 @@ namespace Vinki
             RestoreGraffitiOnUpdate = config.Bind("restoreGraffitiOnUpdate", true, new ConfigurableInfo("Restore default graffiti when the mod updates to a new version. Helpful to automatically add any new graffiti from updates.", tags:
             [
                 "Restore Default Graffiti when Mod Updates"
-            ]));
-            ShowVinkiTitleCard = config.Bind("showVinkiTitleCard", true, new ConfigurableInfo("Always show one of the Vinki title cards when starting the game. This replaces other title cards, and the mod must be high in the mod order on the left to work!", tags:
-            [
-                "Always Show Vinki Title Cards"
-            ]));
-            GlassesOverDMS = config.Bind("glassesOverDMS", true, new ConfigurableInfo("Wear Vinki's glasses on top of the current DMS skin for Vinki. Only works if you have DMS enabled.", tags:
-            [
-                "Wear Glasses Over DMS Skin"
-            ]));
-            TagDamageJolly = config.Bind("tagDamageJolly", false, new ConfigurableInfo("Tagging a player while in Jolly Coop does damage.", tags:
-            [
-                "Tagging Damages Jolly Players"
-            ]));
-            UseGraffitiButton = config.Bind("useGraffitiButton", true, new ConfigurableInfo("Use the Graffiti Mode button when crafting, spraying, and tagging. Disable if you have custom bindings and don't like having to press two buttons to perform these abilities.", tags:
-            [
-                "Require Graffiti Mode Button for Controls"
-            ]));
-            TokensInEveryCampaign = config.Bind("tokensInEveryCampaign", false, new ConfigurableInfo("Be able to collect the unlockable graffiti tokens in campaigns besides Vinki's (excluding Saint)", tags:
-            [
-                "Graffiti Tokens in Any Campaign"
             ]));
         }
 
@@ -96,35 +96,40 @@ namespace Vinki
 
             // Options tab
             AddDivider(593f);
-            AddTitle();
+            AddTitle(0);
             AddDivider(557f);
-            AddCheckbox(RequireCansGraffiti, 520f);
-            AddCheckbox(RequireCansTagging, 480f);
-            AddCheckbox(UpGraffiti, 440f);
-            AddIntBox(GraffitiFadeTime, 400f);
-            AddCheckbox(DeleteGraffiti, 360f);
-            AddCheckbox(RestoreGraffitiOnUpdate, 320f);
+            AddTitle(0, "Gameplay", 510f);
+            AddCheckbox(RequireCansGraffiti, 480f);
+            AddCheckbox(RequireCansTagging, 450f);
+            AddCheckbox(UseGraffitiButton, 420f);
+            AddCheckbox(UpGraffiti, 390f);
+            AddCheckbox(TagDamageJolly, 360f);
+            AddCheckbox(TokensInEveryCampaign, 330f);
+            AddTitle(0, "Visuals", 270f);
+            AddCheckbox(ShowVinkiTitleCard, 240f);
+            AddCheckbox(GlassesOverDMS, 210f);
+            AddIntBox(GraffitiFadeTime, 180f);
+            AddCheckbox(DeleteGraffiti, 150f);
+            AddTitle(0, "Graffiti Files", 90f);
+            AddCheckbox(RestoreGraffitiOnUpdate, 60f);
             AddHoldButton(
                 "Restore Default Graffiti",
                 "Restore the default graffiti that came with The Vinki. Useful for after installing an update that includes new default graffiti.",
                 RestoreDefaultGraffiti,
-                280f,
+                20f,
                 200f,
-                40f
+                40f,
+                x: 50f
             );
             AddHoldButton(
                 "Reset Graffiti Folder to Default",
                 "Revert Graffiti Folder to default. This will remove any custom files you've added to it!",
                 ResetGraffitiFolder,
-                240f,
+                20f,
                 200f,
-                color: Color.red
+                color: Color.red,
+                x: 350f
             );
-            AddCheckbox(ShowVinkiTitleCard, 200f);
-            AddCheckbox(GlassesOverDMS, 160f);
-            AddCheckbox(TagDamageJolly, 120f);
-            AddCheckbox(UseGraffitiButton, 80f);
-            AddCheckbox(TokensInEveryCampaign, 40f);
 
             // Credits tab
             AddDivider(593f, 1);
@@ -203,9 +208,9 @@ namespace Vinki
         }
 
         // Adds the mod name to the interface.
-        private void AddTitle(int tab = 0)
+        private void AddTitle(int tab, string text = "The Vinki", float yPos = 560f)
         {
-            OpLabel title = new(new Vector2(150f, 560f), new Vector2(300f, 30f), "The Vinki", bigText: true);
+            OpLabel title = new(new Vector2(150f, yPos), new Vector2(300f, 30f), text, bigText: true);
 
             Tabs[tab].AddItems(
             [
@@ -274,7 +279,7 @@ namespace Vinki
             //uifocusable = opUpdown;
             Tabs[0].AddItems(
             [
-                new OpLabel(190f, y + 0f, Translate(optionText.info.Tags[0] as string), false)
+                new OpLabel(190f, y + 2f, Translate(optionText.info.Tags[0] as string), false)
                 {
                     bumpBehav = opUpdown.bumpBehav,
                     description = opUpdown.description
