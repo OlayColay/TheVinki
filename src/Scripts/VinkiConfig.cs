@@ -9,7 +9,8 @@ namespace Vinki
     public class VinkiConfig : OptionInterface
     {
         public static VinkiConfig Instance { get; } = new();
-        public static Configurable<bool> RequireSprayCans;
+        public static Configurable<bool> RequireCansGraffiti;
+        public static Configurable<bool> RequireCansTagging;
         public static Configurable<bool> UpGraffiti;
         public static Configurable<int> GraffitiFadeTime;
         public static Configurable<bool> DeleteGraffiti;
@@ -28,9 +29,13 @@ namespace Vinki
 
         public VinkiConfig()
         {
-            RequireSprayCans = config.Bind("requireSprayCans", true, new ConfigurableInfo("Requires a spray can to spray graffiti (craft one with a rock and a colorful item).", tags:
+            RequireCansGraffiti = config.Bind("requireCansGraffiti", true, new ConfigurableInfo("Requires a spray can to spray graffiti on the background (craft a can with a rock and a colorful item).", tags:
             [
                 "Require Spray Cans for Graffiti"
+            ]));
+            RequireCansTagging = config.Bind("requireCansTagging", true, new ConfigurableInfo("Requires a spray can to tag creatures (craft a can with a rock and a colorful item).", tags:
+            [
+                "Require Spray Cans for Tagging"
             ]));
             UpGraffiti = config.Bind("upGraffiti", true, new ConfigurableInfo("Use the Up direction for Graffiti Mode (in addition to the normal binding).", tags:
             [
@@ -93,16 +98,17 @@ namespace Vinki
             AddDivider(593f);
             AddTitle();
             AddDivider(557f);
-            AddCheckbox(RequireSprayCans, 520f);
-            AddCheckbox(UpGraffiti, 480f);
-            AddIntBox(GraffitiFadeTime, 440f);
-            AddCheckbox(DeleteGraffiti, 400f);
-            AddCheckbox(RestoreGraffitiOnUpdate, 360f);
+            AddCheckbox(RequireCansGraffiti, 520f);
+            AddCheckbox(RequireCansTagging, 480f);
+            AddCheckbox(UpGraffiti, 440f);
+            AddIntBox(GraffitiFadeTime, 400f);
+            AddCheckbox(DeleteGraffiti, 360f);
+            AddCheckbox(RestoreGraffitiOnUpdate, 320f);
             AddHoldButton(
                 "Restore Default Graffiti",
                 "Restore the default graffiti that came with The Vinki. Useful for after installing an update that includes new default graffiti.",
                 RestoreDefaultGraffiti,
-                320f,
+                280f,
                 200f,
                 40f
             );
@@ -110,15 +116,15 @@ namespace Vinki
                 "Reset Graffiti Folder to Default",
                 "Revert Graffiti Folder to default. This will remove any custom files you've added to it!",
                 ResetGraffitiFolder,
-                280f,
+                240f,
                 200f,
                 color: Color.red
             );
-            AddCheckbox(ShowVinkiTitleCard, 240f);
-            AddCheckbox(GlassesOverDMS, 200f);
-            AddCheckbox(TagDamageJolly, 160f);
-            AddCheckbox(UseGraffitiButton, 120f);
-            AddCheckbox(TokensInEveryCampaign, 80f);
+            AddCheckbox(ShowVinkiTitleCard, 200f);
+            AddCheckbox(GlassesOverDMS, 160f);
+            AddCheckbox(TagDamageJolly, 120f);
+            AddCheckbox(UseGraffitiButton, 80f);
+            AddCheckbox(TokensInEveryCampaign, 40f);
 
             // Credits tab
             AddDivider(593f, 1);

@@ -370,7 +370,7 @@ namespace Vinki
                 float yPos = sLeaser.sprites[9].y + Mathf.Lerp(0f, 20f, vinki.tagIconSize);
                 var iconPos = new Vector2(xPos, yPos);
 
-                bool tagAble = vinki.tagLag <= 0 && (!VinkiConfig.RequireSprayCans.Value || (
+                bool tagAble = vinki.tagLag <= 0 && (!VinkiConfig.RequireCansGraffiti.Value || (
                     self.player.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan) != null) && 
                     ((self.player.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan).grabbed as SprayCan).Abstr.uses > 0));
 

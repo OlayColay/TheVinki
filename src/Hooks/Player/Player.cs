@@ -751,7 +751,7 @@ namespace Vinki
                 }  
             }
 
-            if (!VinkiConfig.RequireSprayCans.Value)
+            if (!VinkiConfig.RequireCansGraffiti.Value)
             {
                 _ = SprayGraffiti(self, gNum: gNum);
             }
@@ -765,8 +765,8 @@ namespace Vinki
             }
         }
 
-        private static readonly float boxRadius = 45f;
-        private static readonly float boxOffset = 45f;
+        private static readonly float boxRadius = 50f;
+        private static readonly float boxOffset = 50f;
         private static void CheckForTagging(Player self, VinkiPlayerData v)
         {
             // Wait before being able to tag again
@@ -800,7 +800,7 @@ namespace Vinki
                 (v.poisonedVictims[i].creature.State as HealthState).health -= v.poisonedVictims[i].damagePerTick;
             }
 
-            if ((!IsPressingGraffiti(self) && improvedInput) || (VinkiConfig.RequireSprayCans.Value && self.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan) == null) ||
+            if ((!IsPressingGraffiti(self) && improvedInput) || (VinkiConfig.RequireCansGraffiti.Value && self.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan) == null) ||
                 self.room == null)
             {
                 v.tagableCreature = null;
@@ -826,8 +826,7 @@ namespace Vinki
 
                 foreach (var chunk in creature.bodyChunks)
                 {
-                    // Can't spray face to encourage spraying from behind
-                    if (!chunk.collideWithObjects || chunk == creature.mainBodyChunk)
+                    if (!chunk.collideWithObjects)
                     {
                         continue;
                     }
@@ -847,7 +846,7 @@ namespace Vinki
         private static void TagCreature(Player self)
         {
             PhysicalObject source = self;
-            if (VinkiConfig.RequireSprayCans.Value)
+            if (VinkiConfig.RequireCansGraffiti.Value)
             {
                 SprayCan can = self.grasps.FirstOrDefault(g => g?.grabbed is SprayCan).grabbed as SprayCan;
                 if (!can.TryUse())
