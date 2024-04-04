@@ -834,8 +834,13 @@ namespace Vinki
                     Vector2 cPos = chunk.pos;
                     if (cPos.x > minX && cPos.x < maxX && cPos.y > minY && cPos.y < maxY)
                     {
-                        v.tagableCreature = creature;
-                        return;
+                        // Linecast to check if there's a solid tile that would block the spray
+                        if (SharedPhysics.RayTraceTilesForTerrainReturnFirstSolid(self.room, self.mainBodyChunk.pos, cPos) == null ||
+                            SharedPhysics.RayTraceTilesForTerrainReturnFirstSolid(self.room, self.bodyChunks[1].pos, cPos) == null)
+                        {
+                            v.tagableCreature = creature;
+                            return;
+                        }
                     }
                 }
             }
