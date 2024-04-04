@@ -85,7 +85,7 @@ public static partial class Hooks
 
         if (self.wantToContinue && self.manager.sideProcesses.Contains(data.graffitiMenu))
         {
-            data.graffitiMenu.Singal(self.pages[0], "CLOSE");
+            data.graffitiMenu.Singal(self.pages[0], "CLOSE MUTED");
         }
     }
 

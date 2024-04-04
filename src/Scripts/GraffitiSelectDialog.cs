@@ -235,11 +235,14 @@ namespace Menu
         public override void Singal(MenuObject sender, string message)
         {
             base.Singal(sender, message);
-            if (message == "CLOSE")
+            if (message.StartsWith("CLOSE"))
             {
                 closing = true;
                 targetAlpha = 0f;
-                this.PlaySound(SoundID.MENU_Switch_Page_Out);
+                if (message == "CLOSE")
+                {
+                    this.PlaySound(SoundID.MENU_Switch_Page_Out);
+                }
             }
             else if (message.StartsWith("SELECT "))
             {
