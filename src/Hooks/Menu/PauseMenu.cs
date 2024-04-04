@@ -45,8 +45,10 @@ public static partial class Hooks
             return;
         }
 
+        bool needToMoveButtonUp = ModManager.ActiveMods.Exists(mod => mod.id == "ved_s.restartbutton");
+
         PauseMenuData data = self.VinkiData();
-        data.graffitiMenuButton = new SimpleButton(self, self.pages[0], self.Translate("SELECT GRAFFITI"), "SELECT GRAFFITI", new Vector2(self.ContinueAndExitButtonsXPos - 460f - self.manager.rainWorld.options.SafeScreenOffset.x, Mathf.Max(self.manager.rainWorld.options.SafeScreenOffset.y, 15f)), new Vector2(110f, 30f));
+        data.graffitiMenuButton = new SimpleButton(self, self.pages[0], self.Translate("SELECT GRAFFITI"), "SELECT GRAFFITI", new Vector2(self.ContinueAndExitButtonsXPos - 460f - self.manager.rainWorld.options.SafeScreenOffset.x, Mathf.Max(self.manager.rainWorld.options.SafeScreenOffset.y, 15f + (needToMoveButtonUp ? 38f : 0f))), new Vector2(110f, 30f));
         self.pages[0].subObjects.Add(data.graffitiMenuButton);
         data.graffitiMenuButton.black = 0f;
     }
