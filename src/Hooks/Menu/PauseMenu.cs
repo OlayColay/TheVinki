@@ -66,7 +66,7 @@ public static partial class Hooks
         data.graffitiMenuButton = null;
     }
 
-    private static void PauseMenu_Update(On.Menu.PauseMenu.orig_Update orig, Menu.PauseMenu self)
+    private static void PauseMenu_Update(On.Menu.PauseMenu.orig_Update orig, PauseMenu self)
     {
         orig(self);
 

@@ -23,7 +23,7 @@ sealed class SprayCan : Weapon
     public float rotVel;
     public float lastDarkness = -1f;
     public float darkness;
-    public Smoke.BombSmoke smoke;
+    public BombSmoke smoke;
 
     private Color blackColor;
     private Color earthColor;
@@ -105,7 +105,7 @@ sealed class SprayCan : Weapon
             }
             if (smoke == null)
             {
-                smoke = new Smoke.BombSmoke(room, base.firstChunk.pos, base.firstChunk, RandomColor());
+                smoke = new BombSmoke(room, base.firstChunk.pos, base.firstChunk, RandomColor());
                 room.AddObject(smoke);
             }
         }
@@ -343,10 +343,10 @@ sealed class SprayCan : Weapon
             Color smokeColor = RandomColor();
             if (smoke == null)
             {
-                smoke = new Smoke.BombSmoke(room, vector, null, smokeColor);
+                smoke = new BombSmoke(room, vector, null, smokeColor);
                 roomPalette.blackColor = roomPalette.fogColor = smokeColor;
                 room.AddObject(smoke);
-                foreach (Smoke.BombSmoke.ThickSmokeSegment particle in smoke.particles.Cast<BombSmoke.ThickSmokeSegment>())
+                foreach (BombSmoke.ThickSmokeSegment particle in smoke.particles.Cast<BombSmoke.ThickSmokeSegment>())
                 {
                     particle.ApplyPalette(null, null, roomPalette);
                 }
