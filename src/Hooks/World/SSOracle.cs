@@ -260,7 +260,7 @@ namespace Vinki
             orig(self);
         }
 
-        private static void SSOracleBehavior_NewAction(On.SSOracleBehavior.orig_NewAction orig, SSOracleBehavior self, SSOracleBehavior.Action nextAction)
+        private static void SSOracleBehavior_NewAction(On.SSOracleBehavior.orig_NewAction orig, SSOracleBehavior self, Action nextAction)
         {
             //Debug.Log(string.Concat(new string[]
             //{
@@ -912,12 +912,12 @@ namespace Vinki
                 }
             }
 
-            public override void Activate(SSOracleBehavior.Action oldAction, SSOracleBehavior.Action newAction)
+            public override void Activate(Action oldAction, Action newAction)
             {
                 base.Activate(oldAction, newAction);
             }
 
-            public override void NewAction(SSOracleBehavior.Action oldAction, SSOracleBehavior.Action newAction)
+            public override void NewAction(Action oldAction, Action newAction)
             {
                 base.NewAction(oldAction, newAction);
                 if (newAction == SSOracleBehavior.Action.ThrowOut_KillOnSight && owner.conversation != null)

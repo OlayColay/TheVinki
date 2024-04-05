@@ -1,4 +1,5 @@
 ﻿using SlugBase.SaveData;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -126,24 +127,26 @@ public static partial class Hooks
         //    return;
         //}
 
+        string name = self.abstractRoom?.name;
+
         SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(self.game.rainWorld.progression.currentSaveState.miscWorldSaveData);
         // Graffiti Tutorial
-        if (self.abstractRoom?.name == "SS_E08" && self.game.rainWorld.progression.currentSaveState.cycleNumber == 0)
+        if (name == "SS_E08" && self.game.rainWorld.progression.currentSaveState.cycleNumber == 0)
         {
             self.AddObject(new GraffitiTutorial(self));
         }
         // Story Graffiti Tutorial
-        else if (self.abstractRoom?.name == "SS_D08" && (!miscSave.TryGet("StoryGraffitiTutorialPhase", out int i) || i < (int)StoryGraffitiTutorial.Phase.End))
+        else if (name == "SS_D08" && (!miscSave.TryGet("StoryGraffitiTutorialPhase", out int i) || i < (int)StoryGraffitiTutorial.Phase.End))
         {
             self.AddObject(new StoryGraffitiTutorial(self));
         }
         // Grinding Tutorial
-        else if ((self.abstractRoom?.name == "UW_H01" || self.abstractRoom?.name == "UW_H01VI") && (!miscSave.TryGet("GrindTutorialCompleted", out bool b) || !b))
+        else if ((name == "UW_H01" || name == "UW_H01VI") && (!miscSave.TryGet("GrindTutorialCompleted", out bool b) || !b))
         {
             self.AddObject(new GrindTutorial(self));
         }
         // Spawn pearl and disable hologram
-        else if (self.abstractRoom?.name == "DM_AI")
+        else if (name == "DM_AI")
         {
             if (miscSave.TryGet("SpawnUnlockablePearl", out int phase) && phase == 1)
             {
@@ -152,6 +155,14 @@ public static partial class Hooks
                 abstr.Realize();
                 self.abstractRoom.AddEntity(abstr);
                 self.AddObject(abstr.realizedObject);
+            }
+        }
+        // Spawn drone and cutscene
+        else if (name == "CC_B01")
+        {
+            if (!self.game.GetStorySession.saveState.hasRobo)
+            {
+                self.AddObject(new CutsceneVinkiRobo(self));
             }
         }
     }
