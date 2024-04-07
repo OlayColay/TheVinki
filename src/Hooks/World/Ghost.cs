@@ -21,7 +21,10 @@ namespace Vinki
 
         private static void GhostConversation_AddEvents(On.GhostConversation.orig_AddEvents orig, GhostConversation self)
         {
-            UnlockGraffitiMidgame("ArtisticDragon1292 - Echo");
+            if (self.ghost.room.game.StoryCharacter == Enums.vinki)
+            {
+                UnlockGraffitiMidgame("ArtisticDragon1292 - Echo");
+            }
             orig(self);
         }
     }
