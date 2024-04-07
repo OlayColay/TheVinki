@@ -60,6 +60,7 @@ namespace Vinki
             ApplyPauseMenuHooks();
             ApplyGhostHooks();
             ApplyAncientBotHooks();
+            ApplyRegionGateHooks();
         }
 
         public static void RemoveHooks()
@@ -82,6 +83,7 @@ namespace Vinki
             RemovePauseMenuHooks();
             RemoveGhostHooks();
             RemoveAncientBotHooks();
+            RemoveRegionGateHooks();
 
             RemoveMenuSceneHooks();
 
