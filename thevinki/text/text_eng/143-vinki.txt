@@ -1,0 +1,16 @@
+0-143-vinki
+0 : .  .  . : 60
+
+0 : You little f!@#er. : 60
+
+PEBBLESWAIT : 20
+
+0 : Of couse you had to go and find one of my citizen ID drones : 30
+
+This must be some sort of karmic justice for some crime I have yet to commit.
+
+SPECEVENT : resync
+
+0 : .  .  . : 60
+
+1000 : Unfortunately, my programming binds me to resynchronize it so that my citizen can reach their home.<LINE>So go home and please do not return. : 30

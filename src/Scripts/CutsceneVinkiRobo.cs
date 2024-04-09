@@ -10,50 +10,50 @@ namespace Vinki
         {
             Debug.Log("VINKI ROBO CUTSCENE START!");
             this.room = room;
-            this.phase = Phase.Init;
-            this.bot = new AncientBot(roboPos, new Color(0.945f, 0.3765f, 0f), null, false);
-            room.AddObject(this.bot);
+            phase = Phase.Init;
+            bot = new AncientBot(roboPos, new Color(0.945f, 0.3765f, 0f), null, false);
+            room.AddObject(bot);
         }
 
         public override void Update(bool eu)
         {
             base.Update(eu);
-            this.UpdateBot();
-            if (this.phase == Phase.End)
+            UpdateBot();
+            if (phase == Phase.End)
             {
                 Debug.Log("VINKI ROBO CUTSCENE END!");
-                this.Destroy();
+                Destroy();
             }
         }
 
         public void UpdateBot()
         {
-            if (this.Player == null)
+            if (Player == null)
             {
                 return;
             }
-            if (this.phase == Phase.Init)
+            if (phase == Phase.Init)
             {
-                if (Vector2.Distance(this.Player.mainBodyChunk.pos, roboPos) <= activateRadius)
+                if (Vector2.Distance(Player.mainBodyChunk.pos, roboPos) <= activateRadius)
                 {
-                    this.bot.tiedToObject = this.Player;
-                    this.phase = Phase.ActivateRobo;
+                    bot.tiedToObject = Player;
+                    phase = Phase.ActivateRobo;
                 }
             }
-            else if (this.phase == Phase.ActivateRobo)
+            else if (phase == Phase.ActivateRobo)
             {
-                if (this.bot.myAnimation == AncientBot.Animation.IdleOffline)
+                if (bot.myAnimation == AncientBot.Animation.IdleOffline)
                 {
-                    this.bot.myAnimation = AncientBot.Animation.TurnOn;
+                    bot.myAnimation = AncientBot.Animation.TurnOn;
                 }
-                if (this.bot.myMovement != AncientBot.FollowMode.Offline)
+                if (bot.myMovement != AncientBot.FollowMode.Offline)
                 {
-                    this.phase = Phase.End;
-                    if (this.room.game.IsStorySession)
+                    phase = Phase.End;
+                    if (room.game.IsStorySession)
                     {
-                        (this.room.game.session as StoryGameSession).saveState.hasRobo = true;
+                        (room.game.session as StoryGameSession).saveState.hasRobo = true;
                     }
-                    this.Player.myRobot = this.bot;
+                    Player.myRobot = bot;
                 }
             }
         }
@@ -62,8 +62,8 @@ namespace Vinki
         {
             get
             {
-                AbstractCreature firstAlivePlayer = this.room.game.FirstAlivePlayer;
-                if (this.room.game.Players.Count > 0 && firstAlivePlayer != null && firstAlivePlayer.realizedCreature != null)
+                AbstractCreature firstAlivePlayer = room.game.FirstAlivePlayer;
+                if (room.game.Players.Count > 0 && firstAlivePlayer != null && firstAlivePlayer.realizedCreature != null)
                 {
                     return firstAlivePlayer.realizedCreature as Player;
                 }

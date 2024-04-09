@@ -26,6 +26,7 @@ public static class Enums
     public static class SSOracle
     {
         public static Conversation.ID Vinki_SSConvoFirstMeet = new(nameof(Vinki_SSConvoFirstMeet), true);
+        public static Conversation.ID Vinki_SSConvoDrone = new(nameof(Vinki_SSConvoDrone), true);
 
         public static SSOracleBehavior.Action Vinki_SSActionGeneral = new(nameof(Vinki_SSActionGeneral), true);
         public static SSOracleBehavior.Action Vinki_SSActionTriggered = new(nameof(Vinki_SSActionTriggered), true);

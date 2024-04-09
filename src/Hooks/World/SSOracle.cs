@@ -10,6 +10,7 @@ using SlugBase.SaveData;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.IO;
+using Rewired.ControllerExtensions;
 
 namespace Vinki
 {
@@ -237,16 +238,26 @@ namespace Vinki
             self.oracle.myScreen.RemoveImage("True Victory");
         }
 
+        static bool botCutscene = false;
         private static void SSOracleBehavior_SeePlayer(On.SSOracleBehavior.orig_SeePlayer orig, SSOracleBehavior self)
         {
+            if (self.oracle.room.game.StoryCharacter != Enums.vinki)
+            {
+                orig(self);
+                return;
+            }
+            
             oracleBehavior = self;
-            if (self.oracle.room.game.StoryCharacter == Enums.vinki && ModManager.MSC && self.oracle.ID == MoreSlugcatsEnums.OracleID.DM)
+            SlugBaseSaveData miscWorldSave = SaveDataExtension.GetSlugBaseData(self.oracle.room.game.GetStorySession.saveState.miscWorldSaveData);
+            botCutscene = self.oracle.room.game.GetStorySession.saveState.hasRobo &&
+                (!miscWorldSave.TryGet("LC Unlocked", out bool unlocked) || !unlocked);
+            if (self.oracle.ID == MoreSlugcatsEnums.OracleID.DM)
             {
                 self.NewAction(Enums.DMOracle.Vinki_DMActionGeneral);
                 return;
             }
-            else if (self.oracle.room.game.StoryCharacter == Enums.vinki && self.action != Enums.SSOracle.Vinki_SSActionGeneral &&
-                self.oracle.room.game.GetStorySession.saveState.miscWorldSaveData.SSaiConversationsHad == 0)
+            else if (self.action != Enums.SSOracle.Vinki_SSActionGeneral &&
+                (self.oracle.room.game.GetStorySession.saveState.miscWorldSaveData.SSaiConversationsHad == 0 || botCutscene))
             {
                 if (self.timeSinceSeenPlayer < 0)
                     self.timeSinceSeenPlayer = 0;
@@ -254,6 +265,12 @@ namespace Vinki
                 self.movementBehavior = MovementBehavior.Talk;
 
                 self.SlugcatEnterRoomReaction();
+
+                if (botCutscene)
+                {
+                    oracleBehavior.NewAction(Enums.SSOracle.Vinki_SSActionGeneral);
+                    miscWorldSave.Set("LC Unlocked", true);
+                }
                 return;
             }
 
@@ -294,7 +311,9 @@ namespace Vinki
                 var subBehavior = self.allSubBehaviors.FirstOrDefault(x => x.ID == Enums.SSOracle.Vinki_SSSubBehavGeneral);
 
                 if (subBehavior == null)
-                    self.allSubBehaviors.Add(subBehavior = new SSOracleMeetVinki(self));
+                {
+                    self.allSubBehaviors.Add(subBehavior = botCutscene ? new SSOracleDroneVinki(self) : new SSOracleMeetVinki(self));
+                }
 
                 self.currSubBehavior.Deactivate();
 
@@ -354,6 +373,10 @@ namespace Vinki
                 e.Add(new TextEvent(self, 0,
                     self.Translate("It is simply laughable that a little beast climbed all the way up my exterior just to insult me in this way. I hope you realize that I am NOT<LINE>offended in any way, shape, or form. After all, I am a being who is, if you excuse me, godlike in compar-"), 0));
             }
+            else if (id == Enums.SSOracle.Vinki_SSConvoDrone)
+            {
+                self.LoadEventsFromFile(143, Enums.vinki, false, 0);
+            }
             else if (id == Enums.DMOracle.Vinki_DMConvoFirstMeet)
             {
                 self.LoadEventsFromFile(8675309);
@@ -391,77 +414,117 @@ namespace Vinki
                     Plugin.sleeping = false;
                 }
 
-                if (base.action == Enums.SSOracle.Vinki_SSActionGeneral)
+                if (action == Enums.SSOracle.Vinki_SSActionGeneral)
                 {
                     owner.LockShortcuts();
-                    if (base.inActionCounter == 15 && (owner.conversation == null || owner.conversation.id != convoID))
+                    if (inActionCounter == 15 && (owner.conversation == null || owner.conversation.id != convoID))
                     {
-                        base.oracle.room.game.GetStorySession.saveState.miscWorldSaveData.SSaiConversationsHad = 1;
+                        oracle.room.game.GetStorySession.saveState.miscWorldSaveData.SSaiConversationsHad = 1;
                         owner.InitateConversation(convoID, this);
                     }
                 }
-                else if (base.action == Enums.SSOracle.Vinki_SSActionTriggered)
+                else if (action == Enums.SSOracle.Vinki_SSActionTriggered)
                 {
-                    if (base.inActionCounter == 15)
+                    if (inActionCounter == 15)
                     {
                         owner.conversation.paused = true;
                         owner.restartConversationAfterCurrentDialoge = false;
 
-                        base.dialogBox.Interrupt(base.Translate(". . ."), 0);
-                        base.dialogBox.NewMessage(base.Translate("You disrespectful little cretin."), 0);
+                        dialogBox.Interrupt(Translate(". . ."), 0);
+                        dialogBox.NewMessage(Translate("You disrespectful little cretin."), 0);
                     }
-                    if (base.inActionCounter > 175)
+                    if (inActionCounter > 175)
                     {
                         Debug.Log("Done with conversation.");
                         owner.conversation = null;
                         owner.NewAction(Enums.SSOracle.Vinki_SSActionGetOut);
                     }
                 }
-                else if (base.action == Enums.SSOracle.Vinki_SSActionGetOut)
+                else if (action == Enums.SSOracle.Vinki_SSActionGetOut)
                 {
                     owner.UnlockShortcuts();
                     owner.getToWorking = 1f;
-                    if (base.inActionCounter == 100 && base.oracle.room.game.GetStorySession.saveState.deathPersistentSaveData.theMark)
+                    if (inActionCounter == 100 && oracle.room.game.GetStorySession.saveState.deathPersistentSaveData.theMark)
                     {
-                        base.dialogBox.Interrupt(base.Translate("Get out of my sight! Do not return until you have accomplished something worthwhile."), 60);
-                        owner.voice = base.oracle.room.PlaySound(SoundID.SS_AI_Talk_5, base.oracle.firstChunk);
+                        dialogBox.Interrupt(Translate("Get out of my sight! Do not return until you have accomplished something worthwhile."), 60);
+                        owner.voice = oracle.room.PlaySound(SoundID.SS_AI_Talk_5, oracle.firstChunk);
                         owner.voice.requireActiveUpkeep = true;
                     }
-                    if (base.inActionCounter == 220)
+                    if (inActionCounter == 220)
                     {
                         var grasp = player.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan);
                         if (grasp != null && (grasp.grabbed as SprayCan).TryUse())
                         {
-                            _ = Hooks.SprayGraffiti(player, 4, 1, 1f);
+                            _ = SprayGraffiti(player, 4, 1, 1f);
                         }
                     }
-                    if (base.inActionCounter == 500)
+                    if (inActionCounter == 500)
                     {
-                        owner.voice = base.oracle.room.PlaySound(SoundID.SS_AI_Talk_3, base.oracle.firstChunk);
+                        owner.voice = oracle.room.PlaySound(SoundID.SS_AI_Talk_3, oracle.firstChunk);
                         owner.voice.requireActiveUpkeep = true;
                     }
-                    if (base.inActionCounter > 550)
+                    if (inActionCounter > 550)
                     {
-                        owner.NewAction(SSOracleBehavior.Action.ThrowOut_KillOnSight);
+                        owner.NewAction(Action.ThrowOut_KillOnSight);
                     }
-                    if (base.inActionCounter > 200)
+                    if (inActionCounter > 200)
                     {
-                        if (base.player.room == base.oracle.room)
+                        if (player.room == oracle.room)
                         {
-                            if (!base.oracle.room.aimap.getAItile(base.player.mainBodyChunk.pos).narrowSpace)
+                            if (!oracle.room.aimap.getAItile(player.mainBodyChunk.pos).narrowSpace)
                             {
-                                base.player.mainBodyChunk.vel += Custom.DirVec(base.player.mainBodyChunk.pos, base.oracle.room.MiddleOfTile(28, 32)) * 2f * (1f - base.oracle.room.gravity) * Mathf.InverseLerp(20f, 150f, (float)base.inActionCounter);
+                                player.mainBodyChunk.vel += Custom.DirVec(player.mainBodyChunk.pos, oracle.room.MiddleOfTile(28, 32)) * 2f * (1f - oracle.room.gravity) * Mathf.InverseLerp(20f, 150f, (float)inActionCounter);
                             }
-                            if (base.oracle.room.GetTilePosition(base.player.mainBodyChunk.pos) == new IntVector2(28, 32) && base.player.enteringShortCut == null)
+                            if (oracle.room.GetTilePosition(player.mainBodyChunk.pos) == new IntVector2(28, 32) && player.enteringShortCut == null)
                             {
-                                base.player.enteringShortCut = new IntVector2?(base.oracle.room.ShortcutLeadingToNode(1).StartTile);
+                                player.enteringShortCut = new IntVector2?(oracle.room.ShortcutLeadingToNode(1).StartTile);
                                 return;
                             }
                             return;
                         }
-                        owner.NewAction(SSOracleBehavior.Action.ThrowOut_KillOnSight);
+                        owner.NewAction(Action.ThrowOut_KillOnSight);
                     }
                     return;
+                }
+            }
+        }
+
+        public class SSOracleDroneVinki : ConversationBehavior
+        {
+            public SSOracleDroneVinki(SSOracleBehavior owner) : base(owner, Enums.SSOracle.Vinki_SSSubBehavGeneral, Enums.SSOracle.Vinki_SSConvoDrone)
+            {
+                owner.getToWorking = 1f;
+                owner.SlugcatEnterRoomReaction();
+            }
+
+            public override void Update()
+            {
+                base.Update();
+
+                if (owner == null || oracle == null || player == null || player.room == null)
+                {
+                    return;
+                }
+
+                if (action == Enums.SSOracle.Vinki_SSActionGeneral)
+                {
+                    owner.LockShortcuts();
+                    if (owner.conversation == null || owner.conversation.id != Enums.SSOracle.Vinki_SSConvoDrone)
+                    {
+                        oracle.room.game.GetStorySession.saveState.miscWorldSaveData.SSaiConversationsHad++;
+                        owner.InitateConversation(Enums.SSOracle.Vinki_SSConvoDrone, this);
+                    }
+                    else if (owner.conversation.slatedForDeletion)
+                    {
+                        Custom.Log(
+                        [
+                            "throw out"
+                        ]);
+                        owner.NewAction(Action.ThrowOut_ThrowOut);
+                        player.myRobot.lockTarget = null;
+                        oracle.marbleOrbiting = false;
+                        Deactivate();
+                    }
                 }
             }
         }
@@ -854,50 +917,50 @@ namespace Vinki
                 owner.getToWorking = 1f;
 
                 // If this is picking up the pearl, or visit 3+ to Moon
-                met = (base.oracle.room.game.GetStorySession.saveState.miscWorldSaveData.smPearlTagged || base.oracle.room.game.rainWorld.ExpeditionMode);
-                SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(base.oracle.room.game.GetStorySession.saveState.miscWorldSaveData);
+                met = (oracle.room.game.GetStorySession.saveState.miscWorldSaveData.smPearlTagged || oracle.room.game.rainWorld.ExpeditionMode);
+                SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(oracle.room.game.GetStorySession.saveState.miscWorldSaveData);
                 if (miscSave.TryGet("SpawnUnlockablePearl", out int phase) && phase == 1)
                 {
-                    base.dialogBox.NewMessage(base.Translate("Hello, little friend!"), 0);
-                    base.dialogBox.NewMessage(base.Translate("I have the pearl for you, with your mural safely stored within it."), 0);
-                    base.dialogBox.NewMessage(base.Translate("If you would like to see it again, just hand me the pearl, and I will project it once again."), 0);
+                    dialogBox.NewMessage(Translate("Hello, little friend!"), 0);
+                    dialogBox.NewMessage(Translate("I have the pearl for you, with your mural safely stored within it."), 0);
+                    dialogBox.NewMessage(Translate("If you would like to see it again, just hand me the pearl, and I will project it once again."), 0);
                     miscSave.Set("SpawnUnlockablePearl", 2);
                     return;
                 }
-                else if (miscSave.TryGet("MetMoonTwice", out int met2) || base.oracle.room.game.rainWorld.ExpeditionMode)
+                else if (miscSave.TryGet("MetMoonTwice", out int met2) || oracle.room.game.rainWorld.ExpeditionMode)
                 {
-                    if (met2 > 1 || base.oracle.room.game.rainWorld.ExpeditionMode)
+                    if (met2 > 1 || oracle.room.game.rainWorld.ExpeditionMode)
                     {
                         float rand = Random.value;
                         if (rand < 0.2f)
                         {
-                            base.dialogBox.NewMessage(base.Translate("Hello, " + owner.NameForPlayer(false) + "."), 0);
-                            base.dialogBox.NewMessage(base.Translate("It is good to see you again, even if I have nothing to give you."), 0);
+                            dialogBox.NewMessage(Translate("Hello, " + owner.NameForPlayer(false) + "."), 0);
+                            dialogBox.NewMessage(Translate("It is good to see you again, even if I have nothing to give you."), 0);
                         }
                         else if (rand < 0.4f)
                         {
-                            base.dialogBox.NewMessage(base.Translate("Hello again, " + owner.NameForPlayer(false) + "."), 0);
-                            base.dialogBox.NewMessage(base.Translate("How have you been?"), 0);
+                            dialogBox.NewMessage(Translate("Hello again, " + owner.NameForPlayer(false) + "."), 0);
+                            dialogBox.NewMessage(Translate("How have you been?"), 0);
                         }
                         else if (rand < 0.6f)
                         {
-                            base.dialogBox.NewMessage(base.Translate("Ah... " + owner.NameForPlayer(false) + ", you're back!"), 0);
+                            dialogBox.NewMessage(Translate("Ah... " + owner.NameForPlayer(false) + ", you're back!"), 0);
                         }
                         else if (rand < 0.8f)
                         {
-                            base.dialogBox.NewMessage(base.Translate("Hello, " + owner.NameForPlayer(false) + ". You're here again."), 0);
+                            dialogBox.NewMessage(Translate("Hello, " + owner.NameForPlayer(false) + ". You're here again."), 0);
                         }
                         else
                         {
-                            base.dialogBox.NewMessage(base.Translate("Hello again, " + owner.NameForPlayer(false) + "."), 0);
+                            dialogBox.NewMessage(Translate("Hello again, " + owner.NameForPlayer(false) + "."), 0);
                         }
                     }
                     else
                     {
-                        base.dialogBox.NewMessage(base.Translate("Welcome back unusual creature."), 0);
-                        base.dialogBox.NewMessage(base.Translate("It seems to me like you were quite busy with your work, and yet you still made some time to visit me."), 0);
-                        base.dialogBox.NewMessage(base.Translate("I wonder what is it that you want? Is it just to say hello?"), 0);
-                        base.dialogBox.NewMessage(base.Translate("Feel free to visit anytime you wish, little creature. I don't mind."), 0);
+                        dialogBox.NewMessage(Translate("Welcome back unusual creature."), 0);
+                        dialogBox.NewMessage(Translate("It seems to me like you were quite busy with your work, and yet you still made some time to visit me."), 0);
+                        dialogBox.NewMessage(Translate("I wonder what is it that you want? Is it just to say hello?"), 0);
+                        dialogBox.NewMessage(Translate("Feel free to visit anytime you wish, little creature. I don't mind."), 0);
                     }
                     miscSave.Set("MetMoonTwice", met2 + 1);
                     return;
@@ -920,7 +983,7 @@ namespace Vinki
             public override void NewAction(Action oldAction, Action newAction)
             {
                 base.NewAction(oldAction, newAction);
-                if (newAction == SSOracleBehavior.Action.ThrowOut_KillOnSight && owner.conversation != null)
+                if (newAction == Action.ThrowOut_KillOnSight && owner.conversation != null)
                 {
                     owner.conversation.Destroy();
                     owner.conversation = null;
@@ -930,14 +993,14 @@ namespace Vinki
             public override void Update()
             {
                 base.Update();
-                if (base.player == null)
+                if (player == null)
                 {
                     return;
                 }
                 if (owner.oracle.room.game.StoryCharacter == Enums.vinki && owner.action == Enums.DMOracle.Vinki_DMActionGeneral && !met)
                 {
                     owner.LockShortcuts();
-                    owner.movementBehavior = SSOracleBehavior.MovementBehavior.KeepDistance;
+                    owner.movementBehavior = MovementBehavior.KeepDistance;
                     //owner.gravOn = true;
                     if (owner.inActionCounter == 80 && (owner.conversation == null || owner.conversation.id != Enums.DMOracle.Vinki_DMConvoFirstMeet))
                     {
@@ -948,21 +1011,21 @@ namespace Vinki
                         owner.UnlockShortcuts();
                         owner.conversation = null;
                         owner.getToWorking = 1f;
-                        met = base.oracle.room.game.GetStorySession.saveState.miscWorldSaveData.smPearlTagged = true;
+                        met = oracle.room.game.GetStorySession.saveState.miscWorldSaveData.smPearlTagged = true;
                     }
                     return;
                 }
                 else if (owner.oracle.room.game.StoryCharacter == Enums.vinki && owner.action == Enums.DMOracle.Vinki_DMActionGeneral && owner.conversation?.id == Enums.DMOracle.Vinki_DMConvoSecondMeet)
                 {
                     owner.LockShortcuts();
-                    owner.movementBehavior = SSOracleBehavior.MovementBehavior.KeepDistance;
+                    owner.movementBehavior = MovementBehavior.KeepDistance;
                     //owner.gravOn = true;
                     if (owner.inActionCounter > 80 && (owner.conversation == null || (owner.conversation != null && owner.conversation.slatedForDeletion)))
                     {
                         owner.UnlockShortcuts();
                         owner.conversation = null;
                         owner.getToWorking = 1f;
-                        met = base.oracle.room.game.GetStorySession.saveState.miscWorldSaveData.smPearlTagged = true;
+                        met = oracle.room.game.GetStorySession.saveState.miscWorldSaveData.smPearlTagged = true;
                     }
                     return;
                 }
@@ -974,17 +1037,17 @@ namespace Vinki
                     {
                         for (int i = 0; i < 20; i++)
                         {
-                            base.oracle.room.AddObject(new Spark(owner.inspectPearl.firstChunk.pos, Custom.RNV() * Random.value * 40f, new Color(1f, 1f, 1f), null, 30, 120));
+                            oracle.room.AddObject(new Spark(owner.inspectPearl.firstChunk.pos, Custom.RNV() * Random.value * 40f, new Color(1f, 1f, 1f), null, 30, 120));
                         }
-                        base.oracle.room.PlaySound(SoundID.SS_AI_Give_The_Mark_Boom, owner.inspectPearl.firstChunk.pos, 1f, 0.5f + Random.value * 0.5f);
+                        oracle.room.PlaySound(SoundID.SS_AI_Give_The_Mark_Boom, owner.inspectPearl.firstChunk.pos, 1f, 0.5f + Random.value * 0.5f);
                         owner.killFac = 0f;
                     }
                 }
-                if (holdPlayer && base.player.room == base.oracle.room)
+                if (holdPlayer && player.room == oracle.room)
                 {
-                    base.player.mainBodyChunk.vel *= Custom.LerpMap((float)base.inActionCounter, 0f, 30f, 1f, 0.95f);
-                    base.player.bodyChunks[1].vel *= Custom.LerpMap((float)base.inActionCounter, 0f, 30f, 1f, 0.95f);
-                    base.player.mainBodyChunk.vel += Custom.DirVec(base.player.mainBodyChunk.pos, HoldPlayerPos) * Mathf.Lerp(0.5f, Custom.LerpMap(Vector2.Distance(base.player.mainBodyChunk.pos, HoldPlayerPos), 30f, 150f, 2.5f, 7f), base.oracle.room.gravity) * Mathf.InverseLerp(0f, 10f, (float)base.inActionCounter) * Mathf.InverseLerp(0f, 30f, Vector2.Distance(base.player.mainBodyChunk.pos, HoldPlayerPos));
+                    player.mainBodyChunk.vel *= Custom.LerpMap((float)inActionCounter, 0f, 30f, 1f, 0.95f);
+                    player.bodyChunks[1].vel *= Custom.LerpMap((float)inActionCounter, 0f, 30f, 1f, 0.95f);
+                    player.mainBodyChunk.vel += Custom.DirVec(player.mainBodyChunk.pos, HoldPlayerPos) * Mathf.Lerp(0.5f, Custom.LerpMap(Vector2.Distance(player.mainBodyChunk.pos, HoldPlayerPos), 30f, 150f, 2.5f, 7f), oracle.room.gravity) * Mathf.InverseLerp(0f, 10f, (float)inActionCounter) * Mathf.InverseLerp(0f, 30f, Vector2.Distance(player.mainBodyChunk.pos, HoldPlayerPos));
                 }
                 else
                 {
@@ -993,7 +1056,7 @@ namespace Vinki
                     {
                         lowGravity = 0f;
                     }
-                    owner.SetNewDestination(base.oracle.firstChunk.pos);
+                    owner.SetNewDestination(oracle.firstChunk.pos);
                 }
             }
 
@@ -1001,7 +1064,7 @@ namespace Vinki
             {
                 get
                 {
-                    return new Vector2(668f, 268f + Mathf.Sin((float)base.inActionCounter / 70f * 3.1415927f * 2f) * 4f);
+                    return new Vector2(668f, 268f + Mathf.Sin((float)inActionCounter / 70f * 3.1415927f * 2f) * 4f);
                 }
             }
 
