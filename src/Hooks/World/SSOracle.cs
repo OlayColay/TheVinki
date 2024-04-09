@@ -9,8 +9,6 @@ using Random = UnityEngine.Random;
 using SlugBase.SaveData;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.IO;
-using Rewired.ControllerExtensions;
 
 namespace Vinki
 {

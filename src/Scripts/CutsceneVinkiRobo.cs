@@ -1,5 +1,4 @@
-﻿using System;
-using MoreSlugcats;
+﻿using MoreSlugcats;
 using UnityEngine;
 
 namespace Vinki

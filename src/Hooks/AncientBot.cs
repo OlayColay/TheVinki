@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 using MoreSlugcats;
-using static Vinki.Plugin;
 using RWCustom;
 
 namespace Vinki

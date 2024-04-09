@@ -1,7 +1,5 @@
 ﻿using BepInEx;
 using UnityEngine;
-using SlugBase.Features;
-using static SlugBase.Features.FeatureTypes;
 using System.Collections.Generic;
 using ImprovedInput;
 using System;
