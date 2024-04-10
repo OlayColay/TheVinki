@@ -24,8 +24,8 @@ namespace Menu
             scene = new InteractiveMenuScene(this, pages[0], Enums.GraffitiMap);
             pages[0].subObjects.Add(scene);
 
-            float cancelButtonWidth = GetCancelButtonWidth(base.CurrLang);
-            cancelButton = new SimpleButton(this, pages[0], base.Translate("CLOSE"), "CLOSE", cancelButtonPos, new Vector2(cancelButtonWidth, 30f));
+            float cancelButtonWidth = GetCancelButtonWidth(CurrLang);
+            cancelButton = new SimpleButton(this, pages[0], Translate("CLOSE"), "CLOSE", cancelButtonPos, new Vector2(cancelButtonWidth, 30f));
             pages[0].subObjects.Add(cancelButton);
             opening = true;
             targetAlpha = 1f;

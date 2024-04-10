@@ -11,7 +11,7 @@ namespace Vinki
 		{
 			Debug.Log("VINKI CUTSCENE START!");
 			this.room = room;
-			phase = CutsceneVinkiIntro.Phase.Init;
+			phase = Phase.Init;
 		}
 
 		// Token: 0x06002095 RID: 8341 RVA: 0x0028D744 File Offset: 0x0028B944
@@ -19,7 +19,7 @@ namespace Vinki
 		{
 			base.Update(eu);
 
-			if (phase == CutsceneVinkiIntro.Phase.Init)
+			if (phase == Phase.Init)
 			{
 				if (!room.BeingViewed)
 				{
@@ -62,18 +62,18 @@ namespace Vinki
                 }
 				if (playerPosCorrect && foodMeterInit)
 				{
-					phase = CutsceneVinkiIntro.Phase.PlayerRun;
+					phase = Phase.PlayerRun;
 					return;
 				}
 			}
 			else
 			{
-				if (phase == CutsceneVinkiIntro.Phase.PlayerRun)
+				if (phase == Phase.PlayerRun)
 				{
 					cutsceneTimer++;
 					return;
 				}
-				if (phase == CutsceneVinkiIntro.Phase.Wait && player != null)
+				if (phase == Phase.Wait && player != null)
 				{
 					if (player.room != null)
 					{
@@ -83,11 +83,11 @@ namespace Vinki
 						}
 						else
 						{
-							phase = CutsceneVinkiIntro.Phase.End;
+							phase = Phase.End;
 						}
 					}
 				}
-				if (phase == CutsceneVinkiIntro.Phase.End)
+				if (phase == Phase.End)
 				{
 					Debug.Log("VINKI CUTSCENE END!");
 					if (player != null)
@@ -112,7 +112,7 @@ namespace Vinki
 			bool jmp = false;
 			bool pckp = false;
 			bool thrw = false;
-			if (phase == CutsceneVinkiIntro.Phase.PlayerRun)
+			if (phase == Phase.PlayerRun)
 			{
 				int[] array2 =
                 [
@@ -180,7 +180,7 @@ namespace Vinki
 				{
 					//thrw = true;
 					cutsceneTimer = 0;
-					phase = CutsceneVinkiIntro.Phase.Wait;
+					phase = Phase.Wait;
 				}
 			}
 			return new Player.InputPackage(false, Options.ControlSetup.Preset.None, x, y, jmp, thrw, pckp, false, false);

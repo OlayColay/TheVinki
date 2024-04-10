@@ -45,7 +45,7 @@ public static partial class Hooks
             List<MenuDepthIllustration> menuGraffitis = [.. self.depthIllustrations.Where(f => Path.GetFileNameWithoutExtension(f.fileName).StartsWith("Graffiti - "))];
 
             // Randomize which graffiti shows
-            int randGraffiti = UnityEngine.Random.Range(0, menuGraffitis.Count);
+            int randGraffiti = Random.Range(0, menuGraffitis.Count);
             string fileName = "Graffiti - " + randGraffiti.ToString();
 
             // Show the random graffiti and hide the rest
@@ -81,7 +81,7 @@ public static partial class Hooks
             List<MenuDepthIllustration> menuGraffitis = [.. self.depthIllustrations.Where(f => Path.GetFileNameWithoutExtension(f.fileName).StartsWith("Graffiti - "))];
 
             // Randomize which graffiti shows
-            int randGraffiti = UnityEngine.Random.Range(0, menuGraffitis.Count - 1);
+            int randGraffiti = Random.Range(0, menuGraffitis.Count - 1);
             string fileName = "Graffiti - " + randGraffiti.ToString();
 
             // Show the random graffiti and hide the rest
@@ -96,7 +96,7 @@ public static partial class Hooks
             List<MenuDepthIllustration> menuDoodles = [.. self.depthIllustrations.Where(f => Path.GetFileNameWithoutExtension(f.fileName).StartsWith("Doodle - "))];
 
             // Randomize which doodle shows
-            int randDoodles = UnityEngine.Random.Range(0, menuDoodles.Count);
+            int randDoodles = Random.Range(0, menuDoodles.Count);
             fileName = "Doodle - " + randDoodles.ToString();
 
             // Show the random doodle and hide the rest

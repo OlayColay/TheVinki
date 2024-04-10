@@ -32,8 +32,8 @@ namespace Menu
             page.subObjects.Add(previewLabel);
 
             // Cancel button
-            float cancelButtonWidth = GetCancelButtonWidth(base.CurrLang);
-            cancelButton = new SimpleButton(this, page, base.Translate("CLOSE"), "CLOSE", cancelButtonPos - page.pos + new Vector2(0f, 2025f), new Vector2(cancelButtonWidth, 30f));
+            float cancelButtonWidth = GetCancelButtonWidth(CurrLang);
+            cancelButton = new SimpleButton(this, page, Translate("CLOSE"), "CLOSE", cancelButtonPos - page.pos + new Vector2(0f, 2025f), new Vector2(cancelButtonWidth, 30f));
             page.subObjects.Add(cancelButton);
             opening = true;
             targetAlpha = 1f;

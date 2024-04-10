@@ -100,6 +100,12 @@ namespace Vinki
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("As for what I was saying before you rudely interrupted me..."), -10);
                 }
             }
+            // Pebbles
+            else if (oracleBehavior.oracle.room.game.GetStorySession.saveState.miscWorldSaveData.SSaiConversationsHad > 0)
+            {
+                oracleBehavior.NewAction(Action.ThrowOut_KillOnSight);
+                oracleBehavior.killFac = 0.4f;
+            }
         }
 
         public static void CraftNearMoon(Player player)

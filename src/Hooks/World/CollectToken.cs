@@ -33,7 +33,7 @@ public static partial class Hooks
 
         On.CollectToken.CollectTokenData.FromString += CollectTokenData_FromString;
 
-        On.DevInterface.TokenRepresentation.TokenName += TokenRepresentation_TokenName;
+        TokenRepresentation.TokenName += TokenRepresentation_TokenName;
     }
     private static void RemoveCollectTokenHooks()
     {
@@ -43,7 +43,7 @@ public static partial class Hooks
 
         On.CollectToken.CollectTokenData.FromString -= CollectTokenData_FromString;
 
-        On.DevInterface.TokenRepresentation.TokenName -= TokenRepresentation_TokenName;
+        TokenRepresentation.TokenName -= TokenRepresentation_TokenName;
     }
 
     public delegate Color orig_TokenColor(CollectToken self);

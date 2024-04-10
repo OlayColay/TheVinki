@@ -11,7 +11,7 @@ public class TagSmoke : PositionedSmokeEmitter
     public float hue;
 
     // Token: 0x06002820 RID: 10272 RVA: 0x0030DCD0 File Offset: 0x0030BED0
-    public TagSmoke(Room room, PhysicalObject source, Creature target) : base(SmokeSystem.SmokeType.BlackHaze, room, source.firstChunk.pos, 2, 0f, false, -1f, -1)
+    public TagSmoke(Room room, PhysicalObject source, Creature target) : base(SmokeType.BlackHaze, room, source.firstChunk.pos, 2, 0f, false, -1f, -1)
     {
         this.source = source;
         this.target = target;
@@ -100,7 +100,7 @@ public class TagSmoke : PositionedSmokeEmitter
             {
                 v *= 0.5f + 0.5f / Mathf.Pow(v.magnitude, 0.5f);
             }
-            v += SmokeSystem.PerlinWind(p, rm) * 2f;
+            v += PerlinWind(p, rm) * 2f;
             if (rm.readyForAI && rm.aimap.getTerrainProximity(p) < 3)
             {
                 int terrainProximity = rm.aimap.getTerrainProximity(p);
@@ -135,7 +135,7 @@ public class TagSmoke : PositionedSmokeEmitter
             {
                 return 0f;
             }
-            return Mathf.InverseLerp(0f, 0.7f, Mathf.Lerp(lastLife, life, timeStacker)) * Mathf.Lerp(Custom.LerpMap(Vector2.Distance(Vector2.Lerp(lastPos, pos, timeStacker), base.NextPos(timeStacker)), 20f, 250f, 1f, 0f, 1.5f), 1f, Mathf.InverseLerp(0.9f, 1f, Mathf.Lerp(lastLife, life, timeStacker))) * (0.5f + 0.5f * Mathf.InverseLerp(0.2f, 0.4f, power));
+            return Mathf.InverseLerp(0f, 0.7f, Mathf.Lerp(lastLife, life, timeStacker)) * Mathf.Lerp(Custom.LerpMap(Vector2.Distance(Vector2.Lerp(lastPos, pos, timeStacker), NextPos(timeStacker)), 20f, 250f, 1f, 0f, 1.5f), 1f, Mathf.InverseLerp(0.9f, 1f, Mathf.Lerp(lastLife, life, timeStacker))) * (0.5f + 0.5f * Mathf.InverseLerp(0.2f, 0.4f, power));
         }
 
         // Token: 0x0600407E RID: 16510 RVA: 0x004854EA File Offset: 0x004836EA

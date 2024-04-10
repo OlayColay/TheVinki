@@ -222,7 +222,7 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
             sLeaser.sprites[LineSprite(i)].color = color;
             sLeaser.sprites[LineSprite(i)].isVisible = (num3 > 0f);
         }
-        if (base.slatedForDeletetion || room != rCam.room)
+        if (slatedForDeletetion || room != rCam.room)
         {
             sLeaser.CleanSpritesAndRemove();
         }

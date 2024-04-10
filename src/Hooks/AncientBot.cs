@@ -144,7 +144,7 @@ namespace Vinki
 
             if (self.lockTarget != null && !self.lightOn)
             {
-                sLeaser.sprites[self.LightBaseIndex].color = new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value);
+                sLeaser.sprites[self.LightBaseIndex].color = new Color(Random.value, Random.value, Random.value);
             }
 
             Vector2 vector = Custom.DegToVec(-90f - self.antAngOff) * sLeaser.sprites[self.LeftAntIndex + 1].scaleY * 0.8f;

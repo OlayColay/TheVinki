@@ -18,12 +18,12 @@ namespace Vinki
             if (gNum < 0)
             {
                 // If not spraying a story graffiti, check if we've queued a specific graffiti from the selection menu
-                if (Plugin.queuedGNums[self.JollyOption.playerNumber] != -1)
+                if (queuedGNums[self.JollyOption.playerNumber] != -1)
                 {
-                    gNum = Plugin.queuedGNums[self.JollyOption.playerNumber];
-                    if (!Plugin.repeatGraffiti[self.JollyOption.playerNumber])
+                    gNum = queuedGNums[self.JollyOption.playerNumber];
+                    if (!repeatGraffiti[self.JollyOption.playerNumber])
                     {
-                        Plugin.queuedGNums[self.JollyOption.playerNumber] = -1;
+                        queuedGNums[self.JollyOption.playerNumber] = -1;
                     }
                 }
                 else
@@ -58,9 +58,10 @@ namespace Vinki
             Debug.Log("Spraying " + slugcat + " #" + gNum + "\tsize: " + graffitis[slugcat][gNum].handles[1].ToString());
 
             // Trigger Iterator dialogue if there's one in the room
-            if (self.room.abstractRoom.name.Equals("DM_AI"))
+            bool isMoon;
+            if ((isMoon = self.room.abstractRoom.name.Equals("DM_AI")) || self.room.abstractRoom.name.Equals("SS_AI"))
             {
-                Hooks.SprayNearIterator(true, SaveDataExtension.GetSlugBaseData(self.room.game.GetStorySession.saveState.miscWorldSaveData), graffitis[slugcat][gNum].imageName);
+                SprayNearIterator(isMoon, SaveDataExtension.GetSlugBaseData(self.room.game.GetStorySession.saveState.miscWorldSaveData), graffitis[slugcat][gNum].imageName);
             }
 
             Vector2 sprayPos = (slugcat == "Story" && storyGraffitiRoomPositions.ContainsKey(gNum)) ? storyGraffitiRoomPositions[gNum].Value : self.mainBodyChunk.pos;
@@ -373,7 +374,7 @@ namespace Vinki
                 Vector2 posB = pos - new Vector2(10f * v.lastXDirection, 0);
                 for (int j = 0; j < 2; j++)
                 {
-                    Vector2 a = RWCustom.Custom.RNV();
+                    Vector2 a = Custom.RNV();
                     a.x = Mathf.Abs(a.x) * -v.lastXDirection;
                     a.y = Mathf.Abs(a.y);
                     self.room.AddObject(new Spark(pos, a * Mathf.Lerp(4f, 30f, UnityEngine.Random.value), Enums.SparkColor, null, 2, 4));
@@ -437,7 +438,7 @@ namespace Vinki
                 Vector2 posB = pos + new Vector2(0f, -3f);
                 for (int j = 0; j < 2; j++)
                 {
-                    Vector2 a = RWCustom.Custom.RNV();
+                    Vector2 a = Custom.RNV();
                     a.x = Mathf.Abs(a.x) * v.lastXDirection;
                     a.y = Mathf.Abs(a.y) * -v.lastYDirection;
                     Vector2 b = new(-a.x, a.y);
@@ -711,7 +712,7 @@ namespace Vinki
 
         private static void SprayGraffitiInGame(Player self)
         {
-            var storyGraffitisInRoom = Plugin.storyGraffitiRoomPositions.Where(e => e.Value.Key == self.room.abstractRoom.name);
+            var storyGraffitisInRoom = storyGraffitiRoomPositions.Where(e => e.Value.Key == self.room.abstractRoom.name);
             bool storyGraffitisExist = false;
             bool hologramsExist = false;
             int[] sprayedGNums = null;
@@ -729,7 +730,7 @@ namespace Vinki
                 // Check if we are in the right place to spray a story graffiti
                 foreach (var storyGraffiti in storyGraffitisInRoom)
                 {
-                    var graf = Plugin.graffitis["Story"][storyGraffiti.Key];
+                    var graf = graffitis["Story"][storyGraffiti.Key];
                     if (graf != null && (!storyGraffitisExist || !sprayedGNums.Contains(storyGraffiti.Key)) && hologramsExist)
                     {
                         Vector2 grafRadius = graf.handles[1] / 2f;

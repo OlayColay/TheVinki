@@ -49,8 +49,8 @@ namespace Menu
         {
             base.GrafUpdate(timeStacker);
             symbolSprite.color = (buttonBehav.greyedOut ? Menu.MenuRGB(Menu.MenuColors.VeryDarkGrey) : base.MyColor(timeStacker));
-            symbolSprite.x = DrawX(timeStacker) + base.DrawSize(timeStacker).x / 2f;
-            symbolSprite.y = DrawY(timeStacker) + base.DrawSize(timeStacker).y / 2f;
+            symbolSprite.x = DrawX(timeStacker) + DrawSize(timeStacker).x / 2f;
+            symbolSprite.y = DrawY(timeStacker) + DrawSize(timeStacker).y / 2f;
             Color color = Color.Lerp(Menu.MenuRGB(Menu.MenuColors.Black), Menu.MenuRGB(Menu.MenuColors.White), Mathf.Lerp(buttonBehav.lastFlash, buttonBehav.flash, timeStacker));
             for (int i = 0; i < 9; i++)
             {
