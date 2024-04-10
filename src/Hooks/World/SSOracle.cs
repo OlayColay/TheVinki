@@ -101,10 +101,22 @@ namespace Vinki
                 }
             }
             // Pebbles
-            else if (oracleBehavior.oracle.room.game.GetStorySession.saveState.miscWorldSaveData.SSaiConversationsHad > 0)
+            else if (oracleBehavior.oracle.room.game.GetStorySession.saveState.cycleNumber > 0)
             {
-                oracleBehavior.NewAction(Action.ThrowOut_KillOnSight);
-                oracleBehavior.killFac = 0.4f;
+                if (oracleBehavior.oracle.room.game.GetStorySession.saveState.hasRobo)
+                {
+                    oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("Incredible. Thank you."), -10);
+                    if (!oracleBehavior.conversation.slatedForDeletion)
+                    {
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("As I was saying..."), -10);
+                    }
+                }
+                else
+                {
+                    oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("..."), 200);
+                    oracleBehavior.NewAction(Action.ThrowOut_KillOnSight);
+                    oracleBehavior.throwOutCounter = 150;
+                }
             }
         }
 
@@ -165,7 +177,10 @@ namespace Vinki
             On.SSOracleBehavior.UpdateStoryPearlCollection += SSOracleBehavior_UpdateStoryPearlCollection;
 
             On.SSOracleBehavior.PebblesConversation.AddEvents += PebblesConversation_AddEvents;
+
+            On.SSOracleBehavior.ThrowOutBehavior.Update += ThrowOutBehavior_Update;
         }
+
         private static void RemoveSSOracleHooks()
         {
             On.SSOracleBehavior.SeePlayer -= SSOracleBehavior_SeePlayer;
@@ -174,6 +189,8 @@ namespace Vinki
             On.SSOracleBehavior.UpdateStoryPearlCollection -= SSOracleBehavior_UpdateStoryPearlCollection;
 
             On.SSOracleBehavior.PebblesConversation.AddEvents -= PebblesConversation_AddEvents;
+
+            On.SSOracleBehavior.ThrowOutBehavior.Update -= ThrowOutBehavior_Update;
         }
 
         private static void SSOracleBehavior_UpdateStoryPearlCollection(On.SSOracleBehavior.orig_UpdateStoryPearlCollection orig, SSOracleBehavior self)
@@ -253,8 +270,9 @@ namespace Vinki
             
             oracleBehavior = self;
             SlugBaseSaveData miscWorldSave = SaveDataExtension.GetSlugBaseData(self.oracle.room.game.GetStorySession.saveState.miscWorldSaveData);
+            bool unlocked = false;
             botCutscene = self.oracle.room.game.GetStorySession.saveState.hasRobo &&
-                (!miscWorldSave.TryGet("LC Unlocked", out bool unlocked) || !unlocked);
+                (!miscWorldSave.TryGet("LC Unlocked", out unlocked) || !unlocked);
             if (self.oracle.ID == MoreSlugcatsEnums.OracleID.DM)
             {
                 self.NewAction(Enums.DMOracle.Vinki_DMActionGeneral);
@@ -279,6 +297,11 @@ namespace Vinki
             }
 
             orig(self);
+
+            if (unlocked)
+            {
+                self.NewAction(MoreSlugcatsEnums.SSOracleBehaviorAction.Pebbles_SlumberParty);
+            }
         }
 
         private static void SSOracleBehavior_NewAction(On.SSOracleBehavior.orig_NewAction orig, SSOracleBehavior self, Action nextAction)
@@ -305,25 +328,34 @@ namespace Vinki
                 self.currSubBehavior = subBehavior;
                 return;
             }
-            if (self.oracle.room.game.StoryCharacter == Enums.vinki && self.action != Enums.SSOracle.Vinki_SSActionGeneral && nextAction == Enums.SSOracle.Vinki_SSActionGeneral)
+
+            if (self.oracle.room.game.StoryCharacter == Enums.vinki)
             {
-                if (self.currSubBehavior.ID == Enums.SSOracle.Vinki_SSSubBehavGeneral) return;
-
-                self.inActionCounter = 0;
-                self.action = nextAction;
-
-                var subBehavior = self.allSubBehaviors.FirstOrDefault(x => x.ID == Enums.SSOracle.Vinki_SSSubBehavGeneral);
-
-                if (subBehavior == null)
+                if (self.action != Enums.SSOracle.Vinki_SSActionGeneral && nextAction == Enums.SSOracle.Vinki_SSActionGeneral)
                 {
-                    self.allSubBehaviors.Add(subBehavior = botCutscene ? new SSOracleDroneVinki(self) : new SSOracleMeetVinki(self));
+                    if (self.currSubBehavior.ID == Enums.SSOracle.Vinki_SSSubBehavGeneral) return;
+
+                    self.inActionCounter = 0;
+                    self.action = nextAction;
+
+                    var subBehavior = self.allSubBehaviors.FirstOrDefault(x => x.ID == Enums.SSOracle.Vinki_SSSubBehavGeneral);
+
+                    if (subBehavior == null)
+                    {
+                        self.allSubBehaviors.Add(subBehavior = botCutscene ? new SSOracleDroneVinki(self) : new SSOracleMeetVinki(self));
+                    }
+
+                    self.currSubBehavior.Deactivate();
+
+                    subBehavior.Activate(self.action, nextAction);
+                    self.currSubBehavior = subBehavior;
+                    return;
                 }
-
-                self.currSubBehavior.Deactivate();
-
-                subBehavior.Activate(self.action, nextAction);
-                self.currSubBehavior = subBehavior;
-                return;
+                else if (self.action != Enums.SSOracle.Vinki_SSActionGeneral && nextAction == Action.ThrowOut_KillOnSight && self.oracle.room.game.GetStorySession.saveState.hasRobo)
+                {
+                    // Prevent getting killed with a drone
+                    return;
+                }
             }
 
             orig(self, nextAction);
@@ -395,6 +427,50 @@ namespace Vinki
             }
         }
 
+        private static void ThrowOutBehavior_Update(On.SSOracleBehavior.ThrowOutBehavior.orig_Update orig, ThrowOutBehavior self)
+        {
+            orig(self);
+
+            if (self.action != Action.ThrowOut_ThrowOut || self.oracle.room.game.GetStorySession.saveStateNumber != Enums.vinki || !self.oracle.room.game.GetStorySession.saveState.hasRobo)
+            {
+                return;
+            }
+
+            if (self.owner.inspectPearl != null)
+            {
+                self.owner.NewAction(MoreSlugcatsEnums.SSOracleBehaviorAction.Pebbles_SlumberParty);
+                return;
+            }
+
+            if (self.owner.throwOutCounter == 980)
+            {
+                self.dialogBox.messages.Clear();
+                self.dialogBox.Interrupt(self.Translate("Please leave."), 60);
+                self.dialogBox.NewMessage(self.Translate("This is not a request. I have important work to do."), 0);
+            }
+            else if (self.owner.throwOutCounter == 1530)
+            {
+                self.dialogBox.messages.Clear();
+                self.dialogBox.Interrupt(self.Translate("Unfortunately, my operations are encoded with a restriction that prevents<LINE>me from carrying out violent actions against my own citizens."), 0);
+                self.dialogBox.NewMessage(self.Translate("Please do not take advantage of this. I do not have the patience for your continued presence here."), 0);
+            }
+            else if (self.owner.throwOutCounter == 2100)
+            {
+                self.dialogBox.messages.Clear();
+                self.dialogBox.Interrupt(self.Translate("Did you not register what I've said to you?"), 60);
+                self.dialogBox.NewMessage(self.Translate("LEAVE."), 0);
+            }
+            else if (self.owner.throwOutCounter == 2900)
+            {
+                self.dialogBox.messages.Clear();
+                self.dialogBox.Interrupt(self.Translate("I'm returning to my work. Unless you have anything productive<LINE>for me, I have nothing further to say to you."), 0);
+            }
+            else if (self.owner.throwOutCounter == 3300)
+            {
+                self.owner.NewAction(MoreSlugcatsEnums.SSOracleBehaviorAction.Pebbles_SlumberParty);
+            }
+        }
+
         public class SSOracleMeetVinki : ConversationBehavior
         {
             public SSOracleMeetVinki(SSOracleBehavior owner) : base(owner, Enums.SSOracle.Vinki_SSSubBehavGeneral, Enums.SSOracle.Vinki_SSConvoFirstMeet)
@@ -460,6 +536,11 @@ namespace Vinki
                         if (grasp != null && (grasp.grabbed as SprayCan).TryUse())
                         {
                             _ = SprayGraffiti(player, 4, 1, 1f);
+                        }
+                        if (intro != null)
+                        {
+                            intro.Destroy();
+                            player.room.RemoveObject(intro);
                         }
                     }
                     if (inActionCounter == 500)

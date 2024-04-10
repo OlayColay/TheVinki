@@ -14,8 +14,14 @@ namespace Vinki
 			phase = Phase.Init;
 		}
 
-		// Token: 0x06002095 RID: 8341 RVA: 0x0028D744 File Offset: 0x0028B944
-		public override void Update(bool eu)
+        public override void Destroy()
+        {
+			player.controller = startController = null;
+            base.Destroy();
+        }
+
+        // Token: 0x06002095 RID: 8341 RVA: 0x0028D744 File Offset: 0x0028B944
+        public override void Update(bool eu)
 		{
 			base.Update(eu);
 
