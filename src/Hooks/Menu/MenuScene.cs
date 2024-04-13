@@ -114,14 +114,14 @@ public static partial class Hooks
             if (self.flatMode)
             {
                 self.AddIllustration(new MenuIllustration(self.menu, self, self.sceneFolder, "graffiti_map", new Vector2(Screen.width / 2, Screen.height / 2), true, true));
-                self.AddIllustration(new MenuIllustration(self.menu, self, self.sceneFolder, "wip_black", new Vector2(Screen.width * 2 / 3, Screen.height / 3), true, true));
-                self.AddIllustration(new MenuIllustration(self.menu, self, self.sceneFolder, "wip_overseer", new Vector2(Screen.width / 3, Screen.height * 5 / 12), true, true));
+                self.AddIllustration(new MenuIllustration(self.menu, self, self.sceneFolder, "wip_black", new Vector2(Screen.width * 5 / 6, Screen.height / 3), true, true));
+                self.AddIllustration(new MenuIllustration(self.menu, self, self.sceneFolder, "wip_overseer", new Vector2(Screen.width / 6, Screen.height * 5 / 12), true, true));
             }
             else
             {
                 self.AddIllustration(new MenuDepthIllustration(self.menu, self, self.sceneFolder, "graffiti_map", new Vector2(0f, 0f), 5f, MenuDepthIllustration.MenuShader.Basic));
-                self.AddIllustration(new MenuDepthIllustration(self.menu, self, self.sceneFolder, "wip_black", new Vector2(512f, -64f), 3f, MenuDepthIllustration.MenuShader.Basic));
-                self.AddIllustration(new MenuDepthIllustration(self.menu, self, self.sceneFolder, "wip_overseer", new Vector2(0f, -64f), 2f, MenuDepthIllustration.MenuShader.Basic));
+                self.AddIllustration(new MenuDepthIllustration(self.menu, self, self.sceneFolder, "wip_black", new Vector2(762f, -64f), 3f, MenuDepthIllustration.MenuShader.Basic));
+                self.AddIllustration(new MenuDepthIllustration(self.menu, self, self.sceneFolder, "wip_overseer", new Vector2(-50f, -64f), 2f, MenuDepthIllustration.MenuShader.Basic));
             }
 
             GraffitiQuestDialog.graffitiSpots =

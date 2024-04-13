@@ -159,12 +159,9 @@ public static partial class Hooks
             }
         }
         // Spawn drone and cutscene
-        else if (name == "CC_B01")
+        else if (name == "CC_B01" && !self.game.GetStorySession.saveState.hasRobo && Plugin.FirstStoryGraffitisDone(miscSave))
         {
-            if (!self.game.GetStorySession.saveState.hasRobo)
-            {
-                self.AddObject(new CutsceneVinkiRobo(self));
-            }
+            self.AddObject(new CutsceneVinkiRobo(self));
         }
     }
 }

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using ImprovedInput;
 using System;
 using Menu;
+using SlugBase.SaveData;
+using System.Linq;
 
 namespace Vinki
 {
@@ -89,6 +91,33 @@ namespace Vinki
             {
                 texture.Apply(false);
             }
+        }
+
+        public static bool FirstStoryGraffitisDone(SlugBaseSaveData miscWorldSave)
+        {
+            if (miscWorldSave.TryGet("StoryGraffitisSprayed", out int[] sprd))
+            {
+                return Enumerable.Range(4, 7).All(i => sprd.Contains(i));
+            }
+            return false;
+        }
+
+        public static bool CCStoryGraffitisDone(SlugBaseSaveData miscWorldSave)
+        {
+            if (miscWorldSave.TryGet("StoryGraffitisSprayed", out int[] sprd))
+            {
+                return Enumerable.Range(11, 4).All(i => sprd.Contains(i));
+            }
+            return false;
+        }
+
+        public static bool EndStoryGraffitisDone(SlugBaseSaveData miscWorldSave)
+        {
+            if (miscWorldSave.TryGet("StoryGraffitisSprayed", out int[] sprd))
+            {
+                return Enumerable.Range(15, 4).All(i => sprd.Contains(i));
+            }
+            return false;
         }
     }
 }

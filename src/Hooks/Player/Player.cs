@@ -177,6 +177,9 @@ namespace Vinki
                     num += Mathf.Min(Mathf.Max(0f, self.grasps[0].grabbed.TotalMass - 0.2f) * 1.5f, 1.3f);
                 }
 
+                // Randomly front or back flip
+                self.flipDirection = UnityEngine.Random.value < 0.5f ? -1 : 1;
+
                 // Initiate flip
                 if (self.PainJumps)
                 {
