@@ -803,7 +803,7 @@ namespace Vinki
             }
 
             if ((!IsPressingGraffiti(self) && improvedInput) || (VinkiConfig.RequireCansGraffiti.Value && self.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan) == null) ||
-                self.room == null)
+                self.room == null || self.Stunned || self.dead)
             {
                 v.tagableCreature = null;
                 return;
