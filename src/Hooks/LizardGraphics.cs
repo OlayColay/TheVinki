@@ -28,7 +28,7 @@ public static partial class Hooks
         List<int> affectedSprites = new(Enumerable.Range(0, sLeaser.sprites.Length));
         //affectedSprites.RemoveRange(self.SpriteHeadStart, self.SpriteHeadEnd - self.SpriteHeadStart);
 
-        self.Tag().affectedSprites = affectedSprites.ToArray();
+        self.Tag().affectedSprites = [.. affectedSprites];
     }
 
     private static void LizardGraphics_DrawSprites(On.LizardGraphics.orig_DrawSprites orig, LizardGraphics self, RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, float timeStacker, Vector2 camPos)

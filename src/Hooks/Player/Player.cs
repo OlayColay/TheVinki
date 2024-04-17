@@ -7,6 +7,7 @@ using static Vinki.Plugin;
 using System.Threading.Tasks;
 using SlugBase.SaveData;
 using Smoke;
+using System.Collections.Generic;
 
 namespace Vinki
 {
@@ -37,15 +38,12 @@ namespace Vinki
 
                 // Save that we sprayed this story graffiti
                 SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(self.room.game.GetStorySession.saveState.miscWorldSaveData);
-                if (miscSave.TryGet("StoryGraffitisSprayed", out int[] sprd))
+                miscSave.TryGet("StoryGraffitisSprayed", out List<int> sprd);
+                if (!sprd.Contains(gNum))
                 {
-                    storyGraffitisSprayed = sprd;
+                    sprd.Add(gNum);
                 }
-                if (!storyGraffitisSprayed.Contains(gNum))
-                {
-                    storyGraffitisSprayed.Append(gNum);
-                }
-                miscSave.Set("StoryGraffitisSprayed", storyGraffitisSprayed);
+                miscSave.Set("StoryGraffitisSprayed", sprd);
 
                 // If spraying the StoryGraffitiTutorial graffiti, move to the next phase
                 if (gNum == 2)
@@ -718,7 +716,7 @@ namespace Vinki
             var storyGraffitisInRoom = storyGraffitiRoomPositions.Where(e => e.Value.Key == self.room.abstractRoom.name);
             bool storyGraffitisExist = false;
             bool hologramsExist = false;
-            int[] sprayedGNums = null;
+            List<int> sprayedGNums = [];
             int gNum = -1;
 
             if (self.room.game.GetStorySession != null)

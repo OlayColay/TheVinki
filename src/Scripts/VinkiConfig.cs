@@ -488,14 +488,14 @@ namespace Vinki
 
         private void RegenerateVinkiGraffitiPage()
         {
-            Tabs[2].RemoveItems(Tabs[2].items.ToArray());
+            Tabs[2].RemoveItems([.. Tabs[2].items]);
             AddGraffiti(555f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "vinki", 2);
             AddPageButtons(2);
         }
 
         private void RegenerateOtherGraffitiPage()
         {
-            Tabs[4].RemoveItems(Tabs[4].items.ToArray());
+            Tabs[4].RemoveItems([.. Tabs[4].items]);
             float curY = 500f;
             switch (currentOtherPage)
             {

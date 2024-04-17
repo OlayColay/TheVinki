@@ -134,29 +134,27 @@ public static partial class Hooks
 
             // Save that we sprayed self story graffiti
             SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(self.menu.manager.rainWorld.progression.currentSaveState.miscWorldSaveData);
-            if (miscSave.TryGet("StoryGraffitisSprayed", out int[] sprd))
-            {
-                Plugin.storyGraffitisSprayed = sprd;
-            }
+            List<int> sprd = [];
+            miscSave.TryGet("StoryGraffitisSprayed", out sprd);
             if (miscSave.TryGet("StoryGraffitisOnMap", out int[] onMap))
             {
                 Plugin.storyGraffitisOnMap = onMap;
             }
-            for (int i = 0; i < Plugin.storyGraffitisSprayed.Length; i++)
+            for (int i = 0; i < sprd.Count; i++)
             {
-                GraffitiQuestDialog.graffitiSpots[i].alpha = Plugin.storyGraffitisOnMap.Contains(Plugin.storyGraffitisSprayed[i]) ? 1f : 0f;
-                if (!Plugin.storyGraffitisOnMap.Contains(Plugin.storyGraffitisSprayed[i]))
+                GraffitiQuestDialog.graffitiSpots[i].alpha = Plugin.storyGraffitisOnMap.Contains(sprd[i]) ? 1f : 0f;
+                if (!Plugin.storyGraffitisOnMap.Contains(sprd[i]))
                 {
                     GraffitiQuestDialog.graffitiSlapping[i] = (int)GraffitiQuestDialog.slapLength;
                     GraffitiQuestDialog.graffitiSpots[i].sprite.scale = 0.1f;
-                    Plugin.storyGraffitisOnMap.Append(Plugin.storyGraffitisSprayed[i]);
+                    Plugin.storyGraffitisOnMap.Append(sprd[i]);
                 }
             }
             miscSave.Set("StoryGraffitisOnMap", Plugin.storyGraffitisOnMap);
 
-            for (int i = 0; i < Plugin.storyGraffitisSprayed.Length; i++)
+            for (int i = 0; i < sprd.Count; i++)
             {
-                if (Plugin.storyGraffitisOnMap.Contains(Plugin.storyGraffitisSprayed[i]))
+                if (Plugin.storyGraffitisOnMap.Contains(sprd[i]))
                 {
                     // TODO
                     //self.AddIllustration(GraffitiQuestDialog.graffitiSpots[i]);
