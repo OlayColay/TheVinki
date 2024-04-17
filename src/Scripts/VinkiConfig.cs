@@ -529,7 +529,9 @@ namespace Vinki
                     break;
                 case 3:
                     AddSubtitle(curY + 30f, "Escort", 4);
-                    AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "EscortMe", 4);
+                    curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "EscortMe", 4);
+                    AddSubtitle(curY + 30f, "Gravel-Eater", 4);
+                    AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Gravelslug", 4);
                     break;
             }
             AddPageButtons(4);
