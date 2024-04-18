@@ -20,7 +20,7 @@ namespace Menu
             rightAnchor = screenOffsets[1];
             pages[0].pos = new Vector2(0.01f, 0f);
             Page page = pages[0];
-            page.pos.y = page.pos.y + 2000f;
+            page.pos.y += 2000f;
             scene = new InteractiveMenuScene(this, pages[0], Enums.GraffitiMap);
             pages[0].subObjects.Add(scene);
 
@@ -98,7 +98,7 @@ namespace Menu
                 }
 
                 float t = (slapLength - graffitiSlapping[i]) / slapLength;
-                graffitiSpots[i].sprite.scale = EaseOutElastic(0.01f, 1f, t);
+                graffitiSpots[i].sprite.scale = EaseOutElastic(0.001f, 1f, t);
                 graffitiSpots[i].alpha = Mathf.Min(t * 5f, 1f);
                 graffitiSlapping[i]--;
 

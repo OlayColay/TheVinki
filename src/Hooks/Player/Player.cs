@@ -38,10 +38,11 @@ namespace Vinki
 
                 // Save that we sprayed this story graffiti
                 SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(self.room.game.GetStorySession.saveState.miscWorldSaveData);
-                miscSave.TryGet("StoryGraffitisSprayed", out List<int> sprd);
+                miscSave.TryGet("StoryGraffitisSprayed", out int[] sprd);
+                sprd ??= [];
                 if (!sprd.Contains(gNum))
                 {
-                    sprd.Add(gNum);
+                    sprd = [.. sprd, gNum];
                 }
                 miscSave.Set("StoryGraffitisSprayed", sprd);
 
@@ -716,17 +717,14 @@ namespace Vinki
             var storyGraffitisInRoom = storyGraffitiRoomPositions.Where(e => e.Value.Key == self.room.abstractRoom.name);
             bool storyGraffitisExist = false;
             bool hologramsExist = false;
-            List<int> sprayedGNums = [];
             int gNum = -1;
 
             if (self.room.game.GetStorySession != null)
             {
                 SlugBaseSaveData miscWorldSave = SaveDataExtension.GetSlugBaseData(self.room.game.GetStorySession.saveState.miscWorldSaveData);
-                storyGraffitisExist = miscWorldSave.TryGet("StoryGraffitisSprayed", out sprayedGNums);
-                if (storyGraffitisExist) 
-                {
-                    hologramsExist = HologramsEnabledInRoom(self.room, miscWorldSave);
-                }
+                storyGraffitisExist = miscWorldSave.TryGet("StoryGraffitisSprayed", out int[] sprayedGNums);
+                sprayedGNums ??= [];
+                hologramsExist = HologramsEnabledInRoom(self.room, miscWorldSave);
 
                 // Check if we are in the right place to spray a story graffiti
                 foreach (var storyGraffiti in storyGraffitisInRoom)

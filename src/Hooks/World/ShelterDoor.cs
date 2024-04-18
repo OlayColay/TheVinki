@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SlugBase.SaveData;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using static Vinki.Plugin;
@@ -29,8 +30,6 @@ namespace Vinki
             // We should have talked to Pebbles in the intro (case if died in cycle 0)
             self.room.game.GetStorySession.saveState.miscWorldSaveData.SSaiConversationsHad = Math.Max(self.room.game.GetStorySession.saveState.miscWorldSaveData.SSaiConversationsHad, 1);
 
-            Player player = self.room.PlayersInRoom[0];
-
             foreach(List<PhysicalObject> items in self.room.physicalObjects)
             {
                 foreach (PhysicalObject item in items)
@@ -51,6 +50,12 @@ namespace Vinki
                         shelterItems.Add(itemType);
                     }
                 }
+            }
+
+            // Save story graffiti on the map before cycle ends
+            if (storyGraffitisOnMap.Length > 0)
+            {
+                SaveDataExtension.GetSlugBaseData(self.room.game.GetStorySession.saveState.miscWorldSaveData).Set("StoryGraffitisOnMap", storyGraffitisOnMap);
             }
         }
     }

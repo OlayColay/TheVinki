@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Vinki;
@@ -24,7 +25,7 @@ public class StoryGraffitiTutorial : UpdatableAndDeletable
         miscSave.TryGet("StoryGraffitiTutorialPhase", out int nextPhaseInt);  // If there's nothing in the save, it should give 0
         if (nextPhaseInt == 0)
         {
-            miscSave.TryGet("StoryGraffitiSprayed", out int[] sprd);
+            miscSave.TryGet("StoryGraffitiSprayed", out List<int> sprd);
             nextPhase = sprd != null && sprd.Contains(2) ? Phase.Explore : Phase.Spray;
         }
         else

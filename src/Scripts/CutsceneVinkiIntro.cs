@@ -12,6 +12,9 @@ namespace Vinki
 			Debug.Log("VINKI CUTSCENE START!");
 			this.room = room;
 			phase = Phase.Init;
+
+			// Reset graffitis on map
+			Plugin.storyGraffitisOnMap = [];
 		}
 
         public override void Destroy()

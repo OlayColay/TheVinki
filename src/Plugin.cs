@@ -94,7 +94,7 @@ namespace Vinki
 
         public static bool FirstStoryGraffitisDone(SlugBaseSaveData miscWorldSave)
         {
-            if (miscWorldSave.TryGet("StoryGraffitisSprayed", out List<int> sprd))
+            if (miscWorldSave.TryGet("StoryGraffitisSprayed", out int[] sprd))
             {
                 return Enumerable.Range(4, 7).All(i => sprd.Contains(i));
             }
@@ -103,7 +103,7 @@ namespace Vinki
 
         public static bool CCStoryGraffitisDone(SlugBaseSaveData miscWorldSave)
         {
-            if (miscWorldSave.TryGet("StoryGraffitisSprayed", out List<int> sprd))
+            if (miscWorldSave.TryGet("StoryGraffitisSprayed", out int[] sprd))
             {
                 return Enumerable.Range(11, 4).All(i => sprd.Contains(i));
             }
@@ -112,7 +112,7 @@ namespace Vinki
 
         public static bool EndStoryGraffitisDone(SlugBaseSaveData miscWorldSave)
         {
-            if (miscWorldSave.TryGet("StoryGraffitisSprayed", out List<int> sprd))
+            if (miscWorldSave.TryGet("StoryGraffitisSprayed", out int[] sprd))
             {
                 return Enumerable.Range(15, 4).All(i => sprd.Contains(i));
             }

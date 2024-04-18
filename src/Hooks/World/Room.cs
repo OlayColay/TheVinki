@@ -89,7 +89,8 @@ public static partial class Hooks
         // Create hologram for any story graffiti
         var storyGraffitisInRoom = Plugin.storyGraffitiRoomPositions.Where(e => e.Value.Key == self.abstractRoom.name);
         var miscWorldSave = SaveDataExtension.GetSlugBaseData(self.game.GetStorySession.saveState.miscWorldSaveData);
-        bool storyGraffitisHaveBeenSprayed = miscWorldSave.TryGet("StoryGraffitisSprayed", out List<int> sprayedGNums);
+        bool storyGraffitisHaveBeenSprayed = miscWorldSave.TryGet("StoryGraffitisSprayed", out int[] sprayedGNums);
+        sprayedGNums ??= [];
 
         // Disable holograms for story graffiti tutorial room after they've been sprayed and erased by 5P already
         if (HologramsEnabledInRoom(self, miscWorldSave))
