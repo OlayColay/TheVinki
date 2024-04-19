@@ -11,18 +11,11 @@ namespace Vinki;
 
 public class VinkiPlayerData
 {
-    public class PoisonedCreature
+    public class PoisonedCreature(Creature creature, int timeLeft, float totalDamage)
     {
-        public Creature creature;
-        public int timeLeft;
-        public float damagePerTick;
-
-        public PoisonedCreature(Creature creature, int timeLeft, float totalDamage)
-        {
-            this.creature = creature;
-            this.timeLeft = timeLeft;
-            damagePerTick = totalDamage / timeLeft / creature.Template.baseDamageResistance;
-        }
+        public Creature creature = creature;
+        public int timeLeft = timeLeft;
+        public float damagePerTick = totalDamage / timeLeft / creature.Template.baseDamageResistance;
     }
 
     public readonly bool IsVinki;

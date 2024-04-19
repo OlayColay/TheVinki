@@ -29,7 +29,6 @@ namespace Vinki
         public static Dictionary<AbstractPhysicalObject.AbstractObjectType, int> colorfulItems = [];
         public static string graffitiFolder = "decals/VinkiGraffiti";
         public static string storyGraffitiFolder = "decals/StorySpoilers";
-        public static int storyGraffitiCount = 0;
         public static bool sleeping = false;
         public static Color?[][] jollyColors = [
             new Color?[6], new Color?[6], new Color?[6], new Color?[6],

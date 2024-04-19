@@ -33,10 +33,7 @@ public static partial class Hooks
 
         if (tag.tagLag > 0)
         {
-            if (tag.taggedColors == null)
-            {
-                tag.taggedColors = new Color[tag.ogColors.Length];
-            }
+            tag.taggedColors ??= new Color[tag.ogColors.Length];
             for (int i = 0; i < tag.taggedColors.Length; i++)
             {
                 tag.taggedColors[i] = Color.Lerp(tag.curColors[i], tag.tagColor, (30f - tag.tagLag) / 30f);

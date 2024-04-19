@@ -242,7 +242,6 @@ namespace Vinki
                     decal.imageName = Path.GetFileNameWithoutExtension(image);
                 }
                 storyGraffitiRoomPositions.Add(graffitis["Story"].Count, storyGraffitiRoomPos.Value);
-                storyGraffitiCount++;
             }
             else
             {

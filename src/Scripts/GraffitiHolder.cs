@@ -110,10 +110,7 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
 
     public void AddToContainer(RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, FContainer newContatiner)
     {
-        if (newContatiner == null)
-        {
-            newContatiner = rCam.ReturnFContainer("Water");
-        }
+        newContatiner ??= rCam.ReturnFContainer("Water");
         for (int i = 0; i < sLeaser.sprites.Length; i++)
         {
             sLeaser.sprites[i].RemoveFromContainer();

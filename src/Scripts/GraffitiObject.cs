@@ -7,34 +7,25 @@ namespace Vinki;
 public class GraffitiObject : CustomDecal
 {
     [Serializable]
-    public struct SerializableGraffiti
+    public struct SerializableGraffiti(PlacedObject placedObject, int cyclePlaced, int gNum)
     {
-        public string data;
-        public float x, y;
-        public int cyclePlaced;
-        public int gNum;
-
-        public SerializableGraffiti(PlacedObject placedObject, int cyclePlaced, int gNum)
-        {
-            data = (placedObject.data as PlacedObject.CustomDecalData).ToString();
-            x = placedObject.pos.x;
-            y = placedObject.pos.y;
-            this.cyclePlaced = cyclePlaced;
-            this.gNum = gNum;
-        }
+        public string data = (placedObject.data as PlacedObject.CustomDecalData).ToString();
+        public float x = placedObject.pos.x, y = placedObject.pos.y;
+        public int cyclePlaced = cyclePlaced;
+        public int gNum = gNum;
     }
 
     private SerializableGraffiti serializableGraffiti;
 	private readonly int cyclePlaced = 0;
 
-    public GraffitiObject(PlacedObject placedObject, SaveState save, int gNum, string roomId) : base(placedObject)
+    public GraffitiObject(PlacedObject placedObject, SaveState save, int gNum, string roomId, bool isStory) : base(placedObject)
     {
         if (save == null)
         {
             return;
         }
 
-        cyclePlaced = (gNum < Plugin.storyGraffitiCount) ? -1 : save.cycleNumber;
+        cyclePlaced = isStory ? -1 : save.cycleNumber;
         serializableGraffiti = new(placedObject, cyclePlaced, gNum);
 
         SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(save.miscWorldSaveData);

@@ -100,7 +100,7 @@ namespace Vinki
                 smoke.colorB = Color.gray;
 
                 await Task.Delay(100);
-                room.AddObject(new GraffitiObject(graffiti, room.game.GetStorySession?.saveState, gNum, room.abstractRoom.name));
+                room.AddObject(new GraffitiObject(graffiti, room.game.GetStorySession?.saveState, gNum, room.abstractRoom.name, slugcat == "Story"));
             }
         }
 

@@ -16,7 +16,7 @@ namespace Vinki
 
         public override void Destroy()
         {
-			player.controller = startController = null;
+			Plr.controller = startController = null;
             base.Destroy();
         }
 
@@ -32,39 +32,39 @@ namespace Vinki
 					return;
 				}
 
-				if (player != null && !foodMeterInit)
+				if (Plr != null && !foodMeterInit)
 				{
 					if (room.game.cameras[0].hud == null)
 					{
-						room.game.cameras[0].FireUpSinglePlayerHUD(player);
+						room.game.cameras[0].FireUpSinglePlayerHUD(Plr);
 					}
 					foodMeterInit = true;
-					room.game.cameras[0].hud.foodMeter.NewShowCount(player.FoodInStomach);
+					room.game.cameras[0].hud.foodMeter.NewShowCount(Plr.FoodInStomach);
 					room.game.cameras[0].hud.foodMeter.visibleCounter = 0;
 					room.game.cameras[0].hud.foodMeter.fade = 0f;
 					room.game.cameras[0].hud.foodMeter.lastFade = 0f;
-					room.game.cameras[0].followAbstractCreature = player.abstractCreature;
+					room.game.cameras[0].followAbstractCreature = Plr.abstractCreature;
 				}
-				if (player != null && player.room != null && !playerPosCorrect)
+				if (Plr != null && Plr.room != null && !playerPosCorrect)
 				{
 					for (int j = 0; j < 2; j++)
 					{
-						player.bodyChunks[j].HardSetPosition(room.MiddleOfTile(28, 34));
+						Plr.bodyChunks[j].HardSetPosition(room.MiddleOfTile(28, 34));
 					}
 					playerPosCorrect = true;
-					player.graphicsModule?.Reset();
+					Plr.graphicsModule?.Reset();
 					startController = new StartController(this);
-					player.controller = startController;
-					player.standing = true;
+					Plr.controller = startController;
+					Plr.standing = true;
 
                     // Spawn SprayCan in hand
-                    var tilePosition = player.room.GetTilePosition(player.mainBodyChunk.pos);
-                    var pos = new WorldCoordinate(player.room.abstractRoom.index, tilePosition.x, tilePosition.y - 1, 0);
-                    var abstr = new SprayCanAbstract(player.room.world, pos, player.room.game.GetNewID(), 2);
+                    var tilePosition = Plr.room.GetTilePosition(Plr.mainBodyChunk.pos);
+                    var pos = new WorldCoordinate(Plr.room.abstractRoom.index, tilePosition.x, tilePosition.y - 1, 0);
+                    var abstr = new SprayCanAbstract(Plr.room.world, pos, Plr.room.game.GetNewID(), 2);
                     abstr.Realize();
-                    player.room.abstractRoom.AddEntity(abstr);
-                    player.room.AddObject(abstr.realizedObject);
-                    player.SlugcatGrab(abstr.realizedObject, 0);
+                    Plr.room.abstractRoom.AddEntity(abstr);
+                    Plr.room.AddObject(abstr.realizedObject);
+                    Plr.SlugcatGrab(abstr.realizedObject, 0);
                 }
 				if (playerPosCorrect && foodMeterInit)
 				{
@@ -79,11 +79,11 @@ namespace Vinki
 					cutsceneTimer++;
 					return;
 				}
-				if (phase == Phase.Wait && player != null)
+				if (phase == Phase.Wait && Plr != null)
 				{
-					if (player.room != null)
+					if (Plr.room != null)
 					{
-						if (player.room == room)
+						if (Plr.room == room)
 						{
 							cutsceneTimer++;
 						}
@@ -96,9 +96,9 @@ namespace Vinki
 				if (phase == Phase.End)
 				{
 					Debug.Log("VINKI CUTSCENE END!");
-					if (player != null)
+					if (Plr != null)
 					{
-						player.controller = null;
+						Plr.controller = null;
                     }
 					Plugin.introPlayed = true;
 					Destroy();
@@ -109,7 +109,7 @@ namespace Vinki
 		// Token: 0x06002096 RID: 8342 RVA: 0x0028DB88 File Offset: 0x0028BD88
 		public Player.InputPackage GetInput()
 		{
-			if (player == null)
+			if (Plr == null)
 			{
 				return new Player.InputPackage(false, Options.ControlSetup.Preset.None, 0, 0, false, false, false, false, false);
 			}
@@ -173,10 +173,10 @@ namespace Vinki
 				if (cutsceneTimer == num2)
 				{
 					x = -1;
-                    var grasp = player.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan);
+                    var grasp = Plr.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan);
                     if (grasp != null && (grasp.grabbed as SprayCan).TryUse())
                     {
-                        _ = Hooks.SprayGraffiti(player, 20, 0, 0.5f);
+                        _ = Hooks.SprayGraffiti(Plr, 20, 0, 0.5f);
                         // Trigger the cutscene
                         Hooks.TriggerSSOracleScene();
                     }
@@ -194,7 +194,7 @@ namespace Vinki
 
 		// Token: 0x17000596 RID: 1430
 		// (get) Token: 0x06002097 RID: 8343 RVA: 0x0028DF5C File Offset: 0x0028C15C
-		public Player player
+		public Player Plr
 		{
 			get
 			{
@@ -223,15 +223,10 @@ namespace Vinki
 		public int cutsceneTimer;
 
 		// Token: 0x0200078B RID: 1931
-		public class Phase : ExtEnum<Phase>
+		public class Phase(string value, bool register = false) : ExtEnum<Phase>(value, register)
 		{
-			// Token: 0x06003D8B RID: 15755 RVA: 0x0045D077 File Offset: 0x0045B277
-			public Phase(string value, bool register = false) : base(value, register)
-			{
-			}
-
-			// Token: 0x04003ED4 RID: 16084
-			public static readonly Phase Init = new("Init", true);
+            // Token: 0x04003ED4 RID: 16084
+            public static readonly Phase Init = new("Init", true);
 
 			// Token: 0x04003ED5 RID: 16085
 			public static readonly Phase PlayerRun = new("PlayerRun", true);
@@ -244,22 +239,17 @@ namespace Vinki
 		}
 
 		// Token: 0x0200078C RID: 1932
-		public class StartController : Player.PlayerController
+		public class StartController(CutsceneVinkiIntro owner) : Player.PlayerController
 		{
-			// Token: 0x06003D8D RID: 15757 RVA: 0x0045D0E1 File Offset: 0x0045B2E1
-			public StartController(CutsceneVinkiIntro owner)
-			{
-				this.owner = owner;
-			}
 
-			// Token: 0x06003D8E RID: 15758 RVA: 0x0045D0F0 File Offset: 0x0045B2F0
-			public override Player.InputPackage GetInput()
+            // Token: 0x06003D8E RID: 15758 RVA: 0x0045D0F0 File Offset: 0x0045B2F0
+            public override Player.InputPackage GetInput()
 			{
 				return owner.GetInput();
 			}
 
 			// Token: 0x04003ED9 RID: 16089
-			private readonly CutsceneVinkiIntro owner;
+			private readonly CutsceneVinkiIntro owner = owner;
 		}
 	}
 }

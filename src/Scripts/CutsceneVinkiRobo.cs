@@ -14,7 +14,7 @@ namespace Vinki
             room.AddObject(bot);
 
             // Dead scav (lol)
-            AbstractCreature abstractCreature = new AbstractCreature(room.world, StaticWorld.GetCreatureTemplate(MoreSlugcatsEnums.CreatureTemplateType.ScavengerElite), null, new WorldCoordinate(room.abstractRoom.index, scavX, scavY, -1), room.game.GetNewID());
+            AbstractCreature abstractCreature = new(room.world, StaticWorld.GetCreatureTemplate(MoreSlugcatsEnums.CreatureTemplateType.ScavengerElite), null, new WorldCoordinate(room.abstractRoom.index, scavX, scavY, -1), room.game.GetNewID());
             abstractCreature.state.Die();
             room.abstractRoom.AddEntity(abstractCreature);
         }
