@@ -57,7 +57,7 @@ public static partial class Hooks
         // Open quest map if new graffiti has been sprayed
         SlugBaseSaveData miscWorldSave = SaveDataExtension.GetSlugBaseData(self.myGamePackage.saveState.miscWorldSaveData);
         if (firstSleepUpdate && !self.ButtonsGreyedOut && miscWorldSave.TryGet("StoryGraffitisSprayed", out int[] _) && 
-            miscWorldSave.TryGet("AutoOpenMap", out bool autoMap) && autoMap)
+            miscWorldSave.TryGet("AutoOpenMap", out bool autoMap) && autoMap && VinkiConfig.AutoOpenMap.Value)
         {
             self.Singal(self.pages[0], "QUEST MAP");
             firstSleepUpdate = false;

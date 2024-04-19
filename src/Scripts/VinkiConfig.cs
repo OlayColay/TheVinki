@@ -20,6 +20,7 @@ namespace Vinki
         public static Configurable<bool> TagDamageJolly;
         public static Configurable<bool> UseGraffitiButton;
         public static Configurable<bool> TokensInEveryCampaign;
+        public static Configurable<bool> AutoOpenMap;
 
         private static OpHoldButton unlockButton;
         private static OpHoldButton lockButton;
@@ -52,6 +53,10 @@ namespace Vinki
             TokensInEveryCampaign = config.Bind("tokensInEveryCampaign", false, new ConfigurableInfo("Be able to collect the unlockable graffiti tokens in campaigns besides Vinki's (excluding Saint)", tags:
             [
                 "Graffiti Tokens in Any Campaign"
+            ]));
+            AutoOpenMap = config.Bind("autoOpenMap", true, new ConfigurableInfo("Automatically open the quest map after a cycle where you spray a new story graffiti. Disable if you want to speedrun", tags:
+            [
+                "Automatically Open Quest Map"
             ]));
             ShowVinkiTitleCard = config.Bind("showVinkiTitleCard", true, new ConfigurableInfo("Always show one of the Vinki title cards when starting the game. This replaces other title cards, and the mod must be high in the mod order on the left to work!", tags:
             [
@@ -105,18 +110,19 @@ namespace Vinki
             AddCheckbox(UpGraffiti, 390f);
             AddCheckbox(TagDamageJolly, 360f);
             AddCheckbox(TokensInEveryCampaign, 330f);
-            AddTitle(0, "Visuals", 270f);
-            AddCheckbox(ShowVinkiTitleCard, 240f);
-            AddCheckbox(GlassesOverDMS, 210f);
-            AddIntBox(GraffitiFadeTime, 180f);
-            AddCheckbox(DeleteGraffiti, 150f);
-            AddTitle(0, "Graffiti Files", 90f);
-            AddCheckbox(RestoreGraffitiOnUpdate, 60f);
+            AddCheckbox(AutoOpenMap, 300f);
+            AddTitle(0, "Visuals", 245f);
+            AddCheckbox(ShowVinkiTitleCard, 215f);
+            AddCheckbox(GlassesOverDMS, 185f);
+            AddIntBox(GraffitiFadeTime, 155f);
+            AddCheckbox(DeleteGraffiti, 125f);
+            AddTitle(0, "Graffiti Files", 70f);
+            AddCheckbox(RestoreGraffitiOnUpdate, 40f);
             AddHoldButton(
                 "Restore Default Graffiti",
                 "Restore the default graffiti that came with The Vinki. Useful for after installing an update that includes new default graffiti.",
                 RestoreDefaultGraffiti,
-                20f,
+                0f,
                 200f,
                 40f,
                 x: 50f
@@ -125,7 +131,7 @@ namespace Vinki
                 "Reset Graffiti Folder to Default",
                 "Revert Graffiti Folder to default. This will remove any custom files you've added to it!",
                 ResetGraffitiFolder,
-                20f,
+                0f,
                 200f,
                 color: Color.red,
                 x: 350f
