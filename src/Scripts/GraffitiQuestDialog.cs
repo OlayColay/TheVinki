@@ -133,7 +133,7 @@ namespace Menu
             return (a * Mathf.Pow(2, -10 * value) * Mathf.Sin((value * d - s) * (2 * Mathf.PI) / p) + end + start);
         }
 
-        public static MenuDepthIllustration[] graffitiSpots;
+        public static MenuDepthIllustration[] graffitiSpots = new MenuDepthIllustration[10];
         public static int[] graffitiSlapping;
 
         public SimpleButton cancelButton;

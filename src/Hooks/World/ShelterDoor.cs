@@ -51,12 +51,6 @@ namespace Vinki
                     }
                 }
             }
-
-            // Save story graffiti on the map before cycle ends
-            if (storyGraffitisOnMap.Length > 0)
-            {
-                SaveDataExtension.GetSlugBaseData(self.room.game.GetStorySession.saveState.miscWorldSaveData).Set("StoryGraffitisOnMap", storyGraffitisOnMap);
-            }
         }
     }
 }

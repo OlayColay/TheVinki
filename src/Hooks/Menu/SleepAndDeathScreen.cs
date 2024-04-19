@@ -1,4 +1,5 @@
 ﻿using Menu;
+using SlugBase.SaveData;
 using UnityEngine;
 
 namespace Vinki;
@@ -22,6 +23,7 @@ public static partial class Hooks
     }
 
     private static SimpleButton questButton;
+    private static bool firstSleepUpdate;
     private static void SleepAndDeathScreen_ctor(On.Menu.SleepAndDeathScreen.orig_ctor orig, SleepAndDeathScreen self, ProcessManager manager, ProcessManager.ProcessID ID)
     {
         orig(self, manager, ID);
@@ -34,6 +36,7 @@ public static partial class Hooks
         questButton = new SimpleButton(self, self.pages[0], self.Translate("QUEST MAP"), "QUEST MAP", new Vector2(self.ContinueAndExitButtonsXPos - 460f - self.manager.rainWorld.options.SafeScreenOffset.x, Mathf.Max(self.manager.rainWorld.options.SafeScreenOffset.y, 15f)), new Vector2(110f, 30f));
         self.pages[0].subObjects.Add(questButton);
         questButton.black = 0f;
+        firstSleepUpdate = true;
     }
 
     private static void SleepAndDeathScreen_Update(On.Menu.SleepAndDeathScreen.orig_Update orig, SleepAndDeathScreen self)
@@ -49,6 +52,16 @@ public static partial class Hooks
         {
             questButton.buttonBehav.greyedOut = self.ButtonsGreyedOut;
             questButton.black = Mathf.Max(0f, questButton.black - 0.025f);
+        }
+
+        // Open quest map if new graffiti has been sprayed
+        SlugBaseSaveData miscWorldSave = SaveDataExtension.GetSlugBaseData(self.myGamePackage.saveState.miscWorldSaveData);
+        if (firstSleepUpdate && !self.ButtonsGreyedOut && miscWorldSave.TryGet("StoryGraffitisSprayed", out int[] _) && 
+            miscWorldSave.TryGet("AutoOpenMap", out bool autoMap) && autoMap)
+        {
+            self.Singal(self.pages[0], "QUEST MAP");
+            firstSleepUpdate = false;
+            miscWorldSave.Set("AutoOpenMap", false);
         }
     }
 

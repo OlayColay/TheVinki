@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using SlugBase.SaveData;
 using Smoke;
 using System.Collections.Generic;
+using Menu;
 
 namespace Vinki
 {
@@ -50,6 +51,12 @@ namespace Vinki
                 if (gNum == 2)
                 {
                     miscSave.Set("StoryGraffitiTutorialPhase", 1);
+                }
+
+                // Flag that the map should open automatically when hibernating
+                if (gNum < GraffitiQuestDialog.graffitiSpots.Length)
+                {
+                    miscSave.Set("AutoOpenMap", true);
                 }
 
                 (self.room.drawableObjects.Find((x) => x is GraffitiHolder && (x as GraffitiHolder).gNum == gNum) as GraffitiHolder)?.RemoveFromRoom();

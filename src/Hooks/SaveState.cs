@@ -10,8 +10,13 @@ public static partial class Hooks
     {
         On.SaveState.GetStoryDenPosition += SaveState_GetStoryDenPosition;
 
-        On.PlayerProgression.WipeSaveState += (On.PlayerProgression.orig_WipeSaveState orig, PlayerProgression self, SlugcatStats.Name name) => { 
-            if (name == Enums.vinki) Plugin.introPlayed = false;
+        On.PlayerProgression.WipeSaveState += (On.PlayerProgression.orig_WipeSaveState orig, PlayerProgression self, SlugcatStats.Name name) => {
+            if (name == Enums.vinki)
+            {
+                Plugin.introPlayed = false;
+                // Reset graffitis on map
+                Plugin.storyGraffitisOnMap = [];
+            }
             orig(self, name);
         };
         On.PlayerProgression.MiscProgressionData.GetTokenCollected_string_bool += PlayerProgression_MiscProgressionData_GetTokenCollected;
@@ -21,7 +26,12 @@ public static partial class Hooks
         On.SaveState.GetStoryDenPosition -= SaveState_GetStoryDenPosition;
 
         On.PlayerProgression.WipeSaveState -= (On.PlayerProgression.orig_WipeSaveState orig, PlayerProgression self, SlugcatStats.Name name) => {
-            if (name == Enums.vinki) Plugin.introPlayed = false;
+            if (name == Enums.vinki)
+            {
+                Plugin.introPlayed = false;
+                // Reset graffitis on map
+                Plugin.storyGraffitisOnMap = [];
+            }
             orig(self, name);
         };
         On.PlayerProgression.MiscProgressionData.GetTokenCollected_string_bool -= PlayerProgression_MiscProgressionData_GetTokenCollected;

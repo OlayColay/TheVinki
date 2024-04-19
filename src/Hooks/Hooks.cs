@@ -12,6 +12,7 @@ using Mono.Cecil.Cil;
 using SlugBase;
 using BepInEx;
 using DressMySlugcat;
+using SlugBase.SaveData;
 
 namespace Vinki
 {
@@ -23,21 +24,33 @@ namespace Vinki
             On.RainWorld.OnModsInit += Extras.WrapInit(LoadResources);
             On.RainWorld.PostModsInit += RainWorld_PostModsInit;
 
-            if (debugMode)
-            {
-                On.RainWorldGame.ctor += RainWorldGame_ctor;
-            }
+            On.RainWorldGame.ctor += RainWorldGame_ctor;
         }
 
         private static void RainWorldGame_ctor(On.RainWorldGame.orig_ctor orig, RainWorldGame self, ProcessManager manager)
         {
             orig(self, manager);
 
-            Enums.RegisterValues();
-            ApplyHooks();
+            if (debugMode)
+            {
+                Enums.RegisterValues();
+                ApplyHooks();
 
-            LoadResources(self.rainWorld);
-            RainWorld_PostModsInit((_) => { }, self.rainWorld);
+                LoadResources(self.rainWorld);
+                RainWorld_PostModsInit((_) => { }, self.rainWorld);
+            }
+
+            if (self.IsStorySession && self.GetStorySession.saveStateNumber == Enums.vinki)
+            { 
+                SlugBaseSaveData miscWorldSave = SaveDataExtension.GetSlugBaseData(self.GetStorySession.saveState.miscWorldSaveData);
+                miscWorldSave.Set("AutoOpenMap", false);
+
+                // Save story graffiti on the map before cycle ends
+                if (storyGraffitisOnMap.Length > 0)
+                {
+                    miscWorldSave.Set("StoryGraffitisOnMap", storyGraffitisOnMap);
+                }
+            }
         }
 
         // Add hooks
