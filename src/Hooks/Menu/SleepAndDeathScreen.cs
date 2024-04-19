@@ -75,6 +75,7 @@ public static partial class Hooks
 
         if (message == "QUEST MAP")
         {
+            GraffitiQuestDialog.removeCloud = Plugin.FirstStoryGraffitisDone(SaveDataExtension.GetSlugBaseData(self.myGamePackage.saveState.miscWorldSaveData)) ? (int)GraffitiQuestDialog.slapLength : 0;
             GraffitiQuestDialog dialog = new(self.manager, self.continueButton.pos);
             self.manager.ShowDialog(dialog);
             self.PlaySound(SoundID.MENU_Switch_Page_In);

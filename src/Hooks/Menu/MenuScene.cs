@@ -112,6 +112,7 @@ public static partial class Hooks
             Debug.Log("Building Graffiti Map Scene!\n" + StackTraceUtility.ExtractStackTrace());
             self.sceneFolder = "Scenes" + Path.DirectorySeparatorChar.ToString() + "Graffiti Map";
             self.AddIllustration(new MenuDepthIllustration(self.menu, self, self.sceneFolder, "graffiti_map", new Vector2(0f, 0f), 5f, MenuDepthIllustration.MenuShader.Basic));
+            self.AddIllustration(GraffitiQuestDialog.cloud = new MenuDepthIllustration(self.menu, self, self.sceneFolder, "cloud", new Vector2(680f, 324f), 5f, MenuDepthIllustration.MenuShader.Basic));
             self.AddIllustration(new MenuDepthIllustration(self.menu, self, self.sceneFolder, "wip_black", new Vector2(762f, -64f), 3f, MenuDepthIllustration.MenuShader.Basic));
             self.AddIllustration(new MenuDepthIllustration(self.menu, self, self.sceneFolder, "wip_overseer", new Vector2(-50f, -64f), 2f, MenuDepthIllustration.MenuShader.Basic));
 
@@ -135,6 +136,7 @@ public static partial class Hooks
             {
                 illustration.sprite.SetAnchor(0.5f, 0.5f);
             }
+            GraffitiQuestDialog.cloud.sprite.SetAnchor(0.5f, 0.5f);
 
             // Save that we sprayed self story graffiti
             SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(self.menu.manager.rainWorld.progression.currentSaveState.miscWorldSaveData);

@@ -105,6 +105,14 @@ namespace Menu
                 // Only show one graffiti animation at a time
                 break;
             }
+
+            if (removeCloud > 0 && graffitiSlapping.All(x => x == 0))
+            {
+                float t = (slapLength - removeCloud) / slapLength;
+                cloud.sprite.scale = Mathf.Abs(EaseOutElastic(1f, 0.001f, t));
+                cloud.alpha = Mathf.Max(1f - t * 5f, 0f);
+                removeCloud--;
+            }
         }
 
         public static float EaseOutElastic(float start, float end, float value)
@@ -135,6 +143,9 @@ namespace Menu
 
         public static MenuDepthIllustration[] graffitiSpots = new MenuDepthIllustration[10];
         public static int[] graffitiSlapping;
+
+        public static MenuDepthIllustration cloud;
+        public static int removeCloud = 0;
 
         public SimpleButton cancelButton;
 
