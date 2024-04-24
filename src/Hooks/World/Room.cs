@@ -1,4 +1,5 @@
 ﻿using SlugBase.SaveData;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -12,6 +13,7 @@ public static partial class Hooks
     {
         On.AbstractRoom.RealizeRoom += AbstractRoom_RealizeRoom;
 
+        On.Room.ctor += Room_ctor;
         On.Room.Loaded += Room_Loaded;
 
         On.RoomSpecificScript.AddRoomSpecificScript += RoomSpecificScript_AddRoomSpecificScript;
@@ -20,6 +22,7 @@ public static partial class Hooks
     {
         On.AbstractRoom.RealizeRoom -= AbstractRoom_RealizeRoom;
 
+        On.Room.ctor -= Room_ctor;
         On.Room.Loaded -= Room_Loaded;
 
         On.RoomSpecificScript.AddRoomSpecificScript -= RoomSpecificScript_AddRoomSpecificScript;
@@ -69,6 +72,20 @@ public static partial class Hooks
         }
 
         miscSave.Set("PlacedGraffitis", placedGraffitis);
+    }
+
+    private static void Room_ctor(On.Room.orig_ctor orig, Room self, RainWorldGame game, World world, AbstractRoom abstractRoom)
+    {
+        orig(self, game, world, abstractRoom);
+
+        if (game == null || game.StoryCharacter != Enums.vinki)
+        {
+            return;
+        }
+
+        self.roomSettings.placedObjects.RemoveAll((obj) => obj.type == PlacedObject.Type.Corruption
+        || obj.type == PlacedObject.Type.CorruptionDarkness
+        || obj.type == PlacedObject.Type.CorruptionTube);
     }
 
     private static CutsceneVinkiIntro intro = null;

@@ -74,6 +74,7 @@ namespace Vinki
             ApplyGhostHooks();
             ApplyAncientBotHooks();
             ApplyRegionGateHooks();
+            ApplyAbstractCreatureHooks();
         }
 
         public static void RemoveHooks()
@@ -97,6 +98,7 @@ namespace Vinki
             RemoveGhostHooks();
             RemoveAncientBotHooks();
             RemoveRegionGateHooks();
+            RemoveAbstractCreatureHooks();
 
             RemoveMenuSceneHooks();
 
