@@ -807,8 +807,8 @@ namespace Vinki
                 (v.poisonedVictims[i].creature.State as HealthState).health -= v.poisonedVictims[i].damagePerTick;
             }
 
-            if ((!IsPressingGraffiti(self) && improvedInput) || (VinkiConfig.RequireCansGraffiti.Value && self.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan) == null) ||
-                self.room == null || self.Stunned || self.dead)
+            if ((!IsPressingGraffiti(self) && improvedInput) || (VinkiConfig.RequireCansTagging.Value && self.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan) == null) ||
+                self.room == null || (!self.Consious && (self.dangerGrasp == null || self.dangerGraspTime >= 30)) || self.dead)
             {
                 v.tagableCreature = null;
                 return;
@@ -858,7 +858,7 @@ namespace Vinki
         private static void TagCreature(Player self)
         {
             PhysicalObject source = self;
-            if (VinkiConfig.RequireCansGraffiti.Value)
+            if (VinkiConfig.RequireCansTagging.Value)
             {
                 SprayCan can = self.grasps.FirstOrDefault(g => g?.grabbed is SprayCan).grabbed as SprayCan;
                 if (!can.TryUse())
@@ -894,7 +894,7 @@ namespace Vinki
             {
                 if (v.tagableCreature.State is HealthState)
                 {
-                    v.tagableCreature.Violence(self.firstChunk, null, v.tagableCreature.firstChunk, null, Creature.DamageType.Stab, damage / 2, 0f);
+                    v.tagableCreature.Violence(self.firstChunk, null, v.tagableCreature.firstChunk, null, Creature.DamageType.Stab, damage / 2, 10f);
                     v.poisonedVictims.Add(new VinkiPlayerData.PoisonedCreature(v.tagableCreature, 120, damage / 2));
                 }
                 else
@@ -903,7 +903,7 @@ namespace Vinki
                     if (ModManager.MSC && v.tagableCreature is Player)
                     {
                         Player player = v.tagableCreature as Player;
-                        player.playerState.permanentDamageTracking += (double)(damage / player.Template.baseDamageResistance);
+                        player.playerState.permanentDamageTracking += damage / player.Template.baseDamageResistance;
                         if (player.playerState.permanentDamageTracking >= 1.0)
                         {
                             player.Die();

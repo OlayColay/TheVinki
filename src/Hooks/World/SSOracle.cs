@@ -558,7 +558,7 @@ namespace Vinki
                         {
                             if (!oracle.room.aimap.getAItile(player.mainBodyChunk.pos).narrowSpace)
                             {
-                                player.mainBodyChunk.vel += Custom.DirVec(player.mainBodyChunk.pos, oracle.room.MiddleOfTile(28, 32)) * 2f * (1f - oracle.room.gravity) * Mathf.InverseLerp(20f, 150f, (float)inActionCounter);
+                                player.mainBodyChunk.vel += Custom.DirVec(player.mainBodyChunk.pos, oracle.room.MiddleOfTile(28, 32)) * 2f * (1f - oracle.room.gravity) * Mathf.InverseLerp(20f, 150f, inActionCounter);
                             }
                             if (oracle.room.GetTilePosition(player.mainBodyChunk.pos) == new IntVector2(28, 32) && player.enteringShortCut == null)
                             {
@@ -1130,9 +1130,9 @@ namespace Vinki
                 }
                 if (holdPlayer && player.room == oracle.room)
                 {
-                    player.mainBodyChunk.vel *= Custom.LerpMap((float)inActionCounter, 0f, 30f, 1f, 0.95f);
-                    player.bodyChunks[1].vel *= Custom.LerpMap((float)inActionCounter, 0f, 30f, 1f, 0.95f);
-                    player.mainBodyChunk.vel += Custom.DirVec(player.mainBodyChunk.pos, HoldPlayerPos) * Mathf.Lerp(0.5f, Custom.LerpMap(Vector2.Distance(player.mainBodyChunk.pos, HoldPlayerPos), 30f, 150f, 2.5f, 7f), oracle.room.gravity) * Mathf.InverseLerp(0f, 10f, (float)inActionCounter) * Mathf.InverseLerp(0f, 30f, Vector2.Distance(player.mainBodyChunk.pos, HoldPlayerPos));
+                    player.mainBodyChunk.vel *= Custom.LerpMap(inActionCounter, 0f, 30f, 1f, 0.95f);
+                    player.bodyChunks[1].vel *= Custom.LerpMap(inActionCounter, 0f, 30f, 1f, 0.95f);
+                    player.mainBodyChunk.vel += Custom.DirVec(player.mainBodyChunk.pos, HoldPlayerPos) * Mathf.Lerp(0.5f, Custom.LerpMap(Vector2.Distance(player.mainBodyChunk.pos, HoldPlayerPos), 30f, 150f, 2.5f, 7f), oracle.room.gravity) * Mathf.InverseLerp(0f, 10f, inActionCounter) * Mathf.InverseLerp(0f, 30f, Vector2.Distance(player.mainBodyChunk.pos, HoldPlayerPos));
                 }
                 else
                 {
@@ -1149,7 +1149,7 @@ namespace Vinki
             {
                 get
                 {
-                    return new Vector2(668f, 268f + Mathf.Sin((float)inActionCounter / 70f * 3.1415927f * 2f) * 4f);
+                    return new Vector2(668f, 268f + Mathf.Sin(inActionCounter / 70f * 3.1415927f * 2f) * 4f);
                 }
             }
 

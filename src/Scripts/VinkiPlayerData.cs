@@ -135,20 +135,14 @@ public static class PlayerExtension
             }
         }
 
-        switch (index)
+        return index switch
         {
-            case 0:
-            case 4:
-                return player.input[0].pckp;
-            case 1:
-                return false;
-            case 2:
-                return player.input[0].y == 1;
-            case 3:
-            case 5:
-                return player.input[0].jmp && player.input[0].pckp;
-        }
-        return false;
+            0 or 4 => player.input[0].pckp,
+            1 => false,
+            2 => player.input[0].y == 1,
+            3 or 5 => player.input[0].jmp && player.input[0].pckp,
+            _ => false,
+        };
     }
     private static bool IsPressedImprovedInput(this Player player, int index)
     {
@@ -169,23 +163,22 @@ public static class PlayerExtension
             }
         }
 
-        switch (index)
+        return index switch
         {
-            case 0:
-            case 4:
-                return player.input[0].pckp && !player.input[1].pckp;
-            case 1:
-                return false;
-            case 2:
-                return player.input[0].y == 1 && player.input[1].y != 1;
-            case 3:
-            case 5:
-                return player.wantToJump > 0 && player.input[0].pckp;
-        }
-        return false;
+            0 or 4 => player.input[0].pckp && !player.input[1].pckp,
+            1 => false,
+            2 => player.input[0].y == 1 && player.input[1].y != 1,
+            3 or 5 => (player.wantToJump > 0 || (player.dangerGrasp != null && player.dangerGraspTime < 30)) && RWInput.PlayerInput(player.playerState.playerNumber).pckp,
+            _ => false,
+        };
     }
     private static bool JustPressedImprovedInput(this Player player, int index)
     {
+        // Able to tag while caught
+        if (index == 5)
+        {
+            return player.RawInput()[(PlayerKeybind)Plugin.improvedControls.GetValue(index)];
+        }
         return player.JustPressed((PlayerKeybind)Plugin.improvedControls.GetValue(index));
     }
 }

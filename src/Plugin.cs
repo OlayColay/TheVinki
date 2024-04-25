@@ -11,7 +11,7 @@ namespace Vinki
 {
     [BepInDependency("slime-cubed.slugbase")]
     [BepInDependency("dressmyslugcat", BepInDependency.DependencyFlags.SoftDependency)]
-    [BepInPlugin(MOD_ID, "The Vinki", "0.12.6")]
+    [BepInPlugin(MOD_ID, "The Vinki", "0.12.7")]
     class Plugin : BaseUnityPlugin
     {
         public const string MOD_ID = "olaycolay.thevinki";
@@ -69,6 +69,13 @@ namespace Vinki
             improvedControls.SetValue(PlayerKeybind.Register("thevinki:spray", "The Vinki", "Spray Graffiti", KeyCode.LeftControl, KeyCode.JoystickButton3), Spray);
             improvedControls.SetValue(PlayerKeybind.Register("thevinki:craft", "The Vinki", "Craft Spray Can", KeyCode.LeftShift, KeyCode.JoystickButton2), Craft);
             improvedControls.SetValue(PlayerKeybind.Register("thevinki:tag", "The Vinki", "Tag Creatures", KeyCode.LeftControl, KeyCode.JoystickButton3), Tag);
+
+            // Hide conflict warning for certain bindings
+            ((PlayerKeybind)improvedControls.GetValue(Grind)).HideConflict = (_) => true;
+            ((PlayerKeybind)improvedControls.GetValue(Graffiti)).HideConflict = (x) => x != ((PlayerKeybind)improvedControls.GetValue(Spray)) && x != ((PlayerKeybind)improvedControls.GetValue(Craft)) && x != ((PlayerKeybind)improvedControls.GetValue(Tag));
+            ((PlayerKeybind)improvedControls.GetValue(Spray)).HideConflict = (x) => x != ((PlayerKeybind)improvedControls.GetValue(Graffiti)) && x != ((PlayerKeybind)improvedControls.GetValue(Craft));
+            ((PlayerKeybind)improvedControls.GetValue(Craft)).HideConflict = (x) => x != ((PlayerKeybind)improvedControls.GetValue(Spray)) && x != ((PlayerKeybind)improvedControls.GetValue(Graffiti)) && x != ((PlayerKeybind)improvedControls.GetValue(Tag));
+            ((PlayerKeybind)improvedControls.GetValue(Tag)).HideConflict = (x) => x != ((PlayerKeybind)improvedControls.GetValue(Craft)) && x != ((PlayerKeybind)improvedControls.GetValue(Graffiti));
         }
 
         public static void MapTextureColor(Texture2D texture, int alpha, Color32 to, bool apply = true)

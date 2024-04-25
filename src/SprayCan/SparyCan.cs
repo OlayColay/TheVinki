@@ -320,7 +320,7 @@ sealed class SprayCan : Weapon
         }
         for (int l = 0; l < 6; l++)
         {
-            room.AddObject(new ScavengerBomb.BombFragment(vector, Custom.DegToVec(((float)l + Random.value) / 6f * 360f) * Mathf.Lerp(18f, 38f, Random.value)));
+            room.AddObject(new ScavengerBomb.BombFragment(vector, Custom.DegToVec((l + Random.value) / 6f * 360f) * Mathf.Lerp(18f, 38f, Random.value)));
         }
         room.ScreenMovement(new Vector2?(vector), default, 0.3f * Abstr.uses);
         for (int m = 0; m < abstractPhysicalObject.stuckObjects.Count; m++)

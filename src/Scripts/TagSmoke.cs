@@ -141,7 +141,7 @@ public class TagSmoke : PositionedSmokeEmitter
         // Token: 0x0600407E RID: 16510 RVA: 0x004854EA File Offset: 0x004836EA
         public override Color MyColor(float timeStacker)
         {
-            return VultureSmokeColor(Mathf.InverseLerp(1f, 5f + 15f * power, (float)age + timeStacker));
+            return VultureSmokeColor(Mathf.InverseLerp(1f, 5f + 15f * power, age + timeStacker));
         }
 
         // Token: 0x0600407F RID: 16511 RVA: 0x00485518 File Offset: 0x00483718

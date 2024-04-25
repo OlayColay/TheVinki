@@ -370,7 +370,7 @@ namespace Vinki
                 float yPos = sLeaser.sprites[9].y + Mathf.Lerp(0f, 20f, vinki.tagIconSize);
                 var iconPos = new Vector2(xPos, yPos);
 
-                bool tagAble = vinki.tagLag <= 0 && (!VinkiConfig.RequireCansGraffiti.Value || (
+                bool tagAble = vinki.tagLag <= 0 && (!VinkiConfig.RequireCansTagging.Value || (
                     self.player.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan) != null) && 
                     ((self.player.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan).grabbed as SprayCan).Abstr.uses > 0));
 
@@ -414,11 +414,11 @@ namespace Vinki
             {
                 foreach (SlugcatHand hand in self.hands)
                 {
-                    hand.pos = Vector2.Lerp(hand.pos, self.drawPositions[0, 0], (float)v.craftCounter / 25f);
+                    hand.pos = Vector2.Lerp(hand.pos, self.drawPositions[0, 0], v.craftCounter / 25f);
                 }
 
-                float num10 = Mathf.InverseLerp(0f, 110f, (float)v.craftCounter);
-                float num11 = (float)v.craftCounter / Mathf.Lerp(30f, 15f, num10);
+                float num10 = Mathf.InverseLerp(0f, 110f, v.craftCounter);
+                float num11 = v.craftCounter / Mathf.Lerp(30f, 15f, num10);
                 if (self.player.standing)
                 {
                     self.drawPositions[0, 0].y += Mathf.Sin(num11 * 3.1415927f * 2f) * num10 * 2f;
