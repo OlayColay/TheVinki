@@ -95,6 +95,12 @@
 		<Reference Include="..\lib\UnityEngine.ImageConversionModule.dll">
 		  <Private>false</Private>
 		</Reference>
+		<Reference Include="..\lib\UnityEngine.AssetBundleModule.dll">
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="..\lib\UnityEngine.AudioModule.dll">
+			<Private>false</Private>
+		</Reference>
 	</ItemGroup>
     
 </Project>

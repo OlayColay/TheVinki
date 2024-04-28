@@ -646,6 +646,12 @@ namespace Vinki
             }
 
             CheckForTagging(self, v);
+
+            // Head bop on song's beat
+            if (Plugin.curUpdatesPerBeat > 0 && self.bodyChunks[1].vel.magnitude < 5f && Plugin.curUpdatesSinceSong % Plugin.curUpdatesPerBeat == 0)
+            {
+                self.mainBodyChunk.vel = new Vector2(3f, 0f);
+            }
         }
 
         private static int CanCraftSprayCan(Creature.Grasp a, Creature.Grasp b)

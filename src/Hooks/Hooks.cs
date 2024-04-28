@@ -75,6 +75,7 @@ namespace Vinki
             ApplyAncientBotHooks();
             ApplyRegionGateHooks();
             ApplyAbstractCreatureHooks();
+            ApplyMusicHooks();
         }
 
         public static void RemoveHooks()
@@ -99,6 +100,7 @@ namespace Vinki
             RemoveAncientBotHooks();
             RemoveRegionGateHooks();
             RemoveAbstractCreatureHooks();
+            RemoveMusicHooks();
 
             RemoveMenuSceneHooks();
 
@@ -380,7 +382,7 @@ namespace Vinki
             colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.KarmaFlower, 3);
             colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.Lantern, 3);
             colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.Mushroom, 1);
-            colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.NeedleEgg, 2);
+            colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.NeedleEgg, 3);
             colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.OverseerCarcass, 3);
             colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.PuffBall, 1);
             colorfulItems.Add(AbstractPhysicalObject.AbstractObjectType.ScavengerBomb, 3);
@@ -397,7 +399,7 @@ namespace Vinki
             }
 
             colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.DandelionPeach, 2);
-            colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.FireEgg, 2);
+            colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.FireEgg, 3);
             colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.Germinator, 2);
             colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.GlowWeed, 2);
             colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.GooieDuck, 2);
