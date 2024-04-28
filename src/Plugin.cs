@@ -6,6 +6,7 @@ using System;
 using Menu;
 using SlugBase.SaveData;
 using System.Linq;
+using System.IO;
 
 namespace Vinki
 {
@@ -16,7 +17,8 @@ namespace Vinki
     {
         public const string MOD_ID = "olaycolay.thevinki";
 
-        public static bool debugMode = false;
+        public static bool restartMode = false;
+        public static bool isDebug = false;
         
         public static bool introPlayed = false;
         public static int[] storyGraffitisOnMap = [];
@@ -45,8 +47,10 @@ namespace Vinki
         public static int[] queuedGNums = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
         public static bool[] repeatGraffiti = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
 
+        public static Dictionary<string, int> manualSongUpdatesPerBeat;
         public static int curUpdatesPerBeat = 0;
         public static int curUpdatesSinceSong = 0;
+        public static string curPlayingSong;
 
         // Add hooks
         public void OnEnable()
@@ -58,9 +62,14 @@ namespace Vinki
         public void OnDisable()
         {
             Debug.Log("OnDisable\n" + StackTraceUtility.ExtractStackTrace());
-            if (debugMode) {
+            if (restartMode) {
                 Hooks.RemoveHooks();
             };
+        }
+
+        public void Start()
+        {
+            isDebug = File.ReadAllText(Path.Combine(Application.dataPath, "boot.config")).Contains("player-connection-debug=1");
         }
 
         public static void SetImprovedInput()

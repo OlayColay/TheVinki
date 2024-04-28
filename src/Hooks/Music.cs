@@ -13,12 +13,16 @@ namespace Vinki
         {
             On.Music.MusicPiece.StartPlaying += MusicPiece_StartPlaying;
             On.Music.MusicPiece.Update += MusicPiece_Update;
+
+            On.Music.Song.FadeOut += Song_FadeOut;
         }
 
         private static void RemoveMusicHooks()
         {
             On.Music.MusicPiece.StartPlaying -= MusicPiece_StartPlaying;
             On.Music.MusicPiece.Update -= MusicPiece_Update;
+
+            On.Music.Song.FadeOut -= Song_FadeOut;
         }
 
         private static void MusicPiece_StartPlaying(On.Music.MusicPiece.orig_StartPlaying orig, MusicPiece self)
@@ -30,6 +34,16 @@ namespace Vinki
                 return;
             }
 
+            string trackName = self.subTracks[0].trackName;
+            if (Plugin.manualSongUpdatesPerBeat.ContainsKey(trackName))
+            {
+                // It's a vanilla song
+                Plugin.curUpdatesPerBeat = Plugin.manualSongUpdatesPerBeat[trackName];
+                Plugin.curUpdatesSinceSong = 0;
+                Plugin.curPlayingSong = trackName;
+                return;
+            }
+
             AudioClip loadedClip;
             string checkPath3 = string.Concat(
                 [
@@ -37,34 +51,37 @@ namespace Vinki
                     Path.DirectorySeparatorChar.ToString(),
                     "Songs",
                     Path.DirectorySeparatorChar.ToString(),
-                    self.subTracks[0].trackName,
+                    trackName,
                     ".ogg"
                 ]);
             string modPathCheck2 = AssetManager.ResolveFilePath(checkPath3);
-            bool flag9 = !Application.isConsolePlatform && modPathCheck2 != Path.Combine(RWCustom.Custom.RootFolderDirectory(), checkPath3.ToLowerInvariant()) && File.Exists(modPathCheck2);
-            if (flag9)
+            if (!Application.isConsolePlatform && modPathCheck2 != Path.Combine(RWCustom.Custom.RootFolderDirectory(), checkPath3.ToLowerInvariant()) && File.Exists(modPathCheck2))
             {
                 loadedClip = AssetManager.SafeWWWAudioClip("file://" + modPathCheck2, false, false, AudioType.OGGVORBIS); 
                 Plugin.curUpdatesPerBeat = Mathf.RoundToInt(2400f / UniBpmAnalyzer.AnalyzeBpm(loadedClip));
+                Plugin.curUpdatesSinceSong = 0;
+                Plugin.curPlayingSong = trackName;
             }
-            else
-            {
-                // It's a vanilla song
-                Plugin.curUpdatesPerBeat = 29;
-            }
-            Plugin.curUpdatesSinceSong = 0;
         }
 
         private static void MusicPiece_Update(On.Music.MusicPiece.orig_Update orig, MusicPiece self)
         {
             orig(self);
 
-            if (!self.startedPlaying)
+            if (self.startedPlaying && self.subTracks[0]?.trackName == Plugin.curPlayingSong)
             {
-                return;
+                Plugin.curUpdatesSinceSong++;
             }
+        }
 
-            Plugin.curUpdatesSinceSong++;
+        private static void Song_FadeOut(On.Music.Song.orig_FadeOut orig, Song self, float speed)
+        {
+            orig(self, speed);
+
+            if (self.subTracks[0]?.trackName == Plugin.curPlayingSong)
+            {
+                Plugin.curUpdatesPerBeat = 0;
+            }
         }
     }
 }

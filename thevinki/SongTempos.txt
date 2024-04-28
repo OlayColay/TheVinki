@@ -1,0 +1,566 @@
+[
+    {
+        "name": "NA_19 - Halcyon Memories",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "BM_UW_UNDERHANG",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_94 - Weathered Steps",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_1 - Urban Jungle",
+        "updatesPerBeat": 20
+    },
+    {
+        "name": "RW_93 - Veiled Northstar",
+        "updatesPerBeat": 20
+    },
+    {
+        "name": "RW_41 - Grumblebum",
+        "updatesPerBeat": 21
+    },
+    {
+        "name": "RW_40 - Floes",
+        "updatesPerBeat": 27
+    },
+    {
+        "name": "NA_16 - Drastic FM",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "NA_09 - Interest Pad",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_9 - Mud Pits",
+        "updatesPerBeat": 23
+    },
+    {
+        "name": "BM_UW_WALL",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_86 - The Cycle",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "NA_01 - Proxima",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "NA_33 - Else2",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "BM_DS_GATE",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_69 - Ancient",
+        "updatesPerBeat": 21
+    },
+    {
+        "name": "RW_88 - Flux",
+        "updatesPerBeat": 21
+    },
+    {
+        "name": "NA_08 - Dark Sus",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "NA_29 - Flutter",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_53 - Leviathan Cave",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "MOON_SIREN_MS",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "BM_SL_SHORE",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_7 - Rooftops",
+        "updatesPerBeat": 20
+    },
+    {
+        "name": "RW_53 - Leviathan",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_20 - Polybius",
+        "updatesPerBeat": 26
+    },
+    {
+        "name": "RW_32 - Grey Cloud",
+        "updatesPerBeat": 20
+    },
+    {
+        "name": "RW_85 - Ascent",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "NA_06 - Past Echoes",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_58 - Lantern Mice",
+        "updatesPerBeat": 15
+    },
+    {
+        "name": "BM_HI_GATE",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "BM_SB_SUBWAY",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_64 - Daze",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_19 - Stone Heads",
+        "updatesPerBeat": 18
+    },
+    {
+        "name": "NA_42 - Else8",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "NA_10 - Qanda",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_10 - Noisy",
+        "updatesPerBeat": 17
+    },
+    {
+        "name": "RW_83 - Accidented Condition",
+        "updatesPerBeat": 20
+    },
+    {
+        "name": "RW_96 - Fragments",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_97 - Open Skies",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "BM_CC_CANOPY",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_45 - Deep Energy",
+        "updatesPerBeat": 24
+    },
+    {
+        "name": "NA_20 - Crystalline",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_66 - Metal Canopy",
+        "updatesPerBeat": 32
+    },
+    {
+        "name": "RW_70 - Scapeless Doubt",
+        "updatesPerBeat": 20
+    },
+    {
+        "name": "NA_19x - Halcyon Memories",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "NA_43 - Isolation",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "NA_39 - Cracked Earth",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_43 - Bio Engineering",
+        "updatesPerBeat": 29
+    },
+    {
+        "name": "RW_76 - Not Your Rain",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_Outro_Theme_B",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "NA_27 - Silent Construct",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_80 - Frosted Festival",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_26 - Black Moonlight",
+        "updatesPerBeat": 40
+    },
+    {
+        "name": "RW_61 - Rain",
+        "updatesPerBeat": 24
+    },
+    {
+        "name": "NA_25 - Demonic Riser",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "TitleRollRain",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_47 - Maze of Soil",
+        "updatesPerBeat": 20
+    },
+    {
+        "name": "RW_67 - Random Fate",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_55 - Sky Sprite",
+        "updatesPerBeat": 26
+    },
+    {
+        "name": "RW_14 - All Thats Left",
+        "updatesPerBeat": 24
+    },
+    {
+        "name": "NA_07 - Phasing",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_49 - Nest in Metal",
+        "updatesPerBeat": 32
+    },
+    {
+        "name": "RW_8 - Sundown",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_27 - Train Tunnels",
+        "updatesPerBeat": 31
+    },
+    {
+        "name": "RW_91 - Sheer Ice Torrent",
+        "updatesPerBeat": 21
+    },
+    {
+        "name": "NA_17 - Dripping Time",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_71 - Sparking Pendulum",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_77 - Fragile",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_79 - Overcast",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_55 - White Lizard",
+        "updatesPerBeat": 25
+    },
+    {
+        "name": "NA_35 - Else4",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "NA_11 - Digital Sundown",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "NA_21 - New Terra",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "NA_34 - Else3",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "NA_31 - Pulse",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_98 - Frost Reaper",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_38 - The Wet Moist",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_92 - Reclaiming Entropy",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_42 - Kayava",
+        "updatesPerBeat": 20
+    },
+    {
+        "name": "NA_40 - Unseen Lands",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "NA_11 - Reminiscence",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_Intro_Theme",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_87 - Fading Light",
+        "updatesPerBeat": 21
+    },
+    {
+        "name": "RW_60 - Bloom",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_50 - Mist Engine",
+        "updatesPerBeat": 33
+    },
+    {
+        "name": "RW_39 - Lack of Comfort",
+        "updatesPerBeat": 21
+    },
+    {
+        "name": "RW_90 - Eyes of Iron",
+        "updatesPerBeat": 32
+    },
+    {
+        "name": "RW_81 - Breathing Hyometer",
+        "updatesPerBeat": 26
+    },
+    {
+        "name": "RW_95 - Reflection of the Moon",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_73 - Flicker",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_78 - Obverse of the Old Wind",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_37 - Garbage City Shuffle",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_89 - Vast Unlife",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_62 - Orange Lizard",
+        "updatesPerBeat": 25
+    },
+    {
+        "name": "BM_UW_UPPERWALL",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_Outro_Theme_B_Short",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "BM_SH_CRYPTS",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_84 - Chilblain Grace",
+        "updatesPerBeat": 20
+    },
+    {
+        "name": "RW_34 - Slaughter",
+        "updatesPerBeat": 25
+    },
+    {
+        "name": "NA_38 - Else7",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_54 - Raindeer Ride",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_74 - Aquaphobia",
+        "updatesPerBeat": 21
+    },
+    {
+        "name": "Passages",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_68 - Wired",
+        "updatesPerBeat": 23
+    },
+    {
+        "name": "NA_41 - Random Gods",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_15 - Old Growth",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "NA_26 - Energy Circuit",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "NA_24 - Emotion Thread",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_16 - Shoreline",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "BM_SB_FILTER",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_82 - Trusted Component",
+        "updatesPerBeat": 25
+    },
+    {
+        "name": "NA_04 - Silicon",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "NA_05 - Sparkles",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_13 - Action Scene",
+        "updatesPerBeat": 20
+    },
+    {
+        "name": "NA_36 - Else5",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_75 - Onto A New Dawn",
+        "updatesPerBeat": 35
+    },
+    {
+        "name": "NA_30 - Distance",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_65 - Garden",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_Outro_Theme",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "NA_18 - Glass Arcs",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_63 - Wandering Cut",
+        "updatesPerBeat": 27
+    },
+    {
+        "name": "RW_52 - Garbage Worms",
+        "updatesPerBeat": 30
+    },
+    {
+        "name": "NA_28 - Stargazer",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "NA_03 - Wormpad",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "NA_22 - They Say",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_59 - Lost City",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_46 - Lonesound",
+        "updatesPerBeat": 23
+    },
+    {
+        "name": "NA_23 - Speaking Systems",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_29 - Lovely Arps",
+        "updatesPerBeat": 28
+    },
+    {
+        "name": "RW_18 - The Captain",
+        "updatesPerBeat": 16
+    },
+    {
+        "name": "RW_48 - Wind Chimes",
+        "updatesPerBeat": 18
+    },
+    {
+        "name": "RW_51 - Swaying Fronds",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_72 - Satellite",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_43 - Albino",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_28 - Ferrous Forest",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "MOON_SIREN",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "NA_02 - Dustcloud",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "RW_33 - Weyuon",
+        "updatesPerBeat": 20
+    },
+    {
+        "name": "NA_32 - Else1",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "NA_37 - Else6",
+        "updatesPerBeat": 0
+    },
+    {
+        "name": "BM_SS_DOOR",
+        "updatesPerBeat": 0
+    },
+]

@@ -31,7 +31,7 @@ namespace Vinki
         {
             orig(self, manager);
 
-            if (debugMode)
+            if (restartMode)
             {
                 Enums.RegisterValues();
                 ApplyHooks();
@@ -111,20 +111,20 @@ namespace Vinki
         // Load any resources, such as sprites or sounds
         private static void LoadResources(RainWorld rainWorld)
         {
-            if (!debugMode)
+            if (!restartMode)
             {
                 Enums.RegisterValues();
                 ApplyHooks();
             }
 
-            SlugBase.SaveData.SlugBaseSaveData progSaveData = SlugBase.SaveData.SaveDataExtension.GetSlugBaseData(rainWorld.progression.miscProgressionData);
+            SlugBase.SaveData.SlugBaseSaveData progSaveData = SaveDataExtension.GetSlugBaseData(rainWorld.progression.miscProgressionData);
             VinkiConfig.ShowVinkiTitleCard.OnChange += () => progSaveData.Set("ShowVinkiTitleCard", VinkiConfig.ShowVinkiTitleCard.Value);
 
             bool modChanged = false;
             if (rainWorld.options.modLoadOrder.TryGetValue("olaycolay.thevinki", out _) && VinkiConfig.RestoreGraffitiOnUpdate.Value)
             {
                 ModManager.Mod vinkiMod = ModManager.InstalledMods.Where(mod => mod.id == "olaycolay.thevinki").FirstOrDefault();
-                var saveData = SlugBase.SaveData.SaveDataExtension.GetSlugBaseData(rainWorld.progression.miscProgressionData);
+                var saveData = SaveDataExtension.GetSlugBaseData(rainWorld.progression.miscProgressionData);
                 if (saveData.TryGet("VinkiVersion", out string modVersion))
                 {
                     modChanged = vinkiMod.version != modVersion;
@@ -290,6 +290,17 @@ namespace Vinki
             }
         }
 
+        public static void AddSongTempos()
+        {
+            manualSongUpdatesPerBeat = new();
+            JsonList json = JsonAny.Parse(File.ReadAllText(AssetManager.ResolveFilePath("SongTempos.txt"))).AsList();
+            foreach (JsonAny song in json)
+            {
+                JsonObject obj = song.AsObject();
+                manualSongUpdatesPerBeat.Add(obj.GetString("name"), obj.GetInt("updatesPerBeat"));
+            }
+        }
+
         public static bool IsPostInit;
         private static void RainWorld_PostModsInit(On.RainWorld.orig_PostModsInit orig, RainWorld self)
         {
@@ -303,7 +314,7 @@ namespace Vinki
                 ApplyMenuSceneHooks();
                 On.ProcessManager.PostSwitchMainProcess += ProcessManager_PostSwitchMainProcess;
 
-                if (SlugBase.SaveData.SaveDataExtension.GetSlugBaseData(self.progression.miscProgressionData).TryGet("ShowVinkiTitleCard", out bool value) == false || value)
+                if (!isDebug && (SaveDataExtension.GetSlugBaseData(self.progression.miscProgressionData).TryGet("ShowVinkiTitleCard", out bool value) == false || value))
                 {
                     Debug.Log("Enabled vinki title card: " + value ?? "null");
                     IL.Menu.IntroRoll.ctor += IntroRoll_ctor;
@@ -311,6 +322,9 @@ namespace Vinki
 
                 // Add the story graffitis
                 AddGraffitiObjectives();
+
+                // Add updates per beat for vanilla songs
+                AddSongTempos();
 
                 //-- You can have the DMS sprite setup in a separate method and only call it if DMS is loaded
                 //-- With this the mod will still work even if DMS isn't installed
