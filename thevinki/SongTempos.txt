@@ -563,4 +563,12 @@
         "name": "BM_SS_DOOR",
         "millisecondsPerBeat": 0
     },
+    {
+        "name": "VI_1 - Tutorial",
+        "millisecondsPerBeat": 600
+    },
+    {
+        "name": "VI_2 - Vertical Grinding",
+        "millisecondsPerBeat": 569.92307
+    }
 ]

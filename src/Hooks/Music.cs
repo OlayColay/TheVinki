@@ -24,7 +24,7 @@ namespace Vinki
             On.Music.Song.FadeOut -= Song_FadeOut;
         }
 
-        private static async void MusicPiece_StartPlaying(On.Music.MusicPiece.orig_StartPlaying orig, MusicPiece self)
+        private static void MusicPiece_StartPlaying(On.Music.MusicPiece.orig_StartPlaying orig, MusicPiece self)
         {
             orig(self);
 
