@@ -292,12 +292,12 @@ namespace Vinki
 
         public static void AddSongTempos()
         {
-            manualSongUpdatesPerBeat = new();
+            manualSongMsPerBeat = [];
             JsonList json = JsonAny.Parse(File.ReadAllText(AssetManager.ResolveFilePath("SongTempos.txt"))).AsList();
             foreach (JsonAny song in json)
             {
                 JsonObject obj = song.AsObject();
-                manualSongUpdatesPerBeat.Add(obj.GetString("name"), obj.GetInt("updatesPerBeat"));
+                manualSongMsPerBeat.Add(obj.GetString("name"), obj.GetFloat("millisecondsPerBeat"));
             }
         }
 

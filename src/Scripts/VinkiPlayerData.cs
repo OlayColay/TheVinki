@@ -51,6 +51,7 @@ public class VinkiPlayerData
     public bool grindToggle = false;
     public int canCoyote = 0;
     public int idleUpdates = 0;
+    public float beatTimer = 0f;
 
     public Vector2 lastVineDir = Vector2.zero;
     public ClimbableVinesSystem.VinePosition vineAtFeet = null;

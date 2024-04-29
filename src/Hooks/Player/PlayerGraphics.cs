@@ -398,6 +398,23 @@ namespace Vinki
                 tail.x = sLeaser.sprites[2].x;
                 tail.y = sLeaser.sprites[2].y;
             }
+
+            if (curMsPerBeat > 0)
+            {
+                VinkiPlayerData v = self.player.Vinki();
+
+                v.beatTimer -= 1000 * Time.deltaTime;
+
+                if (v.beatTimer <= 0f)
+                {
+                    v.beatTimer += curMsPerBeat;
+                    if (v.idleUpdates >= 120)
+                    {
+                        bool lookingRight = self.lookDirection.x > 0f;
+                        self.head.vel.x += lookingRight ? 3f : -3f;
+                    }
+                }
+            }
         }
 
         private static void PlayerGraphics_Update(On.PlayerGraphics.orig_Update orig, PlayerGraphics self)

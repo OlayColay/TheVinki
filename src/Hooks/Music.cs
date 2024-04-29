@@ -2,6 +2,7 @@
 using Music;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Vinki
@@ -12,7 +13,6 @@ namespace Vinki
         private static void ApplyMusicHooks()
         {
             On.Music.MusicPiece.StartPlaying += MusicPiece_StartPlaying;
-            On.Music.MusicPiece.Update += MusicPiece_Update;
 
             On.Music.Song.FadeOut += Song_FadeOut;
         }
@@ -20,12 +20,11 @@ namespace Vinki
         private static void RemoveMusicHooks()
         {
             On.Music.MusicPiece.StartPlaying -= MusicPiece_StartPlaying;
-            On.Music.MusicPiece.Update -= MusicPiece_Update;
 
             On.Music.Song.FadeOut -= Song_FadeOut;
         }
 
-        private static void MusicPiece_StartPlaying(On.Music.MusicPiece.orig_StartPlaying orig, MusicPiece self)
+        private static async void MusicPiece_StartPlaying(On.Music.MusicPiece.orig_StartPlaying orig, MusicPiece self)
         {
             orig(self);
 
@@ -35,16 +34,15 @@ namespace Vinki
             }
 
             string trackName = self.subTracks[0].trackName;
-            if (Plugin.manualSongUpdatesPerBeat.ContainsKey(trackName))
+            if (Plugin.manualSongMsPerBeat.ContainsKey(trackName))
             {
-                // It's a vanilla song
-                Plugin.curUpdatesPerBeat = Plugin.manualSongUpdatesPerBeat[trackName];
-                Plugin.curUpdatesSinceSong = 0;
+                // It's a vanilla song, or it was added to the SongTempos list
+                Plugin.curMsPerBeat = Plugin.manualSongMsPerBeat[trackName];
+                Plugin.curAudioSource = self.subTracks[0].source;
                 Plugin.curPlayingSong = trackName;
                 return;
             }
 
-            AudioClip loadedClip;
             string checkPath3 = string.Concat(
                 [
                     "Music",
@@ -57,21 +55,16 @@ namespace Vinki
             string modPathCheck2 = AssetManager.ResolveFilePath(checkPath3);
             if (!Application.isConsolePlatform && modPathCheck2 != Path.Combine(RWCustom.Custom.RootFolderDirectory(), checkPath3.ToLowerInvariant()) && File.Exists(modPathCheck2))
             {
-                loadedClip = AssetManager.SafeWWWAudioClip("file://" + modPathCheck2, false, false, AudioType.OGGVORBIS); 
-                Plugin.curUpdatesPerBeat = Mathf.RoundToInt(2400f / UniBpmAnalyzer.AnalyzeBpm(loadedClip));
-                Plugin.curUpdatesSinceSong = 0;
+                _ = AsyncLoadClip(modPathCheck2);
+                Plugin.curAudioSource = self.subTracks[0].source;
                 Plugin.curPlayingSong = trackName;
             }
         }
 
-        private static void MusicPiece_Update(On.Music.MusicPiece.orig_Update orig, MusicPiece self)
+        private static async Task AsyncLoadClip(string path)
         {
-            orig(self);
-
-            if (self.startedPlaying && self.subTracks[0]?.trackName == Plugin.curPlayingSong)
-            {
-                Plugin.curUpdatesSinceSong++;
-            }
+            AudioClip loadedClip = await Task.Run(() => AssetManager.SafeWWWAudioClip("file://" + path, false, false, AudioType.OGGVORBIS));
+            Plugin.curMsPerBeat = await Task.Run(() => 60000f / UniBpmAnalyzer.AnalyzeBpm(loadedClip));
         }
 
         private static void Song_FadeOut(On.Music.Song.orig_FadeOut orig, Song self, float speed)
@@ -80,7 +73,7 @@ namespace Vinki
 
             if (self.subTracks[0]?.trackName == Plugin.curPlayingSong)
             {
-                Plugin.curUpdatesPerBeat = 0;
+                Plugin.curMsPerBeat = 0;
             }
         }
     }

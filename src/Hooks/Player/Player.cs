@@ -648,14 +648,9 @@ namespace Vinki
             CheckForTagging(self, v);
 
             // Head bop on song's beat
-            if (curUpdatesPerBeat > 0 && self.bodyMode == Player.BodyModeIndex.Stand && self.input[0].x == 0)
+            if (curMsPerBeat > 0 && self.bodyMode == Player.BodyModeIndex.Stand && self.input[0].x == 0)
             {
                 v.idleUpdates++;
-                if (v.idleUpdates >= 120 && curUpdatesSinceSong % curUpdatesPerBeat == 0)
-                {
-                    bool lookingRight = self.PlayerGraphics().lookDirection.x > 0f;
-                    self.PlayerGraphics().head.vel = new Vector2(lookingRight ? 3f : -3f, 0f);
-                }
             }
             else
             {
