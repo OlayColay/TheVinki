@@ -19,7 +19,7 @@
           {"name": "8 - slugcatsc", "pos": [16, 80], "depth": 3.5, "shader": "Normal"},
           {"name": "7 - slugcatsb", "pos": [95, 200], "depth": 2.5, "shader": "Normal"},
           {"name": "6 - slugcatsa", "pos": [208, 400], "depth": 1.3, "shader": "Normal"},
-          {"name": "5 - mainslugcat", "pos": [698, 296], "depth": 0.9, "shader": "Normal"},
+          {"name": "5 - mainslugcat", "pos": [610, 327], "depth": 0.9, "shader": "Normal"},
           {"name": "4 - bluebloom", "pos": [-68, -73], "depth": 5, "shader": "Lighten"},
           {"name": "3 - catsbloom", "pos": [-114, -29], "depth": 0.9, "shader": "Lighten"},
           {"name": "2 - specks", "pos": [31, -30], "depth": 11, "shader": "LightEdges"},
