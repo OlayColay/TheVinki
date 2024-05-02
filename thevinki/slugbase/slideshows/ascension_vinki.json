@@ -1,0 +1,66 @@
+{
+    "id": "ascension_vinki",
+    "slideshow_folder": "slideshows/ascension_vinki",
+    "next_process": "Credits",
+    "music": {
+      "name": "RW_Outro_Theme",
+      "fade_in": 10
+    },
+    "scenes": [
+      {
+        "name": "outro 1 - left swim vinkified",
+        "scene_folder": "slideshows/ascension_vinki/outro 1 - left swim vinkified",
+        "fade_in_start": 1.2,
+        "fade_in_end": 5,
+        "fade_out_start": 17,
+        "images": [
+          {"name": "10 - slugcatse", "pos": [71, 49], "depth": 8, "shader": "Normal"},
+          {"name": "9 - slugcatsd", "pos": [20, 167], "depth": 6, "shader": "Normal"},
+          {"name": "8 - slugcatsc", "pos": [16, 80], "depth": 3.5, "shader": "Normal"},
+          {"name": "7 - slugcatsb", "pos": [95, 200], "depth": 2.5, "shader": "Normal"},
+          {"name": "6 - slugcatsa", "pos": [208, 400], "depth": 1.3, "shader": "Normal"},
+          {"name": "5 - mainslugcat", "pos": [698, 296], "depth": 0.9, "shader": "Normal"},
+          {"name": "4 - bluebloom", "pos": [-68, -73], "depth": 5, "shader": "Lighten"},
+          {"name": "3 - catsbloom", "pos": [-114, -29], "depth": 0.9, "shader": "Lighten"},
+          {"name": "2 - specks", "pos": [31, -30], "depth": 11, "shader": "LightEdges"},
+          {"name": "1 - foregroundbloom", "pos": [-46, -325], "depth": 1, "shader": "Lighten"},
+          {"name": "outro 1 - left swim - flat", "pos": [0, 0], "depth": -1, "flatmode": true}
+        ],
+        "camera_path": [ 
+          [573, 48, 2.278646],
+          [384, 14, -1],
+          [159, -19, -1],
+          [-63, -50, 0.8854166],
+          [-284, -67, -1],
+          [-551, -86, 0.3645833],
+          [-790, -97, 0.3776042] 
+        ]
+      },
+      {
+        "name": "outro 2 - up swim vinkified",
+        "scene_folder": "slideshows/ascension_vinki/outro 2 - up swim vinkified",
+        "fade_in_start": 21,
+        "fade_in_end": 25,
+        "fade_out_start": 37,
+        "images": [
+          {"name": "7 - swimbkg", "pos": [-197, -70], "depth": 18, "shader": "Normal"},
+          {"name": "6 - bkgswimmers", "pos": [-187, -131], "depth": 5, "shader": "LightEdges"},
+          {"name": "5 - mainswimmer", "pos": [609, 46], "depth": 3, "shader": "Normal"},
+          {"name": "4 - slugcatbloomlighten", "pos": [578, 17], "depth": 2.9, "shader": "Lighten"},
+          {"name": "3 - slugcatbloomoverlay", "pos": [534, -60], "depth": 2.95, "shader": "Overlay"},
+          {"name": "2 - bubbles", "pos": [71, 49], "depth": 1.5, "shader": "LightEdges"},
+          {"name": "1 - foregroundslugcats", "pos": [-313, -175], "depth": 0.6, "shader": "Normal"},
+          {"name": "outro 2 - up swim - flat", "pos": [0, 0], "depth": -1, "flatmode": true}
+        ],
+        "camera_path": [ 
+          [-603, -311, 0.9635416],
+          [-427, -68, 0.6901041],
+          [-254, 51, -1],
+          [-99, 112, 0.46875],
+          [45, 143, -1],
+          [170, 156, -1],
+          [250, 162, 0.2604167] 
+        ]
+      }
+    ]
+  }
