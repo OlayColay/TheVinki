@@ -867,6 +867,12 @@ namespace Vinki
 
         private static void TagCreature(Player self)
         {
+            VinkiPlayerData v = self.Vinki();
+            if (v.tagLag > 0)
+            {
+                return;
+            }
+
             PhysicalObject source = self;
             if (VinkiConfig.RequireCansTagging.Value)
             {
@@ -878,12 +884,6 @@ namespace Vinki
                 source = can;
             }
 
-            VinkiPlayerData v = self.Vinki();
-
-            if (v.tagLag > 0)
-            {
-                return;
-            }
             v.tagLag = 30;
 
             float damage = 1.25f;
