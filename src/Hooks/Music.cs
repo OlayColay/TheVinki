@@ -65,6 +65,12 @@ namespace Vinki
         {
             AudioClip loadedClip = await Task.Run(() => AssetManager.SafeWWWAudioClip("file://" + path, false, false, AudioType.OGGVORBIS));
             Plugin.curMsPerBeat = await Task.Run(() => 60000f / UniBpmAnalyzer.AnalyzeBpm(loadedClip));
+
+            // If bpm is too fast, half it
+            while (Plugin.curMsPerBeat <= 375) 
+            {
+                Plugin.curMsPerBeat *= 2;
+            }
         }
 
         private static void Song_FadeOut(On.Music.Song.orig_FadeOut orig, Song self, float speed)
