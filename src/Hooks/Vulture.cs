@@ -1,4 +1,5 @@
-﻿using BepInEx;
+﻿using MoreSlugcats;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -8,13 +9,43 @@ public static partial class Hooks
 {
     private static void ApplyVultureGraphicsHooks()
     {
+        On.Vulture.DropMask += Vulture_DropMask;
+
         On.VultureGraphics.InitiateSprites += VultureGraphics_InitiateSprites;
         On.VultureGraphics.DrawSprites += VultureGraphics_DrawSprites;
     }
     private static void RemoveVultureGraphicsHooks()
     {
+        On.Vulture.DropMask -= Vulture_DropMask;
+
         On.VultureGraphics.InitiateSprites -= VultureGraphics_InitiateSprites;
         On.VultureGraphics.DrawSprites -= VultureGraphics_DrawSprites;
+    }
+
+    private static void Vulture_DropMask(On.Vulture.orig_DropMask orig, Vulture self, Vector2 violenceDir)
+    {
+        orig(self, violenceDir);
+
+        Color maskColor = self.graphicsModule.Tag().taggedColors[(self.graphicsModule as VultureGraphics).MaskSprite];
+        if (maskColor.maxColorComponent > float.Epsilon)
+        {
+            PhysicalObject newestMask = self.room.physicalObjects[2].LastOrDefault((po) => po is VultureMask);
+            if (newestMask != null)
+            {
+                Color.RGBToHSV(maskColor, out float h, out float s, out _);
+                VultureMaskGraphics newestMaskGfx = (newestMask as VultureMask).maskGfx;
+                if (newestMaskGfx.King)
+                {
+                    newestMaskGfx.ColorB = new HSLColor(h, s, Mathf.Lerp(0.45f, 1f, UnityEngine.Random.value * UnityEngine.Random.value));
+                    newestMaskGfx.ColorA = new HSLColor(newestMaskGfx.ColorB.hue + Mathf.Lerp(-0.25f, 0.25f, UnityEngine.Random.value), Mathf.Lerp(0.5f, 0.7f, UnityEngine.Random.value), Mathf.Lerp(0.7f, 0.8f, UnityEngine.Random.value));
+                }
+                else
+                {
+                    newestMaskGfx.ColorA = new HSLColor(h, s, Mathf.Lerp(0.7f, 0.8f, UnityEngine.Random.value));
+                    newestMaskGfx.ColorB = new HSLColor(newestMaskGfx.ColorA.hue + Mathf.Lerp(-0.25f, 0.25f, UnityEngine.Random.value), Mathf.Lerp(0.8f, 1f, 1f - UnityEngine.Random.value * UnityEngine.Random.value), Mathf.Lerp(0.45f, 1f, UnityEngine.Random.value * UnityEngine.Random.value));
+                }
+            }
+        }
     }
 
     private static void VultureGraphics_InitiateSprites(On.VultureGraphics.orig_InitiateSprites orig, VultureGraphics self, RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam)
