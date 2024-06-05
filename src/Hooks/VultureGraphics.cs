@@ -29,7 +29,9 @@ public static partial class Hooks
             tag.bodyChunkSprites[2 + i % 2] = new(Enumerable.Range(self.FeatherSprite(i, 0), self.FeatherSprite(i+1, 0) - self.FeatherSprite(i, 0) - 1));
             tag.bodyChunkSprites[2 + i % 2].Insert(0, self.TentacleSprite(i));
         }
-        tag.bodyChunkSprites[0] = tag.bodyChunkSprites[1] = new(Enumerable.Range(self.BackShieldSprite(0), self.NeckSprite - self.BackShieldSprite(0)));
+        List<int> torsoSprites = new(Enumerable.Range(self.AppendageSprite(0), self.AppendageSprite(self.appendages.Length - 1) - self.AppendageSprite(0) + 1));
+        torsoSprites.AddRange(Enumerable.Range(self.BackShieldSprite(0), self.NeckSprite - self.BackShieldSprite(0)));
+        tag.bodyChunkSprites[0] = tag.bodyChunkSprites[1] = torsoSprites;
         tag.bodyChunkSprites[4] = new(Enumerable.Range(self.NeckSprite, sLeaser.sprites.Length - self.NeckSprite));
         //affectedSprites.RemoveRange(self.SpriteHeadStart, self.SpriteHeadEnd - self.SpriteHeadStart);
 

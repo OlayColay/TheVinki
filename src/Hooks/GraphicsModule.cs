@@ -77,7 +77,10 @@ public static partial class Hooks
         {
             for (int i = 0; i < sLeaser.sprites.Length; i++)
             {
-                sLeaser.sprites[i].color = Color.Lerp(Color.Lerp(tag.ogColors[i], tag.curColors[i], mixFactor), tag.taggedColors[i], 0.5f);
+                if (tag.taggedColors[i].maxColorComponent > float.Epsilon)
+                {
+                    sLeaser.sprites[i].color = Color.Lerp(Color.Lerp(tag.ogColors[i], tag.curColors[i], mixFactor), tag.taggedColors[i], 0.5f);
+                }
             }
         }
         else
