@@ -29,18 +29,24 @@ public static partial class Hooks
             tag.bodyChunkSprites[2 + i % 2] = new(Enumerable.Range(self.FeatherSprite(i, 0), self.FeatherSprite(i+1, 0) - self.FeatherSprite(i, 0) - 1));
             tag.bodyChunkSprites[2 + i % 2].Insert(0, self.TentacleSprite(i));
         }
-        List<int> torsoSprites = new(Enumerable.Range(self.AppendageSprite(0), self.AppendageSprite(self.appendages.Length - 1) - self.AppendageSprite(0) + 1));
-        torsoSprites.AddRange(Enumerable.Range(self.BackShieldSprite(0), self.NeckSprite - self.BackShieldSprite(0)));
+
+        List<int> torsoSprites = [];
+        for (int i = 0; i < self.vulture.appendages.Count; i++)
+        {
+            torsoSprites.Add(self.AppendageSprite(i));
+        }
+        torsoSprites.Add(self.BodySprite);
+        torsoSprites.AddRange(sLeaser.sprites.Select((value, index) => new { value, index }).Where((sprite) => sprite.value.element.name == "KrakenShield0").Select(x => x.index));
         tag.bodyChunkSprites[0] = tag.bodyChunkSprites[1] = torsoSprites;
-        tag.bodyChunkSprites[4] = new(Enumerable.Range(self.NeckSprite, sLeaser.sprites.Length - self.NeckSprite));
-        //affectedSprites.RemoveRange(self.SpriteHeadStart, self.SpriteHeadEnd - self.SpriteHeadStart);
 
-        //for (int i = 0; i < sLeaser.sprites.Length; i++)
-        //{
-        //    RWCustom.Custom.Log("Vulture sprite " + i + ": " + sLeaser.sprites[i].element.name);
-        //}
-
-        //self.Tag().affectedSprites = [.. affectedSprites];
+        int firstHeadSprite = self.IsKing ? self.FirstKingTuskSpriteBehind : self.NeckSprite;
+        tag.bodyChunkSprites[4] = new(Enumerable.Range(firstHeadSprite, sLeaser.sprites.Length - firstHeadSprite));
+        if (self.IsMiros)
+        {
+            tag.bodyChunkSprites[4].Remove(self.LaserSprite());
+            tag.bodyChunkSprites[4].Remove(self.EyesSprite);
+            tag.bodyChunkSprites[4].Remove(self.EyeTrailSprite());
+        }
     }
 
     private static void VultureGraphics_DrawSprites(On.VultureGraphics.orig_DrawSprites orig, VultureGraphics self, RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, float timeStacker, Vector2 camPos)
