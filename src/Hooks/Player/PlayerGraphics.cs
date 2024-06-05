@@ -380,7 +380,7 @@ namespace Vinki
                 sLeaser.sprites[vinki.tagIconSprite].element = Futile.atlasManager.GetElementWithName("TagIcon");
                 sLeaser.sprites[vinki.tagIconSprite].color = tagAble ? Color.white : Color.gray;
 
-                bool tagReady = vinki.tagableCreature != null;
+                bool tagReady = vinki.tagableBodyChunk != null;
                 vinki.tagIconSize = Mathf.Clamp01(tagReady ? vinki.tagIconSize + 0.05f : vinki.tagIconSize - 0.05f);
                 sLeaser.sprites[vinki.tagIconSprite].scale = Mathf.Lerp(0f, 0.25f, vinki.tagIconSize);
                 sLeaser.sprites[vinki.tagIconSprite].isVisible = tagReady || vinki.tagIconSize > 0f;

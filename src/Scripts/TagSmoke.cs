@@ -7,11 +7,11 @@ namespace Smoke;
 public class TagSmoke : PositionedSmokeEmitter
 {
     public PhysicalObject source;
-    public Creature target;
+    public BodyChunk target;
     public float hue;
 
     // Token: 0x06002820 RID: 10272 RVA: 0x0030DCD0 File Offset: 0x0030BED0
-    public TagSmoke(Room room, PhysicalObject source, Creature target) : base(SmokeType.BlackHaze, room, source.firstChunk.pos, 2, 0f, false, -1f, -1)
+    public TagSmoke(Room room, PhysicalObject source, BodyChunk target) : base(SmokeType.BlackHaze, room, source.firstChunk.pos, 2, 0f, false, -1f, -1)
     {
         this.source = source;
         this.target = target;
@@ -66,7 +66,7 @@ public class TagSmoke : PositionedSmokeEmitter
     // Token: 0x06002824 RID: 10276 RVA: 0x0030DEA0 File Offset: 0x0030C0A0
     public void EmitSmoke(float power)
     {
-        if (AddParticle(pos, (target.bodyChunks[1].pos - pos) * power, Custom.LerpMap(power, 0.3f, 0f, Mathf.Lerp(20f, 60f, Random.value), Mathf.Lerp(60f, 100f, Random.value))) is SmokeSegment newVultureSmokeSegment)
+        if (AddParticle(pos, (target.pos - pos) * power, Custom.LerpMap(power, 0.3f, 0f, Mathf.Lerp(20f, 60f, Random.value), Mathf.Lerp(60f, 100f, Random.value))) is SmokeSegment newVultureSmokeSegment)
         {
             newVultureSmokeSegment.power = power;
         }

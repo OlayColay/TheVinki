@@ -58,6 +58,7 @@ public class VinkiPlayerData
     public Player.AnimationIndex lastAnimationFrame = Player.AnimationIndex.None;
     public Player.AnimationIndex lastAnimation = Player.AnimationIndex.None;
     public ChunkSoundEmitter grindSound;
+    public BodyChunk tagableBodyChunk = null;
     public Creature tagableCreature = null;
     public List<PoisonedCreature> poisonedVictims = [];
     public TagSmoke tagSmoke = null;

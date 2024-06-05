@@ -535,7 +535,7 @@ namespace Vinki
             // Spray a random graffiti, or tag a creature if there's one to tag
             if (IsPressingGraffiti(self) || !improvedInput)
             {
-                if (self.JustPressed(Tag) && self.SlugCatClass == Enums.vinki && self.Vinki().tagableCreature != null)
+                if (self.JustPressed(Tag) && self.SlugCatClass == Enums.vinki && self.Vinki().tagableBodyChunk != null)
                 {
                     if (!improvedInput)
                     {
@@ -790,7 +790,7 @@ namespace Vinki
             if (v.tagLag > 0)
             {
                 v.tagLag--;
-                v.tagSmoke.target.graphicsModule.Tag().tagLag = v.tagLag;
+                v.tagSmoke.target.owner.graphicsModule.Tag().tagLag = v.tagLag;
                 if (v.tagSmoke.room == self.room)
                 {
                     v.tagSmoke.EmitSmoke(0.4f);
@@ -820,7 +820,7 @@ namespace Vinki
             if ((!IsPressingGraffiti(self) && improvedInput) || (VinkiConfig.RequireCansTagging.Value && self.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan) == null) ||
                 self.room == null || (!self.Consious && (self.dangerGrasp == null || self.dangerGraspTime >= 30)) || self.dead)
             {
-                v.tagableCreature = null;
+                v.tagableBodyChunk = null;
                 return;
             }
 
@@ -831,7 +831,8 @@ namespace Vinki
             float minY = boxCenter.y - boxRadius;
             float maxY = boxCenter.y + boxRadius;
 
-            // Find any creatures in the room within the box
+            // Find any creature body chunks in the room within the box
+            List<BodyChunk> taggableBodyChunks = [];
             foreach (var creature in self.room.abstractRoom.creatures.Select((absCreature) => absCreature.realizedCreature).Where((c) => c != null))
             {
                 if (creature is Spider || !creature.canBeHitByWeapons || creature.dead || creature == self || (creature is Lizard && (creature as Lizard).AI.friendTracker.friend != null) ||
@@ -855,14 +856,22 @@ namespace Vinki
                         if (SharedPhysics.RayTraceTilesForTerrainReturnFirstSolid(self.room, self.mainBodyChunk.pos, cPos) == null ||
                             SharedPhysics.RayTraceTilesForTerrainReturnFirstSolid(self.room, self.bodyChunks[1].pos, cPos) == null)
                         {
-                            v.tagableCreature = creature;
-                            return;
+                            taggableBodyChunks.Add(chunk);
                         }
                     }
                 }
             }
 
-            v.tagableCreature = null;
+            if (taggableBodyChunks.Count == 0)
+            {
+                v.tagableBodyChunk = null;
+                v.tagableCreature = null;
+            }
+            else
+            {
+                v.tagableBodyChunk = taggableBodyChunks.OrderBy(chunk => Vector2.Distance(chunk.pos, self.mainBodyChunk.pos)).FirstOrDefault();
+                v.tagableCreature = v.tagableBodyChunk.owner as Creature;
+            }
         }
 
         private static void TagCreature(Player self)
@@ -904,12 +913,12 @@ namespace Vinki
             {
                 if (v.tagableCreature.State is HealthState)
                 {
-                    v.tagableCreature.Violence(self.firstChunk, null, v.tagableCreature.firstChunk, null, Creature.DamageType.Stab, damage / 2, 10f);
+                    v.tagableCreature.Violence(self.firstChunk, null, v.tagableBodyChunk, null, Creature.DamageType.Stab, damage / 2, 10f);
                     v.poisonedVictims.Add(new VinkiPlayerData.PoisonedCreature(v.tagableCreature, 120, damage / 2));
                 }
                 else
                 {
-                    v.tagableCreature.Violence(self.firstChunk, null, v.tagableCreature.firstChunk, null, Creature.DamageType.Stab, damage, 0f);
+                    v.tagableCreature.Violence(self.firstChunk, null, v.tagableBodyChunk, null, Creature.DamageType.Stab, damage, 0f);
                     if (ModManager.MSC && v.tagableCreature is Player)
                     {
                         Player player = v.tagableCreature as Player;
@@ -924,11 +933,12 @@ namespace Vinki
 
             v.tagSmoke?.RemoveFromRoom();
 
-            v.tagSmoke = new TagSmoke(self.room, source, v.tagableCreature);
+            v.tagSmoke = new TagSmoke(self.room, source, v.tagableBodyChunk);
             self.room.AddObject(v.tagSmoke);
             v.tagSmoke.EmitSmoke(0.4f);
-            v.tagSmoke.target.graphicsModule.Tag().tagLag = 30;
-            v.tagSmoke.target.graphicsModule.Tag().tagColor = new HSLColor(v.tagSmoke.hue, 0.8f, 0.5f).rgb;
+            v.tagSmoke.target.owner.graphicsModule.Tag().tagLag = 30;
+            v.tagSmoke.target.owner.graphicsModule.Tag().tagColor = new HSLColor(v.tagSmoke.hue, 0.8f, 0.5f).rgb;
+            v.tagSmoke.target.owner.graphicsModule.Tag().targetedBodyPart = v.tagSmoke.target.index;
         }
 
         private static bool Player_CanBeSwallowed(On.Player.orig_CanBeSwallowed orig, Player self, PhysicalObject testObj)
