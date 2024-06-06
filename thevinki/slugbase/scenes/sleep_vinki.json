@@ -51,6 +51,12 @@
 			"shader": "Basic"
 		},
 		{
+			"name": "Graffiti - 4",
+			"pos": [ 700, 100 ],
+			"depth": 3.5,
+			"shader": "Basic"
+		},
+		{
 			"name": "Grass - 0",
 			"pos": [ 700, 100 ],
 			"depth": 3.3,
