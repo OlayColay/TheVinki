@@ -1,0 +1,10 @@
+{
+	"custom_meows": [
+		{
+			"slugcat_id": "vinki",
+			"short_meow_soundid": "SlugcatMeowVinkiShort",
+			"long_meow_soundid": "SlugcatMeowVinki",
+			"volume_multiplier": 0.85
+		}
+	]
+}
