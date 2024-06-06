@@ -173,13 +173,13 @@ namespace Vinki
 				if (cutsceneTimer == num2)
 				{
 					x = -1;
-                    var grasp = Plr.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan);
-                    if (grasp != null && (grasp.grabbed as SprayCan).TryUse())
+                    if (Plr.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan).grabbed is SprayCan grasp)
                     {
-                        _ = Hooks.SprayGraffiti(Plr, 20, 0, 0.5f);
-                        // Trigger the cutscene
-                        Hooks.TriggerSSOracleScene();
+                        grasp.TryUse();
                     }
+                    // Trigger the cutscene
+                    Hooks.TriggerSSOracleScene();
+                    _ = Hooks.SprayGraffiti(Plr, 20, 0, 0.5f);
                 }
 				num2 += array2[6];
 				if (cutsceneTimer >= num2)
