@@ -139,23 +139,26 @@ public static partial class Hooks
             GraffitiQuestDialog.cloud.sprite.SetAnchor(0.5f, 0.5f);
 
             // Save that we sprayed self story graffiti
+            int[] sprd = [];
+            int[] onMap = [];
             SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(self.menu.manager.rainWorld.progression.currentSaveState.miscWorldSaveData);
-            miscSave.TryGet("StoryGraffitisSprayed", out int[] sprd);
-            miscSave.TryGet("StoryGraffitisOnMap", out int[] onMap);
-            sprd ??= [];
-            onMap ??= [];
-            //RWCustom.Custom.Log("Sprayed: ", $"[{string.Join(", ", sprd)}]", "\nOn Map: ", $"[{string.Join(", ", onMap)}]");
-            for (int i = 0; i < sprd.Length && i < GraffitiQuestDialog.graffitiSpots.Length; i++)
+            miscSave.TryGet("StoryGraffitisSprayed", out sprd);
+            miscSave.TryGet("StoryGraffitisOnMap", out onMap);
+            RWCustom.Custom.Log("Sprayed: " + string.Join(", ", sprd) + "\nOn Map: " + string.Join(", ", onMap) + "\nDied last cycle: " + Plugin.diedLastCycle.ToString());
+            if (!Plugin.diedLastCycle)
             {
-                // We don't care about the Monroe graffiti (the second story graffiti)
-                if (sprd[i] < GraffitiQuestDialog.graffitiSpots.Length && sprd[i] != 1)
+                for (int i = 0; i < sprd.Length && i < GraffitiQuestDialog.graffitiSpots.Length; i++)
                 {
-                    GraffitiQuestDialog.graffitiSpots[i].alpha = onMap.Contains(sprd[i]) ? 1f : 0f;
-                    if (!onMap.Contains(sprd[i]))
+                    // We don't care about the Monroe graffiti (the second story graffiti)
+                    if (sprd[i] < GraffitiQuestDialog.graffitiSpots.Length && sprd[i] != 1)
                     {
-                        GraffitiQuestDialog.graffitiSlapping[sprd[i]] = (int)GraffitiQuestDialog.slapLength;
-                        GraffitiQuestDialog.graffitiSpots[sprd[i]].sprite.scale = 0.001f;
-                        onMap = [.. onMap, sprd[i]];
+                        GraffitiQuestDialog.graffitiSpots[i].alpha = onMap.Contains(sprd[i]) ? 1f : 0f;
+                        if (!onMap.Contains(sprd[i]))
+                        {
+                            GraffitiQuestDialog.graffitiSlapping[sprd[i]] = (int)GraffitiQuestDialog.slapLength;
+                            GraffitiQuestDialog.graffitiSpots[sprd[i]].sprite.scale = 0.001f;
+                            onMap = [.. onMap, sprd[i]];
+                        }
                     }
                 }
             }
@@ -164,7 +167,7 @@ public static partial class Hooks
 
             for (int i = 0; i < sprd.Length; i++)
             {
-                if (sprd[i] < GraffitiQuestDialog.graffitiSpots.Length && sprd[i] != 1)
+                if (sprd[i] < GraffitiQuestDialog.graffitiSpots.Length && sprd[i] != 1 && onMap.Contains(sprd[i]))
                 {
                     self.AddIllustration(GraffitiQuestDialog.graffitiSpots[sprd[i]]);
                 }

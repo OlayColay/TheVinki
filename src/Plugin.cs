@@ -39,6 +39,7 @@ namespace Vinki
             new Color?[6], new Color?[6], new Color?[6], new Color?[6]
         ];
         public static List<MenuDepthIllustration> rotatingGhost = [];
+        public static bool diedLastCycle = false;
 
         public static bool improvedInput;
         public static Array improvedControls;

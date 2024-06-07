@@ -10,7 +10,6 @@ public static partial class Hooks
 		On.Menu.SleepAndDeathScreen.ctor += SleepAndDeathScreen_ctor;
         On.Menu.SleepAndDeathScreen.Update += SleepAndDeathScreen_Update;
         On.Menu.SleepAndDeathScreen.Singal += SleepAndDeathScreen_Singal;
-        On.Menu.SleepAndDeathScreen.CommunicateWithUpcomingProcess += SleepAndDeathScreen_CommunicateWithUpcomingProcess;
         On.Menu.SleepAndDeathScreen.UpdateInfoText += SleepAndDeathScreen_UpdateInfoText;
     }
     private static void RemoveSleepAndDeathScreenHooks()
@@ -18,7 +17,6 @@ public static partial class Hooks
         On.Menu.SleepAndDeathScreen.ctor -= SleepAndDeathScreen_ctor;
         On.Menu.SleepAndDeathScreen.Update -= SleepAndDeathScreen_Update;
         On.Menu.SleepAndDeathScreen.Singal -= SleepAndDeathScreen_Singal;
-        On.Menu.SleepAndDeathScreen.CommunicateWithUpcomingProcess -= SleepAndDeathScreen_CommunicateWithUpcomingProcess;
         On.Menu.SleepAndDeathScreen.UpdateInfoText -= SleepAndDeathScreen_UpdateInfoText;
     }
 
@@ -37,6 +35,9 @@ public static partial class Hooks
         self.pages[0].subObjects.Add(questButton);
         questButton.black = 0f;
         firstSleepUpdate = true;
+
+        // Remove sprayed graffiti from being put on the map if we died
+        Plugin.diedLastCycle = self.IsAnyDeath;
     }
 
     private static void SleepAndDeathScreen_Update(On.Menu.SleepAndDeathScreen.orig_Update orig, SleepAndDeathScreen self)
@@ -56,7 +57,7 @@ public static partial class Hooks
 
         // Open quest map if new graffiti has been sprayed
         SlugBaseSaveData miscWorldSave = SaveDataExtension.GetSlugBaseData(self.myGamePackage.saveState.miscWorldSaveData);
-        if (firstSleepUpdate && !self.ButtonsGreyedOut && miscWorldSave.TryGet("StoryGraffitisSprayed", out int[] _) && 
+        if (firstSleepUpdate && !self.ButtonsGreyedOut && !self.IsAnyDeath && miscWorldSave.TryGet("StoryGraffitisSprayed", out int[] _) && 
             miscWorldSave.TryGet("AutoOpenMap", out bool autoMap) && autoMap && VinkiConfig.AutoOpenMap.Value)
         {
             self.Singal(self.pages[0], "QUEST MAP");
@@ -84,15 +85,6 @@ public static partial class Hooks
         {
             orig(self, sender, message);
         }
-    }
-
-    private static void SleepAndDeathScreen_CommunicateWithUpcomingProcess(On.Menu.SleepAndDeathScreen.orig_CommunicateWithUpcomingProcess orig, SleepAndDeathScreen self, MainLoopProcess nextProcess)
-    {
-        //if (nextProcess is GraffitiDreamScreen)
-        //{
-        //    (nextProcess as GraffitiQuestDialog).GetDataFromGame(null);
-        //}
-        orig(self, nextProcess);
     }
 
     private static string SleepAndDeathScreen_UpdateInfoText(On.Menu.SleepAndDeathScreen.orig_UpdateInfoText orig, SleepAndDeathScreen self)
