@@ -9,6 +9,9 @@ using SlugBase.SaveData;
 using Smoke;
 using System.Collections.Generic;
 using Menu;
+using PushToMeowMod;
+using MonoMod.RuntimeDetour;
+using MonoMod.RuntimeDetour.HookGen;
 
 namespace Vinki
 {
@@ -648,7 +651,8 @@ namespace Vinki
             CheckForTagging(self, v);
 
             // Head bop on song's beat
-            if (curMsPerBeat > 0 && self.bodyMode == Player.BodyModeIndex.Stand && self.input[0].x == 0)
+            if (curMsPerBeat > 0 && self.input[0].x == 0 && 
+                (self.bodyMode == Player.BodyModeIndex.Stand || self.animation == Player.AnimationIndex.StandOnBeam || self.animation == Player.AnimationIndex.BeamTip))
             {
                 v.idleUpdates++;
             }
@@ -950,6 +954,16 @@ namespace Vinki
             
             // Don't want Spearmaster to be able to swallow a can, sorry Spear :(
             return (!ModManager.MSC || !(self.SlugCatClass == MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName.Spear)) && (testObj is SprayCan);
+        }
+
+        public static void PushToMeowMain_DoMeow(Action<object, Player, bool> orig, object self, Player player, bool isShortMeow = false)
+        {
+            orig(self, player, isShortMeow);
+
+            if (player.SlugCatClass == Enums.vinki)
+            {
+                player.Vinki().idleUpdates = 0;
+            }
         }
     }
 }

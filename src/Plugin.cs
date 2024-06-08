@@ -12,6 +12,8 @@ namespace Vinki
 {
     [BepInDependency("slime-cubed.slugbase")]
     [BepInDependency("dressmyslugcat", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("improved-input", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("pushtomeow", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInPlugin(MOD_ID, "The Vinki", "0.12.11")]
     class Plugin : BaseUnityPlugin
     {

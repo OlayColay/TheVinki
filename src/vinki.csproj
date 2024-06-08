@@ -101,6 +101,9 @@
 		<Reference Include="..\lib\UnityEngine.AudioModule.dll">
 			<Private>false</Private>
 		</Reference>
+		<Reference Include="..\lib\PushToMeowMod.dll">
+			<Private>false</Private>
+		</Reference>
 	</ItemGroup>
     
 </Project>

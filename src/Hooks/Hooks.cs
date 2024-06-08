@@ -13,6 +13,8 @@ using SlugBase;
 using BepInEx;
 using DressMySlugcat;
 using SlugBase.SaveData;
+using MonoMod.RuntimeDetour;
+using PushToMeowMod;
 
 namespace Vinki
 {
@@ -354,6 +356,26 @@ namespace Vinki
             {
                 throw new Exception("Improved Input enabled but also not enabled???");
             }
+
+            try
+            {
+
+                if (ModManager.ActiveMods.Exists((mod) => mod.id == "pushtomeow"))
+                {
+                    try
+                    {
+                        SetPushToMeow();
+                    }
+                    catch
+                    {
+                        throw new Exception("Push to Meow enabled but also not enabled???");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogException(ex);
+            }
         }
 
         private static void SetupDMSSprites()
@@ -382,6 +404,11 @@ namespace Vinki
                     ],
                 });
             }
+        }
+
+        public static void SetPushToMeow()
+        {
+            new Hook(typeof(PushToMeowMain).GetMethod(nameof(PushToMeowMain.DoMeow)), PushToMeowMain_DoMeow);
         }
 
         private static void InitColorfulItems()
