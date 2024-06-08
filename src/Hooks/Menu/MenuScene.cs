@@ -139,12 +139,12 @@ public static partial class Hooks
             GraffitiQuestDialog.cloud.sprite.SetAnchor(0.5f, 0.5f);
 
             // Save that we sprayed self story graffiti
-            int[] sprd = [];
-            int[] onMap = [];
             SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(self.menu.manager.rainWorld.progression.currentSaveState.miscWorldSaveData);
-            miscSave.TryGet("StoryGraffitisSprayed", out sprd);
-            miscSave.TryGet("StoryGraffitisOnMap", out onMap);
-            RWCustom.Custom.Log("Sprayed: " + string.Join(", ", sprd) + "\nOn Map: " + string.Join(", ", onMap) + "\nDied last cycle: " + Plugin.diedLastCycle.ToString());
+            miscSave.TryGet("StoryGraffitisSprayed", out int[] sprd);
+            miscSave.TryGet("StoryGraffitisOnMap", out int[] onMap);
+            sprd ??= [];
+            onMap ??= [];
+            //RWCustom.Custom.Log("Sprayed: " + string.Join(", ", sprd) + "\nOn Map: " + string.Join(", ", onMap) + "\nDied last cycle: " + Plugin.diedLastCycle.ToString());
             if (!Plugin.diedLastCycle)
             {
                 for (int i = 0; i < sprd.Length && i < GraffitiQuestDialog.graffitiSpots.Length; i++)

@@ -57,14 +57,11 @@ public static partial class Hooks
                     PlacedObject.CustomDecalData decalData = new(null);
                     decalData.FromString(placedGraffitis[self.name][i].data);
 
-                    if (Futile.atlasManager.GetAtlasWithName(decalData.imageName) != null)
+                    PlacedObject placedObject = new(PlacedObject.Type.CustomDecal, decalData)
                     {
-                        PlacedObject placedObject = new(PlacedObject.Type.CustomDecal, decalData)
-                        {
-                            pos = new Vector2(placedGraffitis[self.name][i].x, placedGraffitis[self.name][i].y)
-                        };
-                        self.realizedRoom.AddObject(new CustomDecal(placedObject));
-                    }
+                        pos = new Vector2(placedGraffitis[self.name][i].x, placedGraffitis[self.name][i].y)
+                    };
+                    self.realizedRoom.AddObject(new CustomDecal(placedObject));
                 }
             }
             else if (VinkiConfig.DeleteGraffiti.Value)
