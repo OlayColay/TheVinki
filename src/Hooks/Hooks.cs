@@ -79,6 +79,7 @@ namespace Vinki
             ApplyRegionGateHooks();
             ApplyAbstractCreatureHooks();
             ApplyMusicHooks();
+            ApplySlugcatSelectMenuHooks();
         }
 
         public static void RemoveHooks()
@@ -515,9 +516,9 @@ namespace Vinki
 
         private static void ProcessManager_PostSwitchMainProcess(On.ProcessManager.orig_PostSwitchMainProcess orig, ProcessManager self, ProcessManager.ProcessID ID)
         {
-            if (ID == Enums.GraffitiQuest)
+            if (ID == Enums.FullscreenVideo)
             {
-                
+                self.currentMainLoop = new FullscreenVideo(self);
             }
             orig(self, ID);
         }

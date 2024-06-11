@@ -507,7 +507,7 @@ namespace Vinki
                 {
                     if (inActionCounter == 15)
                     {
-                        owner.conversation.paused = true;
+                        if (owner.conversation != null) owner.conversation.paused = true;
                         owner.restartConversationAfterCurrentDialoge = false;
 
                         dialogBox.Interrupt(Translate(". . ."), 0);

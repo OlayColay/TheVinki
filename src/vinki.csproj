@@ -29,80 +29,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Reference Include="..\lib\Assembly-CSharp-firstpass.dll">
+		<Reference Include="..\lib\*.dll">
 		  <Private>false</Private>
-		</Reference>
-		<Reference Include="..\lib\AutoUpdate.dll">
-		  <Private>false</Private>
-		</Reference>
-		<Reference Include="..\lib\BepInEx.dll">
-		  <Private>false</Private>
-		</Reference>
-		<Reference Include="..\lib\ConfigMachine.dll">
-		  <Private>false</Private>
-		</Reference>
-		<Reference Include="..\lib\CustomRegions.dll">
-		  <Private>false</Private>
-		</Reference>
-		<Reference Include="..\lib\DressMySlugcat.dll">
-		  <Private>false</Private>
-		</Reference>
-		<Reference Include="..\lib\EnumExtender.dll">
-		  <Private>false</Private>
-		</Reference>
-		<Reference Include="..\lib\Fisobs.dll">
-		  <Private>false</Private>
-		</Reference>
-		<Reference Include="..\lib\HOOKS-Assembly-CSharp.dll">
-		  <Private>false</Private>
-		</Reference>
-		<Reference Include="..\lib\ImprovedInput.dll">
-		  <Private>false</Private>
-		</Reference>
-		<Reference Include="..\lib\Mono.Cecil.dll">
-		  <Private>false</Private>
-		</Reference>
-		<Reference Include="..\lib\Mono.Cecil.Rocks.dll">
-		  <Private>false</Private>
-		</Reference>
-		<Reference Include="..\lib\MonoMod.dll">
-		  <Private>false</Private>
-		</Reference>
-		<Reference Include="..\lib\MonoMod.RuntimeDetour.dll">
-		  <Private>false</Private>
-		</Reference>
-		<Reference Include="..\lib\MonoMod.Utils.dll">
-		  <Private>false</Private>
-		</Reference>
-		<Reference Include="..\lib\PUBLIC-Assembly-CSharp.dll">
-		  <Private>false</Private>
-		</Reference>
-		<Reference Include="..\lib\Rewired_Core.dll">
-		  <Private>false</Private>
-		</Reference>
-		<Reference Include="..\lib\SlugBase.dll">
-		  <Private>false</Private>
-		</Reference>
-		<Reference Include="..\lib\Unity.Mathematics.dll">
-		  <Private>false</Private>
-		</Reference>
-		<Reference Include="..\lib\UnityEngine.CoreModule.dll">
-		  <Private>false</Private>
-		</Reference>
-		<Reference Include="..\lib\UnityEngine.dll">
-		  <Private>false</Private>
-		</Reference>
-		<Reference Include="..\lib\UnityEngine.ImageConversionModule.dll">
-		  <Private>false</Private>
-		</Reference>
-		<Reference Include="..\lib\UnityEngine.AssetBundleModule.dll">
-			<Private>false</Private>
-		</Reference>
-		<Reference Include="..\lib\UnityEngine.AudioModule.dll">
-			<Private>false</Private>
-		</Reference>
-		<Reference Include="..\lib\PushToMeowMod.dll">
-			<Private>false</Private>
 		</Reference>
 	</ItemGroup>
     
