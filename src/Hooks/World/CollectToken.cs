@@ -123,14 +123,14 @@ public static partial class Hooks
             }
             if (File.Exists(AssetManager.ResolveDirectory("decals/VinkiGraffiti/vinki/") + fileName + ".png"))
             {
-                //Debug.LogError("Graffiti already unlocked! " + filePath);
+                //VLogger.LogInfoError("Graffiti already unlocked! " + filePath);
                 return;
             }
             File.Copy(filePath, AssetManager.ResolveDirectory("decals/VinkiGraffiti/vinki/") + fileName + ".png");
         }
         else if (File.Exists(AssetManager.ResolveDirectory("decals/VinkiGraffiti/vinki/") + fileName + ".png"))
         {
-            //Debug.LogError("Graffiti already unlocked! " + filePath);
+            //VLogger.LogInfoError("Graffiti already unlocked! " + filePath);
             return;
         }
         else

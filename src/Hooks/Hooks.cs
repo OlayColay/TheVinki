@@ -79,7 +79,6 @@ namespace Vinki
             ApplyRegionGateHooks();
             ApplyAbstractCreatureHooks();
             ApplyMusicHooks();
-            ApplySlugcatSelectMenuHooks();
         }
 
         public static void RemoveHooks()
@@ -108,6 +107,7 @@ namespace Vinki
             RemoveMusicHooks();
 
             RemoveMenuSceneHooks();
+            RemoveSlugcatSelectMenuHooks();
 
             On.ProcessManager.PostSwitchMainProcess -= ProcessManager_PostSwitchMainProcess;
             IL.Menu.IntroRoll.ctor -= IntroRoll_ctor;
@@ -122,7 +122,7 @@ namespace Vinki
                 ApplyHooks();
             }
 
-            SlugBase.SaveData.SlugBaseSaveData progSaveData = SaveDataExtension.GetSlugBaseData(rainWorld.progression.miscProgressionData);
+            SlugBaseSaveData progSaveData = SaveDataExtension.GetSlugBaseData(rainWorld.progression.miscProgressionData);
             VinkiConfig.ShowVinkiTitleCard.OnChange += () => progSaveData.Set("ShowVinkiTitleCard", VinkiConfig.ShowVinkiTitleCard.Value);
 
             bool modChanged = false;
@@ -133,20 +133,20 @@ namespace Vinki
                 if (saveData.TryGet("VinkiVersion", out string modVersion))
                 {
                     modChanged = vinkiMod.version != modVersion;
-                    if (modChanged) Debug.Log("Vinki mod version changed!");
+                    if (modChanged) VLogger.LogInfo("Vinki mod version changed!");
                 }
                 else
                 {
-                    Debug.Log("Didn't find saved vinki mod version");
+                    VLogger.LogInfo("Didn't find saved vinki mod version");
                     modChanged = true;
                 }
-                Debug.Log("Setting vinki version to " + vinkiMod.version);
+                VLogger.LogInfo("Setting vinki version to " + vinkiMod.version);
                 saveData.Set("VinkiVersion", vinkiMod.version);
                 rainWorld.progression.SaveProgression(false, true);
             }
             else
             {
-                Debug.Log("Can't find vinki mod ID");
+                VLogger.LogInfo("Can't find vinki mod ID");
             }
 
             graffitiFolder = AssetManager.ResolveDirectory(graffitiFolder);
@@ -196,10 +196,10 @@ namespace Vinki
             string backupFolder = AssetManager.ResolveDirectory("decals/GraffitiBackup");
             if (!Directory.Exists(backupFolder))
             {
-                Debug.LogError("Could not find Vinki graffiti backup folder in workshop files or local mods!");
+                VLogger.LogError("Could not find Vinki graffiti backup folder in workshop files or local mods!");
                 return false;
             }
-            Debug.Log("Graffiti folder doesn't exist! Copying from backup folder: " + backupFolder);
+            VLogger.LogInfo("Graffiti folder doesn't exist! Copying from backup folder: " + backupFolder);
             CopyFilesRecursively(backupFolder, backupFolder + "/../VinkiGraffiti");
             graffitiFolder = AssetManager.ResolveDirectory("decals/VinkiGraffiti");
             return true;
@@ -317,11 +317,12 @@ namespace Vinki
 
                 // Putting this hook here ensures that SlugBase's BuildScene hook goes first
                 ApplyMenuSceneHooks();
+                ApplySlugcatSelectMenuHooks();
                 On.ProcessManager.PostSwitchMainProcess += ProcessManager_PostSwitchMainProcess;
 
                 if (!isDebug && (SaveDataExtension.GetSlugBaseData(self.progression.miscProgressionData).TryGet("ShowVinkiTitleCard", out bool value) == false || value))
                 {
-                    Debug.Log("Enabled vinki title card: " + value ?? "null");
+                    VLogger.LogInfo("Enabled vinki title card: " + value ?? "null");
                     IL.Menu.IntroRoll.ctor += IntroRoll_ctor;
                 }
 
@@ -340,7 +341,7 @@ namespace Vinki
             }
             catch (Exception ex)
             {
-                Debug.LogException(ex);
+                VLogger.LogError(ex.Message);
             }
 
             improvedInput = ModManager.ActiveMods.Exists((mod) => mod.id == "improved-input-config");
@@ -375,7 +376,7 @@ namespace Vinki
             }
             catch (Exception ex)
             {
-                Debug.LogException(ex);
+                VLogger.LogError(ex.Message);
             }
         }
 
@@ -550,15 +551,15 @@ namespace Vinki
 
             if (!difference.Any())
             {
-                Debug.Log("All files in Unlockables are also contained in VinkiGraffiti/vinki.");
+                VLogger.LogInfo("All files in Unlockables are also contained in VinkiGraffiti/vinki.");
                 return true;
             }
             else
             {
-                Debug.Log("The following files in Unlockables are not contained in VinkiGraffiti/vinki:");
+                VLogger.LogInfo("The following files in Unlockables are not contained in VinkiGraffiti/vinki:");
                 foreach (string file in difference)
                 {
-                    Debug.Log(file);
+                    VLogger.LogInfo(file);
                 }
                 return false;
             }
@@ -574,16 +575,16 @@ namespace Vinki
 
             if (commonFiles.Any())
             {
-                Debug.Log("The following files are present in both directories:");
+                VLogger.LogInfo("The following files are present in both directories:");
                 foreach (string file in commonFiles)
                 {
-                    Debug.Log(file);
+                    VLogger.LogInfo(file);
                 }
                 return true;
             }
             else
             {
-                Debug.Log("No common files found.");
+                VLogger.LogInfo("No common files found.");
                 return false;
             }
         }

@@ -7,6 +7,7 @@ using Menu;
 using SlugBase.SaveData;
 using System.Linq;
 using System.IO;
+using BepInEx.Logging;
 
 namespace Vinki
 {
@@ -55,16 +56,19 @@ namespace Vinki
         public static AudioSource curAudioSource;
         public static string curPlayingSong;
 
+        public static ManualLogSource VLogger;
+
         // Add hooks
         public void OnEnable()
         {
-            Debug.Log("OnEnable\n" + StackTraceUtility.ExtractStackTrace());
+            VLogger = Logger;
+            VLogger.LogInfo("OnEnable\n" + StackTraceUtility.ExtractStackTrace());
             Hooks.ApplyInit();
         }
 
         public void OnDisable()
         {
-            Debug.Log("OnDisable\n" + StackTraceUtility.ExtractStackTrace());
+            VLogger.LogInfo("OnDisable\n" + StackTraceUtility.ExtractStackTrace());
             if (restartMode) {
                 Hooks.RemoveHooks();
             };

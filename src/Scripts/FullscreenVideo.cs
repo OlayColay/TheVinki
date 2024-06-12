@@ -6,28 +6,21 @@ using Vinki;
 
 public class FullscreenVideo(ProcessManager manager) : MainLoopProcess(manager, Enums.FullscreenVideo)
 {
-    private VideoPlayer videoPlayer;
-    private RawImage rawImage;
-    private RenderTexture renderTexture;
-    private ProcessManager.ProcessID nextProcess;
+    public ProcessManager.ProcessID nextProcess;
 
     public void StartVideo(string videoFileName, ProcessManager.ProcessID nextProcess)
     {
         this.nextProcess = nextProcess;
 
-        this.manager.RequestMainProcessSwitch(Enums.FullscreenVideo);
-
         // Create a Canvas GameObject
-        GameObject canvasGameObject = new("Canvas");
-        Canvas canvas = canvasGameObject.AddComponent<Canvas>();
+        GameObject gameObject = new(nameof(FullscreenVideo));
+        Canvas canvas = gameObject.AddComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceCamera;
-        CanvasScaler canvasScaler = canvasGameObject.AddComponent<CanvasScaler>();
+        CanvasScaler canvasScaler = gameObject.AddComponent<CanvasScaler>();
         canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
 
-        // Create a RawImage GameObject
-        GameObject rawImageGameObject = new("RawImage");
-        rawImageGameObject.transform.SetParent(canvasGameObject.transform);
-        rawImage = rawImageGameObject.AddComponent<RawImage>();
+        // Create a RawImage
+        RawImage rawImage = gameObject.AddComponent<RawImage>();
         rawImage.rectTransform.anchoredPosition = Vector2.zero;
         rawImage.rectTransform.sizeDelta = new Vector2(0, 0);
         rawImage.rectTransform.anchorMin = new Vector2(0, 0);
@@ -35,12 +28,11 @@ public class FullscreenVideo(ProcessManager manager) : MainLoopProcess(manager, 
         rawImage.rectTransform.pivot = new Vector2(0.5f, 0.5f);
 
         // Create a RenderTexture
-        renderTexture = new RenderTexture(Screen.width, Screen.height, 24);
+        RenderTexture renderTexture = new(Screen.width, Screen.height, 24);
         rawImage.texture = renderTexture;
 
-        // Create a VideoPlayer GameObject
-        GameObject videoPlayerGameObject = new("VideoPlayer");
-        videoPlayer = videoPlayerGameObject.AddComponent<VideoPlayer>();
+        // Create a VideoPlayer
+        VideoPlayer videoPlayer = gameObject.AddComponent<VideoPlayer>();
         videoPlayer.playOnAwake = false;
         videoPlayer.renderMode = VideoRenderMode.RenderTexture;
         videoPlayer.targetTexture = renderTexture;
@@ -48,18 +40,22 @@ public class FullscreenVideo(ProcessManager manager) : MainLoopProcess(manager, 
         videoPlayer.isLooping = false;
 
         // Play the video
+        RWCustom.Custom.Log("Preparing video...");
         videoPlayer.prepareCompleted += PrepareCompleted;
         videoPlayer.Prepare();
     }
 
     private void PrepareCompleted(VideoPlayer source)
     {
-        videoPlayer.Play();
-        videoPlayer.loopPointReached += VideoFinished;
+        RWCustom.Custom.Log("Playing video of length " + source.length.ToString());
+        source.Play();
+        source.loopPointReached += VideoFinished;
     }
 
     private void VideoFinished(VideoPlayer source)
     {
+        RWCustom.Custom.Log("Video finished!");
         manager.RequestMainProcessSwitch(nextProcess);
+        UnityEngine.Object.Destroy(source.gameObject);
     }
 }

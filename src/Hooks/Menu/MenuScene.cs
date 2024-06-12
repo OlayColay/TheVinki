@@ -88,7 +88,7 @@ public static partial class Hooks
             foreach (var image in menuGraffitis)
             {
                 string imageName = Path.GetFileNameWithoutExtension(image.fileName);
-                //Debug.Log("Graffiti: Checking if " + imageName + " matches " + fileName + "\t" + (imageName == fileName));
+                //VLogger.LogInfo("Graffiti: Checking if " + imageName + " matches " + fileName + "\t" + (imageName == fileName));
                 image.alpha = (imageName == fileName) ? 1f : 0f;
             }
 
@@ -103,13 +103,13 @@ public static partial class Hooks
             foreach (var image in menuDoodles)
             {
                 string imageName = Path.GetFileNameWithoutExtension(image.fileName);
-                //Debug.Log("Doodle: Checking if " + imageName + " matches " + fileName);
+                //VLogger.LogInfo("Doodle: Checking if " + imageName + " matches " + fileName);
                 image.alpha = (imageName == fileName) ? 1f : 0f;
             }
         }
         else if (self.sceneID == Enums.GraffitiMap)
         {
-            Debug.Log("Building Graffiti Map Scene!\n" + StackTraceUtility.ExtractStackTrace());
+            Plugin.VLogger.LogInfo("Building Graffiti Map Scene!\n" + StackTraceUtility.ExtractStackTrace());
             self.sceneFolder = "Scenes" + Path.DirectorySeparatorChar.ToString() + "Graffiti Map";
             self.AddIllustration(new MenuDepthIllustration(self.menu, self, self.sceneFolder, "graffiti_map", new Vector2(0f, 0f), 5f, MenuDepthIllustration.MenuShader.Basic));
             self.AddIllustration(GraffitiQuestDialog.cloud = new MenuDepthIllustration(self.menu, self, self.sceneFolder, "cloud", new Vector2(680f, 324f), 5f, MenuDepthIllustration.MenuShader.Basic));

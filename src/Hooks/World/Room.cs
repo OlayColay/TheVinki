@@ -126,7 +126,7 @@ public static partial class Hooks
 
     public static bool HologramsEnabledInRoom(Room self, SlugBaseSaveData miscWorldSave)
     {
-        //Debug.Log("HologramsEnabledInRoom: " + self.abstractRoom.name + " " + (!miscWorldSave.TryGet("SpawnUnlockablePearl", out int k) ? k : "null") + " " + Hooks.AllGraffitiUnlocked());
+        //VLogger.LogInfo("HologramsEnabledInRoom: " + self.abstractRoom.name + " " + (!miscWorldSave.TryGet("SpawnUnlockablePearl", out int k) ? k : "null") + " " + Hooks.AllGraffitiUnlocked());
         bool notFPRepeat = self.abstractRoom?.name != "SS_AI" || self.game.GetStorySession.saveState.cycleNumber == 0;
         bool notTutorialGrafRepeat = self.abstractRoom?.name != "SS_D08" || !miscWorldSave.TryGet("StoryGraffitiTutorialPhase", out int i) || i < (int)StoryGraffitiTutorial.Phase.Explore;
         bool notFinalUnlockRepeat = self.abstractRoom?.name != "DM_AI" || ((!miscWorldSave.TryGet("SpawnUnlockablePearl", out int j) || j < 1) && AllGraffitiUnlocked());

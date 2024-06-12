@@ -64,7 +64,7 @@ namespace Vinki
 
                 (self.room.drawableObjects.Find((x) => x is GraffitiHolder && (x as GraffitiHolder).gNum == gNum) as GraffitiHolder)?.RemoveFromRoom();
             }
-            Debug.Log("Spraying " + slugcat + " #" + gNum + "\tsize: " + graffitis[slugcat][gNum].handles[1].ToString());
+            VLogger.LogInfo("Spraying " + slugcat + " #" + gNum + "\tsize: " + graffitis[slugcat][gNum].handles[1].ToString());
 
             // Trigger Iterator dialogue if there's one in the room
             bool isMoon;
@@ -205,7 +205,7 @@ namespace Vinki
                 // Get risk/reward speedboost when coyote jumping
                 if (coyote)
                 {
-                    //Debug.Log("Coyote jump!");
+                    //VLogger.LogInfo("Coyote jump!");
                     self.mainBodyChunk.vel.x += Enums.Movement.CoyoteBoost * self.slideDirection;
                     self.room.PlaySound(SoundID.Slugcat_Flip_Jump, self.mainBodyChunk, false, 3f, 1f);
                 }
@@ -225,7 +225,7 @@ namespace Vinki
         private static bool IsCoyoteJumping(Player self)
         {
             VinkiPlayerData v = self.Vinki();
-            //Debug.Log("Last animation: " + v.lastAnimation.ToString() + "\t Can coyote jump: " + v.canCoyote +
+            //VLogger.LogInfo("Last animation: " + v.lastAnimation.ToString() + "\t Can coyote jump: " + v.canCoyote +
             //    "\t This animation: " + self.animation.ToString() + "\t Body mode: " + self.bodyMode.ToString());
             return (self.bodyMode == Player.BodyModeIndex.Default || self.bodyMode == Player.BodyModeIndex.Stand) && v.canCoyote > 0;
         }
@@ -326,7 +326,7 @@ namespace Vinki
                 // First frame of grinding on vine
                 if (isGrindingAtopVine)
                 {
-                    //Debug.Log("Animation before getting on vine: " + self.animation.ToString() + "\t prev animation: " + lastAnimation.ToString());
+                    //VLogger.LogInfo("Animation before getting on vine: " + self.animation.ToString() + "\t prev animation: " + lastAnimation.ToString());
                     self.room.PlaySound(SoundID.Spear_Bounce_Off_Creauture_Shell, self.mainBodyChunk, false, 0.75f, 1f);
                     self.noGrabCounter = 15;
                     self.animation = Player.AnimationIndex.StandOnBeam;
@@ -404,7 +404,7 @@ namespace Vinki
             // Grind if holding Grind on a pole (vertical beam or 0G beam or vine)
             if (v.isGrindingV || v.isGrindingNoGrav || v.isGrindingVine)
             {
-                //Debug.Log("Zero G Pole direction: " + self.zeroGPoleGrabDir.x + "," + self.zeroGPoleGrabDir.y);
+                //VLogger.LogInfo("Zero G Pole direction: " + self.zeroGPoleGrabDir.x + "," + self.zeroGPoleGrabDir.y);
                 self.slugcatStats.poleClimbSpeedFac = 0;
                 self.animationFrame = 0;
 
@@ -574,7 +574,7 @@ namespace Vinki
             else if (self.IsPressed(Craft) && IsPressingGraffiti(self))
             {
                 int sprayCount = CanCraftSprayCan(self.grasps[0], self.grasps[1]);
-                //Debug.Log("Crafted spray count: " + sprayCount);
+                //VLogger.LogInfo("Crafted spray count: " + sprayCount);
                 if (sprayCount > 0)
                 {
                     v.craftCounter++;
@@ -664,11 +664,11 @@ namespace Vinki
 
         private static int CanCraftSprayCan(Creature.Grasp a, Creature.Grasp b)
         {
-            //Debug.Log("CRAFTING: " + (a == null ? "nothing" : a.grabbed.abstractPhysicalObject.type.ToString()) + " + " + (b == null ? "nothing" : b.grabbed.abstractPhysicalObject.type.ToString()));
+            //VLogger.LogInfo("CRAFTING: " + (a == null ? "nothing" : a.grabbed.abstractPhysicalObject.type.ToString()) + " + " + (b == null ? "nothing" : b.grabbed.abstractPhysicalObject.type.ToString()));
             // You can craft while moving
             if (a == null || a.grabbed == null || b == null || b.grabbed == null)
             {
-                //Debug.Log("Item 1 or 2 is null");
+                //VLogger.LogInfo("Item 1 or 2 is null");
                 return 0;
             }
 
@@ -678,20 +678,20 @@ namespace Vinki
             if (abstractObjectTypeA == AbstractPhysicalObject.AbstractObjectType.Rock &&
                 colorfulItems.ContainsKey(abstractObjectTypeB))
             {
-                //Debug.Log("Item 1 is rock and Item 2 is " + abstractObjectTypeB.ToString() + " and worth " + colorfulItems[abstractObjectTypeB]);
+                //VLogger.LogInfo("Item 1 is rock and Item 2 is " + abstractObjectTypeB.ToString() + " and worth " + colorfulItems[abstractObjectTypeB]);
                 return colorfulItems[abstractObjectTypeB];
             }
             if (abstractObjectTypeB == AbstractPhysicalObject.AbstractObjectType.Rock &&
                 colorfulItems.ContainsKey(abstractObjectTypeA))
             {
-                //Debug.Log("Item 2 is rock and Item 1 is " + abstractObjectTypeA.ToString() + " and worth " + colorfulItems[abstractObjectTypeA]);
+                //VLogger.LogInfo("Item 2 is rock and Item 1 is " + abstractObjectTypeA.ToString() + " and worth " + colorfulItems[abstractObjectTypeA]);
                 return colorfulItems[abstractObjectTypeA];
             }
 
             // Upgrade Spray Can
             if (a.grabbed is SprayCan && b.grabbed is SprayCan)
             {
-                //Debug.Log("Crafting two cans with uses: " + (a.grabbed as SprayCan).Abstr.uses + " and " + (b.grabbed as SprayCan).Abstr.uses);
+                //VLogger.LogInfo("Crafting two cans with uses: " + (a.grabbed as SprayCan).Abstr.uses + " and " + (b.grabbed as SprayCan).Abstr.uses);
                 if ((a.grabbed as SprayCan).Abstr.uses >= 5 || (b.grabbed as SprayCan).Abstr.uses >= 5)
                 {
                     return 0;
@@ -700,7 +700,7 @@ namespace Vinki
             }
             if (a.grabbed is SprayCan && colorfulItems.ContainsKey(abstractObjectTypeB))
             {
-                //Debug.Log("Crafting first hand can with uses: " + (a.grabbed as SprayCan).Abstr.uses + " and " + abstractObjectTypeB.ToString() + " worth " + colorfulItems[abstractObjectTypeB]);
+                //VLogger.LogInfo("Crafting first hand can with uses: " + (a.grabbed as SprayCan).Abstr.uses + " and " + abstractObjectTypeB.ToString() + " worth " + colorfulItems[abstractObjectTypeB]);
                 if (colorfulItems[abstractObjectTypeB] > 9000)
                 {
                     return 9001;
@@ -713,7 +713,7 @@ namespace Vinki
             }
             if (b.grabbed is SprayCan && colorfulItems.ContainsKey(abstractObjectTypeA))
             {
-                //Debug.Log("Crafting second hand can with uses: " + (b.grabbed as SprayCan).Abstr.uses + " and " + abstractObjectTypeA.ToString() + " worth " + colorfulItems[abstractObjectTypeA]);
+                //VLogger.LogInfo("Crafting second hand can with uses: " + (b.grabbed as SprayCan).Abstr.uses + " and " + abstractObjectTypeA.ToString() + " worth " + colorfulItems[abstractObjectTypeA]);
                 if (colorfulItems[abstractObjectTypeA] > 9000)
                 {
                     return 9001;
@@ -724,7 +724,7 @@ namespace Vinki
                 }
                 return Math.Min(5, (b.grabbed as SprayCan).Abstr.uses + colorfulItems[abstractObjectTypeA]);
             }
-            //Debug.Log("None of the cases are covered");
+            //VLogger.LogInfo("None of the cases are covered");
             return 0;
         }
 
