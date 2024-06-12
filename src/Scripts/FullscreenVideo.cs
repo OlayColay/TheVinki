@@ -20,7 +20,7 @@ public class FullscreenVideo(ProcessManager manager) : MainLoopProcess(manager, 
         // Create a Canvas GameObject
         GameObject canvasGameObject = new("Canvas");
         Canvas canvas = canvasGameObject.AddComponent<Canvas>();
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        canvas.renderMode = RenderMode.ScreenSpaceCamera;
         CanvasScaler canvasScaler = canvasGameObject.AddComponent<CanvasScaler>();
         canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
 
