@@ -107,7 +107,6 @@ namespace Vinki
             RemoveMusicHooks();
 
             RemoveMenuSceneHooks();
-            RemoveSlugcatSelectMenuHooks();
 
             On.ProcessManager.PostSwitchMainProcess -= ProcessManager_PostSwitchMainProcess;
             IL.Menu.IntroRoll.ctor -= IntroRoll_ctor;
@@ -122,6 +121,7 @@ namespace Vinki
                 ApplyHooks();
             }
 
+            ApplySlugcatSelectMenuHooks();
             SlugBaseSaveData progSaveData = SaveDataExtension.GetSlugBaseData(rainWorld.progression.miscProgressionData);
             VinkiConfig.ShowVinkiTitleCard.OnChange += () => progSaveData.Set("ShowVinkiTitleCard", VinkiConfig.ShowVinkiTitleCard.Value);
 
@@ -317,7 +317,6 @@ namespace Vinki
 
                 // Putting this hook here ensures that SlugBase's BuildScene hook goes first
                 ApplyMenuSceneHooks();
-                ApplySlugcatSelectMenuHooks();
                 On.ProcessManager.PostSwitchMainProcess += ProcessManager_PostSwitchMainProcess;
 
                 if (!isDebug && (SaveDataExtension.GetSlugBaseData(self.progression.miscProgressionData).TryGet("ShowVinkiTitleCard", out bool value) == false || value))
