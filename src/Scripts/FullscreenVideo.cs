@@ -7,6 +7,7 @@ using Vinki;
 public class FullscreenVideo(ProcessManager manager) : MainLoopProcess(manager, Enums.FullscreenVideo)
 {
     public ProcessManager.ProcessID nextProcess;
+    public VideoPlayer videoPlayer;
 
     public void StartVideo(string videoFileName, ProcessManager.ProcessID nextProcess)
     {
@@ -32,7 +33,7 @@ public class FullscreenVideo(ProcessManager manager) : MainLoopProcess(manager, 
         rawImage.texture = renderTexture;
 
         // Create a VideoPlayer
-        VideoPlayer videoPlayer = gameObject.AddComponent<VideoPlayer>();
+        videoPlayer = gameObject.AddComponent<VideoPlayer>();
         videoPlayer.playOnAwake = false;
         videoPlayer.renderMode = VideoRenderMode.RenderTexture;
         videoPlayer.targetTexture = renderTexture;
@@ -57,5 +58,16 @@ public class FullscreenVideo(ProcessManager manager) : MainLoopProcess(manager, 
         RWCustom.Custom.Log("Video finished!");
         manager.RequestMainProcessSwitch(nextProcess);
         UnityEngine.Object.Destroy(source.gameObject);
+    }
+
+    public override void Update()
+    {
+        base.Update();
+
+        if (RWInput.CheckPauseButton(0))
+        {
+            videoPlayer.Stop();
+            VideoFinished(videoPlayer);
+        }
     }
 }
