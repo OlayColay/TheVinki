@@ -36,10 +36,11 @@ public static partial class Hooks
 
     private static void Vinki_Jolly_PupUpdate(On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.orig_Update orig, SymbolButtonTogglePupButton self)
     {
-        //if (!(self.owner as JollyPlayerSelector).dirty)
-        //{
-        //    return;
-        //}
+        if (self.menu is not JollySetupDialog)
+        {
+            orig(self);
+            return;
+        }
 
         int index = GetPlayerIndex(self);
 
@@ -136,7 +137,7 @@ public static partial class Hooks
     {
         orig(self, menu, owner, signal, pos, size, symbolNameOn, symbolNameOff, isOn, stringLabelOn, stringLabelOff);
 
-        if (!symbolNameOff.Contains(Enums.vinkiStr))
+        if (!symbolNameOff.Contains(Enums.vinkiStr) || menu is not JollySetupDialog)
         {
             return;
         }
@@ -179,6 +180,11 @@ public static partial class Hooks
     private static void Vinki_Jolly_LoadIcon(On.JollyCoop.JollyMenu.SymbolButtonTogglePupButton.orig_LoadIcon orig, SymbolButtonTogglePupButton self)
     {
         orig(self);
+
+        if (self.menu is not JollySetupDialog)
+        {
+            return;
+        }
 
         int index = GetPlayerIndex(self);
 
