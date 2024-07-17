@@ -15,7 +15,6 @@ namespace Vinki
         public static Configurable<int> GraffitiFadeTime;
         public static Configurable<bool> DeleteGraffiti;
         public static Configurable<bool> RestoreGraffitiOnUpdate;
-        public static Configurable<bool> ShowVinkiTitleCard;
         public static Configurable<bool> GlassesOverDMS;
         public static Configurable<bool> TagDamageJolly;
         public static Configurable<bool> UseGraffitiButton;
@@ -57,10 +56,6 @@ namespace Vinki
             AutoOpenMap = config.Bind("autoOpenMap", true, new ConfigurableInfo("Automatically open the quest map after a cycle where you spray a new story graffiti. Disable if you want to speedrun", tags:
             [
                 "Automatically Open Quest Map"
-            ]));
-            ShowVinkiTitleCard = config.Bind("showVinkiTitleCard", true, new ConfigurableInfo("Always show one of the Vinki title cards when starting the game. This replaces other title cards, and the mod must be high in the mod order on the left to work!", tags:
-            [
-                "Always Show Vinki Title Cards"
             ]));
             GlassesOverDMS = config.Bind("glassesOverDMS", true, new ConfigurableInfo("Wear Vinki's glasses on top of the current DMS skin for Vinki. Only works if you have DMS enabled.", tags:
             [
@@ -112,12 +107,11 @@ namespace Vinki
             AddCheckbox(TokensInEveryCampaign, 330f);
             AddCheckbox(AutoOpenMap, 300f);
             AddTitle(0, "Visuals", 245f);
-            AddCheckbox(ShowVinkiTitleCard, 215f);
-            AddCheckbox(GlassesOverDMS, 185f);
-            AddIntBox(GraffitiFadeTime, 155f);
-            AddCheckbox(DeleteGraffiti, 125f);
-            AddTitle(0, "Graffiti Files", 70f);
-            AddCheckbox(RestoreGraffitiOnUpdate, 40f);
+            AddCheckbox(GlassesOverDMS, 215f);
+            AddIntBox(GraffitiFadeTime, 185f);
+            AddCheckbox(DeleteGraffiti, 155f);
+            AddTitle(0, "Graffiti Files", 100f);
+            AddCheckbox(RestoreGraffitiOnUpdate, 70f);
             AddHoldButton(
                 "Restore Default Graffiti",
                 "Restore the default graffiti that came with The Vinki. Useful for after installing an update that includes new default graffiti.",

@@ -47,7 +47,6 @@
     "select_menu_scene_ascended": "Ghost_Vinki",
     "the_mark": true,
     "timeline_before": [ "Spear", "Red" ],
-    "title_card": "intro_roll_vinki_0",
     "world_state": [ "vinki", "Spear", "Red" ]
   }
 }

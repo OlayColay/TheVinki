@@ -122,8 +122,6 @@ namespace Vinki
             }
 
             ApplySlugcatSelectMenuHooks();
-            SlugBaseSaveData progSaveData = SaveDataExtension.GetSlugBaseData(rainWorld.progression.miscProgressionData);
-            VinkiConfig.ShowVinkiTitleCard.OnChange += () => progSaveData.Set("ShowVinkiTitleCard", VinkiConfig.ShowVinkiTitleCard.Value);
 
             bool modChanged = false;
             if (rainWorld.options.modLoadOrder.TryGetValue("olaycolay.thevinki", out _) && VinkiConfig.RestoreGraffitiOnUpdate.Value)
@@ -319,9 +317,8 @@ namespace Vinki
                 ApplyMenuSceneHooks();
                 On.ProcessManager.PostSwitchMainProcess += ProcessManager_PostSwitchMainProcess;
 
-                if (!isDebug && (SaveDataExtension.GetSlugBaseData(self.progression.miscProgressionData).TryGet("ShowVinkiTitleCard", out bool value) == false || value))
+                if (!isDebug)
                 {
-                    VLogger.LogInfo("Enabled vinki title card: " + value ?? "null");
                     IL.Menu.IntroRoll.ctor += IntroRoll_ctor;
                 }
 
@@ -527,16 +524,17 @@ namespace Vinki
         {
             var cursor = new ILCursor(il);
 
-            if (cursor.TryGotoNext(i => i.MatchLdstr("Intro_Roll_C_"))
-                && cursor.TryGotoNext(MoveType.After, i => i.MatchCallOrCallvirt<string>(nameof(string.Concat))))
+            if (cursor.TryGotoNext(i => i.MatchNewarr<string>())
+                && cursor.TryGotoNext(MoveType.After, i => i.MatchStloc(3)))
             {
                 cursor.Emit(OpCodes.Ldloc_3);
-                cursor.EmitDelegate<Func<string, string[], string>>((titleImage, oldTitleImages) =>
-                {
-                    titleImage = (UnityEngine.Random.value < 0.5f) ? "intro_roll_vinki_0" : "intro_roll_vinki_1";
-
-                    return titleImage;
-                });
+                cursor.EmitDelegate<Func<string[], string[]>>((oldTitleImages) => [.. oldTitleImages, "vinki_0", "vinki_1"]);
+                cursor.Emit(OpCodes.Stloc_3);
+                //cursor.Emit(OpCodes.Ldloc_3);
+                //cursor.EmitDelegate<Action<string[]>>((oldTitleImages) =>
+                //{
+                //    VLogger.LogInfo("Title screens (" + oldTitleImages.Length + "): " + string.Join(", ", oldTitleImages));
+                //});
             }
         }
 
