@@ -1,5 +1,6 @@
 ﻿using Menu;
 using Menu.Remix.MixedUI;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using UnityEngine;
@@ -112,20 +113,28 @@ namespace Vinki
             AddCheckbox(DeleteGraffiti, 155f);
             AddTitle(0, "Graffiti Files", 100f);
             AddCheckbox(RestoreGraffitiOnUpdate, 70f);
+            AddButton(
+                "Open Graffiti Folder",
+                "Click to open the Graffiti Folder in your file explorer for easily adding custom graffiti",
+                OpenGraffitiFolder,
+                30f,
+                200f,
+                x: 200f
+            );
             AddHoldButton(
                 "Restore Default Graffiti",
                 "Restore the default graffiti that came with The Vinki. Useful for after installing an update that includes new default graffiti.",
                 RestoreDefaultGraffiti,
-                0f,
+                -5f,
                 200f,
                 40f,
                 x: 50f
             );
             AddHoldButton(
                 "Reset Graffiti Folder to Default",
-                "Revert Graffiti Folder to default. This will remove any custom files you've added to it!",
+                "Revert Graffiti Folder to default. This will remove any custom graffiti you've added to it!",
                 ResetGraffitiFolder,
-                0f,
+                -5f,
                 200f,
                 color: Color.red,
                 x: 350f
@@ -330,6 +339,23 @@ namespace Vinki
             ]);
         }
 
+        private OpSimpleButton AddButton(string displayName, string description, OnSignalHandler action, float y, float width, Color? color = null, int tab = 0, float x = 150f)
+        {
+            OpSimpleButton button = new(new Vector2(x, y), new Vector2(width, 30f), Translate(displayName))
+            {
+                description = Translate(description),
+                colorEdge = color ?? MenuColorEffect.rgbMediumGrey,
+            };
+            button.OnClick += action;
+
+            Tabs[tab].AddItems(
+            [
+                button
+            ]);
+
+            return button;
+        }
+
         private OpHoldButton AddHoldButton(string displayName, string description, OnSignalHandler action, float y, float width, float fillTime = 80f, Color? color = null, int tab = 0, float x = 150f)
         {
             OpHoldButton holdButton = new(new Vector2(x, y), new Vector2(width, 30f), Translate(displayName), fillTime)
@@ -364,6 +390,27 @@ namespace Vinki
         {
             Directory.Delete(Plugin.graffitiFolder, true);
             RestoreDefaultGraffiti(trigger);
+        }
+
+        private void OpenGraffitiFolder(UIfocusable trigger)
+        {
+            ModManager.Mod mod = ModManager.ActiveMods.Find((mod) => mod.id == Plugin.MOD_ID);
+
+            if (mod == null)
+            {
+                Plugin.VLogger.LogError("Couldn't find Vinki mod in list of active mods!");
+            }
+
+            Plugin.VLogger.LogMessage("Opening \"" + Plugin.graffitiFolder + "\" in file explorer");
+            if (Directory.Exists(Plugin.graffitiFolder))
+            {
+                Process.Start(new ProcessStartInfo()
+                {
+                    FileName = Plugin.graffitiFolder,
+                    UseShellExecute = true,
+                    Verb = "open"
+                });
+            }
         }
 
         private void UnlockAllGraffiti(UIfocusable trigger)

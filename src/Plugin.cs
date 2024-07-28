@@ -32,8 +32,8 @@ namespace Vinki
         public static List<string> shelterItems = [];
         public static Dictionary<int, KeyValuePair<string, Vector2>> storyGraffitiRoomPositions = [];
         public static Dictionary<AbstractPhysicalObject.AbstractObjectType, int> colorfulItems = [];
-        public static string graffitiFolder = "decals/VinkiGraffiti";
-        public static string storyGraffitiFolder = "decals/StorySpoilers";
+        public static string graffitiFolder = "decals" + Path.DirectorySeparatorChar + "VinkiGraffiti";
+        public static string storyGraffitiFolder = "decals" + Path.DirectorySeparatorChar + "StorySpoilers";
         public static bool sleeping = false;
         public static Color?[][] jollyColors = [
             new Color?[6], new Color?[6], new Color?[6], new Color?[6],
