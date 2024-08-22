@@ -161,7 +161,7 @@ namespace Vinki
             AddSubtitle(60f, "Special Thanks", 1);
             AddText(25f, "Developers of this mod's dependencies\n" +
                 "Abigail    a doku    AxoTheAxolotl    Azura Hardware    banba fan   BreadwardBolero    BUGS    Doop    goof\n" +
-                "Johnn    Nico    Rae    Sadman    Salami_Hunter    skrybl    Sunbloom    SunnyBeam    TacticalBombs\n",
+                "Johnn    Nico    Rae    Repeat    Sadman    Salami_Hunter    skrybl    Sunbloom    SunnyBeam    TacticalBombs    Vinyla\n",
             1);
 
             // Vinki Graffiti tab

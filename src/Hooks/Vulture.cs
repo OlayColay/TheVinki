@@ -26,6 +26,11 @@ public static partial class Hooks
     {
         orig(self, violenceDir);
 
+        if (self.graphicsModule == null || self.graphicsModule.Tag() == null)
+        {
+            return;
+        }
+
         Color maskColor = self.graphicsModule.Tag().taggedColors[(self.graphicsModule as VultureGraphics).MaskSprite];
         if (maskColor.maxColorComponent > float.Epsilon)
         {
