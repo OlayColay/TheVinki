@@ -21,6 +21,12 @@ public static partial class Hooks
         };
         On.PlayerProgression.MiscProgressionData.GetTokenCollected_string_bool += PlayerProgression_MiscProgressionData_GetTokenCollected;
     }
+
+    private static void SaveState_ctor(On.SaveState.orig_ctor orig, SaveState self, SlugcatStats.Name saveStateNumber, PlayerProgression progression)
+    {
+        throw new NotImplementedException();
+    }
+
     private static void RemoveSaveStateHooks()
     {
         On.SaveState.GetStoryDenPosition -= SaveState_GetStoryDenPosition;
@@ -44,7 +50,7 @@ public static partial class Hooks
             return orig(slugcat, out isVanilla);
         }
 
-        string den = Plugin.introPlayed ? "SS_D07" : "SS_AI";
+        string den = VinkiConfig.SkipIntro.Value ? "UW_F01" : (Plugin.introPlayed ? "SS_D07" : "SS_AI");
 
         if (WorldLoader.FindRoomFile(den, false, ".txt") != null)
         {

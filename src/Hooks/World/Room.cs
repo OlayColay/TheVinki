@@ -151,17 +151,17 @@ public static partial class Hooks
 
         SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(self.game.rainWorld.progression.currentSaveState.miscWorldSaveData);
         // Graffiti Tutorial
-        if (name == "SS_E08" && self.game.rainWorld.progression.currentSaveState.cycleNumber == 0)
+        if (name == "SS_E08" && !VinkiConfig.SkipIntro.Value && self.game.rainWorld.progression.currentSaveState.cycleNumber == 0)
         {
             self.AddObject(new GraffitiTutorial(self));
         }
         // Story Graffiti Tutorial
-        else if (name == "SS_D08" && (!miscSave.TryGet("StoryGraffitiTutorialPhase", out int i) || i < (int)StoryGraffitiTutorial.Phase.End))
+        else if (name == "SS_D08" && !VinkiConfig.SkipIntro.Value && (!miscSave.TryGet("StoryGraffitiTutorialPhase", out int i) || i < (int)StoryGraffitiTutorial.Phase.End))
         {
             self.AddObject(new StoryGraffitiTutorial(self));
         }
         // Grinding Tutorial
-        else if ((name == "UW_H01" || name == "UW_H01VI") && (!miscSave.TryGet("GrindTutorialCompleted", out bool b) || !b))
+        else if ((name == "UW_H01" || name == "UW_H01VI") && !VinkiConfig.SkipIntro.Value && (!miscSave.TryGet("GrindTutorialCompleted", out bool b) || !b))
         {
             self.AddObject(new GrindTutorial(self));
         }
@@ -181,6 +181,11 @@ public static partial class Hooks
         else if (name == "CC_B01" && !self.game.GetStorySession.saveState.hasRobo && Plugin.FirstStoryGraffitisDone(miscSave))
         {
             self.AddObject(new CutsceneVinkiRobo(self));
+        }
+        // Set spawn position if intro and tutorials are skipped
+        else if (name == "UW_F01" && VinkiConfig.SkipIntro.Value && self.abstractRoom.firstTimeRealized && self.game.GetStorySession.saveState.cycleNumber == 0)
+        {
+            self.AddObject(new SkipIntroSpawn(self));
         }
     }
 }

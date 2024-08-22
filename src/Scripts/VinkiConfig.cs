@@ -21,6 +21,7 @@ namespace Vinki
         public static Configurable<bool> UseGraffitiButton;
         public static Configurable<bool> TokensInEveryCampaign;
         public static Configurable<bool> AutoOpenMap;
+        public static Configurable<bool> SkipIntro;
 
         private static OpHoldButton unlockButton;
         private static OpHoldButton lockButton;
@@ -74,6 +75,10 @@ namespace Vinki
             [
                 "Restore Default Graffiti when Mod Updates"
             ]));
+            SkipIntro = config.Bind("skipIntro", false, new ConfigurableInfo("When starting a new game skip the campaign intro and tutorials and start at the top of The Wall.", tags:
+            [
+                "Skip Intro and Tutorials"
+            ]));
         }
 
         public static void RegisterOI()
@@ -96,28 +101,26 @@ namespace Vinki
             ];
 
             // Options tab
-            AddDivider(593f);
-            AddTitle(0);
-            AddDivider(557f);
-            AddTitle(0, "Gameplay", 510f);
-            AddCheckbox(RequireCansGraffiti, 480f);
-            AddCheckbox(RequireCansTagging, 450f);
-            AddCheckbox(UseGraffitiButton, 420f);
-            AddCheckbox(UpGraffiti, 390f);
-            AddCheckbox(TagDamageJolly, 360f);
-            AddCheckbox(TokensInEveryCampaign, 330f);
-            AddCheckbox(AutoOpenMap, 300f);
-            AddTitle(0, "Visuals", 245f);
-            AddCheckbox(GlassesOverDMS, 215f);
-            AddIntBox(GraffitiFadeTime, 185f);
-            AddCheckbox(DeleteGraffiti, 155f);
-            AddTitle(0, "Graffiti Files", 100f);
-            AddCheckbox(RestoreGraffitiOnUpdate, 70f);
+            AddTitle(0, "Gameplay", 590f);
+            AddCheckbox(RequireCansGraffiti, 560f);
+            AddCheckbox(RequireCansTagging, 530f);
+            AddCheckbox(UseGraffitiButton, 500f);
+            AddCheckbox(UpGraffiti, 470f);
+            AddCheckbox(TagDamageJolly, 440f);
+            AddCheckbox(TokensInEveryCampaign, 410f);
+            AddCheckbox(AutoOpenMap, 380f);
+            AddCheckbox(SkipIntro, 350f);
+            AddTitle(0, "Visuals", 295f);
+            AddCheckbox(GlassesOverDMS, 265f);
+            AddIntBox(GraffitiFadeTime, 235f);
+            AddCheckbox(DeleteGraffiti, 205f);
+            AddTitle(0, "Graffiti Files", 150f);
+            AddCheckbox(RestoreGraffitiOnUpdate, 120f);
             AddButton(
                 "Open Graffiti Folder",
                 "Click to open the Graffiti Folder in your file explorer for easily adding custom graffiti",
                 OpenGraffitiFolder,
-                30f,
+                80f,
                 200f,
                 x: 200f
             );
@@ -125,7 +128,7 @@ namespace Vinki
                 "Restore Default Graffiti",
                 "Restore the default graffiti that came with The Vinki. Useful for after installing an update that includes new default graffiti.",
                 RestoreDefaultGraffiti,
-                -5f,
+                45f,
                 200f,
                 40f,
                 x: 50f
@@ -134,7 +137,7 @@ namespace Vinki
                 "Reset Graffiti Folder to Default",
                 "Revert Graffiti Folder to default. This will remove any custom graffiti you've added to it!",
                 ResetGraffitiFolder,
-                -5f,
+                45f,
                 200f,
                 color: Color.red,
                 x: 350f

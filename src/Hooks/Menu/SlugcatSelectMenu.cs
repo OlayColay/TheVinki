@@ -50,7 +50,7 @@ public static partial class Hooks
             c.Emit(OpCodes.Ldarg_1);
             c.EmitDelegate((SlugcatSelectMenu self, SlugcatStats.Name storyGameCharacter) =>
             {
-                if (storyGameCharacter == Enums.vinki)
+                if (storyGameCharacter == Enums.vinki && !VinkiConfig.SkipIntro.Value)
                 {
                     self.manager.RequestMainProcessSwitch(Enums.FullscreenVideo);
                     return true;
