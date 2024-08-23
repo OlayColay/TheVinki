@@ -101,26 +101,26 @@ namespace Vinki
             ];
 
             // Options tab
-            AddTitle(0, "Gameplay", 590f);
-            AddCheckbox(RequireCansGraffiti, 560f);
-            AddCheckbox(RequireCansTagging, 530f);
-            AddCheckbox(UseGraffitiButton, 500f);
-            AddCheckbox(UpGraffiti, 470f);
-            AddCheckbox(TagDamageJolly, 440f);
-            AddCheckbox(TokensInEveryCampaign, 410f);
-            AddCheckbox(AutoOpenMap, 380f);
-            AddCheckbox(SkipIntro, 350f);
-            AddTitle(0, "Visuals", 295f);
-            AddCheckbox(GlassesOverDMS, 265f);
-            AddIntBox(GraffitiFadeTime, 235f);
-            AddCheckbox(DeleteGraffiti, 205f);
-            AddTitle(0, "Graffiti Files", 150f);
-            AddCheckbox(RestoreGraffitiOnUpdate, 120f);
+            AddTitle(0, "Gameplay", 570f);
+            AddCheckbox(RequireCansGraffiti, 540f);
+            AddCheckbox(RequireCansTagging, 510f);
+            AddCheckbox(UseGraffitiButton, 480f);
+            AddCheckbox(UpGraffiti, 450f);
+            AddCheckbox(TagDamageJolly, 420f);
+            AddCheckbox(TokensInEveryCampaign, 390f);
+            AddCheckbox(AutoOpenMap, 360f);
+            AddCheckbox(SkipIntro, 330f);
+            AddTitle(0, "Visuals", 275f);
+            AddCheckbox(GlassesOverDMS, 245f);
+            AddIntBox(GraffitiFadeTime, 215f);
+            AddCheckbox(DeleteGraffiti, 185f);
+            AddTitle(0, "Graffiti Files", 130f);
+            AddCheckbox(RestoreGraffitiOnUpdate, 100f);
             AddButton(
                 "Open Graffiti Folder",
                 "Click to open the Graffiti Folder in your file explorer for easily adding custom graffiti",
                 OpenGraffitiFolder,
-                80f,
+                60f,
                 200f,
                 x: 200f
             );
@@ -128,7 +128,7 @@ namespace Vinki
                 "Restore Default Graffiti",
                 "Restore the default graffiti that came with The Vinki. Useful for after installing an update that includes new default graffiti.",
                 RestoreDefaultGraffiti,
-                45f,
+                25f,
                 200f,
                 40f,
                 x: 50f
@@ -137,7 +137,7 @@ namespace Vinki
                 "Reset Graffiti Folder to Default",
                 "Revert Graffiti Folder to default. This will remove any custom graffiti you've added to it!",
                 ResetGraffitiFolder,
-                45f,
+                25f,
                 200f,
                 color: Color.red,
                 x: 350f

@@ -23,8 +23,12 @@ public class SkipIntroSpawn : UpdatableAndDeletable
             if (this.firstStart)
             {
                 Vector2 vector = new(980f, 4100f);
-                firstAlivePlayer.realizedCreature.bodyChunks[0].HardSetPosition(vector + new Vector2(9f, 0f));
-                firstAlivePlayer.realizedCreature.bodyChunks[1].HardSetPosition(vector + new Vector2(-5f, 0f));
+                firstAlivePlayer.realizedCreature.bodyChunks[0].HardSetPosition(vector + new Vector2(0f, 0f));
+                firstAlivePlayer.realizedCreature.bodyChunks[1].HardSetPosition(vector + new Vector2(0f, 10f));
+                (firstAlivePlayer.realizedCreature as Player).standing = true;
+                (firstAlivePlayer.realizedCreature as Player).playerState.foodInStomach = (firstAlivePlayer.realizedCreature as Player).MaxFoodInStomach;
+                room.game.GetStorySession.saveState.cycleNumber = 1;
+                room.game.GetStorySession.saveState.miscWorldSaveData.SSaiConversationsHad = 1;
                 this.firstStart = false;
             }
         }

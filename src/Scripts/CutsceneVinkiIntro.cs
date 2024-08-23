@@ -34,13 +34,14 @@ namespace Vinki
 
 				if (Plr != null && !foodMeterInit)
 				{
-					if (room.game.cameras[0].hud == null)
+                    Plr.playerState.foodInStomach = 4;
+                    if (room.game.cameras[0].hud == null)
 					{
 						room.game.cameras[0].FireUpSinglePlayerHUD(Plr);
 					}
 					foodMeterInit = true;
 					room.game.cameras[0].hud.foodMeter.NewShowCount(Plr.FoodInStomach);
-					room.game.cameras[0].hud.foodMeter.visibleCounter = 0;
+					room.game.cameras[0].hud.foodMeter.visibleCounter = 4;
 					room.game.cameras[0].hud.foodMeter.fade = 0f;
 					room.game.cameras[0].hud.foodMeter.lastFade = 0f;
 					room.game.cameras[0].followAbstractCreature = Plr.abstractCreature;

@@ -187,5 +187,11 @@ public static partial class Hooks
         {
             self.AddObject(new SkipIntroSpawn(self));
         }
+        // Close GATE_SS_UW on first cycle to imply Vinki just travelled through it
+        else if (name == "GATE_SS_UW" && self.abstractRoom.firstTimeRealized && (self.game.GetStorySession.saveState.cycleNumber == 0 ||
+            (self.game.GetStorySession.saveState.cycleNumber == 1 && VinkiConfig.SkipIntro.Value)))
+        {
+            self.AddObject(new CloseGateSsUw(self));
+        }
     }
 }
