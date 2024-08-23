@@ -110,19 +110,35 @@ namespace Vinki
         // Add hooks
         private static void ApplyPlayerHooks()
         {
+            On.Player.ctor += Player_ctor;
             On.Player.Jump += Player_Jump;
             On.Player.MovementUpdate += Player_Move;
             On.Player.Update += Player_Update;
             On.Player.JollyUpdate += Player_JollyUpdate;
             On.Player.CanBeSwallowed += Player_CanBeSwallowed;
         }
+
         private static void RemovePlayerHooks()
         {
+            On.Player.ctor -= Player_ctor;
             On.Player.Jump -= Player_Jump;
             On.Player.MovementUpdate -= Player_Move;
             On.Player.Update -= Player_Update;
             On.Player.JollyUpdate -= Player_JollyUpdate;
             On.Player.CanBeSwallowed -= Player_CanBeSwallowed;
+        }
+
+        private static void Player_ctor(On.Player.orig_ctor orig, Player self, AbstractCreature abstractCreature, World world)
+        {
+            orig(self, abstractCreature, world);
+
+            if (self.SlugCatClass != Enums.vinki)
+            {
+                return;
+            }
+
+            // It takes about 50% more height for Vinki to take fall damage
+            self.impactTreshhold = 45f;
         }
 
         private static void Player_JollyUpdate(On.Player.orig_JollyUpdate orig, Player self, bool eu)
