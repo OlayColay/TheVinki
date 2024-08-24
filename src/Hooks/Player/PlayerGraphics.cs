@@ -47,7 +47,7 @@ namespace Vinki
                 return;
             }
 
-            PlayerGraphics.jollyColors = new Color?[4][];
+            PlayerGraphics.jollyColors = new Color?[16][];
             JollyCustom.Log("Initializing colors... reference " + (reference?.ToString()), false);
             for (int i = 0; i < PlayerGraphics.jollyColors.Length; i++)
             {
