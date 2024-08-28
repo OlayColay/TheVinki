@@ -391,7 +391,7 @@ namespace Vinki
 
         private void ResetGraffitiFolder(UIfocusable trigger)
         {
-            Directory.Delete(Plugin.graffitiFolder, true);
+            Directory.Delete(Plugin.mainGraffitiFolder, true);
             RestoreDefaultGraffiti(trigger);
         }
 
@@ -404,12 +404,12 @@ namespace Vinki
                 Plugin.VLogger.LogError("Couldn't find Vinki mod in list of active mods!");
             }
 
-            Plugin.VLogger.LogMessage("Opening \"" + Plugin.graffitiFolder + "\" in file explorer");
-            if (Directory.Exists(Plugin.graffitiFolder))
+            Plugin.VLogger.LogMessage("Opening \"" + Plugin.mainGraffitiFolder + "\" in file explorer");
+            if (Directory.Exists(Plugin.mainGraffitiFolder))
             {
                 Process.Start(new ProcessStartInfo()
                 {
-                    FileName = Plugin.graffitiFolder,
+                    FileName = Plugin.mainGraffitiFolder,
                     UseShellExecute = true,
                     Verb = "open"
                 });

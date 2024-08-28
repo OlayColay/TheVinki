@@ -112,13 +112,15 @@ namespace Menu
             }
 
             string[] graffitiFiles;
-            if (Plugin.graffitis.ContainsKey(players[currentPlayer].SlugCatClass.ToString()))
+            string lowerScugClass = players[currentPlayer].SlugCatClass.ToString().ToLowerInvariant();
+            Plugin.VLogger.LogInfo("Graffiti scugs: " + string.Join(", ", Plugin.graffitis.Keys));
+            if (Plugin.graffitis.ContainsKey(lowerScugClass))
             {
-                graffitiFiles = Plugin.graffitis[players[currentPlayer].SlugCatClass.ToString()].Select(g => "decals/" + g.imageName).ToArray();
+                graffitiFiles = Plugin.graffitis[lowerScugClass].Select(g => "decals/" + g.imageName).ToArray();
             }
             else
             {
-                graffitiFiles = Plugin.graffitis["White"].Select(g => "decals/" + g.imageName).ToArray();
+                graffitiFiles = Plugin.graffitis["white"].Select(g => "decals/" + g.imageName).ToArray();
             }
             graffitiButtons = new GraffitiButton[Math.Min(GraffitiPerPage, graffitiFiles.Length - (curGPage * GraffitiPerPage))];
 
@@ -204,7 +206,7 @@ namespace Menu
             previewSprite.y = roundedRects[1].DrawY(1f) + (roundedRects[1].size.y / 2);
             roundedRects[1].Container.AddChild(previewSprite);
 
-            previewLabel.text = spritePath.Substring(spritePath.LastIndexOf("/") + 1);
+            previewLabel.text = spritePath.Substring(spritePath.LastIndexOf(System.IO.Path.DirectorySeparatorChar) + 1);
         }
 
         private static float GetCancelButtonWidth(InGameTranslator.LanguageID lang)
@@ -245,7 +247,7 @@ namespace Menu
             else if (message.StartsWith("SELECT "))
             {
                 int gNum = int.Parse(message.Substring(7));
-                Plugin.VLogger.LogInfo("Selecting " + Plugin.graffitis[players[currentPlayer].SlugCatClass.ToString()][gNum].imageName);
+                Plugin.VLogger.LogInfo("Selecting " + Plugin.graffitis[players[currentPlayer].SlugCatClass.ToString().ToLowerInvariant()][gNum].imageName);
                 PlaySound(SoundID.MENU_Button_Standard_Button_Pressed);
 
                 Plugin.queuedGNums[currentPlayer] = gNum;
@@ -260,7 +262,7 @@ namespace Menu
                 repeatButton.buttonBehav.greyedOut = false;
 
                 // Update graffiti preview
-                UpdatePreview("decals/" + Plugin.graffitis[players[currentPlayer].SlugCatClass.ToString()][gNum].imageName);
+                UpdatePreview("decals/" + Plugin.graffitis[players[currentPlayer].SlugCatClass.ToString().ToLowerInvariant()][gNum].imageName);
             }
             else if (message.StartsWith("PLAYER "))
             {
@@ -278,7 +280,7 @@ namespace Menu
                 //playerButtons[currentPlayer].InterpColor(players[currentPlayer].JollyOption.bodyColor);
 
                 int gNum = Plugin.queuedGNums[currentPlayer];
-                UpdatePreview(gNum == -1 ? "" : "decals/" + Plugin.graffitis[players[currentPlayer].SlugCatClass.ToString()][gNum].imageName);
+                UpdatePreview(gNum == -1 ? "" : "decals/" + Plugin.graffitis[players[currentPlayer].SlugCatClass.ToString().ToLowerInvariant()][gNum].imageName);
                 previewLabel.text = players[currentPlayer].JollyOption.customPlayerName ?? Translate("Player " + (currentPlayer + 1));
             }
             else if (message == "SHUFFLE")

@@ -15,6 +15,7 @@ using DressMySlugcat;
 using SlugBase.SaveData;
 using MonoMod.RuntimeDetour;
 using PushToMeowMod;
+using BepInEx.Logging;
 
 namespace Vinki
 {
@@ -147,13 +148,16 @@ namespace Vinki
                 VLogger.LogInfo("Can't find vinki mod ID");
             }
 
-            graffitiFolder = AssetManager.ResolveDirectory(graffitiFolder);
+            graffitiFolders = AssetManager.ListDirectory(baseGraffitiFolder, true, true, true);
+            mainGraffitiFolder = AssetManager.ResolveDirectory(storyGraffitiFolder + "/../VinkiGraffiti");
             storyGraffitiFolder = AssetManager.ResolveDirectory(storyGraffitiFolder);
 
+            VLogger.LogInfo("Graffiti folders: " + string.Join("; ", graffitiFolders));
+
             // If the graffiti folder doesn't exist (or is empty), copy it from the mod
-            if (!Directory.Exists(graffitiFolder) || !Directory.EnumerateDirectories(graffitiFolder).Any() ||
-                !Directory.Exists(graffitiFolder + "/vinki") || !Directory.EnumerateFileSystemEntries(graffitiFolder + "/vinki").Any() ||
-                !Directory.Exists(graffitiFolder + "/White") || !Directory.EnumerateFileSystemEntries(graffitiFolder + "/White").Any() || modChanged)
+            if (!Directory.Exists(mainGraffitiFolder) || !Directory.EnumerateDirectories(mainGraffitiFolder).Any() ||
+                !Directory.Exists(mainGraffitiFolder + "/vinki") || !Directory.EnumerateFileSystemEntries(mainGraffitiFolder + "/vinki").Any() ||
+                !Directory.Exists(mainGraffitiFolder + "/White") || !Directory.EnumerateFileSystemEntries(mainGraffitiFolder + "/White").Any() || modChanged)
             {
                 if (!CopyGraffitiBackup())
                 {
@@ -199,7 +203,7 @@ namespace Vinki
             }
             VLogger.LogInfo("Graffiti folder doesn't exist! Copying from backup folder: " + backupFolder);
             CopyFilesRecursively(backupFolder, backupFolder + "/../VinkiGraffiti");
-            graffitiFolder = AssetManager.ResolveDirectory("decals/VinkiGraffiti");
+            mainGraffitiFolder = AssetManager.ResolveDirectory(storyGraffitiFolder + "/../VinkiGraffiti");
             return true;
         }
 
@@ -209,13 +213,18 @@ namespace Vinki
             graffitis.Clear();
             storyGraffitiRoomPositions.Clear();
 
-            foreach (string parent in Directory.EnumerateDirectories(graffitiFolder))
+            foreach (string scugGraffitiFolder in graffitiFolders)
             {
-                foreach (var image in Directory.EnumerateFiles(parent, "*.*", SearchOption.AllDirectories)
-                    .Where(s => s.EndsWith(".png")))
+                foreach (var image in Directory.EnumerateFiles(scugGraffitiFolder, "*.*", SearchOption.AllDirectories).Where(s => s.EndsWith(".png")))
                 {
-                    AddGraffiti(image, new DirectoryInfo(parent).Name);
+                    AddGraffiti(image, new DirectoryInfo(scugGraffitiFolder).Name);
                 }
+            }
+
+            foreach (var kvp in graffitis)
+            {
+                string values = string.Join(", ", kvp.Value);
+                VLogger.LogInfo($"Key: {kvp.Key}, Values: {values}");
             }
         }
 
@@ -223,7 +232,7 @@ namespace Vinki
         {
             PlacedObject.CustomDecalData decal = new(null)
             {
-                imageName = "VinkiGraffiti/" + slugcat + "/" + Path.GetFileNameWithoutExtension(image),
+                imageName = "VinkiGraffiti/" + slugcat + Path.DirectorySeparatorChar + Path.GetFileNameWithoutExtension(image),
                 fromDepth = 0.2f
             };
 
@@ -252,7 +261,8 @@ namespace Vinki
             }
             else
             {
-                filePath = graffitiFolder + "/" + slugcat + "/" + Path.GetFileNameWithoutExtension(image) + ".png";
+                VLogger.LogInfo("Adding new reqular graffiti: " + baseGraffitiFolder + Path.DirectorySeparatorChar + slugcat + Path.DirectorySeparatorChar + Path.GetFileNameWithoutExtension(image) + ".png");
+                filePath = AssetManager.ResolveFilePath(baseGraffitiFolder + Path.DirectorySeparatorChar + slugcat + Path.DirectorySeparatorChar + Path.GetFileNameWithoutExtension(image) + ".png");
 
                 // Add to futile atlas for sprite to show in graffiti selector
                 Futile.atlasManager.LoadImage("decals/" + decal.imageName);
