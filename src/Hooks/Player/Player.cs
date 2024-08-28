@@ -19,7 +19,7 @@ namespace Vinki
     {
         public static async Task SprayGraffiti(Player self, int smokes = 10, int gNum = -1, float alphaPerSmoke = 0.3f)
         {
-            string slugcat = graffitis.ContainsKey(self.slugcatStats.name.value) ? self.slugcatStats.name.value : SlugcatStats.Name.White.value;
+            string slugcat = graffitis.ContainsKey(self.slugcatStats.name.value.ToLowerInvariant()) ? self.slugcatStats.name.value.ToLowerInvariant() : SlugcatStats.Name.White.value.ToLowerInvariant();
             if (gNum < 0)
             {
                 // If not spraying a story graffiti, check if we've queued a specific graffiti from the selection menu
