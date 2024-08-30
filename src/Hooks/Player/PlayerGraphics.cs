@@ -304,10 +304,19 @@ namespace Vinki
             }
 
             //Vector2 animationOffset = GetAnimationOffset(self);
-
-            Color glassesColor = GetCustomVinkiColor(self.player.JollyOption.playerNumber, 5);
-            Color shoesColor = GetCustomVinkiColor(self.player.JollyOption.playerNumber, 4);
-            Color rainPodsColor = GetCustomVinkiColor(self.player.JollyOption.playerNumber, 3);
+            Color rainPodsColor, shoesColor, glassesColor;
+            if (rCam.room.game.IsArenaSession)
+            {
+                glassesColor = GetCustomVinkiArenaColor(vinki, self.player.JollyOption.playerNumber % 4, vinki.glassesSprite);
+                shoesColor = GetCustomVinkiArenaColor(vinki, self.player.JollyOption.playerNumber % 4, vinki.shoesSprite);
+                rainPodsColor = GetCustomVinkiArenaColor(vinki, self.player.JollyOption.playerNumber % 4, vinki.rainPodsSprite);
+            }
+            else
+            {
+                glassesColor = GetCustomVinkiColor(self.player.JollyOption.playerNumber, 5);
+                shoesColor = GetCustomVinkiColor(self.player.JollyOption.playerNumber, 4);
+                rainPodsColor = GetCustomVinkiColor(self.player.JollyOption.playerNumber, 3);
+            }
 
             // RainPods
             var headSpriteName = sLeaser.sprites[3].element.name;
@@ -522,6 +531,45 @@ namespace Vinki
                 return DressMySlugcat.Customization.For(player).CustomSprite("TAIL").SpriteSheetID;
             }
             return null;
+        }
+
+        private static Color GetCustomVinkiArenaColor(VinkiPlayerData vinki, int playerNumber, int bodyPartIndex)
+        {
+            if (bodyPartIndex == vinki.rainPodsSprite)
+            {
+                switch (playerNumber)
+                {
+                    case 0: return new Color(0.62f, 0.835f, 1f);
+                    case 1: return new Color(1f, 1f, 1f);
+                    case 2: return new Color(1f, 1f, 1f);
+                    default: return new Color(1f, 1f, 1f);
+                }
+            }
+            else if (bodyPartIndex == vinki.shoesSprite)
+            {
+                switch (playerNumber)
+                {
+                    case 0: return new Color(0.62f, 0.835f, 1f);
+                    case 1: return new Color(0.549f, 0.749f, 0.141f);
+                    case 2: return new Color(0.804f, 0.157f, 0.541f);
+                    default: return new Color(1f, 1f, 1f);
+                }
+            }
+            else if (bodyPartIndex == vinki.glassesSprite)
+            {
+                switch (playerNumber)
+                {
+                    case 0: return new Color(0.153f, 0.18f, 0.443f);
+                    case 1: return new Color(0.384f, 0.192f, 0.035f);
+                    case 2: return new Color(0.537f, 0.039f, 0.231f);
+                    default: return new Color(1f, 1f, 1f);
+                }
+            }
+            else
+            {
+                Plugin.VLogger.LogError("Invalid bodyPartIndex!\n" + StackTraceUtility.ExtractStackTrace());
+                return Color.white;
+            }
         }
     }
 }
