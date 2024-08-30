@@ -71,6 +71,7 @@ namespace Vinki
             ApplySaveStateHooks();
             ApplySleepAndDeathScreenHooks();
             ApplyLizardGraphicsHooks();
+            ApplySnailGraphicsHooks();
             ApplyVultureGraphicsHooks();
             ApplyCollectTokenHooks();
             ApplyExpeditionHooks();
@@ -97,6 +98,7 @@ namespace Vinki
             RemoveSaveStateHooks();
             RemoveSleepAndDeathScreenHooks();
             RemoveLizardGraphicsHooks();
+            RemoveSnailGraphicsHooks();
             RemoveVultureGraphicsHooks();
             RemoveCollectTokenHooks();
             RemoveExpeditionHooks();
