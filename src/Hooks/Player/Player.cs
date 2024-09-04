@@ -63,6 +63,12 @@ namespace Vinki
                 }
 
                 (self.room.drawableObjects.Find((x) => x is GraffitiHolder && (x as GraffitiHolder).gNum == gNum) as GraffitiHolder)?.RemoveFromRoom();
+
+                // Spawn triggered creatures if there are any in this room
+                if (self.room.drawableObjects.Count((x) => x is GraffitiHolder) <= 1)
+                {
+                    GraffitiCreatureSpawner.TriggerSpawns(self.room.abstractRoom);
+                }
             }
             VLogger.LogInfo("Spraying " + slugcat + " #" + gNum + "\tsize: " + graffitis[slugcat][gNum].handles[1].ToString());
 

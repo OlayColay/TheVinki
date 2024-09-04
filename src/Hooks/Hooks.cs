@@ -193,6 +193,9 @@ namespace Vinki
 
             // Populate the colorfulItems List for crafting Spray Cans
             InitColorfulItems();
+
+            // Populate dictionary of creatures that will spawn from spraying all the story graffiti in a room
+            GraffitiCreatureSpawner.PopulateDictionary();
         }
 
         public static bool CopyGraffitiBackup()
@@ -223,11 +226,11 @@ namespace Vinki
                 }
             }
 
-            foreach (var kvp in graffitis)
-            {
-                string values = string.Join(", ", kvp.Value);
-                VLogger.LogInfo($"Key: {kvp.Key}, Values: {values}");
-            }
+            //foreach (var kvp in graffitis)
+            //{
+            //    string values = string.Join(", ", kvp.Value);
+            //    VLogger.LogInfo($"Key: {kvp.Key}, Values: {values}");
+            //}
         }
 
         private static void AddGraffiti(string image, string slugcat, KeyValuePair<string, Vector2>? storyGraffitiRoomPos = null)
