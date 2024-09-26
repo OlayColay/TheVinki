@@ -296,6 +296,11 @@ namespace Vinki
                 }
                 return;
             }
+            else if (Plugin.blueCycles == 1)
+            {
+                // If Vinki is blue, Pebbles comments on it first thing
+                oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("What is wrong with you. Why are you blue?"), 0);
+            }
 
             orig(self);
 
@@ -985,6 +990,52 @@ namespace Vinki
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("It is a simplistic drawing of a green vulture. I can applaud you for the complex perspective you managed to portray with the head, but unfortunately, there is not much more I can say about it."), 0);
                     break;
+                case "VinkiGraffiti/vinki/Backslash - Triangulated":
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Oh, it seems that you are dabbling in geometric art? It is certainly an interesting way to depict yourself."), 0);
+                    break;
+                case "VinkiGraffiti/vinki/Hessi - I Smoked Wheelflower":
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("What happened to this poor creature? Is this a wheel flower that has coiled around them?"), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Does this represent your intolerance for the use of this hallucinogenic plant? My creators would eat them often, so I wonder why you are against it."), 0);
+                    break;
+                case "VinkiGraffiti/vinki/Kiwi - Alien Plant":
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("An impressive use of perspective! Is this a plant you have encountered during your travels?"), 0);
+                    break;
+                case "VinkiGraffiti/vinki/Salami_Hunter - Fall of Miros":
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Does this represent a purposed organism that you have seen? It seems like this is almost a memorial of sorts to one."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("I imagine there are not many creatures out there that would be friendly towards you, so I wonder why you decided to memorialize this one."), 0);
+                    break;
+                case "VinkiGraffiti/vinki/The_Pana_Hoskar - Da One and Only":
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("An assortment of your body parts and garments. By the way that they are arranged, it is almost like it is trying to say something..."), 0);
+                    break;
+                case "VinkiGraffiti/vinki/zirfal - Society Makes You Wear Pants":
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Is this your interpretation of how my creators appeared? It is very interesting how your understanding of them is shaped by other graffiti you have seen."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("I am sure you would like for me to tell you if your interpretation is correct or not. But, that would take all of the fun out of it, little creature!"), 0);
+                    break;
+                case "VinkiGraffiti/vinki/Tiny Slugcat - Ran Out of Orange Paint":
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                    if (Plugin.blueCycles > 1)
+                    {
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("This again? I've already blasted you with the color-changing radiation. Be patient and allow it to take effect... perhaps next cycle."), 0);
+                    }
+                    if (Plugin.blueCycles == 1)
+                    {
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("This again? It seems like you are enjoying being blue, but I don’t want to overload you with radiation. Wait until it fades and I can reapply the colors."), 0);
+                    }
+                    else
+                    {
+                        Plugin.blueCycles = 2;
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Oh, were you hoping for me to make your appearance like this? I suppose I could attempt to radiate you with some color-changing particles, but I’m unsure if it would work for your species."), 0);
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("One second..."), 30);
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Okay, it is finished. It may not appear to have worked, but it will need some time. Keep in mind that it’s only temporary. I don’t want to blast you with too much radiation, silly creature!"), 0);
+                    }
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("It is a simplistic drawing of a green vulture. I can applaud you for the complex perspective you managed to portray with the head, but unfortunately, there is not much more I can say about it."), 0);
+                    break;
             }
         }
 
@@ -1001,6 +1052,12 @@ namespace Vinki
                 }
                 this.owner.TurnOffSSMusic(true);
                 owner.getToWorking = 1f;
+
+                // If Vinki is blue, Moon comments on it first thing
+                if (Plugin.blueCycles == 1)
+                {
+                    dialogBox.NewMessage(Translate("Oh, it appears that the color-changing radiation worked! You look spiffy, little friend~"), 0);
+                }
 
                 // If this is picking up the pearl, or visit 3+ to Moon
                 met = (oracle.room.game.GetStorySession.saveState.miscWorldSaveData.smPearlTagged || oracle.room.game.rainWorld.ExpeditionMode);
