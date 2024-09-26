@@ -45,7 +45,7 @@ namespace Vinki
         ];
         public static List<MenuDepthIllustration> rotatingGhost = [];
         public static bool diedLastCycle = false;
-        public static int blueCycles = 2;
+        public static int blueCycles = 0;
 
         public static bool improvedInput;
         public static Array improvedControls;
