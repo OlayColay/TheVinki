@@ -237,7 +237,7 @@ namespace Vinki
         {
             PlacedObject.CustomDecalData decal = new(null)
             {
-                imageName = "VinkiGraffiti/" + slugcat + Path.DirectorySeparatorChar + Path.GetFileNameWithoutExtension(image),
+                imageName = "VinkiGraffiti/" + slugcat + '/' + Path.GetFileNameWithoutExtension(image),
                 fromDepth = 0.2f
             };
 
