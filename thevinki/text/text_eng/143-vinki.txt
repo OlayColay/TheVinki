@@ -1,16 +1,30 @@
 0-143-vinki
 0 : .  .  . : 60
 
-0 : You little f!@#er. : 60
+0 : I recall giving you specific instructions to not return, little creature. Nevertheless, here you are. : 60
 
 PEBBLESWAIT : 20
 
-0 : Of couse you had to go and find one of my citizen ID drones : 30
+0 : My overseers have been persistently informing me that one of my citizen ID drones has been attuned to you.<LINE>Although the damage to it is extensive, I am capable of resynchronizing it to my structure. : 30
 
-This must be some sort of karmic justice for some crime I have yet to commit.
+I sincerely hope I do not come to regret this.
 
 SPECEVENT : resync
 
 0 : .  .  . : 60
 
-1000 : Unfortunately, my programming binds me to resynchronize it so that my citizen can reach their home.<LINE>So go home and please do not return. : 30
+1000 : My overseers have also shown me the vandalism you consider to be "art." I should not have to tell you that<LINE>most of it is abominable; however, I admit that there were a few pieces that caught my attention. : 30
+
+0 : It seems that you are actually capable of telling a story - albeit a self-centered one. The one you are looking for<LINE>is not here, but there is an alternative. : 30
+
+0 : A pack of scavengers have made themselves at home in my city. Recently, they have attempted to inhabit the galleria<LINE>east of the 12th Council Pillar. However, they have been unsuccessful on account of the hostile creatures that happen to nest there.<LINE>They might appreciate some help. : 30
+
+PEBBLESWAIT : 20
+
+0 : Understand that I do not suggest this to you out of compassion - or even out of pity, little rodent. These scavengers<LINE>have been causing a worrying amount of damage to my structure in their search for their weapons of war against<LINE>these beasts. I simply hope that you are able to persuade them to stop before I am forced to take more drastic measures. : 30
+
+0 : .  .  . : 30
+
+0 : Since it seems you have trouble following my instructions, I will repeat. Travel east of the dome-shaped 12th Council Pillar<LINE>and paint your doodles for the scavengers. Once you gain their trust, convince them to stop pulling apart my structure.<LINE>Do you understand? : 50
+
+0 : Now leave me to return to my work, rascally creature. I do not wish to see you here again. : 30
