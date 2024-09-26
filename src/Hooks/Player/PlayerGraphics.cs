@@ -290,6 +290,17 @@ namespace Vinki
                     }
                 }
             }
+
+            // Moon blue easter egg
+            if (Plugin.blueCycles == 1)
+            {
+                foreach (int i in new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 12 })
+                {
+                    sLeaser.sprites[i].color = Custom.hexToColor("494ed3");
+                }
+                sLeaser.sprites[vinki.shoesSprite].color = Custom.hexToColor("d2701d");
+                sLeaser.sprites[vinki.stripesSprite].color = Custom.hexToColor("d2701d");
+            }
         }
 
         private static void PlayerGraphics_DrawSprites(On.PlayerGraphics.orig_DrawSprites orig, PlayerGraphics self, RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, float timeStacker, Vector2 camPos)
@@ -537,33 +548,33 @@ namespace Vinki
         {
             if (bodyPartIndex == vinki.rainPodsSprite)
             {
-                switch (playerNumber)
+                return playerNumber switch
                 {
-                    case 0: return new Color(0.62f, 0.835f, 1f);
-                    case 1: return new Color(1f, 1f, 1f);
-                    case 2: return new Color(1f, 1f, 1f);
-                    default: return new Color(1f, 1f, 1f);
-                }
+                    0 => new Color(0.62f, 0.835f, 1f),
+                    1 => new Color(1f, 1f, 1f),
+                    2 => new Color(1f, 1f, 1f),
+                    _ => new Color(1f, 1f, 1f),
+                };
             }
             else if (bodyPartIndex == vinki.shoesSprite)
             {
-                switch (playerNumber)
+                return playerNumber switch
                 {
-                    case 0: return new Color(0.62f, 0.835f, 1f);
-                    case 1: return new Color(0.549f, 0.749f, 0.141f);
-                    case 2: return new Color(0.804f, 0.157f, 0.541f);
-                    default: return new Color(1f, 1f, 1f);
-                }
+                    0 => new Color(0.62f, 0.835f, 1f),
+                    1 => new Color(0.549f, 0.749f, 0.141f),
+                    2 => new Color(0.804f, 0.157f, 0.541f),
+                    _ => new Color(1f, 1f, 1f),
+                };
             }
             else if (bodyPartIndex == vinki.glassesSprite)
             {
-                switch (playerNumber)
+                return playerNumber switch
                 {
-                    case 0: return new Color(0.153f, 0.18f, 0.443f);
-                    case 1: return new Color(0.384f, 0.192f, 0.035f);
-                    case 2: return new Color(0.537f, 0.039f, 0.231f);
-                    default: return new Color(1f, 1f, 1f);
-                }
+                    0 => new Color(0.153f, 0.18f, 0.443f),
+                    1 => new Color(0.384f, 0.192f, 0.035f),
+                    2 => new Color(0.537f, 0.039f, 0.231f),
+                    _ => new Color(1f, 1f, 1f),
+                };
             }
             else
             {

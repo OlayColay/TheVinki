@@ -53,6 +53,12 @@ namespace Vinki
                 {
                     miscWorldSave.Set("StoryGraffitisOnMap", storyGraffitisOnMap);
                 }
+
+                // Decrement blueCycles from Moon easter egg
+                if (Plugin.blueCycles > 0)
+                {
+                    Plugin.blueCycles--;
+                }
             }
         }
 

@@ -9,9 +9,6 @@ using SlugBase.SaveData;
 using Smoke;
 using System.Collections.Generic;
 using Menu;
-using PushToMeowMod;
-using MonoMod.RuntimeDetour;
-using MonoMod.RuntimeDetour.HookGen;
 
 namespace Vinki
 {

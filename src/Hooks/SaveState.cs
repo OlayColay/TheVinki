@@ -14,6 +14,7 @@ public static partial class Hooks
             if (name == Enums.vinki)
             {
                 Plugin.introPlayed = false;
+                Plugin.blueCycles = 0;
                 // Reset graffitis on map
                 Plugin.storyGraffitisOnMap = [];
             }
