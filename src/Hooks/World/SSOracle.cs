@@ -211,8 +211,19 @@ namespace Vinki
         private static void SSOracleBehavior_Update(On.SSOracleBehavior.orig_Update orig, SSOracleBehavior self, bool eu)
         {
             orig(self, eu);
-            if (self.oracle.ID != MoreSlugcatsEnums.OracleID.DM || self.player == null || self.player.room != self.oracle.room || self.oracle.room.game.GetStorySession.saveStateNumber != Enums.vinki)
+
+            if (self.oracle.ID != MoreSlugcatsEnums.OracleID.DM || self.oracle.room.game.GetStorySession.saveStateNumber != Enums.vinki)
             {
+                return;
+            }
+
+            // Interrupt when leaving the room, if it's Moon and there is some graffiti dialogue left
+            if (self.player == null || self.player.room != self.oracle.room)
+            {
+                if (self.pearlConversation == null && self.dialogBox.messages.Count > 0)
+                {
+                    self.dialogBox.messages.Clear();
+                }
                 return;
             }
 
@@ -299,7 +310,8 @@ namespace Vinki
             else if (Plugin.blueCycles == 1)
             {
                 // If Vinki is blue, Pebbles comments on it first thing
-                oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("What is wrong with you. Why are you blue?"), 0);
+                oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("What is wrong with you. Why are you blue? Anyways..."), 0);
+                oracleBehavior.throwOutCounter = -100;
             }
 
             orig(self);
@@ -1023,7 +1035,7 @@ namespace Vinki
                     {
                         oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("This again? I've already blasted you with the color-changing radiation. Be patient and allow it to take effect... perhaps next cycle."), 0);
                     }
-                    if (Plugin.blueCycles == 1)
+                    else if (Plugin.blueCycles == 1)
                     {
                         oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("This again? It seems like you are enjoying being blue, but I don’t want to overload you with radiation. Wait until it fades and I can reapply the colors."), 0);
                     }
@@ -1034,7 +1046,6 @@ namespace Vinki
                         oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("One second..."), 30);
                         oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Okay, it is finished. It may not appear to have worked, but it will need some time. Keep in mind that it’s only temporary. I don’t want to blast you with too much radiation, silly creature!"), 0);
                     }
-                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("It is a simplistic drawing of a green vulture. I can applaud you for the complex perspective you managed to portray with the head, but unfortunately, there is not much more I can say about it."), 0);
                     break;
             }
         }
@@ -1056,7 +1067,7 @@ namespace Vinki
                 // If Vinki is blue, Moon comments on it first thing
                 if (Plugin.blueCycles == 1)
                 {
-                    dialogBox.NewMessage(Translate("Oh, it appears that the color-changing radiation worked! You look spiffy, little friend~"), 0);
+                    dialogBox.NewMessage(Translate("Oh, it appears that the color-changing radiation worked! You look spiffy, little friend~ Anyways..."), 0);
                 }
 
                 // If this is picking up the pearl, or visit 3+ to Moon
