@@ -84,6 +84,7 @@ Connection: SS_E06,SS_C08,123,3,4,30,3,1
 Connection: SS_C08,SS_A17,148,31,2,18,0,2
 Connection: SS_A14VI,SS_LAB13,43,31,9,31,0,2
 Connection: SS_A14VI,SS_LAB1,26,2,27,31,3,1
+Connection: SS_LAB420VI,SS_A14VI,43,2,7,2,0,2
 Connection: SS_LAB13,SS_A01,43,31,2,31,0,2
 Connection: SS_A01,SS_LAB6,25,2,29,31,3,1
 Connection: SS_D02,SS_LAB8,101,46,4,6,0,2
