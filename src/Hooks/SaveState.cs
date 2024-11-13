@@ -92,7 +92,7 @@ public static partial class Hooks
             }
         }
 
-        // Attempt to find the graffiti in the vinki graffiti folder. If it's not there, the token be available
+        // Attempt to find the graffiti in the vinki graffiti folder. If it's not there, the token should be available
         string unlockedPath = AssetManager.ResolveDirectory("decals/VinkiGraffiti/vinki/");
         fileName = Array.Find(Directory.GetFiles(unlockedPath).Select(Path.GetFileNameWithoutExtension).ToArray(), (file) => file.EndsWith(tokenString));
         return fileName != null;

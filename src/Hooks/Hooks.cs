@@ -87,6 +87,9 @@ namespace Vinki
             ApplyRegionGateHooks();
             ApplyAbstractCreatureHooks();
             ApplyMusicHooks();
+            ApplyCollectiblesTrackerHooks();
+            ApplyMiscProgressionDataHooks();
+            ApplyRainWorldHooks();
         }
 
         public static void RemoveHooks()
@@ -114,6 +117,8 @@ namespace Vinki
             RemoveRegionGateHooks();
             RemoveAbstractCreatureHooks();
             RemoveMusicHooks();
+            RemoveCollectiblesTrackerHooks();
+            RemoveMiscProgressionDataHooks();
 
             RemoveMenuSceneHooks();
 

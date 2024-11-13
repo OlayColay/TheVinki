@@ -72,6 +72,15 @@ public static partial class Hooks
         {
             self.anythingUnlocked = true;
             UnlockGraffitiMidgame(ext.tokenString);
+            if (ExtEnumBase.TryParse(typeof(Enums.GraffitiUnlockID), ext.tokenString, true, out ExtEnumBase graffitiToken) &&
+                graffitiToken.enumType == typeof(Enums.GraffitiUnlockID))
+            {
+                self.room.game.rainWorld.progression.miscProgressionData.SetTokenCollected(graffitiToken as Enums.GraffitiUnlockID);
+            }
+            else
+            {
+                Plugin.VLogger.LogWarning("Graffiti token " + ext.tokenString + " is not registered with a GraffitiUnlock ID (defined in Enums.cs), so it will not show in the Collectibles tracker!");
+            }
         }
     }
 

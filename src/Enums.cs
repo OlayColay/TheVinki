@@ -68,5 +68,75 @@ public static class Enums
         Color.Glasses = new PlayerColor("Glasses");
 
         Sound.Grind1A = new SoundID("Vinki_Grind_LOOP", true);
+
+        GraffitiUnlockID.Init();
+    }
+
+    public class GraffitiUnlockID(string value, bool register = false) : ExtEnum<GraffitiUnlockID>(value, register)
+    {
+        public static readonly GraffitiUnlockID AcidBath = new("Acid Bath", true);
+        public static readonly GraffitiUnlockID AngryPinecone = new("Angry Pinecone", true);
+        public static readonly GraffitiUnlockID Batnip = new("Batnip", true);
+        public static readonly GraffitiUnlockID CityView = new("City View", true);
+        public static readonly GraffitiUnlockID Crybaby = new("Crybaby", true);
+        public static readonly GraffitiUnlockID DandelionPeaches = new("Dandelion Peaches", true);
+        public static readonly GraffitiUnlockID DropwigThief = new("Dropwig Thief", true);
+        public static readonly GraffitiUnlockID Echo = new("Echo", true);
+        public static readonly GraffitiUnlockID GarbageAlarm = new("Garbage Alarm", true);
+        public static readonly GraffitiUnlockID GummyLizard = new("Gummy Lizard", true);
+        public static readonly GraffitiUnlockID HolyGooieduck = new("Holy Gooieduck", true);
+        public static readonly GraffitiUnlockID Jellyfish = new("Jellyfish", true);
+        public static readonly GraffitiUnlockID JetfishFriend = new("Jetfish Friend", true);
+        public static readonly GraffitiUnlockID LeviathanJaws = new("Leviathan Jaws", true);
+        public static readonly GraffitiUnlockID LilMoon = new("Lil Moon", true);
+        public static readonly GraffitiUnlockID LilypuckKarma = new("Lilypuck Karma", true);
+        public static readonly GraffitiUnlockID LivingPaintbrush = new("Living Paintbrush", true);
+        public static readonly GraffitiUnlockID LoudPebbles = new("Loud Pebbles", true);
+        public static readonly GraffitiUnlockID MirosJaws = new("Miros Jaws", true);
+        public static readonly GraffitiUnlockID NeuronDance = new("Neuron Dance", true);
+        public static readonly GraffitiUnlockID NoodleSpears = new("Noodle Spears", true);
+        public static readonly GraffitiUnlockID OverseerKiss = new("Overseer Kiss", true);
+        public static readonly GraffitiUnlockID PopPopSnails = new("Pop Pop Snails", true);
+        public static readonly GraffitiUnlockID QuestionableCentipede = new("Questionable Centipede", true);
+        public static readonly GraffitiUnlockID SlugcatMoon = new("Slugcat Moon", true);
+        public static readonly GraffitiUnlockID SporeBombs = new("Spore Bombs", true);
+        public static readonly GraffitiUnlockID Squidburger = new("Squidburger", true);
+        public static readonly GraffitiUnlockID StolenFace = new("Stolen Face", true);
+        public static readonly GraffitiUnlockID VultureRemote = new("Vulture Remote", true);
+        public static readonly GraffitiUnlockID WeaponPile = new("Weapon Pile", true);
+
+        public static void Init()
+        {
+            values = new ExtEnumType();
+            values.AddEntry(AcidBath.value);
+            values.AddEntry(AngryPinecone.value);
+            values.AddEntry(Batnip.value);
+            values.AddEntry(CityView.value);
+            values.AddEntry(Crybaby.value);
+            values.AddEntry(DandelionPeaches.value);
+            values.AddEntry(DropwigThief.value);
+            values.AddEntry(Echo.value);
+            values.AddEntry(GarbageAlarm.value);
+            values.AddEntry(GummyLizard.value);
+            values.AddEntry(HolyGooieduck.value);
+            values.AddEntry(Jellyfish.value);
+            values.AddEntry(JetfishFriend.value);
+            values.AddEntry(LeviathanJaws.value);
+            values.AddEntry(LilMoon.value);
+            values.AddEntry(LivingPaintbrush.value);
+            values.AddEntry(LoudPebbles.value);
+            values.AddEntry(MirosJaws.value);
+            values.AddEntry(NeuronDance.value);
+            values.AddEntry(NoodleSpears.value);
+            values.AddEntry(OverseerKiss.value);
+            values.AddEntry(PopPopSnails.value);
+            values.AddEntry(QuestionableCentipede.value);
+            values.AddEntry(SlugcatMoon.value);
+            values.AddEntry(SporeBombs.value);
+            values.AddEntry(Squidburger.value);
+            values.AddEntry(StolenFace.value);
+            values.AddEntry(VultureRemote.value);
+            values.AddEntry(WeaponPile.value);
+        }
     }
 }
