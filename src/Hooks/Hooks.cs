@@ -88,7 +88,6 @@ namespace Vinki
             ApplyAbstractCreatureHooks();
             ApplyMusicHooks();
             ApplyCollectiblesTrackerHooks();
-            ApplyMiscProgressionDataHooks();
             ApplyRainWorldHooks();
         }
 
@@ -118,7 +117,6 @@ namespace Vinki
             RemoveAbstractCreatureHooks();
             RemoveMusicHooks();
             RemoveCollectiblesTrackerHooks();
-            RemoveMiscProgressionDataHooks();
 
             RemoveMenuSceneHooks();
 
