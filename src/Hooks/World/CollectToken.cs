@@ -30,11 +30,48 @@ public static partial class Hooks
         new Hook(typeof(CollectToken).GetProperty(nameof(CollectToken.TokenColor), System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance).GetGetMethod(), CollectToken_get_TokenColor);
         On.CollectToken.Pop += CollectToken_Pop;
         On.CollectToken.Update += CollectToken_Update;
+        On.CollectToken.InitiateSprites += CollectToken_InitiateSprites;
+        On.CollectToken.AddToContainer += CollectToken_AddToContainer;
+        On.CollectToken.DrawSprites += CollectToken_DrawSprites;
 
         On.CollectToken.CollectTokenData.FromString += CollectTokenData_FromString;
 
         TokenRepresentation.TokenName += TokenRepresentation_TokenName;
     }
+
+    private static void CollectToken_InitiateSprites(On.CollectToken.orig_InitiateSprites orig, CollectToken self, RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam)
+    {
+        orig(self, sLeaser, rCam);
+
+        if ((self.placedObj.data as CollectToken.CollectTokenData).Vinki().vinkiToken)
+        {
+            sLeaser.sprites[self.GoldSprite].color = Color.Lerp(new Color(0f, 0f, 0f), RainWorld.GoldRGB, 0.2f);
+            sLeaser.sprites[self.GoldSprite].shader = rCam.game.rainWorld.Shaders["FlatLight"];
+        }
+    }
+
+    private static void CollectToken_AddToContainer(On.CollectToken.orig_AddToContainer orig, CollectToken self, RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, FContainer newContatiner)
+    {
+        orig(self, sLeaser, rCam, newContatiner);
+
+        if ((self.placedObj.data as CollectToken.CollectTokenData).Vinki().vinkiToken)
+        {
+            int index = rCam.ReturnFContainer("Water").GetChildIndex(sLeaser.sprites[0]);
+            rCam.ReturnFContainer("Water").AddChildAtIndex(sLeaser.sprites[self.GoldSprite], index);
+            rCam.ReturnFContainer("GrabShaders").RemoveChild(sLeaser.sprites[self.GoldSprite]);
+        }
+    }
+
+    private static void CollectToken_DrawSprites(On.CollectToken.orig_DrawSprites orig, CollectToken self, RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, float timeStacker, Vector2 camPos)
+    {
+        orig(self, sLeaser, rCam, timeStacker, camPos);
+
+        if ((self.placedObj.data as CollectToken.CollectTokenData).Vinki().vinkiToken)
+        {
+            sLeaser.sprites[self.GoldSprite].alpha *= 0.75f;
+        }
+    }
+
     private static void RemoveCollectTokenHooks()
     {
         HookEndpointManager.Remove(typeof(CollectToken).GetProperty(nameof(CollectToken.TokenColor), System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance).GetGetMethod(), CollectToken_get_TokenColor);
