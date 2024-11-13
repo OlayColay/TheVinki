@@ -54,32 +54,32 @@ public static partial class Hooks
 
         RainWorldData rainWorldData = menu.manager.rainWorld.Vinki();
         CollectiblesTrackerData ext = self.Vinki();
-        for (int l = 0; l < self.displayRegions.Count; l++)
+        foreach (string region in self.displayRegions)
         {
-            if (self.collectionData == null || !self.collectionData.regionsVisited.Contains(self.displayRegions[l]))
+            if (self.collectionData == null || !self.collectionData.regionsVisited.Contains(region))
             {
                 //Plugin.VLogger.LogInfo("collectionData does not include region: " + self.displayRegions[l]);
                 continue;
             }
-            if (!rainWorldData.regionGraffitiTokens.ContainsKey(self.displayRegions[l]))
+            if (!rainWorldData.regionGraffitiTokens.ContainsKey(region))
             {
                 //Plugin.VLogger.LogInfo("regionGraffitiTokens does not include region: " + self.displayRegions[l]);
             }
 
             //Plugin.VLogger.LogInfo("regionGraffitiTokens for " + self.displayRegions[l] + ": " + string.Join(", ", rainWorldData.regionGraffitiTokens[self.displayRegions[l]]));
-            for (int m = 0; m < rainWorldData.regionGraffitiTokens[self.displayRegions[l]].Count; m++)
+            foreach (Enums.GraffitiUnlockID token in rainWorldData.regionGraffitiTokens[region])
             {
-                self.spriteColors[self.displayRegions[l]].Add(new Color(1f, 0.051f, 0.965f));
-                if (!ext.unlockedGraffitis.Contains(rainWorldData.regionGraffitiTokens[self.displayRegions[l]][m]))
+                self.spriteColors[region].Add(new Color(1f, 0.051f, 0.965f));
+                if (!ext.unlockedGraffitis.Contains(token))
                 {
-                    self.sprites[self.displayRegions[l]].Add(new FSprite("ctOff", true));
+                    self.sprites[region].Add(new FSprite("ctOff", true));
                 }
                 else
                 {
-                    self.sprites[self.displayRegions[l]].Add(new FSprite("ctOn", true));
+                    self.sprites[region].Add(new FSprite("ctOn", true));
                 }
-                self.sprites[self.displayRegions[l]][self.sprites[self.displayRegions[l]].Count - 1].color = self.spriteColors[self.displayRegions[l]][self.spriteColors[self.displayRegions[l]].Count - 1];
-                container.AddChild(self.sprites[self.displayRegions[l]][self.sprites[self.displayRegions[l]].Count - 1]);
+                self.sprites[region][self.sprites[region].Count - 1].color = self.spriteColors[region][self.spriteColors[region].Count - 1];
+                container.AddChild(self.sprites[region][self.sprites[region].Count - 1]);
             }
         }
     }
