@@ -109,7 +109,7 @@ public static partial class Hooks
         }
         else if (self.sceneID == Enums.GraffitiMap)
         {
-            Plugin.VLogger.LogInfo("Building Graffiti Map Scene!\n" + StackTraceUtility.ExtractStackTrace());
+            //Plugin.VLogger.LogInfo("Building Graffiti Map Scene!\n" + StackTraceUtility.ExtractStackTrace());
             self.sceneFolder = "Scenes" + Path.DirectorySeparatorChar.ToString() + "Graffiti Map";
             self.AddIllustration(new MenuDepthIllustration(self.menu, self, self.sceneFolder, "graffiti_map", new Vector2(0f, 0f), 5f, MenuDepthIllustration.MenuShader.Basic));
             self.AddIllustration(GraffitiQuestDialog.cloud = new MenuDepthIllustration(self.menu, self, self.sceneFolder, "cloud", new Vector2(680f, 324f), 5f, MenuDepthIllustration.MenuShader.Basic));

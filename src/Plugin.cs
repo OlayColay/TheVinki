@@ -65,13 +65,13 @@ namespace Vinki
         public void OnEnable()
         {
             VLogger = Logger;
-            VLogger.LogInfo("OnEnable\n" + StackTraceUtility.ExtractStackTrace());
+            //VLogger.LogInfo("OnEnable\n" + StackTraceUtility.ExtractStackTrace());
             Hooks.ApplyInit();
         }
 
         public void OnDisable()
         {
-            VLogger.LogInfo("OnDisable\n" + StackTraceUtility.ExtractStackTrace());
+            //VLogger.LogInfo("OnDisable\n" + StackTraceUtility.ExtractStackTrace());
             if (restartMode) {
                 Hooks.RemoveHooks();
             };

@@ -44,13 +44,13 @@ public static partial class Hooks
             return;
         }
 
-        Plugin.VLogger.LogInfo("Gold tokens: " + string.Join("\t", menu.manager.rainWorld.regionGoldTokens.FirstOrDefault().Value));
-        Plugin.VLogger.LogInfo(string.Join("\t", ExtEnum<MultiplayerUnlocks.LevelUnlockID>.values.entries));
-        if (menu.manager.rainWorld.Vinki().regionGraffitiTokens != null)
-        {
-            Plugin.VLogger.LogInfo("Graffiti tokens: " + string.Join("\t", menu.manager.rainWorld.Vinki().regionGraffitiTokens["dm"]));
-            Plugin.VLogger.LogInfo(string.Join("\t", ExtEnum<Enums.GraffitiUnlockID>.values.entries));
-        }
+        //Plugin.VLogger.LogInfo("Gold tokens: " + string.Join("\t", menu.manager.rainWorld.regionGoldTokens.FirstOrDefault().Value));
+        //Plugin.VLogger.LogInfo(string.Join("\t", ExtEnum<MultiplayerUnlocks.LevelUnlockID>.values.entries));
+        //if (menu.manager.rainWorld.Vinki().regionGraffitiTokens != null)
+        //{
+        //    Plugin.VLogger.LogInfo("Graffiti tokens: " + string.Join("\t", menu.manager.rainWorld.Vinki().regionGraffitiTokens["dm"]));
+        //    Plugin.VLogger.LogInfo(string.Join("\t", ExtEnum<Enums.GraffitiUnlockID>.values.entries));
+        //}
 
         RainWorldData rainWorldData = menu.manager.rainWorld.Vinki();
         CollectiblesTrackerData ext = self.Vinki();
@@ -58,15 +58,15 @@ public static partial class Hooks
         {
             if (self.collectionData == null || !self.collectionData.regionsVisited.Contains(self.displayRegions[l]))
             {
-                Plugin.VLogger.LogInfo("collectionData does not include region: " + self.displayRegions[l]);
+                //Plugin.VLogger.LogInfo("collectionData does not include region: " + self.displayRegions[l]);
                 continue;
             }
             if (!rainWorldData.regionGraffitiTokens.ContainsKey(self.displayRegions[l]))
             {
-                Plugin.VLogger.LogInfo("regionGraffitiTokens does not include region: " + self.displayRegions[l]);
+                //Plugin.VLogger.LogInfo("regionGraffitiTokens does not include region: " + self.displayRegions[l]);
             }
 
-            Plugin.VLogger.LogInfo("regionGraffitiTokens for " + self.displayRegions[l] + ": " + string.Join(", ", rainWorldData.regionGraffitiTokens[self.displayRegions[l]]));
+            //Plugin.VLogger.LogInfo("regionGraffitiTokens for " + self.displayRegions[l] + ": " + string.Join(", ", rainWorldData.regionGraffitiTokens[self.displayRegions[l]]));
             for (int m = 0; m < rainWorldData.regionGraffitiTokens[self.displayRegions[l]].Count; m++)
             {
                 self.spriteColors[self.displayRegions[l]].Add(new Color(1f, 0.051f, 0.965f));
@@ -89,11 +89,11 @@ public static partial class Hooks
         orig(self, timeStacker);
         for (int i = 0; i < self.displayRegions.Count; i++)
         {
-            Plugin.VLogger.LogInfo("sprites for " + self.displayRegions[i] + ":");
+            //Plugin.VLogger.LogInfo("sprites for " + self.displayRegions[i] + ":");
             for (int j = 0; j < self.sprites[self.displayRegions[i]].Count; j++)
             {
                 FSprite s = self.sprites[self.displayRegions[i]][j];
-                Plugin.VLogger.LogInfo(j + ": " + s.color.ToString() + "\ty:" + s.y);
+                //Plugin.VLogger.LogInfo(j + ": " + s.color.ToString() + "\ty:" + s.y);
             }
         }
     }

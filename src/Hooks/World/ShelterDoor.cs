@@ -46,7 +46,7 @@ namespace Vinki
                             itemType = itemType.Substring(itemType.IndexOf('.') + 1);
                         }
 
-                        VLogger.LogInfo("Adding shelter item: " + itemType);
+                        //VLogger.LogInfo("Adding shelter item: " + itemType);
                         shelterItems.Add(itemType);
                     }
                 }

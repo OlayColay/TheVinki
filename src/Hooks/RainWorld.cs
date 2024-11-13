@@ -68,10 +68,8 @@ public static partial class Hooks
             c.Emit(OpCodes.Ldloc, placedObjectIndex);
             c.EmitDelegate((RainWorld self, string region, PlacedObject placedObject) =>
             {
-                Plugin.VLogger.LogInfo("Building token cache");
                 if (placedObject.type == PlacedObject.Type.GoldToken && ExtEnum<Enums.GraffitiUnlockID>.values.entries.Contains((placedObject.data as CollectToken.CollectTokenData).tokenString))
                 {
-                    Plugin.VLogger.LogInfo("Building graffiti token cache");
                     RainWorldData ext = self.Vinki();
                     string fileName = region.ToLowerInvariant();
                     Enums.GraffitiUnlockID levelUnlockID = new((placedObject.data as CollectToken.CollectTokenData).tokenString, false);
@@ -166,7 +164,7 @@ public static partial class Hooks
         {
             ext.regionGraffitiTokens[fileName] = [];
         }
-        Plugin.VLogger.LogInfo("Building token cache for " + fileName);
+        //Plugin.VLogger.LogInfo("Building token cache for " + fileName);
 
         // I can't figure out how to IL this, so I'm hard-coding the region graffiti tokens for now
         BuildGraffitiTokenCacheManually(ext, fileName);

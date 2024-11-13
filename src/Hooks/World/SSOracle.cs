@@ -237,12 +237,12 @@ namespace Vinki
                     if (self.inspectPearl == null && self.conversation == null && physicalObject is DataPearl && (physicalObject as DataPearl).grabbedBy.Count == 0 && ((physicalObject as DataPearl).AbstractPearl.dataPearlType != DataPearl.AbstractDataPearl.DataPearlType.PebblesPearl || (self.oracle.ID == MoreSlugcatsEnums.OracleID.DM && ((physicalObject as DataPearl).AbstractPearl as PebblesPearl.AbstractPebblesPearl).color >= 0)) && !self.readDataPearlOrbits.Contains((physicalObject as DataPearl).AbstractPearl) && readingAction && self.oracle.room.game.GetStorySession.saveState.deathPersistentSaveData.theMark && !self.talkedAboutThisSession.Contains(physicalObject.abstractPhysicalObject.ID))
                     {
                         self.inspectPearl = (physicalObject as DataPearl);
-                        if (RainWorld.ShowLogs)
-                        {
-                            string str = "---------- INSPECT PEARL TRIGGERED: ";
-                            DataPearl.AbstractDataPearl.DataPearlType dataPearlType = self.inspectPearl.AbstractPearl.dataPearlType;
-                            VLogger.LogInfo(str + (dataPearlType?.ToString()));
-                        }
+                        //if (RainWorld.ShowLogs)
+                        //{
+                        //    string str = "---------- INSPECT PEARL TRIGGERED: ";
+                        //    DataPearl.AbstractDataPearl.DataPearlType dataPearlType = self.inspectPearl.AbstractPearl.dataPearlType;
+                        //    VLogger.LogInfo(str + (dataPearlType?.ToString()));
+                        //}
                         if (self.inspectPearl.AbstractPearl.dataPearlType.value == "Vinki_Pearl_1")
                         {
                             _ = ShowImage(self);
@@ -533,7 +533,7 @@ namespace Vinki
                     }
                     if (inActionCounter > 175)
                     {
-                        VLogger.LogInfo("Done with conversation.");
+                        //VLogger.LogInfo("Done with conversation.");
                         owner.conversation = null;
                         owner.NewAction(Enums.SSOracle.Vinki_SSActionGetOut);
                     }
