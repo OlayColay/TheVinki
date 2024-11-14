@@ -183,6 +183,7 @@ namespace Vinki
             VinkiConfig.RegisterOI();
 
             // Get sprite atlases
+            Futile.atlasManager.LoadImage("Kill_Slugcat_vinki");
             Futile.atlasManager.LoadAtlas("atlases/SprayCan");
             Futile.atlasManager.LoadAtlas("atlases/glasses");
             Futile.atlasManager.LoadAtlas("atlases/rainpods");
