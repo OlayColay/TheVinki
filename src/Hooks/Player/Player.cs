@@ -9,6 +9,8 @@ using SlugBase.SaveData;
 using Smoke;
 using System.Collections.Generic;
 using Menu;
+using MonoMod.Cil;
+using Mono.Cecil.Cil;
 
 namespace Vinki
 {
@@ -113,7 +115,15 @@ namespace Vinki
         // Add hooks
         private static void ApplyPlayerHooks()
         {
-            On.Player.ctor += Player_ctor;
+            try
+            {
+                IL.Player.TerrainImpact += Player_TerrainImpact;
+            }
+            catch (Exception ex)
+            {
+                Plugin.VLogger.LogError("Could not apply TerrainImpact IL hook\n" + ex.Message);
+            }
+
             On.Player.Jump += Player_Jump;
             On.Player.MovementUpdate += Player_Move;
             On.Player.Update += Player_Update;
@@ -123,25 +133,11 @@ namespace Vinki
 
         private static void RemovePlayerHooks()
         {
-            On.Player.ctor -= Player_ctor;
             On.Player.Jump -= Player_Jump;
             On.Player.MovementUpdate -= Player_Move;
             On.Player.Update -= Player_Update;
             On.Player.JollyUpdate -= Player_JollyUpdate;
             On.Player.CanBeSwallowed -= Player_CanBeSwallowed;
-        }
-
-        private static void Player_ctor(On.Player.orig_ctor orig, Player self, AbstractCreature abstractCreature, World world)
-        {
-            orig(self, abstractCreature, world);
-
-            if (self.SlugCatClass != Enums.vinki)
-            {
-                return;
-            }
-
-            // It takes about 50% more height for Vinki to take fall damage
-            self.impactTreshhold = 45f;
         }
 
         private static void Player_JollyUpdate(On.Player.orig_JollyUpdate orig, Player self, bool eu)
@@ -973,6 +969,35 @@ namespace Vinki
             
             // Don't want Spearmaster to be able to swallow a can, sorry Spear :(
             return (!ModManager.MSC || !(self.SlugCatClass == MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName.Spear)) && (testObj is SprayCan);
+        }
+
+        private static void Player_TerrainImpact(MonoMod.Cil.ILContext il)
+        {
+            var c = new ILCursor(il);
+
+            try
+            {
+                c.GotoNext(MoveType.Before,
+                    x => x.MatchLdcI4(0),
+                    x => x.MatchStloc(5)
+                );
+
+                // Dying from fall damage requires speed to be 80 as Vinki (same as Gourmand)
+                c.Emit(OpCodes.Ldarg_0);
+                c.Emit(OpCodes.Ldloc_0);
+                c.EmitDelegate((Player player, float deathSpeed) => player.IsVinki() ? 80f : deathSpeed);
+                c.Emit(OpCodes.Stloc_0);
+
+                // Getting stunned from fall damage requires speed to be 80 as Vinki (same as Gourmand)
+                c.Emit(OpCodes.Ldarg_0);
+                c.Emit(OpCodes.Ldloc_1);
+                c.EmitDelegate((Player player, float stunSpeed) => player.IsVinki() ? 45f : stunSpeed);
+                c.Emit(OpCodes.Stloc_1);
+            }
+            catch (Exception e)
+            {
+                Plugin.VLogger.LogError("Could not complete TerrainImpact IL Hook\n" + e.Message + '\n' + e.StackTrace);
+            }
         }
 
         public static void PushToMeowMain_DoMeow(Action<object, Player, bool> orig, object self, Player player, bool isShortMeow = false)
