@@ -1047,6 +1047,11 @@ namespace Vinki
                         oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Okay, it is finished. It may not appear to have worked, but it will need some time. Keep in mind that it’s only temporary. I don’t want to blast you with too much radiation, silly creature!"), 0);
                     }
                     break;
+                case "VinkiGraffiti/vinki/Salami_Hunter - Lizzilla":
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("This lizard looks very angry! I wonder what you did to cause it to be so mad at you."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("I know some variations of lizards can spit sticky mucus at their prey, but a beam of energy would be incredibly dangerous. Stay safe, little friend!"), 0);
+                    break;
             }
         }
 
