@@ -10,10 +10,14 @@ public static partial class Hooks
     private static void ApplyRegionGateHooks()
     {
         new Hook(typeof(RegionGate).GetProperty(nameof(RegionGate.MeetRequirement), System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance).GetGetMethod(), RegionGate_get_MeetRequirement);
+    
+        On.RegionGate.customOEGateRequirements += RegionGate_customOEGateRequirements;
     }
     private static void RemoveRegionGateHooks()
     {
         HookEndpointManager.Remove(typeof(RegionGate).GetProperty(nameof(RegionGate.MeetRequirement), System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance).GetGetMethod(), RegionGate_get_MeetRequirement);
+        
+        On.RegionGate.customOEGateRequirements -= RegionGate_customOEGateRequirements;
     }
 
     public delegate bool orig_MeetRequirement(RegionGate self);
@@ -36,5 +40,10 @@ public static partial class Hooks
         }
         
         return orig(self);
+    }
+
+    private static bool RegionGate_customOEGateRequirements(On.RegionGate.orig_customOEGateRequirements orig, RegionGate self)
+    {
+        return (self.room.game.GetStorySession.saveState.saveStateNumber == Enums.vinki) || orig(self);
     }
 }

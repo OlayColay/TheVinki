@@ -26,40 +26,6 @@ namespace Vinki
         {
             On.RainWorld.OnModsInit += Extras.WrapInit(LoadResources);
             On.RainWorld.PostModsInit += RainWorld_PostModsInit;
-
-            On.RainWorldGame.ctor += RainWorldGame_ctor;
-        }
-
-        private static void RainWorldGame_ctor(On.RainWorldGame.orig_ctor orig, RainWorldGame self, ProcessManager manager)
-        {
-            orig(self, manager);
-
-            if (restartMode)
-            {
-                Enums.RegisterValues();
-                ApplyHooks();
-
-                LoadResources(self.rainWorld);
-                RainWorld_PostModsInit((_) => { }, self.rainWorld);
-            }
-
-            if (self.IsStorySession && self.GetStorySession.saveStateNumber == Enums.vinki)
-            { 
-                SlugBaseSaveData miscWorldSave = SaveDataExtension.GetSlugBaseData(self.GetStorySession.saveState.miscWorldSaveData);
-                miscWorldSave.Set("AutoOpenMap", false);
-
-                // Save story graffiti on the map before cycle ends
-                if (storyGraffitisOnMap.Length > 0)
-                {
-                    miscWorldSave.Set("StoryGraffitisOnMap", storyGraffitisOnMap);
-                }
-
-                // Decrement blueCycles from Moon easter egg
-                if (Plugin.blueCycles > 0)
-                {
-                    Plugin.blueCycles--;
-                }
-            }
         }
 
         // Add hooks
@@ -89,6 +55,8 @@ namespace Vinki
             ApplyMusicHooks();
             ApplyCollectiblesTrackerHooks();
             ApplyRainWorldHooks();
+            ApplyRainWorldGameHooks();
+            ApplyRegionGateHooks();
         }
 
         public static void RemoveHooks()
@@ -117,6 +85,8 @@ namespace Vinki
             RemoveAbstractCreatureHooks();
             RemoveMusicHooks();
             RemoveCollectiblesTrackerHooks();
+            RemoveRainWorldGameHooks();
+            RemoveRegionGateHooks();
 
             RemoveMenuSceneHooks();
 
