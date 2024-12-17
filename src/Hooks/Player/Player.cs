@@ -988,7 +988,7 @@ namespace Vinki
                 c.EmitDelegate((Player player, float deathSpeed) => player.IsVinki() ? 80f : deathSpeed);
                 c.Emit(OpCodes.Stloc_0);
 
-                // Getting stunned from fall damage requires speed to be 80 as Vinki (same as Gourmand)
+                // Getting stunned from fall damage requires speed to be 45 as Vinki
                 c.Emit(OpCodes.Ldarg_0);
                 c.Emit(OpCodes.Ldloc_1);
                 c.EmitDelegate((Player player, float stunSpeed) => player.IsVinki() ? 45f : stunSpeed);
