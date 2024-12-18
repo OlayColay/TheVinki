@@ -148,7 +148,7 @@ namespace Vinki
             AddTitle(1);
             AddDivider(557f, 1);
             AddSubtitle(530f, "Art", 1);
-            AddText(510f, "Beep", 1);
+            AddText(510f, "Beep    burnerXIII    Tsuno", 1);
             AddSubtitle(470f, "Coding", 1);
             AddText(450f, "OlayColay", 1);
             AddSubtitle(410f, "Cursed Art", 1);
@@ -163,8 +163,9 @@ namespace Vinki
             AddText(150f, "Beep    MaxDubstep    OlayColay    TarnishedPotato    Tsuno", 1);
             AddSubtitle(60f, "Special Thanks", 1);
             AddText(25f, "Developers of this mod's dependencies\n" +
-                "Abigail    a doku    AxoTheAxolotl    Azura Hardware    banba fan   BreadwardBolero    BUGS    Doop    Eversplode    goof\n" +
-                "Johnn    Nico    Rae    Repeat    Sadman    Salami_Hunter    skrybl    Sunbloom    SunnyBeam    TacticalBombs    Vinyla    whatamidoing\n",
+                "Abigail    a doku    AxoTheAxolotl    Azura Hardware    banba fan   BreadwardBolero\n" +
+                "BUGS    Doop    Eversplode    goof    Johnn    Nico    Rae    Repeat    Sadman\n" +
+                "Salami_Hunter    skrybl    Sunbloom    SunnyBeam    TacticalBombs    Vinyla    whatamidoing\n",
             1);
 
             // Vinki Graffiti tab
