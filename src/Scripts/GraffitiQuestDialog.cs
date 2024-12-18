@@ -21,7 +21,7 @@ namespace Menu
             pages[0].pos = new Vector2(0.01f, 0f);
             Page page = pages[0];
             page.pos.y += 2000f;
-            scene = new InteractiveMenuScene(this, pages[0], Enums.GraffitiMap);
+            scene = new InteractiveMenuScene(this, pages[0], Enums.MenuSceneID.GraffitiMap);
             pages[0].subObjects.Add(scene);
 
             float cancelButtonWidth = GetCancelButtonWidth(CurrLang);

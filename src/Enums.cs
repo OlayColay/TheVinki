@@ -8,7 +8,6 @@ public static class Enums
     public static readonly SlugcatStats.Name vinki = new(nameof(vinki), false);
     public static readonly ProcessManager.ProcessID FullscreenVideo = new(nameof(FullscreenVideo), true);
     public static readonly string vinkiStr = nameof(vinki);
-    public static readonly MenuScene.SceneID GraffitiMap = new(nameof(GraffitiMap), true);
 
     public static readonly UnityEngine.Color SparkColor = new UnityEngine.Color32(0xd1, 0xfa, 0xff, 0xff);
 
@@ -58,6 +57,18 @@ public static class Enums
         public static SoundID Grind1A = new("Vinki_Grind_LOOP", true);
     }
 
+    public static class SlideShowID
+    {
+        public static SlideShow.SlideShowID VinkiAltEnd;
+    }
+
+    public static class MenuSceneID
+    {
+        public static readonly MenuScene.SceneID GraffitiMap = new(nameof(GraffitiMap), true);
+
+        public static readonly MenuScene.SceneID AltEnd_Vinki_3 = new(nameof(AltEnd_Vinki_3), true);
+    }
+
     public static void RegisterValues()
     {
         Color.Body = new PlayerColor("Body");
@@ -70,6 +81,8 @@ public static class Enums
         Sound.Grind1A = new SoundID("Vinki_Grind_LOOP", true);
 
         GraffitiUnlockID.Init();
+
+        SlideShowID.VinkiAltEnd = new("altending_vinki", false);
     }
 
     public class GraffitiUnlockID(string value, bool register = false) : ExtEnum<GraffitiUnlockID>(value, register)

@@ -107,7 +107,7 @@ public static partial class Hooks
                 image.alpha = (imageName == fileName) ? 1f : 0f;
             }
         }
-        else if (self.sceneID == Enums.GraffitiMap)
+        else if (self.sceneID == Enums.MenuSceneID.GraffitiMap)
         {
             //Plugin.VLogger.LogInfo("Building Graffiti Map Scene!\n" + StackTraceUtility.ExtractStackTrace());
             self.sceneFolder = "Scenes" + Path.DirectorySeparatorChar.ToString() + "Graffiti Map";

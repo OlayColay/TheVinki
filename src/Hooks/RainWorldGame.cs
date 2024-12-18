@@ -5,7 +5,6 @@ using System.Linq;
 
 namespace Vinki;
 
-
 public static partial class Hooks
 {
 	private static void ApplyRainWorldGameHooks()
@@ -64,10 +63,7 @@ public static partial class Hooks
         {
             return;
         }
-        if (self.manager.musicPlayer != null)
-        {
-            self.manager.musicPlayer.FadeOutAllSongs(20f);
-        }
+        self.manager.musicPlayer?.FadeOutAllSongs(20f);
         if (self.Players[0].realizedCreature != null && (self.Players[0].realizedCreature as Player).redsIllness != null)
         {
             (self.Players[0].realizedCreature as Player).redsIllness.fadeOutSlow = true;
@@ -95,7 +91,7 @@ public static partial class Hooks
         self.manager.rainWorld.progression.SaveWorldStateAndProgression(false);
 
         self.manager.statsAfterCredits = true;
-        self.manager.nextSlideshow = MoreSlugcatsEnums.SlideShowID.SurvivorAltEnd;
+        self.manager.nextSlideshow = Enums.SlideShowID.VinkiAltEnd;
         self.manager.RequestMainProcessSwitch(ProcessManager.ProcessID.SlideShow);
     }
 }
