@@ -1,4 +1,5 @@
-﻿using SlugBase.SaveData;
+﻿using MoreSlugcats;
+using SlugBase.SaveData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,10 @@ public static partial class Hooks
         On.Room.Loaded += Room_Loaded;
 
         On.RoomSpecificScript.AddRoomSpecificScript += RoomSpecificScript_AddRoomSpecificScript;
+
+        On.MoreSlugcats.MSCRoomSpecificScript.OE_NPCControl.Update += OE_NPCControl_Update;
     }
+
     private static void RemoveRoomHooks()
     {
         On.AbstractRoom.RealizeRoom -= AbstractRoom_RealizeRoom;
@@ -192,6 +196,141 @@ public static partial class Hooks
             (self.game.GetStorySession.saveState.cycleNumber == 1 && VinkiConfig.SkipIntro.Value)))
         {
             self.AddObject(new CloseGateSsUw(self));
+        }
+    }
+
+    private static void OE_NPCControl_Update(On.MoreSlugcats.MSCRoomSpecificScript.OE_NPCControl.orig_Update orig, MoreSlugcats.MSCRoomSpecificScript.OE_NPCControl self, bool eu)
+    {
+        if (self.room == null)
+        {
+            return;
+        }
+
+        if (self.room.game.GetStorySession.saveStateNumber != Enums.vinki)
+        {
+            orig(self, eu);
+            return;
+        }
+
+        self.evenUpdate = eu;
+        if (!self.room.game.IsStorySession || (!self.npcSpawned && self.room.game.GetStorySession.saveState.oeEncounters.Contains(self.room.abstractRoom.name)))
+        {
+            Plugin.VLogger.LogInfo(self.room.abstractRoom.name + ": Destroying NPC");
+            Plugin.VLogger.LogInfo("NPC already spawned: " + self.npcSpawned.ToString());
+            Plugin.VLogger.LogInfo("Encounters: " + string.Join(", ", self.room.game.GetStorySession.saveState.oeEncounters));
+
+            self.Destroy();
+            return;
+        }
+        if (!self.room.readyForAI)
+        {
+            Plugin.VLogger.LogInfo(self.room.abstractRoom.name + ": Not ready for AI");
+            return;
+        }
+        if (self.foundPlayer == null)
+        {
+            self.foundPlayerEntryNode = -1;
+        }
+        AbstractCreature firstAlivePlayer = self.room.game.FirstAlivePlayer;
+        if (self.foundPlayer == null && self.room.game.Players.Count > 0 && firstAlivePlayer != null && firstAlivePlayer.realizedCreature != null)
+        {
+            self.foundPlayer = (firstAlivePlayer.realizedCreature as Player);
+        }
+        if (self.foundPlayer != null && self.foundPlayer.room != null && self.foundPlayer.room.abstractRoom.index != self.room.abstractRoom.index)
+        {
+            self.foundPlayerEntryNode = -1;
+        }
+        if (self.foundPlayer != null && self.foundPlayerEntryNode == -1)
+        {
+            for (int i = 0; i < self.room.game.shortcuts.transportVessels.Count; i++)
+            {
+                ShortcutHandler.ShortCutVessel shortCutVessel = self.room.game.shortcuts.transportVessels[i];
+                if (shortCutVessel.room.index == self.room.abstractRoom.index && shortCutVessel.creature == self.foundPlayer)
+                {
+                    int num = -1;
+                    float num2 = -1f;
+                    for (int j = 0; j < shortCutVessel.room.nodes.Length; j++)
+                    {
+                        if (shortCutVessel.room.nodes[j].type == AbstractRoomNode.Type.Exit)
+                        {
+                            float num3 = shortCutVessel.room.realizedRoom.ShortcutLeadingToNode(j).StartTile.FloatDist(shortCutVessel.pos);
+                            if (num2 == -1f || num3 < num2)
+                            {
+                                num = j;
+                                num2 = num3;
+                            }
+                        }
+                    }
+                    self.foundPlayerEntryNode = num;
+                }
+            }
+        }
+        if (!self.entryPipes.Contains(self.foundPlayerEntryNode))
+        {
+            return;
+        }
+        if (!self.npcSpawned)
+        {
+            self.npc = new AbstractCreature(self.room.world, StaticWorld.GetCreatureTemplate(MoreSlugcatsEnums.CreatureTemplateType.SlugNPC), null, self.room.ToWorldCoordinate(self.spawnPos), self.room.game.GetNewID());
+            if (!self.room.world.game.rainWorld.setup.forcePup)
+            {
+                (self.npc.state as PlayerState).forceFullGrown = true;
+            }
+            self.room.abstractRoom.AddEntity(self.npc);
+            self.npc.RealizeInRoom();
+            self.npcSpawned = true;
+            self.room.game.GetStorySession.saveState.LogOEEncounter(self.room.abstractRoom.name);
+            self.npc.saveCreature = false;
+            self.npc.destroyOnAbstraction = true;
+        }
+        if (self.npcSpawned && self.npc != null)
+        {
+            if (self.npc.state.dead)
+            {
+                self.npc.destroyOnAbstraction = false;
+                self.npc.saveCreature = true;
+            }
+            if (self.useController)
+            {
+                if ((self.npc.realizedCreature as Player).controller == null)
+                {
+                    (self.npc.realizedCreature as Player).controller = new MSCRoomSpecificScript.OE_NPCControl.NPCController(self);
+                }
+                (self.npc.abstractAI as SlugNPCAbstractAI).toldToStay = null;
+            }
+            else if ((self.npc.realizedCreature as Player).controller != null)
+            {
+                (self.npc.realizedCreature as Player).controller = null;
+            }
+            if (self.xTarget == 0f || (self.foundPlayer.mainBodyChunk.pos.x <= self.xTarget && self.foundPlayer.room == self.room))
+            {
+                self.playerZoneTriggered = true;
+            }
+            if (self.playerZoneTriggered)
+            {
+                self.waitTimer++;
+                if (self.isWalking())
+                {
+                    if (!self.useController && (self.npc.abstractAI as SlugNPCAbstractAI).toldToStay == null)
+                    {
+                        (self.npc.abstractAI as SlugNPCAbstractAI).toldToStay = new WorldCoordinate?(self.room.ToWorldCoordinate(self.targetPos));
+                    }
+                    self.WhileWalking();
+                }
+                else
+                {
+                    self.WhileWaiting();
+                }
+                if (self.npc.Room != self.room.abstractRoom && (self.npc.realizedCreature == null || !self.npc.realizedCreature.inShortcut))
+                {
+                    Plugin.VLogger.LogInfo("Removed NPC and cleaned event");
+                    self.npc.realizedCreature.room.RemoveObject(self.npc.realizedCreature);
+                    self.npc.Room.RemoveEntity(self.npc);
+                    self.npc.Destroy();
+                    self.npc = null;
+                    self.Destroy();
+                }
+            }
         }
     }
 }
