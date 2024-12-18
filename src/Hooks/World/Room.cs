@@ -20,6 +20,8 @@ public static partial class Hooks
         On.RoomSpecificScript.AddRoomSpecificScript += RoomSpecificScript_AddRoomSpecificScript;
 
         On.MoreSlugcats.MSCRoomSpecificScript.OE_NPCControl.Update += OE_NPCControl_Update;
+
+        On.MoreSlugcats.MSCRoomSpecificScript.OE_GourmandEnding.Update += OE_GourmandEnding_Update;
     }
 
     private static void RemoveRoomHooks()
@@ -331,6 +333,43 @@ public static partial class Hooks
                     self.Destroy();
                 }
             }
+        }
+    }
+
+    private static void OE_GourmandEnding_Update(On.MoreSlugcats.MSCRoomSpecificScript.OE_GourmandEnding.orig_Update orig, MSCRoomSpecificScript.OE_GourmandEnding self, bool eu)
+    {
+        orig(self, eu);
+
+        if (self.foundPlayer != null && !self.spawnedNPCs && self.room.game.GetStorySession.saveStateNumber == Enums.vinki && self.foundPlayer.firstChunk.pos.x < 4000f)
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                Vector2 vector = new Vector2(UnityEngine.Random.Range(480f, 3450f), UnityEngine.Random.Range(230f, 300f));
+                AbstractCreature abstractCreature = new AbstractCreature(self.room.world, StaticWorld.GetCreatureTemplate(MoreSlugcatsEnums.CreatureTemplateType.SlugNPC), null, self.room.ToWorldCoordinate(vector), self.room.game.GetNewID());
+                if (!self.room.world.game.rainWorld.setup.forcePup)
+                {
+                    (abstractCreature.state as PlayerState).forceFullGrown = true;
+                }
+                self.room.abstractRoom.AddEntity(abstractCreature);
+                abstractCreature.RealizeInRoom();
+                self.npcs.Add(abstractCreature);
+            }
+            for (int j = 0; j < self.npcs.Count; j += 2)
+            {
+                int num2 = UnityEngine.Random.Range(0, self.npcs.Count);
+                while (num2 == j || num2 >= self.npcs.Count || num2 % 2 == 0)
+                {
+                    num2 = UnityEngine.Random.Range(0, self.npcs.Count);
+                }
+                self.npcs[j].state.socialMemory.GetOrInitiateRelationship(self.npcs[num2].ID).InfluenceLike(1f);
+                self.npcs[j].state.socialMemory.GetOrInitiateRelationship(self.npcs[num2].ID).InfluenceTempLike(1f);
+            }
+            for (int k = 1; k < self.npcs.Count; k += 2)
+            {
+                Vector2 vector2 = new Vector2(UnityEngine.Random.Range(480f, 3450f), UnityEngine.Random.Range(230f, 300f));
+                (self.npcs[k].abstractAI as SlugNPCAbstractAI).toldToStay = new WorldCoordinate?(self.room.ToWorldCoordinate(vector2));
+            }
+            self.spawnedNPCs = true;
         }
     }
 }
