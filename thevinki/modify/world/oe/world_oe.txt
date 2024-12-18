@@ -1,0 +1,51 @@
+[MERGE]
+CREATURES
+(vinki)OFFSCREEN : 0-Scavenger-15, 0-Scavenger-5-{Night}, 0-Vulture-2-{Ignorecycle}, 0-Overseer-4-{Ignorecycle}, 0-KingVulture-{Ignorecycle}, 0-KingVulture-2-{Night}
+(vinki)OE_TOWER07 : 2-Centipede-3, 3-Small Centipede-4
+(vinki)OE_TOWER11 : 3-Centipede-3, 3-Small Centipede-6
+(vinki)OE_TOWER14 : 4-Big Spider-2, 4-MotherSpider-1
+(vinki)OE_TOWER09 : 6-JungleLeech-8-{Ignorecycle}
+(vinki)OE_TOWER10 : 2-DropBug-2, 5-White, 3-CicadaB-2, 3-CicadaA-1
+(vinki)OE_RAIL06 : 5-Big Spider-3
+(vinki)OE_RAIL01 : 13-CicadaB-1, 11-CicadaA-5, 17-TentaclePlant, 7-Salamander-2-{PreCycle}
+(vinki)OE_RUIN01 : 5-TentaclePlant
+(vinki)OE_RUIN03 : 5-BigNeedleWorm-2, 6-SmallNeedleWorm-4, 4-Big Spider-2-{Night}, 4-Big Spider-2-{PreCycle}
+(vinki)OE_RUINBackHall : 5-Blue-2, 5-TentaclePlant-{Night}, 6-White-{Night}, 6-White-2, 9-TentaclePlant
+(vinki)OE_RUINCourtYard : 4-Caramel-2-{Ignorecycle}, 5-Caramel-{Ignorecycle}
+(vinki)OE_RUIN05 : 3-Blue-2-{Ignorecycle}, 4-EggBug, 3-White, 3-White-{Night}, 4-Big Spider-3-{Night}, 6-TentaclePlant-{Night}, 7-TentaclePlant-{Night}
+(vinki)OE_CAVE01 : 5-JungleLeech-6-{Ignorecycle}
+(vinki)OE_CAVE09 : 4-White-2-{Ignorecycle}
+(vinki)OE_CAVE04 : 4-Centipede-4-{Ignorecycle}
+(vinki)OE_CAVE10 : 4-Centipede-4-{Ignorecycle}, 4-Small Centipede-4-{Ignorecycle}, 5-JungleLeech-6-{Ignorecycle}, 11-TentaclePlant-{Night}
+(vinki)OE_CAVE16 : 5-JungleLeech-9-{Ignorecycle}
+(vinki)OE_CAVE17 : 5-TentaclePlant-{Ignorecycle}
+(vinki)OE_CAVE12 : 10-RedCentipede-{Ignorecycle}, 11-Small Centipede-4-{Ignorecycle}, 7-TentaclePlant-{Night}
+(vinki)OE_CAVE14 : 2-Centipede-3-{Ignorecycle}, 2-Small Centipede-3-{Ignorecycle}, 2-JungleLeech-6-{Ignorecycle}
+(vinki)OE_CAVE15 : 4-Centipede-3-{Ignorecycle}, 3-Centipede-3-{Ignorecycle}, 5-Small Centipede-5-{Ignorecycle}
+(vinki)OE_RUIN15 : 3-Caramel-{Ignorecycle}, 5-Caramel-{Ignorecycle}, 6-Yeek-8-{Night}, 6-Yeek-2
+(vinki)OE_RUIN24 : 2-CicadaB-5, 3-CicadaA-1, 5-CicadaA-2, 2-TentaclePlant, 7-TentaclePlant-{Night}
+(vinki)OE_RUIN14 : 6-CicadaB-3, 10-CicadaA-3
+(vinki)OE_RUIN04 : 6-CicadaB-3
+(vinki)OE_RUIN06 : 4-JungleLeech-8-{Ignorecycle}, 4-CicadaB-1, 5-CicadaA-2
+(vinki)OE_RUIN10 : 4-Caramel-{Ignorecycle}, 8-Caramel-{Ignorecycle}
+(vinki)OE_RUIN17 : 5-White-2-{Ignorecycle}
+(vinki)OE_RUIN09 : 3-RedLizard
+(vinki)OE_RUIN18 : 3-BigNeedleWorm-2, 3-SmallNeedleWorm-5, 4-CicadaB-6, 5-Caramel
+(vinki)OE_RUIN21 : 2-Yeek-6-{Ignorecycle}
+(vinki)OE_RUIN11 : 6-Yeek-7-{Ignorecycle}
+(vinki)OE_RAIL03 : 7-Blue-2, 6-Salamander-3-{PreCycle}
+(vinki)OE_EXITPATH : 7-TentaclePlant
+(vinki)OE_JUNGLE05 : 3-White-3-{Ignorecycle}, 4-JungleLeech-7-{Ignorecycle}
+(vinki)OE_JUNGLE06 : 2-CicadaB-1, 6-CicadaA-3, 4-Yeek-5-{Ignorecycle}
+(vinki)OE_RUIN07 : 2-Yeek-6-{Ignorecycle}, 2-TentaclePlant-{Ignorecycle}
+(vinki)OE_RUIN08 : 4-Caramel-{Ignorecycle}, 5-Caramel-2-{Ignorecycle}, 7-Yeek-8-{Ignorecycle}
+(vinki)OE_RUIN25 : 7-Yeek-7-{Ignorecycle}
+(vinki)OE_JUNGLE03 : 3-Yeek-9-{Ignorecycle}
+(vinki)OE_FINAL01 : 4-Centipede-2-{Ignorecycle}, 4-Small Centipede-3-{Ignorecycle}
+(vinki)OE_FINAL02 : 5-Yeek-6-{Ignorecycle}
+(vinki)OE_JUNGLE01 : 4-TentaclePlant-{Ignorecycle}, 4-JungleLeech-1-{Ignorecycle}
+(vinki)OE_RUINFrontHall : 2-TentaclePlant-{Night}, 4-Big Spider-1-{Ignorecycle}, 4-Big Spider-2-{Night}
+(vinki)OE_RUIN16 : 6-TentaclePlant
+(vinki)OE_JUNGLEESCAPE : 6-White-{Ignorecycle}, 3-Mimic-{Ignorecycle}-{16}, 9-DropBug-2-{Ignorecycle}, 8-Centipede-2-{Ignorecycle}, 8-Small Centipede-4-{Ignorecycle}
+END CREATURES
+[ENDMERGE]
