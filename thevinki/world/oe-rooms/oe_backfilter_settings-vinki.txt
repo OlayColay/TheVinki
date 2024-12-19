@@ -1,0 +1,6 @@
+Template: OE_SettingsTemplate_Cave
+Palette: 53
+Effects: AboveCloudsView-1-258-121, SkyAndLightBloom-0.1956522-268-247, DayNight-0.8043478-273-299, 
+PlacedObjects: DayNightSettings><108.2><382.0015><5~8.660254~76~10, GooieDuck><478.4111><554.1187><0~0~2~3, GooieDuck><520.1073><487.1401><0~0~2~3, GooieDuck><584.4467><501.0368><0~0~2~3, LightSource><498.1235><493.845><0.2065217~Environment~-697~-555~350~-521.3975~1~1~None~0~0, BlinkingFlower><755.0989><371.0761><, BlinkingFlower><794.1312><342.099><, BlinkingFlower><631.896><222.0792><, BlinkingFlower><406.0805><347.0669><, BlinkingFlower><375.1583><319.1277><, Vine><721.0671><413.573><-353.6575~-150.9208, Vine><395.2384><378.1794><325.813~35.66949, 
+FadePalette: 3, 0.6630435
+RoomSpecificScriptActive: ON

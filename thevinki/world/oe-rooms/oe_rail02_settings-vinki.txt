@@ -1,0 +1,12 @@
+Template: OE_SettingsTemplate_Ruins
+DangerType: Rain
+RainIntensity: 0.2260868
+RumbleIntensity: 0.04347826
+Clouds: 0.8260869
+BkgDroneVolume: 0.3043478
+Palette: 14
+Effects: BorderPushBack-1-266-246, DayNight-0.4021739-275-190, 
+PlacedObjects: LightBeam><-92.64569><362.3293><346~380~2222~378~776~-360~0~0~0.1391303~0.326087~0~1~None~0~0, DayNightSettings><595.7488><380.0432><5~8.660254~76~10, ClimbablePoleH><1235.479><365.6026><2^0, ClimbablePoleH><1402.677><360.5137><3^0, 
+AmbientSounds: OMNI><AM_ENV-NatWind.ogg><115.6309><220.6606><0.4782609><0.6478265, OMNI><SO_WAT-Splashes.ogg><118.95><305.7476><0.1086956><1, 
+Triggers: Spot<tA>event<tB>MusicEvent<eA>songName<eB>RW_63 - Wandering Cut<eA>vol<eB>0.3<eA>prio<eB>0.6086956<eA>mxThrt<eB>1<eA>loop<eB>0<eA>droneTol<eB>0<eA>rooms<eB>-1<eA>rest<eB>5<eA>fadeIn<eB>58.69565<eA>oneSongPerCycle<eB>0<eA>stopAtDeath<eB>0<eA>stopAtGate<eB>0<tA>multiUse<tB>0<tA>toCycle<tB>-1<tA>fromCycle<tB>0<tA>delay<tB>0<tA>panPos<tB>562.9431<tB>449.6978<tA>fireChance<tB>1<tA>entrance<tB>0<tA>karma<tB>0<tA>slugcats<tB><tA>pos<tB>593.943<tB>212.6978<tA>handlePos<tB>122.6447<tB>-105.3553, Spot<tA>event<tB>MusicEvent<eA>songName<eB>RW_63 - Wandering Cut<eA>vol<eB>0.3<eA>prio<eB>0.6195656<eA>mxThrt<eB>1<eA>loop<eB>0<eA>droneTol<eB>0<eA>rooms<eB>-1<eA>rest<eB>5<eA>fadeIn<eB>65.21743<eA>oneSongPerCycle<eB>0<eA>stopAtDeath<eB>0<eA>stopAtGate<eB>0<tA>multiUse<tB>0<tA>toCycle<tB>-1<tA>fromCycle<tB>0<tA>delay<tB>0<tA>panPos<tB>818.1356<tB>429.164<tA>fireChance<tB>1<tA>entrance<tB>2<tA>karma<tB>0<tA>slugcats<tB><tA>pos<tB>598.135<tB>216.164<tA>handlePos<tB>-4.355347<tB>-170.3553, 
+FadePalette: 53, 1, 0.6521739, 0.3043478, 0

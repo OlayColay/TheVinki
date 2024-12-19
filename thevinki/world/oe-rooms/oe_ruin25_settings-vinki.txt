@@ -1,0 +1,14 @@
+Template: OE_SettingsTemplate_RuinsInside
+CeilingDrips: 0
+WaveSpeed: 0.51
+WaveLength: 1
+WaveAmplitude: 0.0001
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Clouds: 0.3478261
+EffectColorA: 18
+EffectColorB: 6
+Effects: PixelShift-0.5-32-65, AboveCloudsView-1-264-243, Contrast-0.07608695-293-20, Desaturation-0.3478261-28-82, SkyAndLightBloom-0.1521739-266-298, LightRain-0-20-20, DayNight-0.3804348-270-192, 
+PlacedObjects: DayNightSettings><76.80011><468.5067><5~8.660254~76~10, DeadSeedCob><573.9468><241.5353><, DeadSeedCob><626.95><291.4988><, DeadSeedCob><699.5956><263.3729><, SeedCob><824.3924><323.9186><0~0~7~10, BlueToken><1435.569><554.3124><65~12~-331~-76~1~SpitLizard~Red|Rivulet|Artificer|Saint|Spear~0~0~0~0~0~0~0~0~0~0~0~0~0~0~0~0~0~0~0~0, DeadTokenStalk><1538.078><474.934><27~-30, DeadTokenStalk><1395.081><392.9327><-28~-69, DeadTokenStalk><1463.188><624.6816><41~-39, DeadTokenStalk><1454.125><375.9062><27~-58, ClimbablePoleH><583.3241><186.6399><12^0, ExitSymbolHidden><250.1698><225.4935><, ClimbablePoleH><433.2391><367.2501><16^0, 
+FadePalette: 42, 0.3152174, 0.3152174
+WetTerrain: OFF

@@ -1,0 +1,17 @@
+Template: OE_SettingsTemplate_Ruins
+DangerType: Rain
+CeilingDrips: 0
+RumbleIntensity: 0
+WaveSpeed: 0.51
+WaveLength: 1
+WaveAmplitude: 0.0001
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Clouds: 0.6086956
+Grime: 0
+WaterReflectionAlpha: 0.4456522
+Palette: 53
+Effects: Desaturation-0.3695652-536-19, LightRain-0.04347826-20-20, DayNight-0.1521739-277-185, LightBurn-0-284-72, Contrast-0.173913-282-18, SkyAndLightBloom-0.07608695-271-238, Fog-1-33-138, 
+PlacedObjects: DayNightSettings><1383.337><1258.278><-75~-373.3398~76~10, LightBeam><148.3035><1209.171><-31~768~3886~759~2292~-612~1810.262~97.7301~0.1086598~0.3804348~0.2065217~1~None~0~0, LightSource><2445.8><1576.747><0.1304348~Environment~-1625~2~-165.0009~-214.3983~1~0~None~0~0, LanternOnStick><1125.137><1352.585><-18~-120, LanternOnStick><1623.87><992.9103><78~-132, LanternOnStick><2165.329><1136.934><22~-209, LanternOnStick><2532.777><1078.802><18~-176, LanternOnStick><2597.553><1014.963><-20~-126, LanternOnStick><3250.196><1124.193><-22~-141, LanternOnStick><3505.591><984.121><55~-82, LightSource><2465.695><937.2096><0.6521739~Environment~-341~126~50~86.60254~0~0~None~0~1, LightSource><2973.859><961.9019><0.1413043~Environment~-201~81~50~86.60254~0~0~None~0~1, LightSource><3601.384><892.6031><0.1630435~Environment~-279~96~-247~202.6025~0~0~None~0~1, ClimbablePoleH><3002.99><1123.097><7^0, ClimbablePoleH><2401.292><1164.634><7^0, Vine><2067.87><1103.621><246.7602~65.11432, 
+AmbientSounds: OMNI><AM_ENV-WindGrass.ogg><123.1874><383.8198><0.4130435><1, OMNI><AM_ENV-Outside.ogg><115.9341><461.3281><0.6521739><1, OMNI><AM_ENV-CricketsWnd.ogg><115.7236><229.5518><0.6521739><1, 
+FadePalette: 42, 0.2065217, 0.2934783, 0.3369565, 0.3369565, 0.7391304
