@@ -59,6 +59,8 @@ namespace Vinki
         public static AudioSource curAudioSource;
         public static string curPlayingSong;
 
+        public static List<string> catMaidGraffitis = ["Beep - 5P or QT", "Tsuno - Loud Pebbles"];
+
         public static ManualLogSource VLogger;
 
         // Add hooks

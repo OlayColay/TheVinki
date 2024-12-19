@@ -402,8 +402,16 @@ namespace Vinki
                 e.Add(new TextEvent(self, 0,
                     self.Translate("And what do we have here, on the once-pristine walls of my chamber?"), l));
 
-                e.Add(new TextEvent(self, 0,
-                    self.Translate("Is that ... scribble supposed to be me? Are those ... ears I'm wearing?"), l));
+                if (VinkiConfig.CatPebbles.Value)
+                {
+                    e.Add(new TextEvent(self, 0,
+                        self.Translate("Is that ... scribble supposed to be me? Are those ... ears I'm wearing?"), l));
+                }
+                else
+                {
+                    e.Add(new TextEvent(self, 0,
+                        self.Translate("Is that ... scribble supposed to be me? Am I in ... a tin can?"), l));
+                }
 
                 e.Add(new WaitEvent(self, 80));
 
@@ -551,7 +559,7 @@ namespace Vinki
                     if (inActionCounter == 220)
                     {
                         var grasp = player.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan);
-                        if (grasp != null && (grasp.grabbed as SprayCan).TryUse())
+                        if (VinkiConfig.CatPebbles.Value && grasp != null && (grasp.grabbed as SprayCan).TryUse())
                         {
                             _ = SprayGraffiti(player, 4, 1, 1f);
                         }

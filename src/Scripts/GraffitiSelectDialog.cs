@@ -114,14 +114,11 @@ namespace Menu
             string[] graffitiFiles;
             string lowerScugClass = players[currentPlayer].SlugCatClass.ToString().ToLowerInvariant();
             //Plugin.VLogger.LogInfo("Graffiti scugs: " + string.Join(", ", Plugin.graffitis.Keys));
-            if (Plugin.graffitis.ContainsKey(lowerScugClass))
+            if (!Plugin.graffitis.ContainsKey(lowerScugClass))
             {
-                graffitiFiles = Plugin.graffitis[lowerScugClass].Select(g => "decals/" + g.imageName).ToArray();
+                lowerScugClass = "white";
             }
-            else
-            {
-                graffitiFiles = Plugin.graffitis["white"].Select(g => "decals/" + g.imageName).ToArray();
-            }
+            graffitiFiles = Plugin.graffitis[lowerScugClass].Select(g => "decals/" + g.imageName).ToArray();
             graffitiButtons = new GraffitiButton[Math.Min(GraffitiPerPage, graffitiFiles.Length - (curGPage * GraffitiPerPage))];
 
             int gNum = curGPage * GraffitiPerPage;

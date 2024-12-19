@@ -22,6 +22,7 @@ namespace Vinki
         public static Configurable<bool> TokensInEveryCampaign;
         public static Configurable<bool> AutoOpenMap;
         public static Configurable<bool> SkipIntro;
+        public static Configurable<bool> CatPebbles;
 
         private static OpHoldButton unlockButton;
         private static OpHoldButton lockButton;
@@ -58,6 +59,10 @@ namespace Vinki
             AutoOpenMap = config.Bind("autoOpenMap", true, new ConfigurableInfo("Automatically open the quest map after a cycle where you spray a new story graffiti. Disable if you want to speedrun", tags:
             [
                 "Automatically Open Quest Map"
+            ]));
+            CatPebbles = config.Bind("catPebbles", true, new ConfigurableInfo("RESTART FOR CHANGES TO TAKE EFFECT! Show art containing depictions of Five Pebbles as catmaids. Disable if you think that's weird.", tags:
+            [
+                "Catmaid Iterators"
             ]));
             GlassesOverDMS = config.Bind("glassesOverDMS", true, new ConfigurableInfo("Wear Vinki's glasses on top of the current DMS skin for Vinki. Only works if you have DMS enabled.", tags:
             [
@@ -110,10 +115,11 @@ namespace Vinki
             AddCheckbox(TokensInEveryCampaign, 390f);
             AddCheckbox(AutoOpenMap, 360f);
             AddCheckbox(SkipIntro, 330f);
-            AddTitle(0, "Visuals", 275f);
-            AddCheckbox(GlassesOverDMS, 245f);
-            AddIntBox(GraffitiFadeTime, 215f);
-            AddCheckbox(DeleteGraffiti, 185f);
+            AddTitle(0, "Visuals", 290f);
+            AddCheckbox(CatPebbles, 260f);
+            AddCheckbox(GlassesOverDMS, 230f);
+            AddIntBox(GraffitiFadeTime, 200f);
+            AddCheckbox(DeleteGraffiti, 170f);
             AddTitle(0, "Graffiti Files", 130f);
             AddCheckbox(RestoreGraffitiOnUpdate, 100f);
             AddButton(

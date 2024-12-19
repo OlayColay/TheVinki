@@ -1,4 +1,5 @@
-﻿using MonoMod.RuntimeDetour;
+﻿using BepInEx.Logging;
+using MonoMod.RuntimeDetour;
 using MonoMod.RuntimeDetour.HookGen;
 using On.DevInterface;
 using System;
@@ -173,6 +174,12 @@ public static partial class Hooks
         else
         {
             File.Copy(unlockPath + filePath + ".png", AssetManager.ResolveDirectory("decals/VinkiGraffiti/vinki/") + filePath + ".png");
+        }
+
+        if (!VinkiConfig.CatPebbles.Value && Plugin.catMaidGraffitis.Any(g => g.EndsWith(fileName)))
+        {
+            Plugin.VLogger.LogInfo($"Prevent catmaid image: {fileName}");
+            return;
         }
 
         PlacedObject.CustomDecalData decal = new(null)

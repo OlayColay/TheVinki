@@ -118,17 +118,17 @@ public static partial class Hooks
 
             GraffitiQuestDialog.graffitiSpots =
             [
-                new MenuDepthIllustration(self.menu, self, self.sceneFolder, "graffiti_ss", new Vector2(826, 569), 4f, MenuDepthIllustration.MenuShader.Basic),
-                new MenuDepthIllustration(self.menu, self, self.sceneFolder, "graffiti_ss", new Vector2(826, 569), 4.5f, MenuDepthIllustration.MenuShader.Basic),
-                new MenuDepthIllustration(self.menu, self, self.sceneFolder, "graffiti_test", new Vector2(706, 632), 6f, MenuDepthIllustration.MenuShader.Basic),
+                new MenuDepthIllustration(self.menu, self, self.sceneFolder, VinkiConfig.CatPebbles.Value ? "graffiti_ss" : "graffiti_ss_alt", new Vector2(826, 569), 4f, MenuDepthIllustration.MenuShader.Basic),
+                new MenuDepthIllustration(self.menu, self, self.sceneFolder, VinkiConfig.CatPebbles.Value ? "graffiti_ss" : "graffiti_ss_alt", new Vector2(826, 569), 4.5f, MenuDepthIllustration.MenuShader.Basic),
+                new MenuDepthIllustration(self.menu, self, self.sceneFolder, VinkiConfig.CatPebbles.Value ? "graffiti_test" : "graffiti_test_alt", new Vector2(706, 632), 6f, MenuDepthIllustration.MenuShader.Basic),
                 new MenuDepthIllustration(self.menu, self, self.sceneFolder, "true_victory", new Vector2(1163, 454), 6f, MenuDepthIllustration.MenuShader.Basic),
-                new MenuDepthIllustration(self.menu, self, self.sceneFolder, "graffiti_test", new Vector2(861, 419), 6f, MenuDepthIllustration.MenuShader.Basic),
-                new MenuDepthIllustration(self.menu, self, self.sceneFolder, "graffiti_test", new Vector2(1131, 587), 6f, MenuDepthIllustration.MenuShader.Basic),
-                new MenuDepthIllustration(self.menu, self, self.sceneFolder, "graffiti_test", new Vector2(868, 190), 6f, MenuDepthIllustration.MenuShader.Basic),
-                new MenuDepthIllustration(self.menu, self, self.sceneFolder, "graffiti_test", new Vector2(719, 230), 6f, MenuDepthIllustration.MenuShader.Basic),
-                new MenuDepthIllustration(self.menu, self, self.sceneFolder, "graffiti_test", new Vector2(508, 186), 6f, MenuDepthIllustration.MenuShader.Basic),
-                new MenuDepthIllustration(self.menu, self, self.sceneFolder, "graffiti_test", new Vector2(263, 136), 6f, MenuDepthIllustration.MenuShader.Basic),
-                new MenuDepthIllustration(self.menu, self, self.sceneFolder, "graffiti_test", new Vector2(382, 304), 6f, MenuDepthIllustration.MenuShader.Basic)
+                new MenuDepthIllustration(self.menu, self, self.sceneFolder, VinkiConfig.CatPebbles.Value ? "graffiti_test" : "graffiti_test_alt", new Vector2(861, 419), 6f, MenuDepthIllustration.MenuShader.Basic),
+                new MenuDepthIllustration(self.menu, self, self.sceneFolder, VinkiConfig.CatPebbles.Value ? "graffiti_test" : "graffiti_test_alt", new Vector2(1131, 587), 6f, MenuDepthIllustration.MenuShader.Basic),
+                new MenuDepthIllustration(self.menu, self, self.sceneFolder, VinkiConfig.CatPebbles.Value ? "graffiti_test" : "graffiti_test_alt", new Vector2(868, 190), 6f, MenuDepthIllustration.MenuShader.Basic),
+                new MenuDepthIllustration(self.menu, self, self.sceneFolder, VinkiConfig.CatPebbles.Value ? "graffiti_test" : "graffiti_test_alt", new Vector2(719, 230), 6f, MenuDepthIllustration.MenuShader.Basic),
+                new MenuDepthIllustration(self.menu, self, self.sceneFolder, VinkiConfig.CatPebbles.Value ? "graffiti_test" : "graffiti_test_alt", new Vector2(508, 186), 6f, MenuDepthIllustration.MenuShader.Basic),
+                new MenuDepthIllustration(self.menu, self, self.sceneFolder, VinkiConfig.CatPebbles.Value ? "graffiti_test" : "graffiti_test_alt", new Vector2(263, 136), 6f, MenuDepthIllustration.MenuShader.Basic),
+                new MenuDepthIllustration(self.menu, self, self.sceneFolder, VinkiConfig.CatPebbles.Value ? "graffiti_test" : "graffiti_test_alt", new Vector2(382, 304), 6f, MenuDepthIllustration.MenuShader.Basic)
             ];
             GraffitiQuestDialog.graffitiSlapping = new int[GraffitiQuestDialog.graffitiSpots.Length];
 

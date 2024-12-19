@@ -14,9 +14,9 @@ public class GraffitiTutorial : UpdatableAndDeletable
     }
     public Phase nextPhase = Phase.Craft;
     public Vector2 playerPos = Vector2.zero;
-    public float craftTriggerPos { get; } = 842f;
-    public float sprayTriggerPos { get; } = 1626f;
-    public float throwTriggerPos { get; } = 2442f;
+    public float CraftTriggerPos { get; } = 842f;
+    public float SprayTriggerPos { get; } = 1626f;
+    public float ThrowTriggerPos { get; } = 2442f;
 
     public GraffitiTutorial(Room room)
     {
@@ -36,7 +36,7 @@ public class GraffitiTutorial : UpdatableAndDeletable
         //Plugin.VLogger.LogInfo("Current player position: " + playerPos + "\tnextPhase: " + nextPhase.ToString());
         var game = room.game;
 
-        if (playerPos.y >= craftTriggerPos && nextPhase == Phase.Craft)
+        if (playerPos.y >= CraftTriggerPos && nextPhase == Phase.Craft)
         {
             string graffitiMode = Plugin.improvedInput ? KeyCodeTranslator.GetImprovedInputKeyName(0, "thevinki:graffiti") : "Up";
             string craft = Plugin.improvedInput ? KeyCodeTranslator.GetImprovedInputKeyName(0, "thevinki:craft") : "Pickup";
@@ -45,12 +45,12 @@ public class GraffitiTutorial : UpdatableAndDeletable
                 0, 600, false, false
             );
             game.cameras.First().hud.textPrompt.AddMessage(
-                game.manager.rainWorld.inGameTranslator.Translate("Different objects produce different levels of Spray Cans. You can also combine two Spray Cans, or upgrade one with another object."),
+                game.manager.rainWorld.inGameTranslator.Translate("Objects have varying amount of charge. You can also combine two Spray Cans, or recharge a can with another object."),
                 100, 600, false, false
             );
             nextPhase = Phase.Spray;
         }
-        else if (playerPos.y >= sprayTriggerPos && nextPhase == Phase.Spray)
+        else if (playerPos.y >= SprayTriggerPos && nextPhase == Phase.Spray)
         {
             string graffitiMode = Plugin.improvedInput ? KeyCodeTranslator.GetImprovedInputKeyName(0, "thevinki:graffiti") + " + " : "";
             string spray = Plugin.improvedInput ? KeyCodeTranslator.GetImprovedInputKeyName(0, "thevinki:spray") : "Jump + Pickup";
@@ -74,7 +74,7 @@ public class GraffitiTutorial : UpdatableAndDeletable
             );
             nextPhase = Phase.Throw;
         }
-        else if (playerPos.y >= throwTriggerPos && nextPhase == Phase.Throw)
+        else if (playerPos.y >= ThrowTriggerPos && nextPhase == Phase.Throw)
         {
             game.cameras.First().hud.textPrompt.AddMessage(
                 game.manager.rainWorld.inGameTranslator.Translate("Throwing a Spray Can will create a large, non-lethal explosion of compressed paint."),

@@ -105,49 +105,11 @@ namespace Vinki
 
             ApplySlugcatSelectMenuHooks();
 
-            bool modChanged = false;
-            if (rainWorld.options.modLoadOrder.TryGetValue("olaycolay.thevinki", out _) && VinkiConfig.RestoreGraffitiOnUpdate.Value)
-            {
-                ModManager.Mod vinkiMod = ModManager.InstalledMods.Where(mod => mod.id == "olaycolay.thevinki").FirstOrDefault();
-                var saveData = SaveDataExtension.GetSlugBaseData(rainWorld.progression.miscProgressionData);
-                if (saveData.TryGet("VinkiVersion", out string modVersion))
-                {
-                    modChanged = vinkiMod.version != modVersion;
-                    if (modChanged) VLogger.LogInfo("Vinki mod version changed!");
-                }
-                else
-                {
-                    VLogger.LogInfo("Didn't find saved vinki mod version");
-                    modChanged = true;
-                }
-                VLogger.LogInfo("Vinki mod version is " + vinkiMod.version);
-                saveData.Set("VinkiVersion", vinkiMod.version);
-                rainWorld.progression.SaveProgression(false, true);
-            }
-            else
-            {
-                VLogger.LogError("Can't find vinki mod ID");
-            }
-
             graffitiFolders = AssetManager.ListDirectory(baseGraffitiFolder, true, true, true);
             mainGraffitiFolder = AssetManager.ResolveDirectory(storyGraffitiFolder + "/../VinkiGraffiti");
             storyGraffitiFolder = AssetManager.ResolveDirectory(storyGraffitiFolder);
 
             //VLogger.LogInfo("Graffiti folders: " + string.Join("; ", graffitiFolders));
-
-            // If the graffiti folder doesn't exist (or is empty), copy it from the mod
-            if (!Directory.Exists(mainGraffitiFolder) || !Directory.EnumerateDirectories(mainGraffitiFolder).Any() ||
-                !Directory.Exists(mainGraffitiFolder + "/vinki") || !Directory.EnumerateFileSystemEntries(mainGraffitiFolder + "/vinki").Any() ||
-                !Directory.Exists(mainGraffitiFolder + "/White") || !Directory.EnumerateFileSystemEntries(mainGraffitiFolder + "/White").Any() || modChanged)
-            {
-                if (!CopyGraffitiBackup())
-                {
-                    return;
-                }
-            }
-
-            // Go through each graffiti image and add it to the list of decals Vinki can place
-            LoadGraffiti();
 
             // Remix menu config
             VinkiConfig.RegisterOI();
@@ -215,9 +177,17 @@ namespace Vinki
 
         private static void AddGraffiti(string image, string slugcat, KeyValuePair<string, Vector2>? storyGraffitiRoomPos = null)
         {
+            string imageName = Path.GetFileNameWithoutExtension(image);
+
+            if (!VinkiConfig.CatPebbles.Value && catMaidGraffitis.Any(g => g == imageName))
+            {
+                VLogger.LogInfo($"Prevent catmaid image: {imageName}");
+                return;
+            }
+
             PlacedObject.CustomDecalData decal = new(null)
             {
-                imageName = "VinkiGraffiti/" + slugcat + '/' + Path.GetFileNameWithoutExtension(image),
+                imageName = "VinkiGraffiti/" + slugcat + '/' + imageName,
                 fromDepth = 0.2f
             };
 
@@ -284,7 +254,8 @@ namespace Vinki
             foreach (JsonAny objective in json)
             {
                 JsonObject obj = objective.AsObject();
-                AddGraffiti(obj.GetString("name"), "Story", new(obj.GetString("room"), JsonUtils.ToVector2(obj["position"])));
+                bool useAltGraffiti = !VinkiConfig.CatPebbles.Value && obj.TryGet("nonCatmaidAltName") != null;
+                AddGraffiti(obj.GetString(useAltGraffiti ? "nonCatmaidAltName" : "name"), "Story", new(obj.GetString("room"), JsonUtils.ToVector2(obj["position"])));
             }
         }
 
@@ -307,6 +278,44 @@ namespace Vinki
             {
                 if (IsPostInit) return;
                 IsPostInit = true;
+
+                bool modChanged = false;
+                if (self.options.modLoadOrder.TryGetValue("olaycolay.thevinki", out _) && VinkiConfig.RestoreGraffitiOnUpdate.Value)
+                {
+                    ModManager.Mod vinkiMod = ModManager.InstalledMods.Where(mod => mod.id == "olaycolay.thevinki").FirstOrDefault();
+                    var saveData = SaveDataExtension.GetSlugBaseData(self.progression.miscProgressionData);
+                    if (saveData.TryGet("VinkiVersion", out string modVersion))
+                    {
+                        modChanged = vinkiMod.version != modVersion;
+                        if (modChanged) VLogger.LogInfo("Vinki mod version changed!");
+                    }
+                    else
+                    {
+                        VLogger.LogInfo("Didn't find saved vinki mod version");
+                        modChanged = true;
+                    }
+                    VLogger.LogInfo("Vinki mod version is " + vinkiMod.version);
+                    saveData.Set("VinkiVersion", vinkiMod.version);
+                    self.progression.SaveProgression(false, true);
+                }
+                else
+                {
+                    VLogger.LogError("Can't find vinki mod ID");
+                }
+
+                // If the graffiti folder doesn't exist (or is empty), copy it from the mod
+                if (!Directory.Exists(mainGraffitiFolder) || !Directory.EnumerateDirectories(mainGraffitiFolder).Any() ||
+                    !Directory.Exists(mainGraffitiFolder + "/vinki") || !Directory.EnumerateFileSystemEntries(mainGraffitiFolder + "/vinki").Any() ||
+                    !Directory.Exists(mainGraffitiFolder + "/White") || !Directory.EnumerateFileSystemEntries(mainGraffitiFolder + "/White").Any() || modChanged)
+                {
+                    if (!CopyGraffitiBackup())
+                    {
+                        return;
+                    }
+                }
+
+                // Go through each graffiti image and add it to the list of decals Vinki can place
+                LoadGraffiti();
 
                 // Putting this hook here ensures that SlugBase's BuildScene hook goes first
                 ApplyMenuSceneHooks();
@@ -524,7 +533,7 @@ namespace Vinki
                 && cursor.TryGotoNext(MoveType.After, i => i.MatchStloc(out localVarNum)))
             {
                 cursor.Emit(OpCodes.Ldloc, localVarNum);
-                cursor.EmitDelegate<Func<string[], string[]>>((oldTitleImages) => [.. oldTitleImages, "vinki_0", "vinki_1"]);
+                cursor.EmitDelegate<Func<string[], string[]>>((oldTitleImages) => VinkiConfig.CatPebbles.Value ? [.. oldTitleImages, "vinki_0", "vinki_1"] : [.. oldTitleImages, "vinki_0"]);
                 cursor.Emit(OpCodes.Stloc, localVarNum);
                 //cursor.Emit(OpCodes.Ldloc, localVarNum);
                 //cursor.EmitDelegate<Action<string[]>>((oldTitleImages) =>
