@@ -344,8 +344,8 @@ public static partial class Hooks
         {
             for (int i = 0; i < 8; i++)
             {
-                Vector2 vector = new Vector2(UnityEngine.Random.Range(480f, 3450f), UnityEngine.Random.Range(230f, 300f));
-                AbstractCreature abstractCreature = new AbstractCreature(self.room.world, StaticWorld.GetCreatureTemplate(MoreSlugcatsEnums.CreatureTemplateType.SlugNPC), null, self.room.ToWorldCoordinate(vector), self.room.game.GetNewID());
+                Vector2 vector = new(UnityEngine.Random.Range(480f, 3450f), UnityEngine.Random.Range(230f, 300f));
+                AbstractCreature abstractCreature = new(self.room.world, StaticWorld.GetCreatureTemplate(MoreSlugcatsEnums.CreatureTemplateType.SlugNPC), null, self.room.ToWorldCoordinate(vector), self.room.game.GetNewID());
                 if (!self.room.world.game.rainWorld.setup.forcePup)
                 {
                     (abstractCreature.state as PlayerState).forceFullGrown = true;
@@ -366,7 +366,7 @@ public static partial class Hooks
             }
             for (int k = 1; k < self.npcs.Count; k += 2)
             {
-                Vector2 vector2 = new Vector2(UnityEngine.Random.Range(480f, 3450f), UnityEngine.Random.Range(230f, 300f));
+                Vector2 vector2 = new(UnityEngine.Random.Range(480f, 3450f), UnityEngine.Random.Range(230f, 300f));
                 (self.npcs[k].abstractAI as SlugNPCAbstractAI).toldToStay = new WorldCoordinate?(self.room.ToWorldCoordinate(vector2));
             }
             self.spawnedNPCs = true;

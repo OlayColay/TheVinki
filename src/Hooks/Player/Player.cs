@@ -561,7 +561,7 @@ namespace Vinki
                     }
                     TagCreature(self);
                 }
-                else if (self.JustPressed(Spray))
+                else if (self.JustPressed(Spray) && self.stun < 1)
                 {
                     if (!improvedInput)
                     {
