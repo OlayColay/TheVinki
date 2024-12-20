@@ -57,6 +57,7 @@ namespace Vinki
             ApplyRainWorldHooks();
             ApplyRainWorldGameHooks();
             ApplyRegionGateHooks();
+            ApplyClimbableVineSystemHooks();
         }
 
         public static void RemoveHooks()
@@ -87,6 +88,7 @@ namespace Vinki
             RemoveCollectiblesTrackerHooks();
             RemoveRainWorldGameHooks();
             RemoveRegionGateHooks();
+            RemoveClimbableVineSystemHooks();
 
             RemoveMenuSceneHooks();
 

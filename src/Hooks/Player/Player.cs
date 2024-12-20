@@ -361,9 +361,6 @@ namespace Vinki
                     self.room.climbableVines.VineBeingClimbedOn(vineAtFeet, self);
                     self.room.climbableVines.ConnectChunkToVine(self.bodyChunks[1], vineAtFeet, self.room.climbableVines.VineRad(vineAtFeet));
 
-                    // Move feet
-                    self.feetStuckPos = self.bodyChunks[1].pos;
-
                     Vector2 oldPos = self.room.climbableVines.OnVinePos(vineAtFeet);
 
                     // vines can "face" either direction, so we need to take that into account
@@ -387,7 +384,7 @@ namespace Vinki
                     else
                     {
                         v.vineAtFeet = vineAtFeet;
-                        //Vector2 grindDir = (self.room.climbableVines.OnVinePos(vineAtFeet) - self.bodyChunks[1].pos).normalized;
+                        //Vector2 grindDir = (self.room.climbableVines.OnVinePos(vineAtFeet) - self.bodyChunks[1].posA).normalized;
                         self.room.climbableVines.PushAtVine(vineAtFeet, (oldPos - self.room.climbableVines.OnVinePos(vineAtFeet)) * 0.05f);
                     }
                 }
@@ -397,14 +394,25 @@ namespace Vinki
                 }
                 
                 // Sparks from grinding
-                Vector2 pos = self.bodyChunks[1].pos;
-                Vector2 posB = pos - new Vector2(10f * v.lastXDirection, 0);
+                Vector2 posA;
+                Vector2 posB;
+                if (isGrindingAtopVine)
+                {
+                    posA = self.room.climbableVines.OnVinePos(vineAtFeet);
+                    ClimbableVinesSystem.VinePosition nextVinePos = self.room.climbableVines?.VineOverlap(posA - new Vector2(10f * v.lastXDirection, 0), self.bodyChunks[1].rad + 5f);
+                    posB = self.room.climbableVines.OnVinePos(nextVinePos);
+                }
+                else
+                {
+                    posA = self.bodyChunks[1].pos;
+                    posB = posA - new Vector2(10f * v.lastXDirection, 0);
+                }
                 for (int j = 0; j < 2; j++)
                 {
                     Vector2 a = Custom.RNV();
                     a.x = Mathf.Abs(a.x) * -v.lastXDirection;
                     a.y = Mathf.Abs(a.y);
-                    self.room.AddObject(new Spark(pos, a * Mathf.Lerp(4f, 30f, UnityEngine.Random.value), Enums.SparkColor, null, 2, 4));
+                    self.room.AddObject(new Spark(posA, a * Mathf.Lerp(4f, 30f, UnityEngine.Random.value), Enums.SparkColor, null, 2, 4));
                     self.room.AddObject(new Spark(posB, a * Mathf.Lerp(4f, 30f, UnityEngine.Random.value), Enums.SparkColor, null, 2, 4));
                 }
 
@@ -416,7 +424,7 @@ namespace Vinki
                 self.slugcatStats.runspeedFac = Enums.Movement.NormalXSpeed;
             }
 
-            // Grind if holding Grind on a pole (vertical beam or 0G beam or vine)
+            // Grind if holding Grind on a pole (vertical beam or 0G beam/vine)
             if (v.isGrindingV || v.isGrindingNoGrav || v.isGrindingVine)
             {
                 //VLogger.LogInfo("Zero G Pole direction: " + self.zeroGPoleGrabDir.x + "," + self.zeroGPoleGrabDir.y);

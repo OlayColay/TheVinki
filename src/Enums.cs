@@ -14,7 +14,7 @@ public static class Enums
     public static class Movement
     {
         public static readonly float CoyoteBoost = 5f;
-        public static readonly float GrindVineSpeed = 6.25f;
+        public static readonly float GrindVineSpeed = 5f;
         public static readonly float GrindXSpeed = 7.5f;
         public static readonly float GrindYSpeed = 7.5f;
         public static readonly float NormalXSpeed = 1.3f;
