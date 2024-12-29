@@ -15,7 +15,7 @@ namespace Vinki
     [BepInDependency("dressmyslugcat", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("improved-input-config", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("pushtomeow", BepInDependency.DependencyFlags.SoftDependency)]
-    [BepInPlugin(MOD_ID, "The Vinki", "0.12.15")]
+    [BepInPlugin(MOD_ID, "The Vinki", "0.12.16")]
     class Plugin : BaseUnityPlugin
     {
         public const string MOD_ID = "olaycolay.thevinki";

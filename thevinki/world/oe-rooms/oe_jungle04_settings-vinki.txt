@@ -1,0 +1,19 @@
+DangerType: Rain
+CeilingDrips: 0
+RainIntensity: 0.1521739
+RumbleIntensity: 0
+WaveSpeed: 0.51
+WaveLength: 1
+WaveAmplitude: 0.0001
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Clouds: 0.5760869
+Grime: 0.1956522
+Palette: 54
+EffectColorA: 6
+EffectColorB: 18
+Effects: Darkness-0-261-235, Fog-1-21-72, PixelShift-0.5-32-65, AboveCloudsView-1-277-136, SkyBloom-0.423913-12-126, DayNight-0.1956522-278-77, 
+PlacedObjects: DayNightSettings><1668.801><553.7679><5~8.660254~76~10, Vine><921.5282><676.052><-331~1, Vine><967.6636><674.3651><-333~94, Vine><1386.565><706.0607><210~119, Vine><1243.672><681.1483><-342~98, Vine><1242.476><698.4486><175~65, Vine><1152.679><633.1611><-190~101, Vine><1152.3><634.244><256~89, LightSource><1370.121><493.0969><0.173913~Environment~497~-423~50~86.60254~1~1~None~0~0, LightSource><647.8733><345.0925><0.1521739~Environment~510~-314~50~86.60254~1~1~None~0~0, GooieDuck><1724.878><492.3414><63~-355~2~3, GooieDuck><1763.128><451.6535><37~-391~2~3, DeadTokenStalk><1459.453><392.3056><16~-81, DeadTokenStalk><1427.393><355.6689><29~-45, DeadTokenStalk><1554.344><372.3742><-14~-56, BlueToken><1500.673><380.0653><4~-57~-176~-247~1~GooieDuck~Red|Rivulet|Artificer|Saint|Spear~0~0~0~0~0~0~0~0, BlinkingFlower><625.5536><307.9427><, BlinkingFlower><245.5587><621.9412><, BlinkingFlower><253.325><568.8469><, BlinkingFlower><337.6126><360.9153><, BlinkingFlower><1767.629><360.9026><, BlinkingFlower><1786.477><412.9487><, Vine><497.5789><492.1588><891.665~186.7341, 
+AmbientSounds: OMNI><SO_WAT-Splashes.ogg><839.6852><637.0754><0.2391304><1, OMNI><AM_ENV-LushNight.ogg><841.5665><566.5614><0.4347826><1, OMNI><AM_ENV-Outside.ogg><675.5576><565.0546><0.2391304><1, OMNI><AM_ENV-Pasture.ogg><672.1563><638.8233><0.2173913><1, OMNI><AM_ENV-WindGrass.ogg><843.4329><497.8311><0.4130435><1, OMNI><AM_ENV-WinterTrees.ogg><842.8658><425.663><0.3913043><1, 
+FadePalette: 42, 0.2173913, 0.1956522
+WetTerrain: OFF

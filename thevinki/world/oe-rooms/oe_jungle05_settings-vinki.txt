@@ -1,0 +1,18 @@
+DangerType: Rain
+CeilingDrips: 0
+RainIntensity: 0.1521739
+RumbleIntensity: 0
+WaveSpeed: 0.51
+WaveLength: 1
+WaveAmplitude: 0.0001
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Palette: 54
+EffectColorA: 6
+EffectColorB: 18
+Effects: SkyBloom-0.8152174-20-136, Darkness-0-275-133, PixelShift-0.5-32-65, AboveCloudsView-1-272-77, BorderPushBack-1-259-240, SilenceWater-0.3695652-255-286, 
+PlacedObjects: NoSpearStickZone><265.8057><681.9421><189~201, LightSource><2231.699><624.5184><0.06521739~Environment~884~-613~-160~-340.3975~1~1~None~0~0, LightSource><2612.867><608.6623><0.08695652~Environment~221~-336~-177~-197.3975~1~1~None~0~0, LightSource><1785.449><632.88><0.09782609~Environment~-587~-237~-323~-246.3975~1~1~None~0~0, LightSource><927.1501><717.4233><0.09782609~Environment~755~-220~-2~-235.3975~1~1~None~0~0, LightSource><564.3492><679.3687><0.07608695~Environment~-693~84~-557~-341.3975~1~1~None~0~0, DayNightSettings><-38.53455><565.803><5~8.660254~76~10, ReliableSpear><866.5662><435.8289><, ReliableSpear><806.8427><429.5728><, ReliableSpear><595.5872><418.8661><, ReliableSpear><684.6691><417.5671><, ReliableSpear><634.8611><393.5837><, OEsphere><217.668><889.3586><100~-47~259~-165.3975~5~1, BlinkingFlower><363.8344><578.4313><, BlinkingFlower><942.8979><654.1155><, BlinkingFlower><453.9498><468.2578><, BlinkingFlower><307.7558><586.45><, BlinkingFlower><328.6331><613.4124><, BlinkingFlower><424.6929><556.0583><, ClimbablePoleH><2391.129><589.3596><11^0, ClimbablePoleV><2587.358><390.2604><0^14, ClimbablePoleV><2445.554><197.5735><0^22, ClimbablePoleH><1771.279><478.0848><12^0, ClimbablePoleH><1478.424><472.0764><10^0, ClimbablePoleH><1050.839><528.8802><7^0, ClimbablePoleV><1111.746><451.4591><0^7, ClimbablePoleH><723.8192><537.0352><11^0, ClimbablePoleV><784.5377><398.6508><0^8, ClimbablePoleH><386.9379><506.182><5^0, 
+AmbientSounds: OMNI><SO_WAT-RainishDrips.ogg><830.077><648.1003><0.5><1, OMNI><SO_WAT-MoreDrips.ogg><657.4024><651.0754><0.2173913><1, OMNI><SO_WAT-Splashes.ogg><832.3206><576.6871><0.2717391><1, OMNI><AM_ENV-Outside.ogg><837.8498><507.4233><0.3043478><1, OMNI><AM_ENV-Pasture.ogg><656.8014><581.5236><0.2826087><1, OMNI><AM_ENV-WinterTrees.ogg><835.9401><437.0592><0.326087><1, 
+Triggers: Spot<tA>event<tB>MusicEvent<eA>songName<eB>RW_60 - Bloom<eA>vol<eB>0.3<eA>prio<eB>0.5<eA>mxThrt<eB>1<eA>loop<eB>0<eA>droneTol<eB>0<eA>rooms<eB>-1<eA>rest<eB>5<eA>fadeIn<eB>0<eA>oneSongPerCycle<eB>0<eA>stopAtDeath<eB>0<eA>stopAtGate<eB>0<tA>multiUse<tB>0<tA>toCycle<tB>-1<tA>fromCycle<tB>0<tA>delay<tB>0<tA>panPos<tB>715.6345<tB>410.352<tA>fireChance<tB>1<tA>entrance<tB>1<tA>karma<tB>0<tA>slugcats<tB><tA>pos<tB>2700.607<tB>515.2824<tA>handlePos<tB>-215.3553<tB>-149.3553, 
+FadePalette: 42, 0.3695652, 0.3695652, 0.4347826
+WetTerrain: OFF

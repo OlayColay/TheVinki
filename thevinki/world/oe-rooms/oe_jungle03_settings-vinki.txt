@@ -1,0 +1,13 @@
+Template: OE_SettingsTemplate_Ruins
+CeilingDrips: 0
+WaveSpeed: 0.51
+WaveLength: 1
+WaveAmplitude: 0.0001
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Palette: 54
+Effects: Darkness-0.02173913-268-233, Contrast-0.02173913-290-20, SilenceWater-0.5543478-266-283, SkyBloom-1-283-338, LightBurn-0-278-66, WaterDepth-0-537-17, DayNight-0.09782609-268-186, 
+PlacedObjects: Vine><1040.45><823.5038><-308~35, Vine><870.45><769.4957><161~72, Vine><879.224><773.3018><-396~96, Vine><373.3828><811.3505><509~-36, Vine><2036.3><702.7535><-252~111, Vine><1462.321><808.8394><338~-1, Vine><1189.32><713.6627><312~102, Vine><1502.308><795.6949><-330~37, Vine><864.342><771.6274><363~66, Vine><1802.381><798.5989><-270~103, Vine><2314.512><650.5504><182~220, Vine><2544.531><599.5524><-526~127, Vine><2544.616><615.9131><-232~46, Vine><2021.7><708.7461><481~158, Vine><2535.948><603.026><-47~262, LightSource><859.199><617.7694><0.1630435~Environment~-975~-492~-433~-174.3975~1~1~None~0~0, LightSource><2143.826><464.5651><0.173913~Environment~-773~211~-563~-88.39746~1~1~None~0~0, DayNightSettings><258.8><640.4965><5~8.660254~76~10, ExitSymbolHidden><1429.467><468.5527><, GooieDuck><2680.42><682.8553><208~10~2~3, GooieDuck><2756.074><653.6539><126~107~2~3, DevToken><1500.3><553.5033><0~-71~0~0~0~~~0~0~0~1~0~0~0~1, BlinkingFlower><376.3171><735.8311><, BlinkingFlower><284.5498><481.5563><, BlinkingFlower><460.6797><761.8377><, BlinkingFlower><2408.696><325.7892><, BlinkingFlower><2645.53><631.9478><, BlinkingFlower><2847.516><639.5506><, BlinkingFlower><2652.651><712.8807><, BlinkingFlower><2675.568><649.938><, BlinkingFlower><2794.681><594.6643><, BlinkingFlower><2608.471><434.9479><, BlinkingFlower><2634.535><431.5531><, BlinkingFlower><2733.419><396.9329><, Vine><355.6932><560.0347><325.813~296.8321, 
+AmbientSounds: OMNI><AM_ENV-Pasture.ogg><807.0521><568.0286><0.2391304><1.019565, OMNI><AM_ENV-Outside.ogg><800.8477><637.1205><0.4021739><1, OMNI><AM_ENV-LushNight.ogg><806.7668><495.6993><0.3478261><1, OMNI><AM_ENV-CricketsWnd.ogg><627.8747><638.6564><0.5><1, 
+FadePalette: 42, 0.2717391, 0.1847826, 0.2717391
+WetTerrain: OFF
