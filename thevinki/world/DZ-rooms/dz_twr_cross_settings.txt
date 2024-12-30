@@ -1,0 +1,7 @@
+Clouds: 0.2925723
+Palette: 3007
+EffectColorA: 0
+EffectColorB: 8
+Effects: ReplaceEffectColorB-0-20-20-Color-0-1-0.8768115, 
+AmbientSounds: OMNI><am_ind-factory04.ogg><724.8051><507.2052><0.5><1, 
+FadePalette: 16, 0.1000905

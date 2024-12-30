@@ -1,0 +1,8 @@
+Clouds: 0.3695652
+Grime: 0.2065217
+Palette: 3007
+EffectColorA: 6
+EffectColorB: 0
+Effects: ReplaceEffectColorB-0-20-20-Color-0.04347826-1-1, HeatWave-0.1847826-232-60, WaterViscosity-0.5217391-30-30, SilenceWater-1-40-40, DirtyWater-1-175-134, 
+PlacedObjects: CGDrySpot><-54.98407><-48.44937><100~50~2157^386~True~Sync, CGDrySpot><2814.197><-21.96716><100~50~217^272~True~Sync, CGDrySpot><3214.389><-17.33368><100~50~199^231~True~Sync, CGDrySpot><2999.594><108.375><100~50~235^87~True~Sync, CGDrySpot><2042.339><186.929><100~50~755^141~True~Sync, CGDrySpot><3590><-13><100~50~223^268~True~Sync, LightSource><3118.8><13.74484><1~EffectColor1~17~336~50~86.60254~1~0~None~0~0, LightSource><3450><169><1~EffectColor1~5~124~50~86.60254~1~0~None~0~0, LightSource><3551><166><1~EffectColor1~14~147~50~86.60254~1~0~None~0~0, LightSource><2215><97><1~EffectColor1~2~294~50~86.60254~0~0~None~0~0, LightSource><2443><98><1~EffectColor1~2~294~50~86.60254~0~0~None~0~0, LightSource><2634><97><1~EffectColor1~2~294~50~86.60254~0~0~None~0~0, 
+FadePalette: 16, 0.1304348, 0.1086956, 0.1086956, 0.1086956

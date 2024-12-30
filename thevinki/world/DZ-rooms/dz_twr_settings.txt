@@ -1,0 +1,11 @@
+Clouds: 0.3586957
+Grime: 0.3369565
+Palette: 3007
+EffectColorA: 12
+EffectColorB: 7
+Effects: HeatWave-0.326087-20-20, SilenceWater-1-28-79, WaterViscosity-0.5434783-157-71, ReplaceEffectColorA-0-653-353-Color-0-1-1, 
+PlacedObjects: LightSource><636.3492><64.67368><1~EffectColor2~0~346~50~86.60254~0~0~None~0~0, LightSource><306.0549><62.45618><1~EffectColor2~-48~345~50~86.60254~0~0~None~0~0, 
+AmbientSounds: OMNI><am_ind-factory02.ogg><727.0502><329.4911><0.5><0.7065217, SPOT><so_nat-fire.ogg><690.377><385.1577><0.5><1><471.377><48.15768><-230.3553><124.6447><0><0.2847827, SPOT><so_nat-burning.ogg><533.6523><446.3704><0.5><1><471.6523><50.37036><-242.3553><112.6447><0><0.2413045, 
+FadePalette: 16, 0.1847826, 0.173913
+MorePalette0: 20, 0.05434782, 0.04347826
+MorePalette1: 10, 0.06521739, 0.06521739

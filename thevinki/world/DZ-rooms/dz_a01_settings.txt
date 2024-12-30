@@ -1,0 +1,8 @@
+Clouds: 0.2826087
+Grime: 0.2608696
+Palette: 3007
+EffectColorA: 6
+EffectColorB: 20
+Effects: LethalWater-1-32-57, WaterViscosity-0.5869565-291-62, HeatWave-0.1847826-76-118, 
+PlacedObjects: CustomDecal><116.6466><35.07881><12~622~760~582~819~-56~616~-99.00002~0~1~0~krackentag~0.2282609~1~0.2282609~1~0.2282609~1~0.2282609~1, LightSource><492.4143><109.6807><0.6956522~EffectColor1~-525~393~-346~-181.3975~1~0~None~0~0, LightSource><281><118><0.5326087~EffectColor1~-525~393~350~74.60254~1~0~None~0~0, LightSource><718><106><0.5652174~EffectColor1~-525~393~-143~74.60254~1~0~None~0~0, SteamPipe><259.4581><100.1956><0~100, SteamPipe><488><80><0~100, SteamPipe><714><81><0~100, 
+FadePalette: 16, 0.1521739

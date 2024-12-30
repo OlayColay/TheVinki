@@ -1,0 +1,5 @@
+Clouds: 0.2391304
+Palette: 3007
+EffectColorB: 7
+Effects: ReplaceEffectColorA-0-20-20-Color-0-0.7717391-0.7717391, DirtyWater-1-166-47, 
+PlacedObjects: LightSource><352.0508><190.2325><0.6521739~EffectColor2~-35~273~224~241.6025~1~0~None~0~0, LightSource><615><191><0.6086956~EffectColor2~-35~273~133~-95.39746~1~0~None~0~0, LightSource><478><540><0.2391304~EffectColor1~9~-309~-459~-35.39746~1~0~None~0~0, CGDrySpot><426.8384><-21.88225><100~50~110^143~True~Sync, CGDrySpot><0.6741028><18.06496><100~50~275^44~True~Sync, CGDrySpot><695.0001><26.00002><100~50~275^44~True~Sync, 

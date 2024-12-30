@@ -1,0 +1,6 @@
+Clouds: 0.2087979
+Palette: 3008
+PlacedObjects: CGDrySpot><-18.05746><113.8855><100~50~100^100~True~None, 
+AmbientSounds: OMNI><am_ind-factory04.ogg><722.9236><503.5994><0.5><1, 
+FadePalette: 4, 0.1005322
+MorePalette0: 17, 0.04881088
