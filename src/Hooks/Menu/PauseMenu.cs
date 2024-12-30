@@ -1,4 +1,5 @@
 ﻿using Menu;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
@@ -44,7 +45,8 @@ public static partial class Hooks
             return;
         }
 
-        bool needToMoveButtonUp = ModManager.ActiveMods.Exists(mod => mod.id == "ved_s.restartbutton");
+        bool needToMoveButtonUp = ModManager.ActiveMods.Exists(mod => mod.id == "ved_s.restartbutton" || mod.id == "henpemaz_rainmeadow") &&
+            self.pages[0].subObjects.Any(x => x is SimpleButton b && b.menuLabel.text == self.Translate("RESTART"));
 
         PauseMenuData data = self.VinkiData();
         data.graffitiMenuButton = new SimpleButton(self, self.pages[0], self.Translate("SELECT GRAFFITI"), "SELECT GRAFFITI", new Vector2(self.ContinueAndExitButtonsXPos - 460f - self.manager.rainWorld.options.SafeScreenOffset.x, Mathf.Max(self.manager.rainWorld.options.SafeScreenOffset.y, 15f + (needToMoveButtonUp ? 38f : 0f))), new Vector2(110f, 30f));

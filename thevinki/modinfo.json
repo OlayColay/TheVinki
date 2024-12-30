@@ -1,13 +1,13 @@
 ﻿{
 	"id": "olaycolay.thevinki",
 	"name": "The Vinki",
-	"version": "0.12.16",
+	"version": "0.12.17",
 	"hide_version": false,
 	"authors": "OlayColay",
 	"description": "Play as an angsty teen wearing rail-grinding shoes and spraying graffiti to enact revenge on 5P.",
 	"requirements": [ "slime-cubed.slugbase", "fisobs", "moreslugcats", "crs", "regionkit" ],
 	"requirements_names": [ "SlugBase", "Fisobs", "More Slugcats Expansion", "Custom Regions Support", "RegionKit" ],
-	"priorities": ["don.desertedwastelands", "improved-input-config", "pushtomeow"],
+	"priorities": [ "don.desertedwastelands", "improved-input-config", "pushtomeow", "henpemaz_rainmeadow", "ved_s.restartbutton" ],
 	"checksum_override_version": false,
 	"tags": [ "Cosmetics", "Custom Slugcat", "Game Mechanics", "Campaigns", "Items" ]
 }
