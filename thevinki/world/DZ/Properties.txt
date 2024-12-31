@@ -10,4 +10,4 @@ overseersMax: 2
 playerGuideOverseerSpawnChance: 0.5
 ghostRelKarmaReq: 4
 Room Setting Templates:
-Subregion: MDZ
+Subregion: Microbial Digestion Zone
