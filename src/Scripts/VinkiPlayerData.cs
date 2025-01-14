@@ -4,6 +4,7 @@ using SlugBase.DataTypes;
 using Smoke;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
@@ -63,6 +64,12 @@ public class VinkiPlayerData
     public List<PoisonedCreature> poisonedVictims = [];
     public TagSmoke tagSmoke = null;
 
+    // Combo stuff
+    public bool comboTimerActive = false;
+    public int timeLeftInCombo = 0;
+    public int comboSize = 0;
+    public Dictionary<string, List<IEnumerable<Room.Tile>>> beamsInCombo = [];
+
     public VinkiPlayerData(Player player)
     {
         IsVinki = player.slugcatStats.name == Enums.vinki;
@@ -96,6 +103,69 @@ public class VinkiPlayerData
         ShoesColor = pg.GetColor(Enums.Color.Shoes) ?? Custom.hexToColor("494ed3");
         RainPodsColor = pg.GetColor(Enums.Color.RainPods) ?? Custom.hexToColor("FFFFFF");
         GlassesColor = pg.GetColor(Enums.Color.Glasses) ?? Custom.hexToColor("0E0202");
+    }
+
+    public void AddCombo()
+    {
+        comboTimerActive = false;
+        comboSize++;
+    }
+
+    public void CheckToAddBeamToCombo(Room room, Room.Tile tile)
+    {
+        IEnumerable<Room.Tile> beam = [ tile ];
+        if (tile.horizontalBeam)
+        {
+            int y = tile.Y;
+            // Add all horizontal beam tiles to the left
+            for (int x = tile.X; room.Tiles[x, y].horizontalBeam; x--)
+            {
+                beam = beam.Prepend(room.Tiles[x, y]);
+            }
+            // Add all horizontal beam tiles to the right
+            for (int x = tile.X; room.Tiles[x, y].horizontalBeam; x++)
+            {
+                beam = beam.Append(room.Tiles[x, y]);
+            }
+        }
+        else if (tile.verticalBeam)
+        {
+            int x = tile.X;
+            // Add all horizontal beam tiles to the left
+            for (int y = tile.Y; room.Tiles[x, y].verticalBeam; y--)
+            {
+                beam = beam.Prepend(room.Tiles[x, y]);
+            }
+            // Add all horizontal beam tiles to the right
+            for (int y = tile.Y; room.Tiles[x, y].verticalBeam; y++)
+            {
+                beam = beam.Append(room.Tiles[x, y]);
+            }
+        }
+
+        string roomName = room.abstractRoom.name;
+        if (beamsInCombo.ContainsKey(roomName))
+        {
+            if (beamsInCombo[roomName].Any((IEnumerable<Room.Tile> oldBeam) => oldBeam.First() == beam.First() && oldBeam.Last() == beam.Last()))
+            {
+                comboTimerActive = true;
+            }
+            else
+            {
+                AddCombo();
+                beamsInCombo[roomName].Add(beam);
+
+                Plugin.VLogger.LogInfo("New beam to combo! " + beam.First().X + ',' + beam.First().Y + " to " + beam.Last().X + ',' + beam.Last().Y);
+            }
+        }
+        else
+        {
+            AddCombo();
+            beamsInCombo.Add(roomName, [ beam ]);
+
+            Plugin.VLogger.LogInfo("New room to combo! " + roomName);
+            Plugin.VLogger.LogInfo("New beam to combo! " + beam.First().X + ',' + beam.First().Y + " to " + beam.Last().X + ',' + beam.Last().Y);
+        }
     }
 }
 

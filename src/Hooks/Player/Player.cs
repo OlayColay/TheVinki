@@ -491,7 +491,7 @@ namespace Vinki
 
             // Catch beam with feet if not holding down
             if (self.bodyMode == Player.BodyModeIndex.Default &&
-                self.input[0].y >= 0 && self.room.GetTile(self.bodyChunks[1].pos).horizontalBeam &&
+                self.input[0].y >= 0 && self.room.GetTile(self.bodyChunks[1].pos) is Room.Tile beamTile && beamTile.horizontalBeam &&
                 self.bodyChunks[0].vel.y < 0f)
             {
                 self.room.PlaySound(SoundID.Spear_Bounce_Off_Creauture_Shell, self.mainBodyChunk, false, 0.75f, 1f);
@@ -500,6 +500,8 @@ namespace Vinki
                 self.bodyChunks[1].pos.y = self.room.MiddleOfTile(self.bodyChunks[1].pos).y + 5f;
                 self.bodyChunks[1].vel.y = 0f;
                 self.bodyChunks[0].vel.y = 0f;
+
+                self.Vinki().CheckToAddBeamToCombo(self.room, beamTile);
             }
 
             // Stop flipping when falling fast and letting go of jmp (so landing on a rail doesn't look weird)
