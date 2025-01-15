@@ -65,7 +65,7 @@ public class VinkiPlayerData
     public TagSmoke tagSmoke = null;
 
     // Combo stuff
-    public bool comboTimerActive = false;
+    public bool fastComboTimer = false;
     public int timeLeftInCombo = 0;
     public int comboSize = 0;
     public Dictionary<string, List<IEnumerable<Room.Tile>>> beamsInCombo = [];
@@ -107,7 +107,7 @@ public class VinkiPlayerData
 
     public void AddCombo()
     {
-        comboTimerActive = false;
+        fastComboTimer = false;
         comboSize++;
     }
 
@@ -148,7 +148,7 @@ public class VinkiPlayerData
         {
             if (beamsInCombo[roomName].Any((IEnumerable<Room.Tile> oldBeam) => oldBeam.First() == beam.First() && oldBeam.Last() == beam.Last()))
             {
-                comboTimerActive = true;
+                fastComboTimer = false;
             }
             else
             {
