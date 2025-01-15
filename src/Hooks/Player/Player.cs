@@ -685,6 +685,9 @@ namespace Vinki
             {
                 v.idleUpdates = 0;
             }
+
+            // Update combo timer
+            
         }
 
         private static int CanCraftSprayCan(Creature.Grasp a, Creature.Grasp b)

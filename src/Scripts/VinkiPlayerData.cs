@@ -109,6 +109,7 @@ public class VinkiPlayerData
     {
         fastComboTimer = false;
         comboSize++;
+        timeLeftInCombo = 400;
     }
 
     public void CheckToAddBeamToCombo(Room room, Room.Tile tile)
