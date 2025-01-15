@@ -117,7 +117,7 @@ namespace Vinki
         {
             try
             {
-                IL.Player.TerrainImpact += Player_TerrainImpact;
+                IL.Player.TerrainImpact += Player_TerrainImpact_IL;
             }
             catch (Exception ex)
             {
@@ -129,6 +129,7 @@ namespace Vinki
             On.Player.Update += Player_Update;
             On.Player.JollyUpdate += Player_JollyUpdate;
             On.Player.CanBeSwallowed += Player_CanBeSwallowed;
+            On.Player.TerrainImpact += Player_TerrainImpact_On;
         }
 
         private static void RemovePlayerHooks()
@@ -181,6 +182,8 @@ namespace Vinki
             v.canCoyote = 0;
 
             bool newFlip = self.animation != Player.AnimationIndex.Flip;
+            bool newSlide = self.animation != Player.AnimationIndex.BellySlide;
+            bool newPounce = self.animation != Player.AnimationIndex.RocketJump;
 
             orig(self);
 
@@ -242,6 +245,14 @@ namespace Vinki
             {
                 v.NewTrick(Enums.TrickType.Flip, false, true);
             }
+            else if (self.animation == Player.AnimationIndex.BellySlide && newSlide)
+            {
+                v.NewTrick(Enums.TrickType.Slide);
+            }
+            else if (self.animation == Player.AnimationIndex.RocketJump && newPounce)
+            {
+                v.NewTrick(Enums.TrickType.Pounce);
+            }
         }
 
         private static bool IsCoyoteJumping(Player self)
@@ -255,6 +266,7 @@ namespace Vinki
         // Implement higher beam speed
         private static void Player_Move(On.Player.orig_MovementUpdate orig, Player self, bool eu)
         {
+            bool wasNotRolling = self.animation != Player.AnimationIndex.Roll;
             orig(self, eu);
 
             if (self.SlugCatClass != Enums.vinki)
@@ -327,16 +339,21 @@ namespace Vinki
             // Add score for flipping/rolling
             if (self.animation == Player.AnimationIndex.Flip)
             {
-                v.currentTrickScore += 3;
-                v.comboTotalScore += v.comboSize * 3;
+                v.currentTrickScore += 2;
+                v.comboTotalScore += v.comboSize + v.comboSize;
+                v.comboTimerSpeed = 1;
             }
-
-            // End combo if the timer runs out or you die
-            if (self.dead || (v.timeLeftInCombo > -50 && v.timeLeftInCombo <= 0))
+            else if (self.animation == Player.AnimationIndex.Roll || self.animation == Player.AnimationIndex.BellySlide || self.animation == Player.AnimationIndex.RocketJump)
             {
-                v.timeLeftInCombo = -50;
-                v.comboSize = v.currentTrickScore = v.comboTotalScore = 0;
-                v.beamsInCombo.Clear();
+                if (self.animation == Player.AnimationIndex.Roll)
+                {
+                    v.currentTrickScore += 2;
+                }
+                v.comboTimerSpeed = 0;
+            }
+            else
+            {
+                v.comboTimerSpeed = 2;
             }
 
             // If player isn't holding Grind, no need to do other stuff
@@ -560,12 +577,14 @@ namespace Vinki
                 }
             }
 
-            // Don't swallow/spitup while grinding
+            // Update combo states
             if (v.isGrinding)
             {
+                // Don't swallow/spitup while grinding
                 self.swallowAndRegurgitateCounter = 0;
                 v.currentTrickScore++;
                 v.comboTotalScore += v.comboSize;
+                v.comboTimerSpeed = 1;
             }
         }
 
@@ -735,10 +754,18 @@ namespace Vinki
                 v.idleUpdates = 0;
             }
 
+            // End combo if the timer runs out or you die
+            if (self.dead || (v.timeLeftInCombo > -50 && v.timeLeftInCombo <= 0))
+            {
+                v.timeLeftInCombo = -50;
+                v.comboSize = v.currentTrickScore = v.comboTotalScore = 0;
+                v.beamsInCombo.Clear();
+            }
+
             // Update combo timer
             if (v.timeLeftInCombo > 0)
             {
-                v.timeLeftInCombo -= v.fastComboTimer ? 2 : 1;
+                v.timeLeftInCombo -= v.comboTimerSpeed;
             }
         }
 
@@ -1036,7 +1063,29 @@ namespace Vinki
             return (!ModManager.MSC || !(self.SlugCatClass == MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName.Spear)) && (testObj is SprayCan);
         }
 
-        private static void Player_TerrainImpact(MonoMod.Cil.ILContext il)
+        private static void Player_TerrainImpact_On(On.Player.orig_TerrainImpact orig, Player self, int chunk, IntVector2 direction, float speed, bool firstContact)
+        {
+            bool wasNotRolling = self.animation != Player.AnimationIndex.Roll;
+            bool wasNotPouncing = self.animation != Player.AnimationIndex.RocketJump;
+
+            orig(self, chunk, direction, speed, firstContact);
+
+            if (!self.IsVinki())
+            {
+                return;
+            }
+
+            if (self.animation == Player.AnimationIndex.Roll && wasNotRolling)
+            {
+                self.Vinki().NewTrick(Enums.TrickType.Roll);
+            }
+            else if (self.animation == Player.AnimationIndex.RocketJump && wasNotPouncing)
+            {
+                self.Vinki().NewTrick(Enums.TrickType.Pounce, false, true);
+            }
+        }
+
+        private static void Player_TerrainImpact_IL(MonoMod.Cil.ILContext il)
         {
             var c = new ILCursor(il);
 

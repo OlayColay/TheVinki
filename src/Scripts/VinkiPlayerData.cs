@@ -72,7 +72,7 @@ public class VinkiPlayerData
     public TagSmoke tagSmoke = null;
 
     // Combo stuff
-    public bool fastComboTimer = false;
+    public int comboTimerSpeed = 0;
     public int timeLeftInCombo = 0;
     public int comboSize = 0;
     public Dictionary<string, List<IEnumerable<Room.Tile>>> beamsInCombo = [];
@@ -118,7 +118,6 @@ public class VinkiPlayerData
 
     public void AddCombo()
     {
-        fastComboTimer = false;
         comboSize++;
         timeLeftInCombo = 400;
     }
@@ -160,7 +159,6 @@ public class VinkiPlayerData
         {
             if (beamsInCombo[roomName].Any((IEnumerable<Room.Tile> oldBeam) => oldBeam.First() == beam.First() && oldBeam.Last() == beam.Last()))
             {
-                fastComboTimer = false;
                 return false;
             }
             else
@@ -182,14 +180,20 @@ public class VinkiPlayerData
 
     public void NewTrick(Enums.TrickType type, bool comboAdded = false, bool fakie = false)
     {
-        int rand = 0;
+        int index = 0;
         string prefix = string.Empty;
         string suffix = string.Empty;
 
         switch (type)
         {
+            case Enums.TrickType.Pounce:
+                index = fakie ? 1 : 0;
+                this.currentTrickScore = fakie ? 300 : 150;
+                break;
             case Enums.TrickType.Flip:
-                rand = fakie ? UnityEngine.Random.Range(2, 4) : UnityEngine.Random.Range(0, 2);
+                index = fakie ? UnityEngine.Random.Range(2, 4) : UnityEngine.Random.Range(0, 2);
+                goto case Enums.TrickType.Roll;
+            case Enums.TrickType.Roll:
                 this.currentTrickScore = 0;
                 break;
             case Enums.TrickType.VerticalBeam:
@@ -207,11 +211,14 @@ public class VinkiPlayerData
                 }
                 this.currentTrickScore = 0;
                 goto default;
+            case Enums.TrickType.Slide:
+                this.currentTrickScore = 100;
+                goto default;
             default:
-                rand = UnityEngine.Random.Range(0, Enums.trickNames[type].Count());
+                index = UnityEngine.Random.Range(0, Enums.trickNames[type].Count());
                 break;
         }
-        this.currentTrickName = prefix + Enums.trickNames[type][rand] + suffix;
+        this.currentTrickName = prefix + Enums.trickNames[type][index] + suffix;
 
         this.OnNewTrick.Invoke();
     }

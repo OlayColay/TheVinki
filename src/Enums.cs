@@ -104,9 +104,9 @@ public static class Enums
         trickNames[TrickType.Vine] = [ "Frontside", "UFO", "Negative Soul" ];
         trickNames[TrickType.ZeroGravity] = [ "Ho Ho Slide" ];
         trickNames[TrickType.Flip] = [ "Frontflip", "Aerial", "Backflip", "Back Aerial" ];
-        trickNames[TrickType.Roll] = [ "Roll" ];
+        trickNames[TrickType.Roll] = [ "Rollout" ];
         trickNames[TrickType.Slide] = [ "Brainstorm" ];
-        trickNames[TrickType.Pounce] = [ "Torpedo" ];
+        trickNames[TrickType.Pounce] = [ "Torpedo", "Ballistic Missile" ];
     }
 
     public class GraffitiUnlockID(string value, bool register = false) : ExtEnum<GraffitiUnlockID>(value, register)
