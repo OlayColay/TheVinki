@@ -180,6 +180,8 @@ namespace Vinki
             bool coyote = IsCoyoteJumping(self);
             v.canCoyote = 0;
 
+            bool newFlip = self.animation != Player.AnimationIndex.Flip;
+
             orig(self);
 
             if (self.SlugCatClass != Enums.vinki)
@@ -234,6 +236,11 @@ namespace Vinki
                 self.slideCounter = 0;
 
                 v.grindUpPoleFlag = false;
+            }
+
+            if (self.animation == Player.AnimationIndex.Flip && newFlip)
+            {
+                v.NewTrick(Enums.TrickType.Flip, false, true);
             }
         }
 
@@ -314,6 +321,13 @@ namespace Vinki
             }
 
             v.vineGrindDelay = Math.Max(0, v.vineGrindDelay - 1);
+
+            // Add score for flipping/rolling
+            if (self.animation == Player.AnimationIndex.Flip)
+            {
+                v.currentTrickScore += 3;
+                v.comboTotalScore += v.comboSize * 3;
+            }
 
             // End combo if the timer runs out or you die
             if (self.dead || (v.timeLeftInCombo > -50 && v.timeLeftInCombo <= 0))

@@ -189,7 +189,8 @@ public class VinkiPlayerData
         switch (type)
         {
             case Enums.TrickType.Flip:
-                rand = fakie ? UnityEngine.Random.Range(2, 3) : UnityEngine.Random.Range(0, 1);
+                rand = fakie ? UnityEngine.Random.Range(2, 4) : UnityEngine.Random.Range(0, 2);
+                this.currentTrickScore = 0;
                 break;
             case Enums.TrickType.HorizontalBeam:
             case Enums.TrickType.VerticalBeam:

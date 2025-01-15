@@ -130,7 +130,10 @@ public class ComboDisplay : HudPart
 
     public void OnNewTrick()
     {
-        trickAndComboOffsetX = 304f;
+        if (vinki.timeLeftInCombo > 0)
+        {
+            trickAndComboOffsetX = 304f;
+        }
     }
 
     public override void ClearSprites()
