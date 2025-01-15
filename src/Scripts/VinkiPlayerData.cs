@@ -192,14 +192,14 @@ public class VinkiPlayerData
                 rand = fakie ? UnityEngine.Random.Range(2, 4) : UnityEngine.Random.Range(0, 2);
                 this.currentTrickScore = 0;
                 break;
-            case Enums.TrickType.HorizontalBeam:
             case Enums.TrickType.VerticalBeam:
-            case Enums.TrickType.Vine:
                 if (fakie)
                 {
                     prefix = "Fakie ";
                 }
                 goto case Enums.TrickType.ZeroGravity;
+            case Enums.TrickType.HorizontalBeam:
+            case Enums.TrickType.Vine:
             case Enums.TrickType.ZeroGravity:
                 if (comboAdded)
                 {

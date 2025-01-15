@@ -271,12 +271,14 @@ namespace Vinki
             v.lastIsGrindingNoGrav = v.isGrindingNoGrav;
 
             // Save the last direction that Vinki was facing
+            bool switchY = false;
             if (self.input[0].x != 0)
             {
                 v.lastXDirection = self.input[0].x;
             }
             if (self.input[0].y != 0)
             {
+                switchY = v.lastYDirection != self.input[0].y;
                 v.lastYDirection = self.input[0].y;
             }
             if (self.SwimDir(true).magnitude > 0f)
@@ -517,10 +519,10 @@ namespace Vinki
                 }
 
                 // Combo stuff
-                if (v.isGrindingV && !v.lastIsGrindingV)
+                if (v.isGrindingV && (!v.lastIsGrindingV || switchY))
                 {
                     Room.Tile beamTile = self.room.GetTile(self.mainBodyChunk.pos);
-                    v.NewTrick(Enums.TrickType.VerticalBeam, v.AddBeamToCombo(self.room, beamTile));
+                    v.NewTrick(Enums.TrickType.VerticalBeam, v.AddBeamToCombo(self.room, beamTile), v.lastYDirection < 0);
                 }
                 else if (v.isGrindingNoGrav && !v.lastIsGrindingNoGrav)
                 {
