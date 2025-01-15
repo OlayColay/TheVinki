@@ -40,7 +40,7 @@ public class ComboDisplay : HudPart
         };
         hud.fContainers[1].AddChild(this.currentCombo);
 
-        this.trickScore = new(Custom.GetFont(), "400")
+        this.trickScore = new(Custom.GetFont(), vinki.currentTrickScore.ToString())
         {
             alignment = FLabelAlignment.Right,
             color = new Color(0.7f, 0.7f, 0.7f),
@@ -83,9 +83,10 @@ public class ComboDisplay : HudPart
         this.currentCombo.x = this.DrawPos(timeStacker).x + 120f;
         this.currentCombo.text = "x" + vinki.comboSize.ToString();
         this.trickScore.x = this.DrawPos(timeStacker).x + 90f;
+        this.trickScore.text = vinki.currentTrickScore.ToString();
         this.comboTimer.scaleX = Mathf.Lerp(0f, 15f, vinki.timeLeftInCombo / 400f);
         this.totalScore.x = this.DrawPos(timeStacker).x + 120f;
-        this.totalScore.text = (400 * vinki.comboSize).ToString();
+        this.totalScore.text = vinki.comboTotalScore.ToString();
     }
 
     public Vector2 DrawPos(float timeStacker)

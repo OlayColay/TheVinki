@@ -315,11 +315,11 @@ namespace Vinki
 
             v.vineGrindDelay = Math.Max(0, v.vineGrindDelay - 1);
 
-            // End combo if the timer runs out
-            if (v.timeLeftInCombo > -50 && v.timeLeftInCombo <= 0)
+            // End combo if the timer runs out or you die
+            if (self.dead || (v.timeLeftInCombo > -50 && v.timeLeftInCombo <= 0))
             {
                 v.timeLeftInCombo = -50;
-                v.comboSize = 0;
+                v.comboSize = v.currentTrickScore = v.comboTotalScore = 0;
                 v.beamsInCombo.Clear();
             }
 
@@ -425,7 +425,7 @@ namespace Vinki
                     if (!v.lastIsGrindingH)
                     {
                         Room.Tile beamTile = self.room.GetTile(self.bodyChunks[1].pos);
-                        v.currentTrickName = v.GetTrickName(Enums.TrickType.HorizontalBeam, v.AddBeamToCombo(self.room, beamTile));
+                        v.NewTrick(Enums.TrickType.HorizontalBeam, v.AddBeamToCombo(self.room, beamTile));
                     }
                 }
                 for (int j = 0; j < 2; j++)
@@ -506,12 +506,12 @@ namespace Vinki
                 if (v.isGrindingV && !v.lastIsGrindingV)
                 {
                     Room.Tile beamTile = self.room.GetTile(self.mainBodyChunk.pos);
-                    v.currentTrickName = v.GetTrickName(Enums.TrickType.VerticalBeam, v.AddBeamToCombo(self.room, beamTile));
+                    v.NewTrick(Enums.TrickType.VerticalBeam, v.AddBeamToCombo(self.room, beamTile));
                 }
                 else if (v.isGrindingNoGrav && !v.lastIsGrindingNoGrav)
                 {
                     Room.Tile beamTile = self.room.GetTile(self.mainBodyChunk.pos);
-                    v.currentTrickName = v.GetTrickName(Enums.TrickType.ZeroGravity, v.AddBeamToCombo(self.room, beamTile));
+                    v.NewTrick(Enums.TrickType.ZeroGravity, v.AddBeamToCombo(self.room, beamTile));
                 }
 
                 // Looping grind sound
@@ -548,6 +548,8 @@ namespace Vinki
             if (v.isGrinding)
             {
                 self.swallowAndRegurgitateCounter = 0;
+                v.currentTrickScore++;
+                v.comboTotalScore += v.comboSize;
             }
         }
 

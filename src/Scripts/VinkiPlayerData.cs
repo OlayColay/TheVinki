@@ -77,6 +77,8 @@ public class VinkiPlayerData
     public int comboSize = 0;
     public Dictionary<string, List<IEnumerable<Room.Tile>>> beamsInCombo = [];
     public string currentTrickName = string.Empty;
+    public int currentTrickScore = 0;
+    public int comboTotalScore;
 
     public VinkiPlayerData(Player player)
     {
@@ -177,7 +179,7 @@ public class VinkiPlayerData
         }
     }
 
-    public string GetTrickName(Enums.TrickType type, bool comboAdded = false, bool fakie = false)
+    public void NewTrick(Enums.TrickType type, bool comboAdded = false, bool fakie = false)
     {
         int rand = 0;
         string prefix = string.Empty;
@@ -201,12 +203,13 @@ public class VinkiPlayerData
                 {
                     suffix = " (New)";
                 }
+                this.currentTrickScore = 0;
                 goto default;
             default:
                 rand = UnityEngine.Random.Range(0, Enums.trickNames[type].Count());
                 break;
         }
-        return prefix + Enums.trickNames[type][rand] + suffix;
+        this.currentTrickName = prefix + Enums.trickNames[type][rand] + suffix;
     }
 }
 
