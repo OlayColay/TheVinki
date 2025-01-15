@@ -256,6 +256,13 @@ namespace Vinki
             }
             VinkiPlayerData v = self.Vinki();
 
+            // Edit isGrindings from last Update
+            v.lastIsGrinding = v.isGrinding;
+            v.lastIsGrindingH = v.isGrindingH;
+            v.lastIsGrindingV = v.isGrindingV;
+            v.lastIsGrindingVine = v.isGrindingVine;
+            v.lastIsGrindingNoGrav = v.isGrindingNoGrav;
+
             // Save the last direction that Vinki was facing
             if (self.input[0].x != 0)
             {
@@ -307,6 +314,14 @@ namespace Vinki
             }
 
             v.vineGrindDelay = Math.Max(0, v.vineGrindDelay - 1);
+
+            // End combo if the timer runs out
+            if (v.timeLeftInCombo > -50 && v.timeLeftInCombo <= 0)
+            {
+                v.timeLeftInCombo = -50;
+                v.comboSize = 0;
+                v.beamsInCombo.Clear();
+            }
 
             // If player isn't holding Grind, no need to do other stuff
             if (!self.IsPressed(Grind) && !v.grindToggle)
@@ -406,6 +421,12 @@ namespace Vinki
                 {
                     posA = self.bodyChunks[1].pos;
                     posB = posA - new Vector2(10f * v.lastXDirection, 0);
+
+                    if (!v.lastIsGrindingH)
+                    {
+                        Room.Tile beamTile = self.room.GetTile(self.bodyChunks[1].pos);
+                        v.currentTrickName = v.GetTrickName(Enums.TrickType.HorizontalBeam, v.AddBeamToCombo(self.room, beamTile));
+                    }
                 }
                 for (int j = 0; j < 2; j++)
                 {
@@ -481,6 +502,18 @@ namespace Vinki
                     self.room.AddObject(new Spark(posB, b * Mathf.Lerp(4f, 30f, UnityEngine.Random.value), Enums.SparkColor, null, 2, 4));
                 }
 
+                // Combo stuff
+                if (v.isGrindingV && !v.lastIsGrindingV)
+                {
+                    Room.Tile beamTile = self.room.GetTile(self.mainBodyChunk.pos);
+                    v.currentTrickName = v.GetTrickName(Enums.TrickType.VerticalBeam, v.AddBeamToCombo(self.room, beamTile));
+                }
+                else if (v.isGrindingNoGrav && !v.lastIsGrindingNoGrav)
+                {
+                    Room.Tile beamTile = self.room.GetTile(self.mainBodyChunk.pos);
+                    v.currentTrickName = v.GetTrickName(Enums.TrickType.ZeroGravity, v.AddBeamToCombo(self.room, beamTile));
+                }
+
                 // Looping grind sound
                 PlayGrindSound(self);
             }
@@ -491,7 +524,7 @@ namespace Vinki
 
             // Catch beam with feet if not holding down
             if (self.bodyMode == Player.BodyModeIndex.Default &&
-                self.input[0].y >= 0 && self.room.GetTile(self.bodyChunks[1].pos) is Room.Tile beamTile && beamTile.horizontalBeam &&
+                self.input[0].y >= 0 && self.room.GetTile(self.bodyChunks[1].pos).horizontalBeam &&
                 self.bodyChunks[0].vel.y < 0f)
             {
                 self.room.PlaySound(SoundID.Spear_Bounce_Off_Creauture_Shell, self.mainBodyChunk, false, 0.75f, 1f);
@@ -500,8 +533,6 @@ namespace Vinki
                 self.bodyChunks[1].pos.y = self.room.MiddleOfTile(self.bodyChunks[1].pos).y + 5f;
                 self.bodyChunks[1].vel.y = 0f;
                 self.bodyChunks[0].vel.y = 0f;
-
-                self.Vinki().CheckToAddBeamToCombo(self.room, beamTile);
             }
 
             // Stop flipping when falling fast and letting go of jmp (so landing on a rail doesn't look weird)
@@ -687,7 +718,10 @@ namespace Vinki
             }
 
             // Update combo timer
-            
+            if (v.timeLeftInCombo > 0)
+            {
+                v.timeLeftInCombo -= v.fastComboTimer ? 2 : 1;
+            }
         }
 
         private static int CanCraftSprayCan(Creature.Grasp a, Creature.Grasp b)

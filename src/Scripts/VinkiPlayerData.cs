@@ -44,15 +44,22 @@ public class VinkiPlayerData
     public int craftCounter = 0;
     public int vineGrindDelay = 0;
     public bool grindUpPoleFlag = false;
+    public bool grindToggle = false;
+    public int canCoyote = 0;
+    public int idleUpdates = 0;
+    public float beatTimer = 0f;
+
     public bool isGrindingH = false;
     public bool isGrindingV = false;
     public bool isGrindingNoGrav = false;
     public bool isGrindingVine = false;
     public bool isGrinding = false;
-    public bool grindToggle = false;
-    public int canCoyote = 0;
-    public int idleUpdates = 0;
-    public float beatTimer = 0f;
+
+    public bool lastIsGrindingH = false;
+    public bool lastIsGrindingV = false;
+    public bool lastIsGrindingNoGrav = false;
+    public bool lastIsGrindingVine = false;
+    public bool lastIsGrinding = false;
 
     public Vector2 lastVineDir = Vector2.zero;
     public ClimbableVinesSystem.VinePosition vineAtFeet = null;
@@ -69,6 +76,7 @@ public class VinkiPlayerData
     public int timeLeftInCombo = 0;
     public int comboSize = 0;
     public Dictionary<string, List<IEnumerable<Room.Tile>>> beamsInCombo = [];
+    public string currentTrickName = string.Empty;
 
     public VinkiPlayerData(Player player)
     {
@@ -112,33 +120,33 @@ public class VinkiPlayerData
         timeLeftInCombo = 400;
     }
 
-    public void CheckToAddBeamToCombo(Room room, Room.Tile tile)
+    public bool AddBeamToCombo(Room room, Room.Tile tile)
     {
         IEnumerable<Room.Tile> beam = [ tile ];
-        if (tile.horizontalBeam)
+        if (this.isGrindingH && tile.horizontalBeam)
         {
             int y = tile.Y;
             // Add all horizontal beam tiles to the left
-            for (int x = tile.X; room.Tiles[x, y].horizontalBeam; x--)
+            for (int x = tile.X; x >= 0 && room.Tiles[x, y].horizontalBeam; x--)
             {
                 beam = beam.Prepend(room.Tiles[x, y]);
             }
             // Add all horizontal beam tiles to the right
-            for (int x = tile.X; room.Tiles[x, y].horizontalBeam; x++)
+            for (int x = tile.X; x < room.Tiles.GetLength(0) && room.Tiles[x, y].horizontalBeam; x++)
             {
                 beam = beam.Append(room.Tiles[x, y]);
             }
         }
-        else if (tile.verticalBeam)
+        else if (this.isGrindingV && tile.verticalBeam)
         {
             int x = tile.X;
-            // Add all horizontal beam tiles to the left
-            for (int y = tile.Y; room.Tiles[x, y].verticalBeam; y--)
+            // Add all vertical beam tiles below
+            for (int y = tile.Y; y >= 0 && room.Tiles[x, y].verticalBeam; y--)
             {
                 beam = beam.Prepend(room.Tiles[x, y]);
             }
-            // Add all horizontal beam tiles to the right
-            for (int y = tile.Y; room.Tiles[x, y].verticalBeam; y++)
+            // Add all vertical beam tiles above
+            for (int y = tile.Y; y < room.Tiles.GetLength(1) && room.Tiles[x, y].verticalBeam; y++)
             {
                 beam = beam.Append(room.Tiles[x, y]);
             }
@@ -150,13 +158,14 @@ public class VinkiPlayerData
             if (beamsInCombo[roomName].Any((IEnumerable<Room.Tile> oldBeam) => oldBeam.First() == beam.First() && oldBeam.Last() == beam.Last()))
             {
                 fastComboTimer = false;
+                return false;
             }
             else
             {
                 AddCombo();
                 beamsInCombo[roomName].Add(beam);
 
-                Plugin.VLogger.LogInfo("New beam to combo! " + beam.First().X + ',' + beam.First().Y + " to " + beam.Last().X + ',' + beam.Last().Y);
+                return true;
             }
         }
         else
@@ -164,9 +173,40 @@ public class VinkiPlayerData
             AddCombo();
             beamsInCombo.Add(roomName, [ beam ]);
 
-            Plugin.VLogger.LogInfo("New room to combo! " + roomName);
-            Plugin.VLogger.LogInfo("New beam to combo! " + beam.First().X + ',' + beam.First().Y + " to " + beam.Last().X + ',' + beam.Last().Y);
+            return true;
         }
+    }
+
+    public string GetTrickName(Enums.TrickType type, bool comboAdded = false, bool fakie = false)
+    {
+        int rand = 0;
+        string prefix = string.Empty;
+        string suffix = string.Empty;
+
+        switch (type)
+        {
+            case Enums.TrickType.Flip:
+                rand = fakie ? UnityEngine.Random.Range(2, 3) : UnityEngine.Random.Range(0, 1);
+                break;
+            case Enums.TrickType.HorizontalBeam:
+            case Enums.TrickType.VerticalBeam:
+            case Enums.TrickType.Vine:
+                if (fakie)
+                {
+                    prefix = "Fakie ";
+                }
+                goto case Enums.TrickType.ZeroGravity;
+            case Enums.TrickType.ZeroGravity:
+                if (comboAdded)
+                {
+                    suffix = " (New)";
+                }
+                goto default;
+            default:
+                rand = UnityEngine.Random.Range(0, Enums.trickNames[type].Count());
+                break;
+        }
+        return prefix + Enums.trickNames[type][rand] + suffix;
     }
 }
 

@@ -22,7 +22,7 @@ public class ComboDisplay : HudPart
         this.pos = new Vector2(50f, 500f);
         this.vinki = vinki;
 
-        this.currentTrick = new(Custom.GetDisplayFont(), "Frontside (New)")
+        this.currentTrick = new(Custom.GetDisplayFont(), vinki.currentTrickName)
         {
             alignment = FLabelAlignment.Left,
             color = new Color(0.7f, 0.7f, 0.7f),
@@ -79,11 +79,12 @@ public class ComboDisplay : HudPart
     public override void Draw(float timeStacker)
     {
         this.currentTrick.x = this.DrawPos(timeStacker).x - 25f;
-        this.currentCombo.x = this.DrawPos(timeStacker).x + 170f;
+        this.currentTrick.text = vinki.currentTrickName;
+        this.currentCombo.x = this.DrawPos(timeStacker).x + 120f;
         this.currentCombo.text = "x" + vinki.comboSize.ToString();
-        this.trickScore.x = this.DrawPos(timeStacker).x + 140f;
+        this.trickScore.x = this.DrawPos(timeStacker).x + 90f;
         this.comboTimer.scaleX = Mathf.Lerp(0f, 15f, vinki.timeLeftInCombo / 400f);
-        this.totalScore.x = this.DrawPos(timeStacker).x + 170f;
+        this.totalScore.x = this.DrawPos(timeStacker).x + 120f;
         this.totalScore.text = (400 * vinki.comboSize).ToString();
     }
 

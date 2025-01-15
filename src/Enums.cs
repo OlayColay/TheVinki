@@ -1,5 +1,7 @@
 ﻿using Menu;
 using SlugBase.DataTypes;
+using System;
+using System.Collections.Generic;
 
 namespace Vinki;
 
@@ -10,6 +12,19 @@ public static class Enums
     public static readonly string vinkiStr = nameof(vinki);
 
     public static readonly UnityEngine.Color SparkColor = new UnityEngine.Color32(0xd1, 0xfa, 0xff, 0xff);
+
+    public enum TrickType
+    {
+        HorizontalBeam,
+        VerticalBeam,
+        Vine,
+        ZeroGravity,
+        Flip,
+        Roll,
+        Slide,
+        Pounce
+    }
+    public static Dictionary<TrickType, string[]> trickNames = [];
 
     public static class Movement
     {
@@ -83,6 +98,15 @@ public static class Enums
         GraffitiUnlockID.Init();
 
         SlideShowID.VinkiAltEnd = new("altending_vinki", false);
+
+        trickNames[TrickType.HorizontalBeam] = [ "Frontside", "UFO", "Negative Soul" ];
+        trickNames[TrickType.VerticalBeam] = [ "Unity", "Tabernacle", "Full Torque" ];
+        trickNames[TrickType.Vine] = [ "Frontside", "UFO", "Negative Soul" ];
+        trickNames[TrickType.ZeroGravity] = [ "Ho Ho Slide" ];
+        trickNames[TrickType.Flip] = [ "Frontflip", "Aerial", "Backflip", "Back Aerial" ];
+        trickNames[TrickType.Roll] = [ "Roll" ];
+        trickNames[TrickType.Slide] = [ "Brainstorm" ];
+        trickNames[TrickType.Pounce] = [ "Torpedo" ];
     }
 
     public class GraffitiUnlockID(string value, bool register = false) : ExtEnum<GraffitiUnlockID>(value, register)
