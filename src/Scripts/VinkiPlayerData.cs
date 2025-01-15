@@ -207,7 +207,7 @@ public class VinkiPlayerData
             case Enums.TrickType.ZeroGravity:
                 if (comboAdded)
                 {
-                    suffix = " (New)";
+                    suffix = " [NEW]";
                 }
                 this.currentTrickScore = 0;
                 goto default;

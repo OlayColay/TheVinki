@@ -582,9 +582,10 @@ namespace Vinki
             {
                 // Don't swallow/spitup while grinding
                 self.swallowAndRegurgitateCounter = 0;
+
                 v.currentTrickScore++;
                 v.comboTotalScore += v.comboSize;
-                v.comboTimerSpeed = 1;
+                v.comboTimerSpeed = v.currentTrickName.EndsWith("[NEW]") ? 0 : 1;
             }
         }
 
