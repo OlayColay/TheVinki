@@ -79,6 +79,7 @@ public class VinkiPlayerData
     public string currentTrickName = string.Empty;
     public int currentTrickScore = 0;
     public int comboTotalScore;
+    public Action OnNewTrick;
 
     public VinkiPlayerData(Player player)
     {
@@ -210,6 +211,8 @@ public class VinkiPlayerData
                 break;
         }
         this.currentTrickName = prefix + Enums.trickNames[type][rand] + suffix;
+
+        this.OnNewTrick.Invoke();
     }
 }
 

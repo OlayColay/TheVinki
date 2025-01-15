@@ -11,6 +11,8 @@ public class ComboDisplay : HudPart
     public Vector2 lastPos;
     public int opacityTimer = 0;
 
+    public float trickAndComboOffsetX = 0f;
+
 	public VinkiPlayerData vinki;
 	public FLabel currentTrick;
 	public FLabel currentCombo;
@@ -22,6 +24,8 @@ public class ComboDisplay : HudPart
 	{
         this.pos = new Vector2(50f, 500f);
         this.vinki = vinki;
+
+        this.vinki.OnNewTrick += OnNewTrick;
 
         this.currentTrick = new(Custom.GetDisplayFont(), vinki.currentTrickName)
         {
@@ -84,13 +88,18 @@ public class ComboDisplay : HudPart
         {
             this.opacityTimer = 200;
         }
+
+        if (this.trickAndComboOffsetX > 0f)
+        {
+            this.trickAndComboOffsetX -= 38f;
+        }
     }
 
     public override void Draw(float timeStacker)
     {
-        this.currentTrick.x = this.DrawPos(timeStacker).x - 25f;
-        this.currentCombo.x = this.DrawPos(timeStacker).x + 120f;
-        this.trickScore.x = this.DrawPos(timeStacker).x + 90f;
+        this.currentTrick.x = this.DrawPos(timeStacker).x - 25f - trickAndComboOffsetX;
+        this.currentCombo.x = this.DrawPos(timeStacker).x + 120f - trickAndComboOffsetX;
+        this.trickScore.x = this.DrawPos(timeStacker).x + 90f - trickAndComboOffsetX;
         this.comboTimer.scaleX = Mathf.Lerp(0f, 15f, vinki.timeLeftInCombo / 400f);
         this.totalScore.x = this.DrawPos(timeStacker).x + 120f;
 
@@ -117,5 +126,15 @@ public class ComboDisplay : HudPart
     public Vector2 DrawPos(float timeStacker)
     {
         return Vector2.Lerp(this.lastPos, this.pos, timeStacker);
+    }
+
+    public void OnNewTrick()
+    {
+        trickAndComboOffsetX = 304f;
+    }
+
+    public override void ClearSprites()
+    {
+        vinki.OnNewTrick -= OnNewTrick;
     }
 }
