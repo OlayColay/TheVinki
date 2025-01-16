@@ -1,4 +1,5 @@
 ﻿using ImprovedInput;
+using MoreSlugcats;
 using RWCustom;
 using SlugBase.DataTypes;
 using Smoke;
@@ -51,14 +52,16 @@ public class VinkiPlayerData
 
     public bool isGrindingH = false;
     public bool isGrindingV = false;
-    public bool isGrindingNoGrav = false;
     public bool isGrindingVine = false;
+    public bool isGrindingNoGrav = false;
+    public bool isGrindingVineNoGrav = false;
     public bool isGrinding = false;
 
     public bool lastIsGrindingH = false;
     public bool lastIsGrindingV = false;
-    public bool lastIsGrindingNoGrav = false;
     public bool lastIsGrindingVine = false;
+    public bool lastIsGrindingNoGrav = false;
+    public bool lastIsGrindingVineNoGrav = false;
     public bool lastIsGrinding = false;
 
     public Vector2 lastVineDir = Vector2.zero;
@@ -76,6 +79,7 @@ public class VinkiPlayerData
     public int timeLeftInCombo = 0;
     public int comboSize = 0;
     public Dictionary<string, List<IEnumerable<Room.Tile>>> beamsInCombo = [];
+    public Dictionary<string, List<int>> vinesInCombo = [];
     public string currentTrickName = string.Empty;
     public int currentTrickScore = 0;
     public int comboTotalScore;
@@ -173,6 +177,32 @@ public class VinkiPlayerData
         {
             AddCombo();
             beamsInCombo.Add(roomName, [ beam ]);
+
+            return true;
+        }
+    }
+
+    public bool AddVineToCombo(Room room, int vine)
+    {
+        string roomName = room.abstractRoom.name;
+        if (vinesInCombo.ContainsKey(roomName))
+        {
+            if (vinesInCombo[roomName].Contains(vine))
+            {
+                return false;
+            }
+            else
+            {
+                AddCombo();
+                vinesInCombo[roomName].Add(vine);
+
+                return true;
+            }
+        }
+        else
+        {
+            AddCombo();
+            vinesInCombo.Add(roomName, [vine]);
 
             return true;
         }

@@ -280,12 +280,15 @@ namespace Vinki
             v.lastIsGrindingH = v.isGrindingH;
             v.lastIsGrindingV = v.isGrindingV;
             v.lastIsGrindingVine = v.isGrindingVine;
+            v.lastIsGrindingVineNoGrav = v.isGrindingVineNoGrav;
             v.lastIsGrindingNoGrav = v.isGrindingNoGrav;
 
             // Save the last direction that Vinki was facing
+            bool switchX = false;
             bool switchY = false;
             if (self.input[0].x != 0)
             {
+                switchX = v.lastXDirection != self.input[0].x;
                 v.lastXDirection = self.input[0].x;
             }
             if (self.input[0].y != 0)
@@ -359,21 +362,21 @@ namespace Vinki
             // If player isn't holding Grind, no need to do other stuff
             if (!self.IsPressed(Grind) && !v.grindToggle)
             {
-                v.isGrindingH = v.isGrindingV = v.isGrindingNoGrav = v.isGrindingVine = false;
+                v.isGrindingH = v.isGrindingV = v.isGrindingNoGrav = v.isGrindingVineNoGrav = false;
                 v.vineAtFeet = null;
                 self.slugcatStats.runspeedFac = Enums.Movement.NormalXSpeed;
                 self.slugcatStats.poleClimbSpeedFac = Enums.Movement.NormalYSpeed;
                 return;
             }
 
+            ClimbableVinesSystem.VinePosition vineAtFeet = v.vineAtFeet;
             v.isGrindingH = IsGrindingHorizontally(self);
             v.isGrindingV = IsGrindingVertically(self);
+            v.isGrindingVine = IsGrindingVine(self, vineAtFeet);
             v.isGrindingNoGrav = IsGrindingNoGrav(self);
-            v.isGrindingVine = IsGrindingVineNoGrav(self);
-            v.isGrinding = v.isGrindingH || v.isGrindingV || v.isGrindingNoGrav || v.isGrindingVine;
+            v.isGrindingVineNoGrav = IsGrindingVineNoGrav(self);
+            v.isGrinding = v.isGrindingH || v.isGrindingV || v.isGrindingVine || v.isGrindingNoGrav || v.isGrindingVineNoGrav;
 
-            ClimbableVinesSystem.VinePosition vineAtFeet = v.vineAtFeet;
-            bool isGrindingAtopVine = vineAtFeet != null;
             bool goodVineState = (v.vineGrindDelay == 0 &&
                 self.animation != Player.AnimationIndex.ClimbOnBeam && self.animation != Player.AnimationIndex.HangFromBeam &&
                 self.animation != Player.AnimationIndex.StandOnBeam && self.animation != Player.AnimationIndex.ClimbOnBeam &&
@@ -381,13 +384,13 @@ namespace Vinki
                 (self.bodyMode == Player.BodyModeIndex.Default || self.bodyMode == Player.BodyModeIndex.Stand) &&
                 self.bodyChunks[1].vel.y < 0f
             );
-            if (!isGrindingAtopVine && goodVineState)
+            if (!v.isGrindingVine && goodVineState)
             {
                 vineAtFeet = self.room.climbableVines?.VineOverlap(self.bodyChunks[1].pos, self.bodyChunks[1].rad + 5f);
-                isGrindingAtopVine = (vineAtFeet != null);
+                v.isGrindingVine = IsGrindingVine(self, vineAtFeet);
 
                 // First frame of grinding on vine
-                if (isGrindingAtopVine)
+                if (v.isGrindingVine)
                 {
                     //VLogger.LogInfo("Animation before getting on vine: " + self.animation.ToString() + "\t prev animation: " + lastAnimation.ToString());
                     self.room.PlaySound(SoundID.Spear_Bounce_Off_Creauture_Shell, self.mainBodyChunk, false, 0.75f, 1f);
@@ -397,12 +400,12 @@ namespace Vinki
             }
 
             // Grind horizontally if holding Grind on a beam
-            if (v.isGrindingH || (isGrindingAtopVine && goodVineState))
+            if (v.isGrindingH || (v.isGrindingVine && goodVineState))
             {
                 v.canCoyote = 3;
                 self.slugcatStats.runspeedFac = 0;
                 self.animationFrame = 0;
-                if (isGrindingAtopVine)
+                if (v.isGrindingVine)
                 {
                     self.canJump = 5;
                     self.vineGrabDelay = 3;
@@ -444,11 +447,16 @@ namespace Vinki
                 // Sparks from grinding
                 Vector2 posA;
                 Vector2 posB;
-                if (isGrindingAtopVine)
+                if (v.isGrindingVine)
                 {
                     posA = self.room.climbableVines.OnVinePos(vineAtFeet);
                     ClimbableVinesSystem.VinePosition nextVinePos = self.room.climbableVines?.VineOverlap(posA - new Vector2(10f * v.lastXDirection, 0), self.bodyChunks[1].rad + 5f);
                     posB = self.room.climbableVines.OnVinePos(nextVinePos);
+                    
+                    if (!v.lastIsGrindingVine || switchX)
+                    {
+                        v.NewTrick(Enums.TrickType.Vine, v.AddVineToCombo(self.room, vineAtFeet.vine));
+                    }
                 }
                 else
                 {
@@ -479,14 +487,14 @@ namespace Vinki
             }
 
             // Grind if holding Grind on a pole (vertical beam or 0G beam/vine)
-            if (v.isGrindingV || v.isGrindingNoGrav || v.isGrindingVine)
+            if (v.isGrindingV || v.isGrindingNoGrav || v.isGrindingVineNoGrav)
             {
                 //VLogger.LogInfo("Zero G Pole direction: " + self.zeroGPoleGrabDir.x + "," + self.zeroGPoleGrabDir.y);
                 self.slugcatStats.poleClimbSpeedFac = 0;
                 self.animationFrame = 0;
 
-                // Handle vine grinding
-                if (v.isGrindingVine)
+                // Handle 0G vine grinding
+                if (v.isGrindingVineNoGrav)
                 {
                     self.vineClimbCursor = Enums.Movement.GrindVineSpeed * Vector2.ClampMagnitude(
                         self.vineClimbCursor + v.lastVineDir * Custom.LerpMap(Vector2.Dot(v.lastVineDir, self.vineClimbCursor.normalized), -1f, 1f, 10f, 3f), 30f
@@ -507,9 +515,20 @@ namespace Vinki
                             self.vineGrabDelay = 10;
                         }
                     }
+
+                    if (!v.lastIsGrindingVineNoGrav)
+                    {
+                        v.NewTrick(Enums.TrickType.ZeroGravity, v.AddVineToCombo(self.room, self.vinePos.vine));
+                    }
                 }
                 else
                 {
+                    if (v.isGrindingNoGrav && !v.lastIsGrindingNoGrav)
+                    {
+                        Room.Tile beamTile = self.room.GetTile(self.mainBodyChunk.pos);
+                        v.NewTrick(Enums.TrickType.ZeroGravity, v.AddBeamToCombo(self.room, beamTile));
+                    }
+
                     // Handle 0G horizontal beam grinding
                     if (v.isGrindingNoGrav && self.room.GetTile(self.mainBodyChunk.pos).horizontalBeam)
                     {
@@ -535,16 +554,12 @@ namespace Vinki
                     self.room.AddObject(new Spark(posB, b * Mathf.Lerp(4f, 30f, UnityEngine.Random.value), Enums.SparkColor, null, 2, 4));
                 }
 
-                // Combo stuff
+                // Resume the combo timer if the direction is switched on a new beam/vine
+                Plugin.VLogger.LogInfo($"{v.isGrindingVine} {v.lastIsGrindingVine} {switchX}");
                 if (v.isGrindingV && (!v.lastIsGrindingV || switchY))
                 {
                     Room.Tile beamTile = self.room.GetTile(self.mainBodyChunk.pos);
                     v.NewTrick(Enums.TrickType.VerticalBeam, v.AddBeamToCombo(self.room, beamTile), v.lastYDirection < 0);
-                }
-                else if (v.isGrindingNoGrav && !v.lastIsGrindingNoGrav)
-                {
-                    Room.Tile beamTile = self.room.GetTile(self.mainBodyChunk.pos);
-                    v.NewTrick(Enums.TrickType.ZeroGravity, v.AddBeamToCombo(self.room, beamTile));
                 }
 
                 // Looping grind sound
@@ -612,6 +627,11 @@ namespace Vinki
             return (self.animation == Player.AnimationIndex.ClimbOnBeam &&
                 ((v.lastYDirection > 0 && self.bodyChunks[1].vel.magnitude > 1f) ||
                 (v.lastYDirection < 0 && self.bodyChunks[1].vel.magnitude > 2f)));
+        }
+
+        private static bool IsGrindingVine(Player self, ClimbableVinesSystem.VinePosition vinePos)
+        {
+            return (vinePos != null && self.room.gravity >= 0.1f);
         }
 
         private static bool IsGrindingNoGrav(Player self)
@@ -761,6 +781,7 @@ namespace Vinki
                 v.timeLeftInCombo = -50;
                 v.comboSize = v.currentTrickScore = v.comboTotalScore = 0;
                 v.beamsInCombo.Clear();
+                v.vinesInCombo.Clear();
             }
 
             // Update combo timer
