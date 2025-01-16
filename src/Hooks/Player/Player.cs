@@ -523,10 +523,10 @@ namespace Vinki
                 }
                 else
                 {
-                    if (v.isGrindingNoGrav && !v.lastIsGrindingNoGrav)
+                    if (v.isGrindingNoGrav && (!v.lastIsGrindingNoGrav || (self.standing && switchY) || (!self.standing && switchX)))
                     {
                         Room.Tile beamTile = self.room.GetTile(self.mainBodyChunk.pos);
-                        v.NewTrick(Enums.TrickType.ZeroGravity, v.AddBeamToCombo(self.room, beamTile));
+                        v.NewTrick(Enums.TrickType.ZeroGravity, v.AddBeamToCombo(self.room, beamTile, self.standing));
                     }
 
                     // Handle 0G horizontal beam grinding
@@ -600,7 +600,7 @@ namespace Vinki
 
                 v.currentTrickScore++;
                 v.comboTotalScore += v.comboSize;
-                v.comboTimerSpeed = v.currentTrickName.EndsWith("[NEW]") ? 0 : 1;
+                v.comboTimerSpeed = v.currentTrickName.EndsWith("[NEW]") && self.animation != Player.AnimationIndex.VineGrab ? 0 : 1;
             }
         }
 

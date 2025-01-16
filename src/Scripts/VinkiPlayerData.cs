@@ -126,10 +126,10 @@ public class VinkiPlayerData
         timeLeftInCombo = 400;
     }
 
-    public bool AddBeamToCombo(Room room, Room.Tile tile)
+    public bool AddBeamToCombo(Room room, Room.Tile tile, bool? uprightInZeroG = null)
     {
         IEnumerable<Room.Tile> beam = [ tile ];
-        if (this.isGrindingH && tile.horizontalBeam)
+        if ((this.isGrindingH || (uprightInZeroG.HasValue && !uprightInZeroG.Value)) && tile.horizontalBeam)
         {
             int y = tile.Y;
             // Add all horizontal beam tiles to the left
@@ -143,7 +143,7 @@ public class VinkiPlayerData
                 beam = beam.Append(room.Tiles[x, y]);
             }
         }
-        else if (this.isGrindingV && tile.verticalBeam)
+        else if ((this.isGrindingV || (uprightInZeroG.HasValue && uprightInZeroG.Value)) && tile.verticalBeam)
         {
             int x = tile.X;
             // Add all vertical beam tiles below
