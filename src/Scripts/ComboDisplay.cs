@@ -26,6 +26,8 @@ public class ComboDisplay : HudPart
         this.vinki = vinki;
 
         this.vinki.OnNewTrick += OnNewTrick;
+        this.vinki.OnNewBestCombo += OnNewBestCombo;
+        this.vinki.OnNewBestScore += OnNewBestScore;
 
         this.currentTrick = new(Custom.GetDisplayFont(), vinki.currentTrickName)
         {
@@ -136,8 +138,31 @@ public class ComboDisplay : HudPart
         }
     }
 
+    public void OnNewBestCombo()
+    {
+        this.currentTrick.text = Custom.rainWorld.inGameTranslator.Translate("New Best Combo!");
+        this.trickScore.text = string.Empty;
+        this.trickAndComboOffsetX = 304f;
+    }
+
+    public void OnNewBestScore()
+    {
+        if (this.currentTrick.text == Custom.rainWorld.inGameTranslator.Translate("New Best Combo!"))
+        {
+            this.currentTrick.text = Custom.rainWorld.inGameTranslator.Translate("New Best Combo and Score!");
+        }
+        else
+        {
+            this.currentTrick.text = Custom.rainWorld.inGameTranslator.Translate("New Best Score!");
+            this.trickScore.text = string.Empty;
+            this.trickAndComboOffsetX = 304f;
+        }
+    }
+
     public override void ClearSprites()
     {
         vinki.OnNewTrick -= OnNewTrick;
+        vinki.OnNewBestCombo -= OnNewBestCombo;
+        vinki.OnNewBestScore -= OnNewBestScore;
     }
 }

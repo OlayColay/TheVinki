@@ -778,6 +778,18 @@ namespace Vinki
             // End combo if the timer runs out or you die
             if (self.dead || (v.timeLeftInCombo > -50 && v.timeLeftInCombo <= 0))
             {
+                SlugBaseSaveData miscProgression = SaveDataExtension.GetSlugBaseData(self.room.game.rainWorld.progression.miscProgressionData);
+                if (!miscProgression.TryGet("VinkiBestCombo", out int bestCombo) || v.comboSize > bestCombo)
+                {
+                    miscProgression.Set("VinkiBestCombo", v.comboSize);
+                    v.OnNewBestCombo.Invoke();
+                }
+                if (!miscProgression.TryGet("VinkiBestScore", out int bestScore) || v.comboTotalScore > bestScore)
+                {
+                    miscProgression.Set("VinkiBestScore", v.comboTotalScore);
+                    v.OnNewBestScore.Invoke();
+                }
+
                 v.timeLeftInCombo = -50;
                 v.comboSize = v.currentTrickScore = v.comboTotalScore = 0;
                 v.beamsInCombo.Clear();

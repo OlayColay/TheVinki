@@ -1,15 +1,33 @@
 ﻿using Menu;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
+using SlugBase.SaveData;
 using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace Vinki;
+
+public class SlugcatPageData
+{
+    public MenuLabel bestCombo;
+    public MenuLabel bestScore;
+}
+public static class SlugcatPageExtension
+{
+    private static readonly ConditionalWeakTable<SlugcatSelectMenu.SlugcatPage, SlugcatPageData> cwt = new();
+
+    public static SlugcatPageData Vinki(this SlugcatSelectMenu.SlugcatPage gm) => cwt.GetValue(gm, _ => new SlugcatPageData());
+}
 
 public static partial class Hooks
 {
     private static void ApplySlugcatSelectMenuHooks()
     {
         On.Menu.SlugcatSelectMenu.CommunicateWithUpcomingProcess += SlugcatSelectMenu_CommunicateWithUpcomingProcess;
+
+        On.Menu.SlugcatSelectMenu.SlugcatPage.ctor += SlugcatSelectMenu_SlugcatPage_ctor;
+        On.Menu.SlugcatSelectMenu.SlugcatPage.GrafUpdate += SlugcatPage_GrafUpdate;
 
         try
         {
@@ -29,6 +47,51 @@ public static partial class Hooks
         {
             (nextProcess as FullscreenVideo).StartVideo("videos/VinkiIntro.mp4", ProcessManager.ProcessID.Game);
         }
+    }
+
+    private static void SlugcatSelectMenu_SlugcatPage_ctor(On.Menu.SlugcatSelectMenu.SlugcatPage.orig_ctor orig, SlugcatSelectMenu.SlugcatPage self, Menu.Menu menu, MenuObject owner, int pageIndex, SlugcatStats.Name slugcatNumber)
+    {
+        orig(self, menu, owner, pageIndex, slugcatNumber);
+
+        if (slugcatNumber != Enums.vinki)
+        {
+            return;
+        }
+
+        SlugBaseSaveData miscProgressionData = SaveDataExtension.GetSlugBaseData(menu.manager.rainWorld.progression.miscProgressionData);
+        if (miscProgressionData.TryGet("VinkiBestCombo", out int bestCombo) && miscProgressionData.TryGet("VinkiBestScore", out int bestScore))
+        {
+            SlugcatPageData data = self.Vinki();
+
+            data.bestCombo = new(menu, self, menu.Translate("Best Trick Combo: " + bestCombo), new(-1500f, 500f), new(110f, 30f), true);
+            data.bestCombo.label.alignment = FLabelAlignment.Left;
+            data.bestCombo.label.color = Menu.Menu.MenuRGB(Menu.Menu.MenuColors.MediumGrey);
+            self.subObjects.Add(data.bestCombo);
+
+            data.bestScore = new(menu, self, menu.Translate("Best Trick Score: " + bestScore), new(-1500f, 470f), new(110f, 30f), true);
+            data.bestScore.label.alignment = FLabelAlignment.Left;
+            data.bestScore.label.color = Menu.Menu.MenuRGB(Menu.Menu.MenuColors.MediumGrey);
+            self.subObjects.Add(data.bestScore);
+        }
+    }
+
+    private static void SlugcatPage_GrafUpdate(On.Menu.SlugcatSelectMenu.SlugcatPage.orig_GrafUpdate orig, SlugcatSelectMenu.SlugcatPage self, float timeStacker)
+    {
+        orig(self, timeStacker);
+
+        if (self.slugcatNumber != Enums.vinki)
+        {
+            return;
+        }
+
+        SlugcatPageData data = self.Vinki();
+        if (data.bestCombo == null || data.bestScore == null)
+        {
+            return;
+        }
+
+        data.bestCombo.label.alpha = data.bestScore.label.alpha = self.UseAlpha(timeStacker);
+        data.bestCombo.label.x = data.bestScore.label.x = self.MidXpos + self.Scroll(timeStacker) * self.ScrollMagnitude - 600f;
     }
 
     private static void SlugcatSelectMenu_StartGame(ILContext il)

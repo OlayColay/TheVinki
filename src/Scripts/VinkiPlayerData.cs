@@ -84,6 +84,8 @@ public class VinkiPlayerData
     public int currentTrickScore = 0;
     public int comboTotalScore;
     public Action OnNewTrick;
+    public Action OnNewBestCombo;
+    public Action OnNewBestScore;
 
     public VinkiPlayerData(Player player)
     {
