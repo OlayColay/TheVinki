@@ -9,7 +9,6 @@ using Random = UnityEngine.Random;
 using SlugBase.SaveData;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using static Vinki.Plugin;
 
 namespace Vinki
 {
@@ -1059,6 +1058,53 @@ namespace Vinki
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("This lizard looks very angry! I wonder what you did to cause it to be so mad at you."), 0);
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("I know some variations of lizards can spit sticky mucus at their prey, but a beam of energy would be incredibly dangerous. Stay safe, little friend!"), 0);
+                    break;
+                case "VinkiGraffiti/vinki/N0TKYU - Buckled Up":
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Ah yes, your shoes. It seems like you admire them greatly."), 0);
+                    if (miscSave.TryGet("MetMoonTwice", out int metTwice) && metTwice > 0)
+                    {
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("I hope that you enjoyed my short history lesson about where they came from."), 0);
+                    }
+                    else
+                    {
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("If you return next cycle, I may have some more to tell you about them."), 0);
+                    }
+                    break;
+                case "VinkiGraffiti/vinki/quarter - Pinhead":
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("It is you, and you have several of my creator's written characters around you."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("I wonder if you know what they all mean, or if they simply look interesting to you. Do they represent your different thoughts throughout each cycle?"), 0);
+                    break;
+                case "VinkiGraffiti/vinki/Natex008 - Guess Who Was Here":
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("... I do not believe you understand our written language very well, but this is cute nonetheless!"), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Would you like to know what you wrote? \"Our main needs more castrophony. Eighty-four!\""), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Castrophony? I do not believe that's even a word. It sounds like something one of the musical artists in my city would invent to sound clever."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Apologies, little creature. I wish I could teach you our language, but I'm afraid that I do not have the time."), 0);
+                    break;
+                case "VinkiGraffiti/vinki/Natex008 - Vinkastik Tunez":
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("You are listening to music on a large set of headphones. Are you wishing for a set like this? I doubt you could move very well with those."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Actually, that brings up a good question. Do those headphones of yours even work? I'm unsure that they would be operable after all this time..."), 0);
+                    break;
+                case "VinkiGraffiti/vinki/raintailed - Star Fighter":
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("It is you wearing a purple top with a star on its back. There are several other stars and nebulae around you."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("This reminds me of a certain debate between some of my creators during my youth. Some missed the time before iterators and being able to visit the sea more often.<LINE>" +
+                        "Others were glad to live so high up, being able to see the stars all the better."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Eventually it devolved into a meaningless dispute about whether the stars or the sea were more beautiful. It appears you would be on the stars' side of the debate."), 0);
+                    break;
+                case "VinkiGraffiti/vinki/quarter - Outlawed!":
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Ah, do you view yourself as an outlaw?"), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Well, to Five Pebbles you might be~"), 0);
+                    break;
+                case "VinkiGraffiti/vinki/quarter - When Lizards Fly":
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Wow, a creature like this existing would be extremely dangerous. Do you think you would be able to slay it?"), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Your species is very diverse, from my experience. Perhaps there is one of you who could if these creatures existed."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("They would have to be quite nimble to slay it, however. They might also need some enhancement, such as extra limbs!"), 0);
                     break;
             }
         }
