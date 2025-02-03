@@ -68,27 +68,27 @@ namespace Vinki
                 {
                     if (!miscSave.TryGet("MoonSprayTimes", out int moonSprayTimes) || moonSprayTimes == 0)
                     {
-                        oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("Ah... I would appreciate you not painting over my chamber walls. Feel free to do so outside of it, but I require clear walls to project holographic graphs over. Your art, as beautiful as it is, might distort them."), 0);
+                        oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("Ah... I would appreciate you not painting over my chamber walls. Feel free to do so outside of it, but I require clear walls to project holographic graphs over.<LINE>Your art, as beautiful as it is, might distort them."), 0);
                     }
                     else if (moonSprayTimes == 1)
                     {
-                        oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("I already told you to not paint over my chamber walls. I'm sure you can find plenty of significantly better canvas outside of my chamber, and I don't want to have to destroy your hard work, so please do so outside."), 0);
+                        oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("I already told you to not paint over my chamber walls. I'm sure you can find plenty of significantly better canvas outside of my chamber,<LINE>and I don't want to have to destroy your hard work, so please do so outside."), 0);
                     }
-                    else
+                    else if (moonSprayTimes == 2)
                     {
-                        float rand = Random.value;
-                        if (rand < 0.3f)
-                        {
-                            oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("Are you ignoring my request on purpose? Please paint outside."), -10);
-                        }
-                        else if (rand < 0.7f)
-                        {
-                            oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("Little friend, I truly need my walls clean for my systems to work correctly. Please stop."), -10);
-                        }
-                        else
-                        {
-                            oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("You are wasting your materials. Your paintings cannot stay here. Please listen."), -10);
-                        }
+                        oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("Are you ignoring my request on purpose? Please paint outside."), -10);
+                    }
+                    else if (moonSprayTimes == 3)
+                    {
+                        oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("Little friend, I truly need my walls clean for my systems to work correctly. Please stop."), -10);
+                    }
+                    else if (moonSprayTimes == 4)
+                    {
+                        oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("You are wasting your materials. Your paintings cannot stay here. Please listen."), -10);
+                    }
+                    else if (moonSprayTimes == 5)
+                    {
+                        oracleBehavior.dialogBox.Interrupt(oracleBehavior.Translate("Do you simply want to show me your art, even if it gets erased? That would be okay, I suppose.<LINE>Just don't be surprised when you find it gone if you return next cycle."), -10);
                     }
                     miscSave.Set("MoonSprayTimes", moonSprayTimes + 1);
                 }
@@ -1078,7 +1078,7 @@ namespace Vinki
                     break;
                 case "VinkiGraffiti/vinki/Natex008 - Guess Who Was Here":
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
-                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("... I do not believe you understand our written language very well, but this is cute nonetheless!"), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("...I do not believe you understand our written language very well, but this is cute nonetheless!"), 0);
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Would you like to know what you wrote? \"Our main needs more castrophony. Eighty-four!\""), 0);
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Castrophony? I do not believe that's even a word. It sounds like something one of the musical artists in my city would invent to sound clever."), 0);
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Apologies, little creature. I wish I could teach you our language, but I'm afraid that I do not have the time."), 0);
@@ -1102,7 +1102,7 @@ namespace Vinki
                     break;
                 case "VinkiGraffiti/vinki/quarter - When Lizards Fly":
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
-                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Wow, a creature like this existing would be extremely dangerous. Do you think you would be able to slay it?"), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("A winged creature like this existing would be extremely dangerous! Do you think you would be able to slay it?"), 0);
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Your species is very diverse, from my experience. Perhaps there is one of you who could if these creatures existed."), 0);
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("They would have to be quite nimble to slay it, however. They might also need some enhancement, such as extra limbs!"), 0);
                     break;
