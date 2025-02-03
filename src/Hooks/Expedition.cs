@@ -1,4 +1,5 @@
 ﻿using On.Expedition;
+﻿using Expedition;
 
 namespace Vinki;
 public static partial class Hooks
@@ -7,11 +8,13 @@ public static partial class Hooks
 	{
         NeuronDeliveryChallenge.ValidForThisSlugcat += NeuronDeliveryChallenge_ValidForThisSlugcat;
         PearlDeliveryChallenge.Update += PearlDeliveryChallenge_Update;
+	CharacterSelectPage.UpdateSelectedSlugcat += CharacterSelectPage_UpdateSelectedSlugcat;
     }
     public static void RemoveExpeditionHooks()
     {
         NeuronDeliveryChallenge.ValidForThisSlugcat -= NeuronDeliveryChallenge_ValidForThisSlugcat;
         PearlDeliveryChallenge.Update -= PearlDeliveryChallenge_Update;
+	CharacterSelectPage.UpdateSelectedSlugcat -= CharacterSelectPage_UpdateSelectedSlugcat;
     }
 
     private static bool NeuronDeliveryChallenge_ValidForThisSlugcat(NeuronDeliveryChallenge.orig_ValidForThisSlugcat orig, Expedition.NeuronDeliveryChallenge self, SlugcatStats.Name slugcat)
@@ -39,6 +42,17 @@ public static partial class Hooks
                     }
                 }
             }
+        }
+    }
+
+    private static void CharacterSelectPage_UpdateSelectedSlugcat(On.Menu.CharacterSelectPage.orig_UpdateSelectedSlugcat orig, CharacterSelectPage self, int num)
+    {
+        if (num < 0 || num >= ExpeditionGame.playableCharacters.Count) num = 1;
+        orig(self, num);
+
+    	if (ExpeditionGame.playableCharacters[num] == Enums.vinki)
+        {
+            self.slugcatScene = new(nameof(MoreSlugcats.MoreSlugcatsEnums.MenuSceneID.Landscape_VS));
         }
     }
 }
