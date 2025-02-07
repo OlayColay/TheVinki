@@ -74,6 +74,10 @@ public class VinkiPlayerData
     public List<PoisonedCreature> poisonedVictims = [];
     public TagSmoke tagSmoke = null;
 
+    // Mushroom rejection stuff
+    public int shakeHeadDir = 0;
+    public int shakeHeadTimes = 0;
+
     // Combo stuff
     public int comboTimerSpeed = 0;
     public int timeLeftInCombo = 0;

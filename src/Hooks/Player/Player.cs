@@ -130,6 +130,28 @@ namespace Vinki
             On.Player.JollyUpdate += Player_JollyUpdate;
             On.Player.CanBeSwallowed += Player_CanBeSwallowed;
             On.Player.TerrainImpact += Player_TerrainImpact_On;
+            On.Player.GrabUpdate += Player_GrabUpdate;
+            On.Player.BiteEdibleObject += Player_BiteEdibleObject;
+        }
+
+        private static void Player_GrabUpdate(On.Player.orig_GrabUpdate orig, Player self, bool eu)
+        {
+            int prevCounter = self.eatCounter;
+
+            orig(self, eu);
+
+            VinkiPlayerData vinki;
+            if (!self.IsVinki(out vinki))
+            {
+                return;
+            }
+
+            // Reset shake head counter if we stopped trying to eat
+            if (self.eatCounter == prevCounter && vinki.shakeHeadTimes > 0)
+            {
+                vinki.shakeHeadTimes = 0;
+                (self.graphicsModule as PlayerGraphics).LookAtNothing();
+            }
         }
 
         private static void RemovePlayerHooks()
@@ -139,6 +161,43 @@ namespace Vinki
             On.Player.Update -= Player_Update;
             On.Player.JollyUpdate -= Player_JollyUpdate;
             On.Player.CanBeSwallowed -= Player_CanBeSwallowed;
+            On.Player.TerrainImpact -= Player_TerrainImpact_On;
+            On.Player.GrabUpdate -= Player_GrabUpdate;
+            On.Player.BiteEdibleObject -= Player_BiteEdibleObject;
+        }
+
+        private static void Player_BiteEdibleObject(On.Player.orig_BiteEdibleObject orig, Player self, bool eu)
+        {
+            // Shake head instead of eating mushrooms
+            for (int i = 0; i < 2; i++)
+            {
+                if (self.IsVinki(out VinkiPlayerData vinki) && self.grasps[i] != null && self.grasps[i].grabbed is Mushroom)
+                {
+                    if (vinki.shakeHeadTimes < 4)
+                    {
+                        if (vinki.shakeHeadDir == 0)
+                        {
+                            vinki.shakeHeadDir = 1;
+                        }
+                        else
+                        {
+                            vinki.shakeHeadDir *= -1;
+                        }
+
+                        self.eatCounter = 7;
+                        self.PlayerGraphics().LookAtPoint(self.mainBodyChunk.pos + new Vector2(vinki.shakeHeadDir * 1000f, 0f), 10f);
+                        vinki.shakeHeadTimes++;
+                    }
+                    else
+                    {
+                        self.ThrowObject(i, eu);
+                    }
+
+                    return;
+                }
+            }
+
+            orig(self, eu);
         }
 
         private static void Player_JollyUpdate(On.Player.orig_JollyUpdate orig, Player self, bool eu)
