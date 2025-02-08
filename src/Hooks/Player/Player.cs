@@ -920,16 +920,15 @@ namespace Vinki
                 }  
             }
 
-            if (!VinkiConfig.RequireCansGraffiti.Value)
+            var grasp = self.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan);
+            bool hasCan = grasp != null && (grasp.grabbed as SprayCan).TryUse();
+            if (hasCan || !VinkiConfig.RequireCansGraffiti.Value)
             {
                 _ = SprayGraffiti(self, gNum: gNum);
-            }
-            else
-            {
-                var grasp = self.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan);
-                if (grasp != null && (grasp.grabbed as SprayCan).TryUse())
+
+                if (hasCan && self.IsVinki(out VinkiPlayerData vinki))
                 {
-                    _ = SprayGraffiti(self, gNum: gNum);
+                    vinki.AddTrickToCombo("New Piece", 500);
                 }
             }
         }
@@ -1035,14 +1034,15 @@ namespace Vinki
             }
 
             PhysicalObject source = self;
-            if (VinkiConfig.RequireCansTagging.Value)
+            if (self.grasps.FirstOrDefault(g => g?.grabbed is SprayCan)?.grabbed is SprayCan can && can.TryUse())
             {
-                SprayCan can = self.grasps.FirstOrDefault(g => g?.grabbed is SprayCan).grabbed as SprayCan;
-                if (!can.TryUse())
-                {
-                    return;
-                }
                 source = can;
+
+                v.AddTrickToCombo("Tag!", 700);
+            }
+            else if (VinkiConfig.RequireCansTagging.Value)
+            {
+                return;
             }
 
             v.tagLag = 30;

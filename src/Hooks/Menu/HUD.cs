@@ -13,6 +13,11 @@ public static partial class Hooks
         On.HUD.HUD.InitSinglePlayerHud += HUD_InitSinglePlayerHud;
     }
 
+    private static void RemoveHudHooks()
+    {
+        On.HUD.HUD.InitSinglePlayerHud -= HUD_InitSinglePlayerHud;
+    }
+
     private static void HUD_InitSinglePlayerHud(On.HUD.HUD.orig_InitSinglePlayerHud orig, HUD.HUD self, RoomCamera cam)
     {
         orig(self, cam);

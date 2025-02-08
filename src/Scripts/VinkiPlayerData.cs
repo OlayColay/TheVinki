@@ -258,6 +258,17 @@ public class VinkiPlayerData
 
         this.OnNewTrick.Invoke();
     }
+
+    public void AddTrickToCombo(string trickName, int points, bool canStartCombo = false)
+    {
+        if (canStartCombo || this.comboSize > 0)
+        {
+            this.currentTrickName = trickName;
+            this.currentTrickScore = points;
+            AddCombo();
+            this.OnNewTrick.Invoke();
+        }
+    }
 }
 
 public static class PlayerExtension
