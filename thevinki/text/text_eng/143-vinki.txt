@@ -21,10 +21,10 @@ SPECEVENT : resync
 
 PEBBLESWAIT : 20
 
-0 : Understand that I do not suggest this to you out of compassion - or even out of pity, little rodent. These scavengers<LINE>have been causing a worrying amount of damage to my structure in their search for their weapons of war against<LINE>these beasts. I simply hope that you are able to persuade them to stop before I am forced to take more drastic measures. : 30
+0 : Understand that I do not suggest this to you out of compassion - or even out of pity, little rodent. These scavengers<LINE>have been causing a worrying amount of damage to my structure in search for their weapons of war against these beasts.<LINE>I simply hope that you are able to persuade them to stop before I am forced to take more drastic measures. : 30
 
 0 : .  .  . : 30
 
-0 : Since it seems you have trouble following my instructions, I will repeat. Travel east of the dome-shaped 12th Council Pillar<LINE>and paint your doodles for the scavengers. Once you gain their trust, convince them to stop pulling apart my structure.<LINE>Do you understand? : 50
+0 : Since it seems you have trouble following my instructions, I will repeat. Travel east of the dome-shaped 12th Council Pillar<LINE>and paint your doodles for the scavengers. Once you gain their trust, convince them to stop pulling my structure apart.<LINE>Do you understand? : 50
 
 0 : Now leave me to return to my work, rascally creature. I do not wish to see you here again. : 30

@@ -1040,18 +1040,19 @@ namespace Vinki
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
                     if (Plugin.blueCycles > 1)
                     {
-                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("This again? I've already blasted you with the color-changing radiation. Be patient and allow it to take effect... perhaps next cycle."), 0);
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("This again? Too much radiation could be harmful to your species, as I said before. I know you are impatient, but please wait and allow it to take effect. Perhaps next cycle?"), 0);
                     }
                     else if (Plugin.blueCycles == 1)
                     {
-                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("This again? It seems like you are enjoying being blue, but I don’t want to overload you with radiation. Wait until it fades and I can reapply the colors."), 0);
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("This again? It seems like you are enjoying being blue, but I don’t want to harm you or give you permanent damage of any kind. I’m sorry, but uncontrollable mutations are never a good thing.<LINE>" +
+                            "Wait until it fades and I can reapply the colors safely."), 0);
                     }
                     else
                     {
                         Plugin.blueCycles = 2;
                         oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Oh, were you hoping for me to make your appearance like this? I suppose I could attempt to radiate you with some color-changing particles, but I’m unsure if it would work for your species."), 0);
                         oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("One second..."), 30);
-                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Okay, it is finished. It may not appear to have worked, but it will need some time. Keep in mind that it’s only temporary. I don’t want to blast you with too much radiation, silly creature!"), 0);
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Okay, it is finished. It might not look like it, but you should change sometime soon. Keep in mind it is only temporary, as too much radiation might be harmful to your species, little friend."), 0);
                     }
                     break;
                 case "VinkiGraffiti/vinki/Salami_Hunter - Lizzilla":
@@ -1068,13 +1069,13 @@ namespace Vinki
                     }
                     else
                     {
-                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("If you return next cycle, I may have some more to tell you about them."), 0);
+                        oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("If you return next cycle, I could tell you some more about them."), 0);
                     }
                     break;
                 case "VinkiGraffiti/vinki/quarter - Pinhead":
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
-                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("It is you, and you have several of my creator's written characters around you."), 0);
-                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("I wonder if you know what they all mean, or if they simply look interesting to you. Do they represent your different thoughts throughout each cycle?"), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("It is you, with several letters originating from my creator’s lexicon."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("I wonder if you know what they mean, or if they are nothing but interesting shapes to you. Do they represent your thoughts throughout each cycle?"), 0);
                     break;
                 case "VinkiGraffiti/vinki/Natex008 - Guess Who Was Here":
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
