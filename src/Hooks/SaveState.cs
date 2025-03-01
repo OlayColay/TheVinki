@@ -73,13 +73,7 @@ public static partial class Hooks
 
     private static bool PlayerProgression_MiscProgressionData_GetTokenCollected(On.PlayerProgression.MiscProgressionData.orig_GetTokenCollected_string_bool orig, PlayerProgression.MiscProgressionData self, string tokenString, bool sandbox)
     {
-        // If the current slugcat isn't Vinki and the option is disabled, disable the token
-        if (!VinkiConfig.TokensInEveryCampaign.Value && self.currentlySelectedSinglePlayerSlugcat != Enums.vinki)
-        {
-            return true;
-        }
-
-        // Is this string in the Unlockables graffiti folder?
+        // Check if the token is a Vinki token: Is this string in the Unlockables graffiti folder?
         string unlockablesPath = AssetManager.ResolveDirectory("decals/Unlockables/");
         string fileName = Array.Find(Directory.GetFiles(unlockablesPath).Select(Path.GetFileNameWithoutExtension).ToArray(), (file) => file.EndsWith(tokenString));
         if (fileName == null) 
@@ -92,7 +86,13 @@ public static partial class Hooks
             }
         }
 
-        // Attempt to find the graffiti in the vinki graffiti folder. If it's not there, the token should be available
+        // If the current slugcat isn't Vinki and the option is disabled, disable the Vinki token
+        if (!VinkiConfig.TokensInEveryCampaign.Value && self.currentlySelectedSinglePlayerSlugcat != Enums.vinki)
+        {
+            return true;
+        }
+
+        // Attempt to find the graffiti in the vinki graffiti folder. If it's not there, the Vinki token should be available
         string unlockedPath = AssetManager.ResolveDirectory("decals/VinkiGraffiti/vinki/");
         fileName = Array.Find(Directory.GetFiles(unlockedPath).Select(Path.GetFileNameWithoutExtension).ToArray(), (file) => file.EndsWith(tokenString));
         return fileName != null;
