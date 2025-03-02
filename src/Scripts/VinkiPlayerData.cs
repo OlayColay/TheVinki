@@ -224,7 +224,8 @@ public class VinkiPlayerData
         {
             case Enums.TrickType.Pounce:
                 index = fakie ? 1 : 0;
-                this.currentTrickScore = fakie ? 300 : 150;
+                this.currentTrickScore = fakie ? 100 : 50;
+                this.comboTotalScore += this.currentTrickScore * this.comboSize;
                 break;
             case Enums.TrickType.Flip:
                 index = fakie ? UnityEngine.Random.Range(2, 4) : UnityEngine.Random.Range(0, 2);
@@ -248,7 +249,8 @@ public class VinkiPlayerData
                 this.currentTrickScore = 0;
                 goto default;
             case Enums.TrickType.Slide:
-                this.currentTrickScore = 100;
+                this.currentTrickScore = 50;
+                this.comboTotalScore += this.currentTrickScore * this.comboSize;
                 goto default;
             default:
                 index = UnityEngine.Random.Range(0, Enums.trickNames[type].Count());

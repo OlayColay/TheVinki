@@ -358,6 +358,7 @@ namespace Vinki
                 if (self.animation == Player.AnimationIndex.Roll)
                 {
                     v.currentTrickScore += 2;
+                    v.comboTotalScore += v.comboSize + v.comboSize;
                 }
                 v.comboTimerSpeed = 0;
             }
