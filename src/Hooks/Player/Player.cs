@@ -639,7 +639,12 @@ namespace Vinki
 
         private static bool IsGrindingVine(Player self, ClimbableVinesSystem.VinePosition vinePos)
         {
-            return (vinePos != null && self.room.gravity >= 0.1f);
+            if (vinePos == null || self.room.climbableVines == null)
+            {
+                return false;
+            }
+            IClimbableVine vine = self.room.climbableVines.GetVineObject(vinePos);
+            return (self.room.gravity >= 0.1f && (vine is not PoleMimic || (vine as PoleMimic).State.alive));
         }
 
         private static bool IsGrindingNoGrav(Player self)
