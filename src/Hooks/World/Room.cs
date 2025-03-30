@@ -81,9 +81,9 @@ public static partial class Hooks
         miscSave.Set("PlacedGraffitis", placedGraffitis);
     }
 
-    private static void Room_ctor(On.Room.orig_ctor orig, Room self, RainWorldGame game, World world, AbstractRoom abstractRoom)
+    private static void Room_ctor(On.Room.orig_ctor orig, Room self, RainWorldGame game, World world, AbstractRoom abstractRoom, bool devUI)
     {
-        orig(self, game, world, abstractRoom);
+        orig(self, game, world, abstractRoom, devUI);
 
         if (game == null || game.StoryCharacter != Enums.vinki)
         {
