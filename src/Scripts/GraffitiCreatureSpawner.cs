@@ -16,7 +16,7 @@ public static class GraffitiCreatureSpawner
         roomCreatures.Clear();
         roomCreatures["GW_TOWER05"] = new Dictionary<int, GraffitiDenSpawnData>
 		{
-            { 4, new GraffitiDenSpawnData([MoreSlugcats.MoreSlugcatsEnums.CreatureTemplateType.MirosVulture], 100) },
+            { 4, new GraffitiDenSpawnData([DLCSharedEnums.CreatureTemplateType.MirosVulture], 100) },
 			{ 6, new GraffitiDenSpawnData([MoreSlugcats.MoreSlugcatsEnums.CreatureTemplateType.TrainLizard], 500) }
         };
     }

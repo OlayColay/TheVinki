@@ -45,7 +45,7 @@ public class GraffitiTutorial : UpdatableAndDeletable
                 0, 600, false, false
             );
             game.cameras.First().hud.textPrompt.AddMessage(
-                game.manager.rainWorld.inGameTranslator.Translate("Objects have varying amount of charge. You can also combine two Spray Cans, or recharge a can with another object."),
+                game.manager.rainWorld.inGameTranslator.Translate("Objects have varying amount of charges. You can also combine two Spray Cans, or recharge a can with another colorful object."),
                 100, 600, false, false
             );
             nextPhase = Phase.Spray;
@@ -53,7 +53,7 @@ public class GraffitiTutorial : UpdatableAndDeletable
         else if (playerPos.y >= SprayTriggerPos && nextPhase == Phase.Spray)
         {
             string graffitiMode = Plugin.improvedInput ? KeyCodeTranslator.GetImprovedInputKeyName(0, "thevinki:graffiti") + " + " : "";
-            string spray = Plugin.improvedInput ? KeyCodeTranslator.GetImprovedInputKeyName(0, "thevinki:spray") : "Jump + Pickup";
+            string spray = Plugin.improvedInput ? KeyCodeTranslator.GetImprovedInputKeyName(0, "thevinki:spray") : "Special";
             if (Plugin.improvedInput)
             {
                 game.cameras.First().hud.textPrompt.AddMessage(
@@ -64,7 +64,7 @@ public class GraffitiTutorial : UpdatableAndDeletable
             else
             {
                 game.cameras.First().hud.textPrompt.AddMessage(
-                    game.manager.rainWorld.inGameTranslator.Translate("Press (" + spray + ") while in midair and carrying a Spray Can to spend a charge and spray graffiti."),
+                    game.manager.rainWorld.inGameTranslator.Translate("Press (" + spray + ") while carrying a Spray Can to spend a charge and spray graffiti."),
                     0, 600, false, false
                 );
             }

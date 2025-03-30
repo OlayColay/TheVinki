@@ -27,18 +27,18 @@ public static partial class Hooks
         Vector2 feetPos = chunk.pos + new Vector2(0f, feetOffset);
 
         int num = self.PrevSegAtFloat(vPos.vine, vPos.floatPos);
-        int num2 = Custom.IntClamp(num + 1, 0, self.vines[vPos.vine].TotalPositions() - 1);
+        int num2 = Custom.IntClamp(num + 1, 0, vPos.vine.TotalPositions() - 1);
         float t = Mathf.InverseLerp(self.FloatAtSegment(vPos.vine, num), self.FloatAtSegment(vPos.vine, num2), vPos.floatPos);
-        Vector2 vector = Vector2.Lerp(self.vines[vPos.vine].Pos(num), self.vines[vPos.vine].Pos(num2), t);
-        float num3 = chunk.mass / (chunk.mass + Mathf.Lerp(self.vines[vPos.vine].Mass(num), self.vines[vPos.vine].Mass(num2), t));
+        Vector2 vector = Vector2.Lerp(vPos.vine.Pos(num), vPos.vine.Pos(num2), t);
+        float num3 = chunk.mass / (chunk.mass + Mathf.Lerp(vPos.vine.Mass(num), vPos.vine.Mass(num2), t));
         float num4 = Vector2.Distance(feetPos, vector);
         Vector2 a = Custom.DirVec(feetPos, vector);
         if (num4 > conRad)
         {
             chunk.pos += a * (num4 - conRad) * (1f - num3);
             chunk.vel += a * (num4 - conRad) * (1f - num3);
-            self.vines[vPos.vine].Push(num, -a * (num4 - conRad) * num3);
-            self.vines[vPos.vine].Push(num2, -a * (num4 - conRad) * num3);
+            vPos.vine.Push(num, -a * (num4 - conRad) * num3);
+            vPos.vine.Push(num2, -a * (num4 - conRad) * num3);
         }
     }
 }

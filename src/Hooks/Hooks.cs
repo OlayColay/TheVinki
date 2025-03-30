@@ -31,7 +31,7 @@ namespace Vinki
         // Add hooks
         private static void ApplyHooks()
         {
-            Content.Register(new SprayCanFisob());
+            //Content.Register(new SprayCanFisob());
 
             // Put your custom hooks here!
             ApplyPlayerHooks();
@@ -449,14 +449,14 @@ namespace Vinki
                 return;
             }
 
-            colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.DandelionPeach, 2);
+            colorfulItems.Add(DLCSharedEnums.AbstractObjectType.DandelionPeach, 2);
+            colorfulItems.Add(DLCSharedEnums.AbstractObjectType.GlowWeed, 2);
+            colorfulItems.Add(DLCSharedEnums.AbstractObjectType.GooieDuck, 2);
+            colorfulItems.Add(DLCSharedEnums.AbstractObjectType.LillyPuck, 1);
+            colorfulItems.Add(DLCSharedEnums.AbstractObjectType.Seed, 1);
+            colorfulItems.Add(DLCSharedEnums.AbstractObjectType.SingularityBomb, 9001);
             colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.FireEgg, 3);
             colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.Germinator, 2);
-            colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.GlowWeed, 2);
-            colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.GooieDuck, 2);
-            colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.LillyPuck, 1);
-            colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.Seed, 1);
-            colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.SingularityBomb, 9001);
             colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.HalcyonPearl, 3);
         }
 
@@ -552,8 +552,8 @@ namespace Vinki
         public static bool AllGraffitiUnlocked()
         {
             // Return true if all of the graffiti in Unlockables is contained within VinkiGraffiti
-            string[] files1 = Directory.GetFiles(AssetManager.ResolveDirectory("decals/Unlockables"), "*", SearchOption.AllDirectories).Select(Path.GetFileName).ToArray();
-            string[] files2 = Directory.GetFiles(AssetManager.ResolveDirectory("decals/VinkiGraffiti/vinki"), "*", SearchOption.AllDirectories).Select(Path.GetFileName).ToArray();
+            string[] files1 = [.. Directory.GetFiles(AssetManager.ResolveDirectory("decals/Unlockables"), "*", SearchOption.AllDirectories).Select(Path.GetFileName)];
+            string[] files2 = [.. Directory.GetFiles(AssetManager.ResolveDirectory("decals/VinkiGraffiti/vinki"), "*", SearchOption.AllDirectories).Select(Path.GetFileName)];
 
             IEnumerable<string> difference = files1.Except(files2);
 

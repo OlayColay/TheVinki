@@ -83,7 +83,7 @@ public class VinkiPlayerData
     public int timeLeftInCombo = 0;
     public int comboSize = 0;
     public Dictionary<string, List<IEnumerable<Room.Tile>>> beamsInCombo = [];
-    public Dictionary<string, List<int>> vinesInCombo = [];
+    public Dictionary<string, List<IClimbableVine>> vinesInCombo = [];
     public string currentTrickName = string.Empty;
     public int currentTrickScore = 0;
     public int comboTotalScore;
@@ -188,7 +188,7 @@ public class VinkiPlayerData
         }
     }
 
-    public bool AddVineToCombo(Room room, int vine)
+    public bool AddVineToCombo(Room room, IClimbableVine vine)
     {
         string roomName = room.abstractRoom.name;
         if (vinesInCombo.ContainsKey(roomName))
@@ -345,7 +345,7 @@ public static class PlayerExtension
             0 or 4 => player.input[0].pckp && !player.input[1].pckp,
             1 => false,
             2 => player.input[0].y == 1 && player.input[1].y != 1,
-            3 or 5 => (player.wantToJump > 0 || (player.dangerGrasp != null && player.dangerGraspTime < 30)) && RWInput.PlayerInput(player.playerState.playerNumber).pckp,
+            3 or 5 => (player.dangerGrasp == null || player.dangerGraspTime < 30) && player.input[0].spec && !player.input[1].spec,
             _ => false,
         };
     }
