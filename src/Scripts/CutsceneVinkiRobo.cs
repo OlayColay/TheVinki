@@ -8,7 +8,7 @@ namespace Vinki
     {
         public CutsceneVinkiRobo(Room room)
         {
-            Debug.Log("VINKI ROBO CUTSCENE START!");
+            Plugin.VLogger.LogInfo("VINKI ROBO CUTSCENE START!");
             this.room = room;
             this.phase = Phase.Init;
             this.bot = new AncientBot(roboPos, new Color(0.945f, 0.3765f, 0f), null, false);
@@ -21,7 +21,7 @@ namespace Vinki
             this.UpdateBot();
             if (this.phase == Phase.End)
             {
-                Debug.Log("VINKI ROBO CUTSCENE END!");
+                Plugin.VLogger.LogInfo("VINKI ROBO CUTSCENE END!");
                 this.Destroy();
             }
         }

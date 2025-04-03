@@ -1,6 +1,7 @@
 using System;
 using System.Security.Permissions;
 using UnityEngine;
+using Vinki;
 
 /*
  * This file contains fixes to some common problems when modding Rain World.
@@ -34,7 +35,7 @@ internal static class Extras
             }
             catch (Exception e)
             {
-                Debug.LogException(e);
+                Plugin.VLogger.LogError(e);
             }
         };
     }

@@ -100,7 +100,7 @@ namespace Vinki
         private static void PlayerGraphics_LoadJollyColorsFromOptions(On.PlayerGraphics.orig_LoadJollyColorsFromOptions orig, int playerNumber)
         {
             orig(playerNumber);
-            //Debug.Log("Called PlayerGraphics.LoadJollyColorsFromOptions. Lengths: [" + PlayerGraphics.jollyColors.Length + "][" + PlayerGraphics.jollyColors[playerNumber].Length + ']');
+            //VLogger.LogInfo("Called PlayerGraphics.LoadJollyColorsFromOptions. Lengths: [" + PlayerGraphics.jollyColors.Length + "][" + PlayerGraphics.jollyColors[playerNumber].Length + ']');
             if (PlayerGraphics.jollyColors[playerNumber].Length == 6)
             {
                 jollyColors[playerNumber] = PlayerGraphics.jollyColors[playerNumber];
@@ -224,7 +224,7 @@ namespace Vinki
                 // (Debug) Get indices of sprites
                 //for (int i = 0; i < sLeaser.sprites.Length; i++)
                 //{
-                //    Debug.Log("Sprite " + i + ": " + sLeaser.sprites[i].element.name);
+                //    VLogger.LogInfo("Sprite " + i + ": " + sLeaser.sprites[i].element.name);
                 //}
 
                 var midgroundContainer = rCam.ReturnFContainer("Midground");

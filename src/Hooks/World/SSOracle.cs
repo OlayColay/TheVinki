@@ -34,7 +34,7 @@ namespace Vinki
 
             if (isMoon)
             {
-                //Debug.Log("Sprayed near Moon: " + imageName);   
+                //VLogger.LogInfo("Sprayed near Moon: " + imageName);   
                 if (oracleBehavior.conversation != null)
                 {
                     oracleBehavior.conversation.paused = true;
@@ -207,7 +207,7 @@ namespace Vinki
                         {
                             string str = "---------- INSPECT PEARL TRIGGERED: ";
                             DataPearl.AbstractDataPearl.DataPearlType dataPearlType = self.inspectPearl.AbstractPearl.dataPearlType;
-                            Debug.Log(str + (dataPearlType?.ToString()));
+                            Plugin.VLogger.LogInfo(str + (dataPearlType?.ToString()));
                         }
                         if (self.inspectPearl.AbstractPearl.dataPearlType.value == "Vinki_Pearl_1")
                         {
@@ -262,7 +262,7 @@ namespace Vinki
 
         private static void SSOracleBehavior_NewAction(On.SSOracleBehavior.orig_NewAction orig, SSOracleBehavior self, Action nextAction)
         {
-            //Debug.Log(string.Concat(new string[]
+            //VLogger.LogInfo(string.Concat(new string[]
             //{
             //    "Vinki new action: ",
             //    nextAction.ToString(),
@@ -412,7 +412,7 @@ namespace Vinki
                     }
                     if (base.inActionCounter > 175)
                     {
-                        Debug.Log("Done with conversation.");
+                        Plugin.VLogger.LogInfo("Done with conversation.");
                         owner.conversation = null;
                         owner.NewAction(Enums.SSOracle.Vinki_SSActionGetOut);
                     }

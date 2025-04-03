@@ -10,7 +10,7 @@ namespace Vinki
 		// Token: 0x06002094 RID: 8340 RVA: 0x0028D648 File Offset: 0x0028B848
 		public CutsceneVinkiIntro(Room room)
 		{
-			Debug.Log("VINKI CUTSCENE START!");
+            Plugin.VLogger.LogInfo("VINKI CUTSCENE START!");
 			this.room = room;
 			phase = CutsceneVinkiIntro.Phase.Init;
 		}
@@ -90,7 +90,7 @@ namespace Vinki
 				}
 				if (phase == CutsceneVinkiIntro.Phase.End)
 				{
-					Debug.Log("VINKI CUTSCENE END!");
+                    Plugin.VLogger.LogInfo("VINKI CUTSCENE END!");
 					if (player != null)
 					{
 						player.controller = null;
