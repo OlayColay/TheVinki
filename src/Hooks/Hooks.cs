@@ -382,14 +382,14 @@ namespace Vinki
                 return;
             }
 
-            colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.DandelionPeach, 2);
+            colorfulItems.Add(DLCSharedEnums.AbstractObjectType.DandelionPeach, 2);
+            colorfulItems.Add(DLCSharedEnums.AbstractObjectType.GlowWeed, 2);
+            colorfulItems.Add(DLCSharedEnums.AbstractObjectType.GooieDuck, 2);
+            colorfulItems.Add(DLCSharedEnums.AbstractObjectType.LillyPuck, 1);
+            colorfulItems.Add(DLCSharedEnums.AbstractObjectType.Seed, 1);
+            colorfulItems.Add(DLCSharedEnums.AbstractObjectType.SingularityBomb, 9001);
             colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.FireEgg, 2);
             colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.Germinator, 2);
-            colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.GlowWeed, 2);
-            colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.GooieDuck, 2);
-            colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.LillyPuck, 1);
-            colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.Seed, 1);
-            colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.SingularityBomb, 9001);
             colorfulItems.Add(MoreSlugcatsEnums.AbstractObjectType.HalcyonPearl, 3);
         }
 
