@@ -466,17 +466,19 @@ namespace Vinki
         private static void IntroRoll_ctor(ILContext il)
         {
             var cursor = new ILCursor(il);
+            int localVarNum = 0;
 
-            if (cursor.TryGotoNext(i => i.MatchLdstr("Intro_Roll_C_"))
-                && cursor.TryGotoNext(MoveType.After, i => i.MatchCallOrCallvirt<string>(nameof(string.Concat))))
+            if (cursor.TryGotoNext(i => i.MatchNewarr<string>())
+                && cursor.TryGotoNext(MoveType.After, i => i.MatchStloc(out localVarNum)))
             {
-                cursor.Emit(OpCodes.Ldloc_3);
-                cursor.EmitDelegate<Func<string, string[], string>>((titleImage, oldTitleImages) =>
-                {
-                    titleImage = (UnityEngine.Random.value < 0.5f) ? "intro_roll_vinki_0" : "intro_roll_vinki_1";
-
-                    return titleImage;
-                });
+                cursor.Emit(OpCodes.Ldloc, localVarNum);
+                cursor.EmitDelegate<Func<string[], string[]>>((oldTitleImages) => [.. oldTitleImages, "vinki_0", "vinki_1"]);
+                cursor.Emit(OpCodes.Stloc, localVarNum);
+                //cursor.Emit(OpCodes.Ldloc, localVarNum);
+                //cursor.EmitDelegate<Action<string[]>>((oldTitleImages) =>
+                //{
+                //    VLogger.LogInfo("Title screens (" + oldTitleImages.Length + "): " + string.Join(", ", oldTitleImages));
+                //});
             }
         }
 
