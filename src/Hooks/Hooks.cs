@@ -31,7 +31,7 @@ namespace Vinki
         // Add hooks
         private static void ApplyHooks()
         {
-            //Content.Register(new SprayCanFisob());
+            Content.Register(new SprayCanFisob());
 
             // Put your custom hooks here!
             ApplyPlayerHooks();
