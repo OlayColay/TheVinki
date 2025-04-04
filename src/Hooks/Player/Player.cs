@@ -1071,8 +1071,8 @@ namespace Vinki
             {
                 if (v.tagableCreature.State is HealthState)
                 {
-                    v.tagableCreature.Violence(self.firstChunk, null, v.tagableBodyChunk, null, Creature.DamageType.Stab, damage / 2, 10f);
-                    v.poisonedVictims.Add(new VinkiPlayerData.PoisonedCreature(v.tagableCreature, 120, damage / 2));
+                    v.tagableCreature.Violence(self.firstChunk, null, v.tagableBodyChunk, null, Creature.DamageType.Stab, damage / 2f, 10f);
+                    v.poisonedVictims.Add(new VinkiPlayerData.PoisonedCreature(v.tagableCreature, 120, damage));
                 }
                 else
                 {
@@ -1095,8 +1095,11 @@ namespace Vinki
             self.room.AddObject(v.tagSmoke);
             v.tagSmoke.EmitSmoke(0.4f);
             v.tagSmoke.target.owner.graphicsModule.Tag().tagLag = 30;
-            v.tagSmoke.target.owner.graphicsModule.Tag().tagColor = new HSLColor(v.tagSmoke.hue, 0.8f, 0.5f).rgb;
             v.tagSmoke.target.owner.graphicsModule.Tag().targetedBodyPart = v.tagSmoke.target.index;
+            if (v.tagSmoke.target.owner is not Lizard and not Player)
+            {
+                v.tagSmoke.target.owner.graphicsModule.Tag().tagColor = new HSLColor(v.tagSmoke.hue, 0.8f, 0.5f).rgb;
+            }
         }
 
         private static bool Player_CanBeSwallowed(On.Player.orig_CanBeSwallowed orig, Player self, PhysicalObject testObj)

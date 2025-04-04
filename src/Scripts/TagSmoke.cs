@@ -1,21 +1,28 @@
 ﻿using RWCustom;
+using Smoke;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Smoke;
+namespace Vinki;
 
 public class TagSmoke : PositionedSmokeEmitter
 {
     public PhysicalObject source;
     public BodyChunk target;
+    public Creature targetCrit;
+
     public float hue;
+    public Color color;
 
     // Token: 0x06002820 RID: 10272 RVA: 0x0030DCD0 File Offset: 0x0030BED0
     public TagSmoke(Room room, PhysicalObject source, BodyChunk target) : base(SmokeType.BlackHaze, room, source.firstChunk.pos, 2, 0f, false, -1f, -1)
     {
         this.source = source;
         this.target = target;
+        this.targetCrit = target.owner as Creature;
+
         hue = Random.value;
+        color = new HSLColor(hue, 0.8f, 0.5f).rgb;
 
         particles.Clear();
         if (particlePool.GetParticle() != null)
@@ -27,7 +34,7 @@ public class TagSmoke : PositionedSmokeEmitter
     // Token: 0x06002821 RID: 10273 RVA: 0x0030DCF7 File Offset: 0x0030BEF7
     public override SmokeSystemParticle CreateParticle()
     {
-        return new SmokeSegment(hue);
+        return new SmokeSegment(hue, color, targetCrit);
     }
 
     // Token: 0x06002822 RID: 10274 RVA: 0x0030DD00 File Offset: 0x0030BF00
@@ -73,7 +80,7 @@ public class TagSmoke : PositionedSmokeEmitter
     }
 
     // Token: 0x02000867 RID: 2151
-    public new class SmokeSegment(float hue) : HyrbidSmokeSegment()
+    public new class SmokeSegment(float hue, Color color, Creature targetCrit) : HyrbidSmokeSegment()
     {
 
         // Token: 0x06004078 RID: 16504 RVA: 0x00485191 File Offset: 0x00483391
@@ -91,6 +98,12 @@ public class TagSmoke : PositionedSmokeEmitter
             base.Update(eu);
             age++;
             vel += driftDir * Mathf.Sin(Mathf.InverseLerp(0.55f, 0.75f, life) * 3.1415927f) * 0.6f * power;
+
+            if (age == 15)
+            {
+                targetCrit.AddMud(100, 5000, color);
+                Plugin.VLogger.LogInfo("Adding mud.\tCreature mud: " + targetCrit.muddy);
+            }
         }
 
         // Token: 0x0600407A RID: 16506 RVA: 0x00485230 File Offset: 0x00483430
@@ -183,5 +196,9 @@ public class TagSmoke : PositionedSmokeEmitter
         public float power;
 
         public float hue = hue;
+
+        public Color color = color;
+
+        public Creature targetCrit = targetCrit;
     }
 }
