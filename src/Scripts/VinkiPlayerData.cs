@@ -258,7 +258,7 @@ public class VinkiPlayerData
         }
         this.currentTrickName = prefix + Enums.trickNames[type][index] + suffix;
 
-        this.OnNewTrick.Invoke();
+        this.OnNewTrick?.Invoke();
     }
 
     public void AddTrickToCombo(string trickName, int points, bool canStartCombo = false)
@@ -268,7 +268,7 @@ public class VinkiPlayerData
             this.currentTrickName = trickName;
             this.currentTrickScore = points;
             AddCombo();
-            this.OnNewTrick.Invoke();
+            this.OnNewTrick?.Invoke();
         }
     }
 }

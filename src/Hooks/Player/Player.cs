@@ -795,12 +795,12 @@ namespace Vinki
                 if (!miscProgression.TryGet("VinkiBestCombo", out int bestCombo) || v.comboSize > bestCombo)
                 {
                     miscProgression.Set("VinkiBestCombo", v.comboSize);
-                    v.OnNewBestCombo.Invoke();
+                    v.OnNewBestCombo?.Invoke();
                 }
                 if (!miscProgression.TryGet("VinkiBestScore", out int bestScore) || v.comboTotalScore > bestScore)
                 {
                     miscProgression.Set("VinkiBestScore", v.comboTotalScore);
-                    v.OnNewBestScore.Invoke();
+                    v.OnNewBestScore?.Invoke();
                 }
 
                 v.timeLeftInCombo = -50;
