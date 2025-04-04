@@ -54,7 +54,7 @@ namespace Vinki
         public static int[] queuedGNums = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
         public static bool[] repeatGraffiti = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
 
-        public static Dictionary<string, float> manualSongMsPerBeat;
+        public static Dictionary<string, float> manualSongMsPerBeat = [];
         public static float curMsPerBeat = 0;
         public static AudioSource curAudioSource;
         public static string curPlayingSong;
