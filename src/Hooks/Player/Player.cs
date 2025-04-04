@@ -1053,7 +1053,7 @@ namespace Vinki
 
             v.tagLag = 30;
 
-            float damage = 1.25f;
+            float damage = 1f;
             if (v.tagableCreature is Player)
             {
                 if (!VinkiConfig.TagDamageJolly.Value && self.room.game.IsStorySession)
@@ -1066,13 +1066,26 @@ namespace Vinki
                 }
             }
 
+            v.tagSmoke?.RemoveFromRoom();
+
+            v.tagSmoke = new TagSmoke(self.room, source, v.tagableBodyChunk);
+            self.room.AddObject(v.tagSmoke);
+            v.tagSmoke.EmitSmoke(0.4f);
+            v.tagSmoke.target.owner.graphicsModule.Tag().tagLag = 30;
+            Color tagColor = new HSLColor(v.tagSmoke.hue, 0.8f, 0.5f).rgb;
+            v.tagSmoke.target.owner.graphicsModule.Tag().targetedBodyPart = v.tagSmoke.target.index;
+            if (v.tagSmoke.target.owner is not Lizard and not Player)
+            {
+                v.tagSmoke.target.owner.graphicsModule.Tag().tagColor = tagColor;
+            }
+
             self.room.PlaySound(SoundID.Hazer_Squirt_Smoke_LOOP, self.mainBodyChunk, false, 2f, 1f);
             if (damage > 0f)
             {
                 if (v.tagableCreature.State is HealthState)
                 {
                     v.tagableCreature.Violence(self.firstChunk, null, v.tagableBodyChunk, null, Creature.DamageType.Stab, damage / 2f, 10f);
-                    v.poisonedVictims.Add(new VinkiPlayerData.PoisonedCreature(v.tagableCreature, 120, damage));
+                    v.poisonedVictims.Add(new VinkiPlayerData.PoisonedCreature(v.tagableCreature, 120, damage * 0.75f));
                 }
                 else
                 {
@@ -1087,18 +1100,7 @@ namespace Vinki
                         }
                     }
                 }
-            }
-
-            v.tagSmoke?.RemoveFromRoom();
-
-            v.tagSmoke = new TagSmoke(self.room, source, v.tagableBodyChunk);
-            self.room.AddObject(v.tagSmoke);
-            v.tagSmoke.EmitSmoke(0.4f);
-            v.tagSmoke.target.owner.graphicsModule.Tag().tagLag = 30;
-            v.tagSmoke.target.owner.graphicsModule.Tag().targetedBodyPart = v.tagSmoke.target.index;
-            if (v.tagSmoke.target.owner is not Lizard and not Player)
-            {
-                v.tagSmoke.target.owner.graphicsModule.Tag().tagColor = new HSLColor(v.tagSmoke.hue, 0.8f, 0.5f).rgb;
+                v.tagableCreature.InjectPoison(damage / 2f, tagColor);
             }
         }
 
