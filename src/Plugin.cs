@@ -90,9 +90,9 @@ namespace Vinki
             improvedControls.SetValue(PlayerKeybind.Register("thevinki:grind", "The Vinki", "Grind", KeyCode.LeftShift, KeyCode.JoystickButton2), Grind);
             improvedControls.SetValue(PlayerKeybind.Register("thevinki:toggle_grind", "The Vinki", "Toggle Grind", KeyCode.None, KeyCode.None), ToggleGrind);
             improvedControls.SetValue(PlayerKeybind.Register("thevinki:graffiti", "The Vinki", "Graffiti Mode", KeyCode.UpArrow, KeyCode.JoystickButton4), Graffiti);
-            improvedControls.SetValue(PlayerKeybind.Register("thevinki:spray", "The Vinki", "Spray Graffiti", KeyCode.LeftControl, KeyCode.JoystickButton3), Spray);
+            improvedControls.SetValue(PlayerKeybind.Register("thevinki:spray", "The Vinki", "Spray Graffiti", KeyCode.C, KeyCode.JoystickButton3), Spray);
             improvedControls.SetValue(PlayerKeybind.Register("thevinki:craft", "The Vinki", "Craft Spray Can", KeyCode.LeftShift, KeyCode.JoystickButton2), Craft);
-            improvedControls.SetValue(PlayerKeybind.Register("thevinki:tag", "The Vinki", "Tag Creatures", KeyCode.LeftControl, KeyCode.JoystickButton3), Tag);
+            improvedControls.SetValue(PlayerKeybind.Register("thevinki:tag", "The Vinki", "Tag Creatures", KeyCode.C, KeyCode.JoystickButton3), Tag);
 
             // Hide conflict warning for certain bindings
             ((PlayerKeybind)improvedControls.GetValue(Grind)).HideConflict = (_) => true;

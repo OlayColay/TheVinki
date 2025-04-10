@@ -42,11 +42,11 @@ namespace Vinki
             ]));
             UseGraffitiButton = config.Bind("useGraffitiButton", true, new ConfigurableInfo("Use the Graffiti Mode button when crafting, spraying, and tagging. Disable if you have custom bindings and don't like having to press two buttons to perform these abilities.", tags:
             [
-                "Require Graffiti Mode Button for Controls"
+                "Graffiti Mode Button for Controls (Improved Input Config)"
             ]));
             UpGraffiti = config.Bind("upGraffiti", true, new ConfigurableInfo("Use the Up direction for Graffiti Mode (in addition to the normal binding).", tags:
             [
-                "Use Up as Graffiti Mode"
+                "Use Up as Graffiti Mode (Improved Input Config)"
             ]));
             TagDamageJolly = config.Bind("tagDamageJolly", false, new ConfigurableInfo("Tagging a player while in Jolly Coop does damage.", tags:
             [
@@ -60,7 +60,7 @@ namespace Vinki
             [
                 "Automatically Open Quest Map"
             ]));
-            CatPebbles = config.Bind("catPebbles", true, new ConfigurableInfo("RESTART FOR CHANGES TO TAKE EFFECT! Show art containing depictions of Five Pebbles as catmaids. Disable if you think that's weird.", tags:
+            CatPebbles = config.Bind("catPebbles", true, new ConfigurableInfo("RESTART FOR CHANGES TO TAKE EFFECT! Show art containing depictions of iterators as catmaids. Disable if you think that's weird.", tags:
             [
                 "Catmaid Iterators"
             ]));
@@ -148,6 +148,13 @@ namespace Vinki
                 color: Color.red,
                 x: 350f
             );
+
+            // Hide IIC options if there is no IIC
+            if (!Plugin.improvedInput)
+            {
+                UseGraffitiButton.BoundUIconfig.Hide();
+                UpGraffiti.BoundUIconfig.Hide();
+            }
 
             // Credits tab
             AddDivider(593f, 1);
