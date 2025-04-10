@@ -564,7 +564,7 @@ namespace Vinki
                     AddSubtitle(curY + 30f, "Hunter", 4);
                     curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Red", 4);
                     AddSubtitle(curY + 30f, "Watcher", 4);
-                    curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Night", 4);
+                    curY = AddGraffiti(curY - 25f, "decals" + Path.DirectorySeparatorChar + "GraffitiBackup" + Path.DirectorySeparatorChar + "Watcher", 4);
                     break;
                 case 1:
                     AddSubtitle(curY + 30f, "Artificer", 4);
