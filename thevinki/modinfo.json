@@ -1,7 +1,8 @@
 ﻿{
 	"id": "olaycolay.thevinki",
 	"name": "The Vinki",
-	"version": "0.12.18.3",
+	"version": "0.13.0",
+	"target_game_version": "v1.10",
 	"hide_version": false,
 	"authors": "OlayColay",
 	"description": "Play as an angsty teen wearing rail-grinding shoes and spraying graffiti to enact revenge on 5P.",
