@@ -340,7 +340,8 @@ namespace Vinki
 
                 //-- You can have the DMS sprite setup in a separate method and only call it if DMS is loaded
                 //-- With this the mod will still work even if DMS isn't installed
-                if (ModManager.ActiveMods.Any(mod => mod.id == "dressmyslugcat"))
+                dressMySlugcat = ModManager.ActiveMods.Exists((mod) => mod.id == "dressmyslugcat");
+                if (dressMySlugcat)
                 {
                     SetupDMSSprites();
                 }
@@ -410,7 +411,7 @@ namespace Vinki
                         new() { Sprite = "LEGS", SpriteSheetID = sheetID + i },
                         new() { Sprite = "TAIL", SpriteSheetID = sheetID + i }
                     ],
-                });
+                }, sheetID + i);
             }
         }
 

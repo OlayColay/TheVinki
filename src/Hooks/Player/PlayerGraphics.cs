@@ -149,7 +149,7 @@ namespace Vinki
                 isVisible = false
             };
 
-            if (!ModManager.ActiveMods.Exists((ModManager.Mod mod) => mod.id == "dressmyslugcat"))
+            if (!dressMySlugcat)
             {
                 Array.Resize(ref sLeaser.sprites, sLeaser.sprites.Length + 4);
 
@@ -237,7 +237,7 @@ namespace Vinki
 
                 //-- Glasses go in front of face
                 sLeaser.sprites[vinki.glassesSprite].RemoveFromContainer();
-                if (!ModManager.ActiveMods.Exists((ModManager.Mod mod) => mod.id == "dressmyslugcat") || VinkiConfig.GlassesOverDMS.Value)
+                if (!dressMySlugcat || VinkiConfig.GlassesOverDMS.Value)
                 {
                     midgroundContainer.AddChild(sLeaser.sprites[vinki.glassesSprite]);
                     sLeaser.sprites[vinki.glassesSprite].MoveInFrontOfOtherNode(sLeaser.sprites[9]);
@@ -280,7 +280,7 @@ namespace Vinki
             }
 
             // Set color to white if DMS is on (so that skins show the correct color)
-            if (ModManager.ActiveMods.Any(mod => mod.id == "dressmyslugcat"))
+            if (dressMySlugcat)
             {
                 for (int i = 0; i < sLeaser.sprites.Length; i++)
                 {

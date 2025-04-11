@@ -162,6 +162,12 @@ namespace Vinki
                 UpGraffiti.BoundUIconfig.Hide();
             }
 
+            // Hide DMS option if there is no DMS
+            if (!Plugin.dressMySlugcat)
+            {
+                GlassesOverDMS.BoundUIconfig.Hide();
+            }
+
             // Credits tab
             AddDivider(593f, 1);
             AddTitle(1);
