@@ -21,46 +21,4 @@
         "room": "DM_AI",
         "position": [ 490, 350 ]
     },
-    {
-        "name": "4",
-        "room": "LM_EDGE02",
-        "position": [ 608, 1474 ],
-	"nonCatmaidAltName": "Tutorial Alt"
-    },
-    {
-        "name": "5",
-        "room": "DM_ROOF01",
-        "position": [ 2675, 287 ],
-	"nonCatmaidAltName": "Tutorial Alt"
-    },
-    {
-        "name": "6",
-        "room": "GW_TOWER05",
-        "position": [ 669, 217 ],
-	"nonCatmaidAltName": "Tutorial Alt"
-    },
-    {
-        "name": "7",
-        "room": "HI_B02",
-        "position": [ 541, 1339 ],
-	"nonCatmaidAltName": "Tutorial Alt"
-    },
-    {
-        "name": "8",
-        "room": "SU_B04",
-        "position": [ 727, 596 ],
-	"nonCatmaidAltName": "Tutorial Alt"
-    },
-    {
-        "name": "9",
-        "room": "LF_J01",
-        "position": [ 574, 350 ],
-	"nonCatmaidAltName": "Tutorial Alt"
-    },
-    {
-        "name": "10",
-        "room": "SI_C05",
-        "position": [ 555, 1931 ],
-	"nonCatmaidAltName": "Tutorial Alt"
-    }
 ]
