@@ -1,5 +1,7 @@
 ﻿using Menu;
 using SlugBase.SaveData;
+using System;
+using System.Linq;
 using UnityEngine;
 
 namespace Vinki;
@@ -7,14 +9,14 @@ public static partial class Hooks
 {
 	private static void ApplySleepAndDeathScreenHooks()
 	{
-		On.Menu.SleepAndDeathScreen.ctor += SleepAndDeathScreen_ctor;
+        On.Menu.SleepAndDeathScreen.AddSubObjects += SleepAndDeathScreen_AddSubObjects;
         On.Menu.SleepAndDeathScreen.Update += SleepAndDeathScreen_Update;
         On.Menu.SleepAndDeathScreen.Singal += SleepAndDeathScreen_Singal;
         On.Menu.SleepAndDeathScreen.UpdateInfoText += SleepAndDeathScreen_UpdateInfoText;
     }
     private static void RemoveSleepAndDeathScreenHooks()
     {
-        On.Menu.SleepAndDeathScreen.ctor -= SleepAndDeathScreen_ctor;
+        On.Menu.SleepAndDeathScreen.AddSubObjects -= SleepAndDeathScreen_AddSubObjects;
         On.Menu.SleepAndDeathScreen.Update -= SleepAndDeathScreen_Update;
         On.Menu.SleepAndDeathScreen.Singal -= SleepAndDeathScreen_Singal;
         On.Menu.SleepAndDeathScreen.UpdateInfoText -= SleepAndDeathScreen_UpdateInfoText;
@@ -22,12 +24,11 @@ public static partial class Hooks
 
     private static SimpleButton questButton;
     private static bool firstSleepUpdate;
-    private static void SleepAndDeathScreen_ctor(On.Menu.SleepAndDeathScreen.orig_ctor orig, SleepAndDeathScreen self, ProcessManager manager, ProcessManager.ProcessID ID)
+    private static void SleepAndDeathScreen_AddSubObjects(On.Menu.SleepAndDeathScreen.orig_AddSubObjects orig, SleepAndDeathScreen self)
     {
-        orig(self, manager, ID);
-
-        if (manager.slugcatLeaving != Enums.vinki)
+        if (self.manager.slugcatLeaving != Enums.vinki)
         {
+            orig(self);
             return;
         }
 
@@ -38,6 +39,8 @@ public static partial class Hooks
 
         // Remove sprayed graffiti from being put on the map if we died
         Plugin.diedLastCycle = self.IsAnyDeath;
+
+        orig(self);
     }
 
     private static void SleepAndDeathScreen_Update(On.Menu.SleepAndDeathScreen.orig_Update orig, SleepAndDeathScreen self)
