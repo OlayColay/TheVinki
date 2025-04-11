@@ -57,7 +57,7 @@ namespace Vinki
             [
                 "Graffiti Tokens in Any Campaign"
             ]));
-            AutoOpenMap = config.Bind("autoOpenMap", true, new ConfigurableInfo("Automatically open the quest map after a cycle where you spray a new story graffiti. Disable if you want to speedrun", tags:
+            AutoOpenMap = config.Bind("autoOpenMap", false, new ConfigurableInfo("Automatically open the quest map after a cycle where you spray a new story graffiti. Disable if you want to speedrun", tags:
             [
                 "Automatically Open Quest Map"
             ]));
@@ -118,8 +118,8 @@ namespace Vinki
             AddCheckbox(UpGraffiti, 450f);
             AddCheckbox(TagDamageJolly, 420f);
             AddCheckbox(TokensInEveryCampaign, 390f);
-            AddCheckbox(AutoOpenMap, 360f);
-            AddCheckbox(SkipIntro, 330f);
+            //AddCheckbox(AutoOpenMap, 360f);
+            AddCheckbox(SkipIntro, 360f);
             AddTitle(0, "Visuals", 290f);
             AddCheckbox(CatPebbles, 260f);
             AddCheckbox(GlassesOverDMS, 230f);

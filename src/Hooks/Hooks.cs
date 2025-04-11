@@ -41,7 +41,7 @@ namespace Vinki
             ApplyRoomHooks();
             ApplyJollyCoopHooks();
             ApplySaveStateHooks();
-            ApplySleepAndDeathScreenHooks();
+            //ApplySleepAndDeathScreenHooks();
             ApplyLizardGraphicsHooks();
             ApplySnailGraphicsHooks();
             ApplyVultureGraphicsHooks();
@@ -75,7 +75,7 @@ namespace Vinki
             RemoveRoomHooks();
             RemoveJollyCoopHooks();
             RemoveSaveStateHooks();
-            RemoveSleepAndDeathScreenHooks();
+            //RemoveSleepAndDeathScreenHooks();
             RemoveLizardGraphicsHooks();
             RemoveSnailGraphicsHooks();
             RemoveVultureGraphicsHooks();
