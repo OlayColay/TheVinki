@@ -23,6 +23,7 @@ namespace Vinki
         public static Configurable<bool> AutoOpenMap;
         public static Configurable<bool> SkipIntro;
         public static Configurable<bool> CatPebbles;
+        public static Configurable<bool> ComboHUD;
 
         private static OpHoldButton unlockButton;
         private static OpHoldButton lockButton;
@@ -84,6 +85,10 @@ namespace Vinki
             [
                 "Skip Intro and Tutorials"
             ]));
+            ComboHUD = config.Bind("comboHUD", true, new ConfigurableInfo("Enable the Trick Score and Combo HUD that appears when you start a combo.", tags:
+            [
+                "Show Trick Score and Combo HUD"
+            ]));
         }
 
         public static void RegisterOI()
@@ -120,13 +125,14 @@ namespace Vinki
             AddCheckbox(GlassesOverDMS, 230f);
             AddIntBox(GraffitiFadeTime, 200f);
             AddCheckbox(DeleteGraffiti, 170f);
-            AddTitle(0, "Graffiti Files", 130f);
-            AddCheckbox(RestoreGraffitiOnUpdate, 100f);
+            AddCheckbox(ComboHUD, 140f);
+            AddTitle(0, "Graffiti Files", 100f);
+            AddCheckbox(RestoreGraffitiOnUpdate, 80f);
             AddButton(
                 "Open Graffiti Folder",
                 "Click to open the Graffiti Folder in your file explorer for easily adding custom graffiti",
                 OpenGraffitiFolder,
-                60f,
+                40f,
                 200f,
                 x: 200f
             );
@@ -134,7 +140,7 @@ namespace Vinki
                 "Restore Default Graffiti",
                 "Restore the default graffiti that came with The Vinki. Useful for after installing an update that includes new default graffiti.",
                 RestoreDefaultGraffiti,
-                25f,
+                5f,
                 200f,
                 40f,
                 x: 50f
@@ -143,7 +149,7 @@ namespace Vinki
                 "Reset Graffiti Folder to Default",
                 "Revert Graffiti Folder to default. This will remove any custom graffiti you've added to it!",
                 ResetGraffitiFolder,
-                25f,
+                5f,
                 200f,
                 color: Color.red,
                 x: 350f

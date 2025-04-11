@@ -23,7 +23,7 @@ public static partial class Hooks
         orig(self, cam);
 
         AbstractCreature vinki = cam.room.game.Players.FirstOrDefault((AbstractCreature c) => (c.realizedCreature as Player).IsVinki());
-        if (vinki != null )
+        if (vinki != null && VinkiConfig.ComboHUD.Value)
         {
             self.AddPart(new ComboDisplay(self, (vinki.realizedCreature as Player).Vinki()));
         }

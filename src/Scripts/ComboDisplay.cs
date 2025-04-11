@@ -19,6 +19,7 @@ public class ComboDisplay : HudPart
 	public FLabel trickScore;
     public FSprite comboTimer;
 	public FLabel totalScore;
+    public FSprite darkFade;
 
     public ComboDisplay(HUD.HUD hud, VinkiPlayerData vinki) : base(hud)
 	{
@@ -28,6 +29,16 @@ public class ComboDisplay : HudPart
         this.vinki.OnNewTrick += OnNewTrick;
         this.vinki.OnNewBestCombo += OnNewBestCombo;
         this.vinki.OnNewBestScore += OnNewBestScore;
+
+        this.darkFade = new FSprite("Futile_White", true)
+        {
+            shader = hud.rainWorld.Shaders["FlatLight"],
+            color = new Color(0f, 0f, 0f),
+            y = this.pos.y + 60f,
+            scaleX = 70.75f,
+            scaleY = 30.75f
+        };
+        hud.fContainers[1].AddChild(this.darkFade);
 
         this.currentTrick = new(Custom.GetDisplayFont(), vinki.currentTrickName)
         {
@@ -104,6 +115,7 @@ public class ComboDisplay : HudPart
         this.trickScore.x = this.DrawPos(timeStacker).x + 90f - trickAndComboOffsetX;
         this.comboTimer.scaleX = Mathf.Lerp(0f, 15f, vinki.timeLeftInCombo / 400f);
         this.totalScore.x = this.DrawPos(timeStacker).x + 120f;
+        this.darkFade.x = this.DrawPos(timeStacker).x;
 
         // Don't update the text if the combo is over, so players have a chance to see their end score and combo
         if (vinki.timeLeftInCombo > 0)
@@ -123,6 +135,7 @@ public class ComboDisplay : HudPart
         this.currentCombo.alpha = alpha;
         this.trickScore.alpha = alpha;
         this.totalScore.alpha = alpha;
+        this.darkFade.alpha = 0.3f * Mathf.Pow(alpha, 2f);
     }
 
     public Vector2 DrawPos(float timeStacker)
