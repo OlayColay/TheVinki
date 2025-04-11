@@ -91,7 +91,7 @@ public static partial class Hooks
         self.manager.rainWorld.progression.SaveWorldStateAndProgression(false);
 
         self.manager.statsAfterCredits = true;
-        self.manager.nextSlideshow = Enums.SlideShowID.VinkiAltEnd;
-        self.manager.RequestMainProcessSwitch(ProcessManager.ProcessID.SlideShow);
+        //self.manager.nextSlideshow = Enums.SlideShowID.VinkiAltEnd;
+        self.manager.RequestMainProcessSwitch(ProcessManager.ProcessID.Credits);
     }
 }
