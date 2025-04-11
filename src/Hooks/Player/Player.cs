@@ -1084,7 +1084,7 @@ namespace Vinki
             {
                 if (v.tagableCreature.State is HealthState)
                 {
-                    v.tagableCreature.Violence(self.firstChunk, null, v.tagableBodyChunk, null, Creature.DamageType.Stab, damage / 2f, 10f);
+                    v.tagableCreature.Violence(self.firstChunk, null, v.tagableBodyChunk, null, Creature.DamageType.Stab, damage / 4f, 10f);
                     v.poisonedVictims.Add(new VinkiPlayerData.PoisonedCreature(v.tagableCreature, 120, damage * 0.75f));
                 }
                 else
