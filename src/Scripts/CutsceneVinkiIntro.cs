@@ -47,8 +47,11 @@ namespace Vinki
 					room.game.cameras[0].followAbstractCreature = Plr.abstractCreature;
 				}
 				if (Plr != null && Plr.room != null && !playerPosCorrect)
-				{
-					for (int j = 0; j < 2; j++)
+                {
+					// Failsafe for if the cutscene breaks. Player will respawn in a different room after dying
+                    Plugin.introPlayed = true;
+
+                    for (int j = 0; j < 2; j++)
 					{
 						Plr.bodyChunks[j].HardSetPosition(room.MiddleOfTile(28, 34));
 					}
@@ -101,7 +104,6 @@ namespace Vinki
 					{
 						Plr.controller = null;
                     }
-					Plugin.introPlayed = true;
 					Destroy();
 				}
 			}

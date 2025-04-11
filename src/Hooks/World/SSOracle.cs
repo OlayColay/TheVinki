@@ -101,7 +101,7 @@ namespace Vinki
                 }
             }
             // Pebbles
-            else if (oracleBehavior.oracle.room.game.GetStorySession.saveState.cycleNumber > 0)
+            else if (oracleBehavior.oracle.room.game.GetStorySession.saveState.miscWorldSaveData.SSaiConversationsHad > 0)
             {
                 if (oracleBehavior.oracle.room.game.GetStorySession.saveState.hasRobo)
                 {
@@ -110,6 +110,10 @@ namespace Vinki
                     {
                         oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("As I was saying..."), -10);
                     }
+                }
+                else if (imageName.StartsWith("StorySpoilers/5P"))
+                {
+                    return;
                 }
                 else
                 {
@@ -496,14 +500,8 @@ namespace Vinki
             }
         }
 
-        public class SSOracleMeetVinki : ConversationBehavior
+        public class SSOracleMeetVinki(SSOracleBehavior owner) : ConversationBehavior(owner, Enums.SSOracle.Vinki_SSSubBehavGeneral, Enums.SSOracle.Vinki_SSConvoFirstMeet)
         {
-            public SSOracleMeetVinki(SSOracleBehavior owner) : base(owner, Enums.SSOracle.Vinki_SSSubBehavGeneral, Enums.SSOracle.Vinki_SSConvoFirstMeet)
-            {
-                owner.getToWorking = 1f;
-                owner.SlugcatEnterRoomReaction();
-            }
-
             public override void Update()
             {
                 base.Update();
@@ -564,6 +562,7 @@ namespace Vinki
                         }
                         if (intro != null)
                         {
+                            player.controller = intro.Plr.controller = null;
                             intro.Destroy();
                             player.room.RemoveObject(intro);
                         }
@@ -599,14 +598,8 @@ namespace Vinki
             }
         }
 
-        public class SSOracleDroneVinki : ConversationBehavior
+        public class SSOracleDroneVinki(SSOracleBehavior owner) : ConversationBehavior(owner, Enums.SSOracle.Vinki_SSSubBehavGeneral, Enums.SSOracle.Vinki_SSConvoDrone)
         {
-            public SSOracleDroneVinki(SSOracleBehavior owner) : base(owner, Enums.SSOracle.Vinki_SSSubBehavGeneral, Enums.SSOracle.Vinki_SSConvoDrone)
-            {
-                owner.getToWorking = 1f;
-                owner.SlugcatEnterRoomReaction();
-            }
-
             public override void Update()
             {
                 base.Update();
