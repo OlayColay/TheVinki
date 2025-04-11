@@ -1245,12 +1245,19 @@ namespace Vinki
 
         public static void PushToMeowMain_DoMeow(Action<object, Player, bool> orig, object self, Player player, bool isShortMeow = false)
         {
+            if (player.SlugCatClass != Enums.vinki)
+            {
+                return;
+            }
+
+            if (VinkiConfig.UseGraffitiButton.Value && IsPressingGraffiti(player))
+            {
+                return;
+            }
+
             orig(self, player, isShortMeow);
 
-            if (player.SlugCatClass == Enums.vinki)
-            {
-                player.Vinki().idleUpdates = 0;
-            }
+            player.Vinki().idleUpdates = 0;
         }
     }
 }
