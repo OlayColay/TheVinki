@@ -117,6 +117,17 @@ namespace Menu
             if (!Plugin.graffitis.ContainsKey(lowerScugClass))
             {
                 lowerScugClass = "white";
+                if (!Plugin.graffitis.ContainsKey(lowerScugClass))
+                {
+                    Hooks.LoadGraffiti();
+                    if (!Plugin.graffitis.ContainsKey(lowerScugClass))
+                    {
+                        Plugin.VLogger.LogError("Could not load graffiti when opening Graffiti Select menu!");
+                        previewLabel.text = "Could not load graffiti when opening Graffiti Select menu! Please report this bug to OlayColay on Discord!";
+                        previewLabel.label.color = Color.red;
+                        return;
+                    }
+                }
             }
             graffitiFiles = Plugin.graffitis[lowerScugClass].Select(g => "decals/" + g.imageName).ToArray();
             graffitiButtons = new GraffitiButton[Math.Min(GraffitiPerPage, graffitiFiles.Length - (curGPage * GraffitiPerPage))];
