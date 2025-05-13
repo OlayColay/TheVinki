@@ -38,8 +38,8 @@ public class GraffitiTutorial : UpdatableAndDeletable
 
         if (playerPos.y >= CraftTriggerPos && nextPhase == Phase.Craft)
         {
-            string graffitiMode = Plugin.improvedInput ? KeyCodeTranslator.GetImprovedInputKeyName(0, "thevinki:graffiti") : "Up";
-            string craft = Plugin.improvedInput ? KeyCodeTranslator.GetImprovedInputKeyName(0, "thevinki:craft") : "Pickup";
+            string graffitiMode = Plugin.improvedInput ? KeyCodeTranslator.GetImprovedInputKeyName(0, "thevinki:graffiti", Plugin.Graffiti) : "Up";
+            string craft = Plugin.improvedInput ? KeyCodeTranslator.GetImprovedInputKeyName(0, "thevinki:craft", Plugin.Craft) : "Pickup";
             game.cameras.First().hud.textPrompt.AddMessage(
                 game.manager.rainWorld.inGameTranslator.Translate("Hold (" + graffitiMode + " + " + craft + ") while carrying a rock and colorful object (pearls, fruit, etc.) to craft a Spray Can."),
                 0, 600, false, false
@@ -52,8 +52,8 @@ public class GraffitiTutorial : UpdatableAndDeletable
         }
         else if (playerPos.y >= SprayTriggerPos && nextPhase == Phase.Spray)
         {
-            string graffitiMode = Plugin.improvedInput ? KeyCodeTranslator.GetImprovedInputKeyName(0, "thevinki:graffiti") + " + " : "";
-            string spray = Plugin.improvedInput ? KeyCodeTranslator.GetImprovedInputKeyName(0, "thevinki:spray") : "Special";
+            string graffitiMode = Plugin.improvedInput ? KeyCodeTranslator.GetImprovedInputKeyName(0, "thevinki:graffiti", Plugin.Graffiti) + " + " : "";
+            string spray = Plugin.improvedInput ? KeyCodeTranslator.GetImprovedInputKeyName(0, "thevinki:spray", Plugin.Spray) : "Special";
             if (Plugin.improvedInput)
             {
                 game.cameras.First().hud.textPrompt.AddMessage(

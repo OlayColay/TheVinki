@@ -62,7 +62,7 @@
             <summary>
             The number of players who could possibly be receiving input at the moment.
             </summary>
-            <remarks>This value starts at 10 and can only be increased. Set it when your mod is being enabled. Avoid setting this to anything extremely high.</remarks>
+            <remarks>This value starts at <see cref="F:RainWorld.PlayerObjectBodyColors"/>.Length.</remarks>
         </member>
         <member name="M:ImprovedInput.CustomInputExt.UsingKeyboard(Options.ControlSetup)">
             <summary>Returns true if a given control setup uses a keyboard.</summary>
@@ -122,11 +122,14 @@
         <member name="M:ImprovedInput.PlayerKeybind.Keybinds">
             <summary>Every keybind currently registered, including vanilla and modded keybinds.</summary>
         </member>
+        <member name="M:ImprovedInput.PlayerKeybind.Get(System.String)">
+            <summary>
+            Gets a keybind given its <paramref name="id"/>.
+            </summary>
+            <returns>The keybind, or <see langword="null"/> if none was found.</returns>
+        </member>
         <member name="F:ImprovedInput.PlayerKeybind.Pause">
             <summary>The PAUSE button. Usually ignored for anyone but the first player.</summary>
-        </member>
-        <member name="F:ImprovedInput.PlayerKeybind.Map">
-            <summary>The MAP button.</summary>
         </member>
         <member name="F:ImprovedInput.PlayerKeybind.Grab">
             <summary>The GRAB button.</summary>
@@ -137,17 +140,23 @@
         <member name="F:ImprovedInput.PlayerKeybind.Throw">
             <summary>The THROW button.</summary>
         </member>
+        <member name="F:ImprovedInput.PlayerKeybind.Special">
+            <summary>The SPECIAL button.</summary>
+        </member>
+        <member name="F:ImprovedInput.PlayerKeybind.Map">
+            <summary>The MAP button.</summary>
+        </member>
         <member name="F:ImprovedInput.PlayerKeybind.Up">
-            <summary>The UP button. Ignored for controllers.</summary>
+            <summary>The UP button. Unconfigurable for controllers.</summary>
         </member>
         <member name="F:ImprovedInput.PlayerKeybind.Left">
-            <summary>The UP button. Ignored for controllers.</summary>
+            <summary>The LEFT button. Unconfigurable for controllers.</summary>
         </member>
         <member name="F:ImprovedInput.PlayerKeybind.Down">
-            <summary>The UP button. Ignored for controllers.</summary>
+            <summary>The DOWN button. Unconfigurable for controllers.</summary>
         </member>
         <member name="F:ImprovedInput.PlayerKeybind.Right">
-            <summary>The UP button. Ignored for controllers.</summary>
+            <summary>The RIGHT button. Unconfigurable for controllers.</summary>
         </member>
         <member name="M:ImprovedInput.PlayerKeybind.Register(System.String,System.String,System.String,UnityEngine.KeyCode,UnityEngine.KeyCode)">
             <summary>
@@ -174,11 +183,15 @@
             <returns>A new <see cref="T:ImprovedInput.PlayerKeybind"/> to be used like <c>player.JustPressed(keybind)</c>.</returns>
             <exception cref="T:System.ArgumentException">The <paramref name="id"/> is invalid or already taken.</exception>
         </member>
-        <member name="M:ImprovedInput.PlayerKeybind.Get(System.String)">
+        <member name="M:ImprovedInput.PlayerKeybind.Register(System.String,System.String,System.String)">
             <summary>
-            Gets a keybind given its <paramref name="id"/>.
+            Registers a new keybind.
             </summary>
-            <returns>The keybind, or <see langword="null"/> if none was found.</returns>
+            <param name="id">The unique ID for the keybind.</param>
+            <param name="mod">The display name of the mod that registered this keybind.</param>
+            <param name="name">A short name to show in the Input Settings screen.</param>
+            <returns>A new <see cref="T:ImprovedInput.PlayerKeybind"/> to be used like <c>player.JustPressed(keybind)</c>.</returns>
+            <exception cref="T:System.ArgumentException">The <paramref name="id"/> is invalid or already taken.</exception>
         </member>
         <member name="P:ImprovedInput.PlayerKeybind.Id">
             <summary>A unique ID.</summary>
@@ -214,20 +227,21 @@
             <summary>If true, the conflict warning will be hidden when this key conflicts with the given key.</summary>
             <remarks>May be null.</remarks>
         </member>
+        <member name="P:ImprovedInput.PlayerKeybind.IsModded">
+            <summary>Checks if this keybind is from a mod.</summary>
+        </member>
+        <member name="P:ImprovedInput.PlayerKeybind.IsVanilla">
+            <summary>Checks if this keybind is from vanilla.</summary>
+        </member>
         <member name="M:ImprovedInput.PlayerKeybind.Bound(System.Int32)">
             <summary>True if the binding for <paramref name="playerNumber"/> is set.</summary>
         </member>
         <member name="M:ImprovedInput.PlayerKeybind.Unbound(System.Int32)">
             <summary>True if the binding for <paramref name="playerNumber"/> is not set.</summary>
         </member>
-        <member name="M:ImprovedInput.PlayerKeybind.Keyboard(System.Int32)">
-            <summary>The current keycode configured for the given <paramref name="playerNumber"/> on keyboard.</summary>
-        </member>
-        <member name="M:ImprovedInput.PlayerKeybind.Gamepad(System.Int32)">
-            <summary>The current keycode configured for the given <paramref name="playerNumber"/> on a controller.</summary>
-        </member>
-        <member name="M:ImprovedInput.PlayerKeybind.CurrentBinding(System.Int32)">
-            <summary>The current recognized keycode for the given <paramref name="playerNumber"/>.</summary>
+        <member name="M:ImprovedInput.PlayerKeybind.CurrentBindingName(System.Int32)">
+            <summary>The name of the button currently bound for this <paramref name="playerNumber"/>. Returns "None" if unbound.</summary>
+            <remarks>Added in IIC:E v2.0.3</remarks>
         </member>
         <member name="M:ImprovedInput.PlayerKeybind.ConflictsWith(System.Int32,ImprovedInput.PlayerKeybind,System.Int32)">
             <summary>
@@ -241,6 +255,19 @@
             <summary>
             Returns <see cref="P:ImprovedInput.PlayerKeybind.Id"/>.
             </summary>
+        </member>
+        <member name="M:ImprovedInput.PlayerKeybind.Keyboard(System.Int32)">
+            <summary>
+            The current keycode configured for the given <paramref name="playerNumber"/> on keyboard.
+            </summary>
+        </member>
+        <member name="M:ImprovedInput.PlayerKeybind.Gamepad(System.Int32)">
+            <summary>
+            The current keycode configured for the given <paramref name="playerNumber"/> on a controller.
+            </summary>
+        </member>
+        <member name="M:ImprovedInput.PlayerKeybind.CurrentBinding(System.Int32)">
+            <summary>The current recognized keycode for the given <paramref name="playerNumber"/>.</summary>
         </member>
     </members>
 </doc>

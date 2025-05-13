@@ -3,22 +3,59 @@ using RWCustom;
 using System;
 using UnityEngine;
 
+namespace Vinki;
+
 // Credit to ImprovedInput
 public class KeyCodeTranslator
 {
-    public static string GetImprovedInputKeyName(int player, string key)
+    public static string GetImprovedInputKeyName(int player, string oldKey, int newKey)
+    {
+        if (Plugin.improvedInputVersion < 2)
+        {
+            try
+            {
+                return GetOldImprovedInputKeyName(player, oldKey);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        try
+        {
+            return GetNewImprovedInputKeyName(player, newKey);
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message);
+        }
+    }
+    private static string GetOldImprovedInputKeyName(int player, string key)
     {
         try
         {
+#pragma warning disable CS0618 // Type or member is obsolete
             return Translate(player, PlayerKeybind.Get(key).CurrentBinding(0));
+#pragma warning restore CS0618 // Type or member is obsolete
         }
-        catch
+        catch (Exception e)
         {
-            throw new Exception("ImprovedInput not found!");
+            throw new Exception("ImprovedInput v1 not found!\n" + e.Message);
+        }
+    }
+    private static string GetNewImprovedInputKeyName(int player, int key)
+    {
+        try
+        {
+            return ((PlayerKeybind)Plugin.improvedControls.GetValue(key)).CurrentBindingName(player);
+        }
+        catch (Exception e)
+        {
+            throw new Exception("ImprovedInput v2+ not found!\n" + e.Message);
         }
     }
 
-	private static string Translate(int player, KeyCode key)
+    private static string Translate(int player, KeyCode key)
     {
         var text = key.ToString();
         if (text.Length > 14 && text.Substring(0, 14) == "JoystickButton" && int.TryParse(text.Substring(14, text.Length - 14), out int btn))

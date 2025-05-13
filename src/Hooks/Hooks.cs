@@ -357,6 +357,8 @@ namespace Vinki
                 return;
             }
 
+            improvedInputVersion = Int32.Parse(ModManager.ActiveMods.First((mod) => mod.id == "improved-input-config").version.Substring(0, 1));
+
             try
             {
                 SetImprovedInput();
