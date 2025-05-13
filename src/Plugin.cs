@@ -48,6 +48,7 @@ namespace Vinki
         public static int blueCycles = 0;
 
         public static bool improvedInput;
+        public static int improvedInputVersion = 0;
         public static Array improvedControls;
         public static readonly int Grind = 0, ToggleGrind = 1, Graffiti = 2, Spray = 3, Craft = 4, Tag = 5;
 
