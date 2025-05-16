@@ -1100,6 +1100,34 @@ namespace Vinki
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Your species is very diverse, from my experience. Perhaps there is one of you who could if these creatures existed."), 0);
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("They would have to be quite nimble to slay it, however. They might also need some enhancement, such as extra limbs!"), 0);
                     break;
+                case "VinkiGraffiti/vinki/Hessi - Dinner":
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Is this food? Are these items a delicacy for your species, or is it just some of your individual favorites?"), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("I can't say that I am able to tell what these are, but it doesn't look too appetizing to me, I'm sorry to say."), 0);
+                    break;
+                case "VinkiGraffiti/vinki/Hessi - Vinki Peace":
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Oh, it's you again. This time you're holding up a gesture that I do not recognize."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("You seem to be happy about it though!"), 0);
+                    break;
+                case "VinkiGraffiti/vinki/piratinthehood - Sleepy Moon":
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Oh, it's me! There is some writing too it seems."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("It reads..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Oh, I should not repeat this out loud. Little creature, you must have found this writing on some other graffiti,<LINE>" +
+                        "but you should not be repeating this phrase to others."), 0);
+                    break;
+                case "VinkiGraffiti/vinki/quarter - Better on Paper":
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("This is a very abstract piece, but I will do my best to disect its meaning."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("It is a sheet of parchment with colors and shapes exploding out of it. Does it represent how creativity can affect the world outside of art?"), 0);
+                    break;
+                case "VinkiGraffiti/vinki/quinn - Pebbsi!":
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("It is one of the drinks offered at Five Pebbles' city. How did you know about this, little creature?"), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("I remember that my city had a company that offered a drink that had almost exactly the same ingredients. Nevertheless, a fierce debate erupted amongst our creators about which drink was better."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Several of our creators moved their families to Five Pebbles purely because of their favorite drink. Many of them had silly vices like this, ironically."), 0);
+                    break;
             }
         }
 
