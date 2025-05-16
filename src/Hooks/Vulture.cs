@@ -26,12 +26,12 @@ public static partial class Hooks
     {
         orig(self, violenceDir);
 
-        if (self.graphicsModule == null || self.graphicsModule.Tag() == null)
+        if (self.graphicsModule is not VultureGraphics vultureGraphics || self.graphicsModule.Tag() == null)
         {
             return;
         }
 
-        Color maskColor = self.graphicsModule.Tag().taggedColors[(self.graphicsModule as VultureGraphics).MaskSprite];
+        Color maskColor = vultureGraphics.Tag().taggedColors[vultureGraphics.MaskSprite];
         if (maskColor.maxColorComponent > float.Epsilon)
         {
             PhysicalObject newestMask = self.room.physicalObjects[2].LastOrDefault((po) => po is VultureMask);
