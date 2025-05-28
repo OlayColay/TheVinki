@@ -8,6 +8,7 @@ using SlugBase.SaveData;
 using System.Linq;
 using System.IO;
 using BepInEx.Logging;
+using SlugBase.Features;
 
 namespace Vinki
 {
@@ -63,6 +64,9 @@ namespace Vinki
         public static string curPlayingSong;
 
         public static List<string> catMaidGraffitis = ["Beep - 5P or QT", "Tsuno - Loud Pebbles"];
+
+        public static readonly PlayerFeature<bool> CanGrind = SlugBase.Features.FeatureTypes.PlayerBool("can_grind");
+        public static readonly PlayerFeature<bool> CanTrickJump = SlugBase.Features.FeatureTypes.PlayerBool("can_trick_jump");
 
         public static ManualLogSource VLogger;
 

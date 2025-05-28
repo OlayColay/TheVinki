@@ -195,7 +195,7 @@ namespace Vinki
 
             orig(self);
 
-            if (self.SlugCatClass != Enums.vinki)
+            if (!CanTrickJump.TryGet(self, out bool canTrickJump) || !canTrickJump)
             {
                 return;
             }
@@ -276,11 +276,11 @@ namespace Vinki
         {
             orig(self, eu);
 
-            if (self.SlugCatClass != Enums.vinki)
+            if (!CanGrind.TryGet(self, out bool canGrind) || !canGrind)
             {
                 return;
             }
-            VinkiPlayerData v = self.Vinki();
+            bool isVinki = self.IsVinki(out VinkiPlayerData v);
 
             // Edit isGrindings from last Update
             v.lastIsGrinding = v.isGrinding;
@@ -471,7 +471,7 @@ namespace Vinki
                     posA = self.bodyChunks[1].pos;
                     posB = posA - new Vector2(10f * v.lastXDirection, 0);
 
-                    if (!v.lastIsGrindingH)
+                    if (isVinki && !v.lastIsGrindingH)
                     {
                         Room.Tile beamTile = self.room.GetTile(self.bodyChunks[1].pos);
                         v.NewTrick(Enums.TrickType.HorizontalBeam, v.AddBeamToCombo(self.room, beamTile));
@@ -524,14 +524,14 @@ namespace Vinki
                         }
                     }
 
-                    if (!v.lastIsGrindingVineNoGrav)
+                    if (isVinki && !v.lastIsGrindingVineNoGrav)
                     {
                         v.NewTrick(Enums.TrickType.ZeroGravity, v.AddVineToCombo(self.room, self.vinePos.vine));
                     }
                 }
                 else
                 {
-                    if (v.isGrindingNoGrav && (!v.lastIsGrindingNoGrav || (self.standing && switchY) || (!self.standing && switchX)))
+                    if (isVinki && v.isGrindingNoGrav && (!v.lastIsGrindingNoGrav || (self.standing && switchY) || (!self.standing && switchX)))
                     {
                         Room.Tile beamTile = self.room.GetTile(self.mainBodyChunk.pos);
                         v.NewTrick(Enums.TrickType.ZeroGravity, v.AddBeamToCombo(self.room, beamTile, self.standing));
@@ -564,7 +564,7 @@ namespace Vinki
 
                 // Resume the combo timer if the direction is switched on a new beam/vine
                 Plugin.VLogger.LogInfo($"{v.isGrindingVine} {v.lastIsGrindingVine} {switchX}");
-                if (v.isGrindingV && (!v.lastIsGrindingV || switchY))
+                if (isVinki && v.isGrindingV && (!v.lastIsGrindingV || switchY))
                 {
                     Room.Tile beamTile = self.room.GetTile(self.mainBodyChunk.pos);
                     v.NewTrick(Enums.TrickType.VerticalBeam, v.AddBeamToCombo(self.room, beamTile), v.lastYDirection < 0);
@@ -601,7 +601,7 @@ namespace Vinki
             }
 
             // Update combo states
-            if (v.isGrinding)
+            if (isVinki && v.isGrinding)
             {
                 // Don't swallow/spitup while grinding
                 self.swallowAndRegurgitateCounter = 0;

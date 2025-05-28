@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace Vinki;
 
-public class VinkiPlayerData
+public class VinkiPlayerData(Player player)
 {
     public class PoisonedCreature(Creature creature, int timeLeft, float totalDamage)
     {
@@ -20,7 +20,7 @@ public class VinkiPlayerData
         public float damagePerTick = totalDamage / timeLeft / creature.Template.baseDamageResistance;
     }
 
-    public readonly bool IsVinki;
+    public readonly bool IsVinki = player.slugcatStats.name == Enums.vinki;
 
     public FAtlas TailAtlas;
 
@@ -32,7 +32,7 @@ public class VinkiPlayerData
     public int tagLag = 0;
     public float tagIconSize = 0f;
 
-    public WeakReference<Player> playerRef;
+    public WeakReference<Player> playerRef = new(player);
     public Color BodyColor;
     public Color EyesColor;
     public Color StripesColor;
@@ -90,18 +90,6 @@ public class VinkiPlayerData
     public Action OnNewTrick;
     public Action OnNewBestCombo;
     public Action OnNewBestScore;
-
-    public VinkiPlayerData(Player player)
-    {
-        IsVinki = player.slugcatStats.name == Enums.vinki;
-
-        playerRef = new WeakReference<Player>(player);
-
-        if (!IsVinki)
-        {
-            return;
-        }
-    }
 
     public void LoadTailAtlas()
     {

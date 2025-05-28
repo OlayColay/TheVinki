@@ -517,11 +517,11 @@ namespace Vinki
 
             if (hidden)
             {
-                thumbnails = atlasPaths.Select((_) => new OpImage(Vector2.zero, "decals/QUESTIONMARK")).ToArray();
+                thumbnails = [.. atlasPaths.Select((_) => new OpImage(Vector2.zero, "decals/QUESTIONMARK"))];
             }
             else
             {
-                thumbnails = atlasPaths.Select((atlas) => new OpImage(Vector2.zero, atlas)).ToArray();
+                thumbnails = [.. atlasPaths.Select((atlas) => new OpImage(Vector2.zero, atlas))];
             }
 
             // Get array of graffitis that are already in the VinkiGraffiti folder
