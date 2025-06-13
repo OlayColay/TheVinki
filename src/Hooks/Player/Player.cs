@@ -1247,6 +1247,7 @@ namespace Vinki
         {
             if (player.SlugCatClass != Enums.vinki)
             {
+                orig(self, player, isShortMeow);
                 return;
             }
 
