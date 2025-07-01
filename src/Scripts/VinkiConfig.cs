@@ -189,7 +189,7 @@ namespace Vinki
             AddSubtitle(65f, "Special Thanks", 1);
             AddText(25f, "Developers of this mod's dependencies\n" +
                 "Abigail    a doku    AxoTheAxolotl    Azura Hardware    banba fan    Bombyx_Silkmoth    BreadwardBolero    BUGS    Doop    Dusk\n" +
-                "Eversplode    goof    googoowoogoo    hamburguesa    Hessi    Johnn    MagicaJaphet    Nico    Pimski    quarter    Rae\n" +
+                "Eversplode    goof    googoowoogoo    hamburguesa    Hessi    Johnn    MagicaJaphet    Marcos66606    Nico    Pimski    quarter    Rae\n" +
                 "raintailed    Repeat    Sadman    Salami_Hunter    skrybl    Sunbloom    SunnyBeam    TacticalBombs    Vinyla    whatamidoing\n",
             1);
 

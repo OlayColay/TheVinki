@@ -116,7 +116,7 @@ namespace Menu
             //Plugin.VLogger.LogInfo("Graffiti scugs: " + string.Join(", ", Plugin.graffitis.Keys));
             if (!Plugin.graffitis.ContainsKey(lowerScugClass))
             {
-                lowerScugClass = "white";
+                lowerScugClass = SlugcatStats.Name.White.value.ToLowerInvariant();
                 if (!Plugin.graffitis.ContainsKey(lowerScugClass))
                 {
                     Hooks.LoadGraffiti();
@@ -254,8 +254,14 @@ namespace Menu
             }
             else if (message.StartsWith("SELECT "))
             {
+                string lowerScugClass = players[currentPlayer].SlugCatClass.ToString().ToLowerInvariant();
+                if (!Plugin.graffitis.ContainsKey(lowerScugClass))
+                {
+                    lowerScugClass = SlugcatStats.Name.White.value.ToLowerInvariant();
+                }
+                
                 int gNum = int.Parse(message.Substring(7));
-                Plugin.VLogger.LogInfo("Selecting " + Plugin.graffitis[players[currentPlayer].SlugCatClass.ToString().ToLowerInvariant()][gNum].imageName);
+                Plugin.VLogger.LogInfo("Selecting " + Plugin.graffitis[lowerScugClass][gNum].imageName);
                 PlaySound(SoundID.MENU_Button_Standard_Button_Pressed);
 
                 Plugin.queuedGNums[currentPlayer] = gNum;
@@ -270,7 +276,7 @@ namespace Menu
                 repeatButton.buttonBehav.greyedOut = false;
 
                 // Update graffiti preview
-                UpdatePreview("decals/" + Plugin.graffitis[players[currentPlayer].SlugCatClass.ToString().ToLowerInvariant()][gNum].imageName);
+                UpdatePreview("decals/" + Plugin.graffitis[lowerScugClass][gNum].imageName);
             }
             else if (message.StartsWith("PLAYER "))
             {
@@ -287,8 +293,14 @@ namespace Menu
                 //}
                 //playerButtons[currentPlayer].InterpColor(players[currentPlayer].JollyOption.bodyColor);
 
+                string lowerScugClass = players[currentPlayer].SlugCatClass.ToString().ToLowerInvariant();
+                if (!Plugin.graffitis.ContainsKey(lowerScugClass))
+                {
+                    lowerScugClass = SlugcatStats.Name.White.value.ToLowerInvariant();
+                }
+
                 int gNum = Plugin.queuedGNums[currentPlayer];
-                UpdatePreview(gNum == -1 ? "" : "decals/" + Plugin.graffitis[players[currentPlayer].SlugCatClass.ToString().ToLowerInvariant()][gNum].imageName);
+                UpdatePreview(gNum == -1 ? "" : "decals/" + Plugin.graffitis[lowerScugClass][gNum].imageName);
                 previewLabel.text = players[currentPlayer].JollyOption.customPlayerName ?? Translate("Player " + (currentPlayer + 1));
             }
             else if (message == "SHUFFLE")
