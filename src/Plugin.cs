@@ -76,6 +76,15 @@ namespace Vinki
             VLogger = Logger;
             //VLogger.LogInfo("OnEnable\n" + StackTraceUtility.ExtractStackTrace());
             Hooks.ApplyInit();
+
+            try
+            {
+                SetImprovedInput();
+            }
+            catch
+            {
+                throw new Exception("Improved Input enabled but also not enabled???");
+            }
         }
 
         public void OnDisable()

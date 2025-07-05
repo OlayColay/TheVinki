@@ -361,15 +361,6 @@ namespace Vinki
 
             try
             {
-                SetImprovedInput();
-            }
-            catch
-            {
-                throw new Exception("Improved Input enabled but also not enabled???");
-            }
-
-            try
-            {
 
                 if (ModManager.ActiveMods.Exists((mod) => mod.id == "pushtomeow"))
                 {
@@ -413,7 +404,7 @@ namespace Vinki
                         new() { Sprite = "LEGS", SpriteSheetID = sheetID + i },
                         new() { Sprite = "TAIL", SpriteSheetID = sheetID + i }
                     ],
-                }, sheetID + i);
+                });
             }
         }
 
