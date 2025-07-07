@@ -829,14 +829,12 @@ namespace Vinki
             AbstractPhysicalObject.AbstractObjectType abstractObjectTypeA = a.grabbed.abstractPhysicalObject.type;
             AbstractPhysicalObject.AbstractObjectType abstractObjectTypeB = b.grabbed.abstractPhysicalObject.type;
 
-            if (abstractObjectTypeA == AbstractPhysicalObject.AbstractObjectType.Rock &&
-                colorfulItems.ContainsKey(abstractObjectTypeB))
+            if (a.grabbed is Rock && colorfulItems.ContainsKey(abstractObjectTypeB))
             {
                 //VLogger.LogInfo("Item 1 is rock and Item 2 is " + abstractObjectTypeB.ToString() + " and worth " + colorfulItems[abstractObjectTypeB]);
                 return colorfulItems[abstractObjectTypeB];
             }
-            if (abstractObjectTypeB == AbstractPhysicalObject.AbstractObjectType.Rock &&
-                colorfulItems.ContainsKey(abstractObjectTypeA))
+            if (b.grabbed is Rock && colorfulItems.ContainsKey(abstractObjectTypeA))
             {
                 //VLogger.LogInfo("Item 2 is rock and Item 1 is " + abstractObjectTypeA.ToString() + " and worth " + colorfulItems[abstractObjectTypeA]);
                 return colorfulItems[abstractObjectTypeA];
