@@ -32,7 +32,13 @@ namespace Vinki
                 }
                 else
                 {
-                    gNum = UnityEngine.Random.Range(0, graffitis[slugcat].Count);
+                    VinkiPlayerData vinki = self.Vinki();
+                    do
+                    {
+                        gNum = UnityEngine.Random.Range(0, graffitis[slugcat].Count);
+                    }
+                    while (gNum == vinki.lastGraffitiSprayed && graffitis[slugcat].Count > 1);
+                    vinki.lastGraffitiSprayed = gNum;
                 }
             }
             else

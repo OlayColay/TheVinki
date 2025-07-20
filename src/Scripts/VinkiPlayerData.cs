@@ -91,6 +91,8 @@ public class VinkiPlayerData(Player player)
     public Action OnNewBestCombo;
     public Action OnNewBestScore;
 
+    public int lastGraffitiSprayed = -1;
+
     public void LoadTailAtlas()
     {
         var tailTexture = new Texture2D(Plugin.TailTexture.width, Plugin.TailTexture.height, TextureFormat.ARGB32, false);
