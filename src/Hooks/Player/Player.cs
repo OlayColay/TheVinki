@@ -52,7 +52,7 @@ namespace Vinki
                 // If spraying the StoryGraffitiTutorial graffiti, move to the next phase
                 if (gNum == 2)
                 {
-                    miscSave.Set("StoryGraffitiTutorialPhase", 1);
+                    miscSave.Set("StoryGraffitiTutorialPhase", (int)StoryGraffitiTutorial.Phase.Explore);
                 }
 
                 // Flag that the map should open automatically when hibernating

@@ -171,6 +171,11 @@ public static partial class Hooks
         {
             self.AddObject(new GrindTutorial(self));
         }
+        // Tagging Tutorial
+        else if ((name == "UW_E01" || name == "UW_E01VI") && !VinkiConfig.SkipIntro.Value && (!miscSave.TryGet("TagTutorialCompleted", out bool c) || !c))
+        {
+            self.AddObject(new TagTutorial(self));
+        }
         // Spawn pearl and disable hologram
         else if (name == "DM_AI")
         {

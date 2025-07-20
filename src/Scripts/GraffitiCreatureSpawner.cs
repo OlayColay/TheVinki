@@ -23,9 +23,9 @@ public static class GraffitiCreatureSpawner
 
 	public static void TriggerSpawns(AbstractRoom room)
 	{
-		Plugin.VLogger.LogInfo("Spawning Graffiti Creatures in " + room.name);
 		if (roomCreatures.ContainsKey(room.name))
 		{
+			Plugin.VLogger.LogInfo("Spawning Graffiti Creatures in " + room.name);
 			foreach (KeyValuePair<int, GraffitiDenSpawnData> den in roomCreatures[room.name])
 			{
 				foreach (CreatureTemplate.Type type in den.Value.creatures)
