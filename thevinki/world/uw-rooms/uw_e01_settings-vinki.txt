@@ -13,3 +13,4 @@ AmbientSounds: SPOT><AM_ENV-WallHum.ogg><66.63177><503.3387><0.4565217><1><1064.
 Triggers: Spot<tA>event<tB>MusicEvent<eA>songName<eB>VI_2 - Vertical Grinding<eA>vol<eB>0.3<eA>prio<eB>1<eA>mxThrt<eB>1<eA>loop<eB>0<eA>droneTol<eB>0<eA>rooms<eB>-1<eA>rest<eB>3<eA>fadeIn<eB>0<eA>oneSongPerCycle<eB>0<eA>stopAtDeath<eB>0<eA>stopAtGate<eB>0<tA>multiUse<tB>1<tA>toCycle<tB>-1<tA>fromCycle<tB>0<tA>delay<tB>0<tA>panPos<tB>385.655<tB>447.3736<tA>fireChance<tB>1<tA>entrance<tB>0<tA>karma<tB>0<tA>slugcats<tB>White|Yellow|Red|Rivulet|Artificer|Saint|Spear|Gourmand<tA>pos<tB>872.655<tB>3684.374<tA>handlePos<tB>-35.35534<tB>-35.35534, 
 FadePalette: 42, 0, 0, 0.02173913, 0.05434782, 0.09782609
 WetTerrain: OFF
+RoomSpecificScriptActive: ON

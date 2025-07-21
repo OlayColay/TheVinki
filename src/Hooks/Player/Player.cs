@@ -32,7 +32,13 @@ namespace Vinki
                 }
                 else
                 {
-                    gNum = UnityEngine.Random.Range(0, graffitis[slugcat].Count);
+                    VinkiPlayerData vinki = self.Vinki();
+                    do
+                    {
+                        gNum = UnityEngine.Random.Range(0, graffitis[slugcat].Count);
+                    }
+                    while (gNum == vinki.lastGraffitiSprayed && graffitis[slugcat].Count > 1);
+                    vinki.lastGraffitiSprayed = gNum;
                 }
             }
             else
@@ -52,7 +58,7 @@ namespace Vinki
                 // If spraying the StoryGraffitiTutorial graffiti, move to the next phase
                 if (gNum == 2)
                 {
-                    miscSave.Set("StoryGraffitiTutorialPhase", 1);
+                    miscSave.Set("StoryGraffitiTutorialPhase", (int)StoryGraffitiTutorial.Phase.Explore);
                 }
 
                 // Flag that the map should open automatically when hibernating
