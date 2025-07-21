@@ -1,0 +1,7 @@
+Grime: 0.173913
+Palette: 3008
+EffectColorA: 13
+Effects: ReplaceEffectColorB-0.6304348-20-20-Color-0-1-1, 
+PlacedObjects: CustomDecal><526.3695><440.5984><3~139~117~136~122~0~-595~-100~0.1521739~1~0~dzhungrybacteria~1~0~1~0~1~0~1~0, CGShelterRain><330.9909><498.3002><, 
+AmbientSounds: OMNI><AM_ENV-LightWind.ogg><728.5815><524.6077><0.3478261><1, OMNI><AM_ENV-Outside.ogg><696.66><477.8799><0.5><1, OMNI><so_ind-heatduct.ogg><698.6823><335.3118><0.3804348><1, 
+FadePalette: 16, 0.08695652
