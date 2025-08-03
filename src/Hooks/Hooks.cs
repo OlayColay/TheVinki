@@ -181,7 +181,7 @@ namespace Vinki
             //}
         }
 
-        private static void AddGraffiti(string image, string slugcat, KeyValuePair<string, Vector2>? storyGraffitiRoomPos = null)
+        private static void AddGraffiti(string image, string slugcat, KeyValuePair<string, Vector2>? storyGraffitiRoomPos = null, bool spawnInFutureCampaigns = false)
         {
             string imageName = Path.GetFileNameWithoutExtension(image);
 
@@ -219,6 +219,11 @@ namespace Vinki
                     decal.imageName = Path.GetFileNameWithoutExtension(image);
                 }
                 storyGraffitiRoomPositions.Add(graffitis["Story"].Count, storyGraffitiRoomPos.Value);
+
+                if (!spawnInFutureCampaigns)
+                {
+                    storyGraffitiNeverSpawningInFutureCampaigns.Add(decal.imageName);
+                }
             }
             else
             {
@@ -261,7 +266,8 @@ namespace Vinki
             {
                 JsonObject obj = objective.AsObject();
                 bool useAltGraffiti = !VinkiConfig.CatPebbles.Value && obj.TryGet("nonCatmaidAltName") != null;
-                AddGraffiti(obj.GetString(useAltGraffiti ? "nonCatmaidAltName" : "name"), "Story", new(obj.GetString("room"), JsonUtils.ToVector2(obj["position"])));
+                bool spawnInFutureCampaignsExists = obj.TryGet("spawnInFutureCampaigns") != null;
+                AddGraffiti(obj.GetString(useAltGraffiti ? "nonCatmaidAltName" : "name"), "Story", new(obj.GetString("room"), JsonUtils.ToVector2(obj["position"])), !spawnInFutureCampaignsExists || obj.GetBool("spawnInFutureCampaigns"));
             }
         }
 

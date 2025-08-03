@@ -1,0 +1,5 @@
+{
+  "id": "vinki",
+  "base": [ "Spear", "Red" ],
+  "insert_before": "Spear"
+}

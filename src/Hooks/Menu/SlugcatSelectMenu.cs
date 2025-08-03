@@ -113,10 +113,15 @@ public static partial class Hooks
             c.Emit(OpCodes.Ldarg_1);
             c.EmitDelegate((SlugcatSelectMenu self, SlugcatStats.Name storyGameCharacter) =>
             {
-                if (storyGameCharacter == Enums.vinki && !VinkiConfig.SkipIntro.Value)
+                if (storyGameCharacter == Enums.vinki)
                 {
-                    self.manager.RequestMainProcessSwitch(Enums.FullscreenVideo);
-                    return true;
+                    SaveDataExtension.GetSlugBaseData(self.manager.rainWorld.progression.miscProgressionData)
+                        .Set("StoryPlacedGraffitis", new Dictionary<string, List<GraffitiObject.SerializableGraffiti>>());
+                    if (!VinkiConfig.SkipIntro.Value)
+                    {
+                        self.manager.RequestMainProcessSwitch(Enums.FullscreenVideo);
+                        return true;
+                    }
                 }
                 return false;
             });

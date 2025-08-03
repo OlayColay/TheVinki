@@ -46,7 +46,6 @@
     "sleep_scene": "Sleep_Vinki",
     "select_menu_scene_ascended": "Ghost_Vinki",
     "the_mark": true,
-    "timeline_before": [ "Spear", "Red" ],
     "world_state": [ "vinki", "Spear", "Red" ],
 
     "can_grind": true,

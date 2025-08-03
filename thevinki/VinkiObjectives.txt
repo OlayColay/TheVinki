@@ -3,23 +3,27 @@
         "name": "5P",
         "room": "SS_AI",
         "position": [ 650, 200 ],
-	"nonCatmaidAltName": "5P Alt"
+	"nonCatmaidAltName": "5P Alt",
+	"spawnInFutureCampaigns": false
     },
     {
         "name": "5P_stretched",
         "room": "SS_AI",
-        "position": [ 520, 400 ]
+        "position": [ 520, 400 ],
+	"spawnInFutureCampaigns": false
     },
     {
         "name": "Caterators",
         "room": "SS_D08",
         "position": [ 300, 250 ],
-	"nonCatmaidAltName": "Tutorial Alt"
+	"nonCatmaidAltName": "Tutorial Alt",
+	"spawnInFutureCampaigns": false
     },
     {
         "name": "True Victory",
         "room": "DM_AI",
-        "position": [ 490, 350 ]
+        "position": [ 490, 350 ],
+	"spawnInFutureCampaigns": false
     },
     {
         "name": "4",

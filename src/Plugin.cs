@@ -32,6 +32,7 @@ namespace Vinki
         public static Dictionary<string, List<Color>> graffitiAvgColors = [];
         public static List<string> shelterItems = [];
         public static Dictionary<int, KeyValuePair<string, Vector2>> storyGraffitiRoomPositions = [];
+        public static HashSet<string> storyGraffitiNeverSpawningInFutureCampaigns = [];
         public static Dictionary<AbstractPhysicalObject.AbstractObjectType, int> colorfulItems = [];
         public static string[] graffitiFolders;
         public static string baseGraffitiFolder = "decals" + Path.DirectorySeparatorChar + "VinkiGraffiti";

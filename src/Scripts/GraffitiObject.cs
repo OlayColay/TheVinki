@@ -28,24 +28,47 @@ public class GraffitiObject : CustomDecal
         cyclePlaced = isStory ? -1 : save.cycleNumber;
         serializableGraffiti = new(placedObject, cyclePlaced, gNum);
 
-        SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(save.miscWorldSaveData);
-
-        // Graffitis are indexed by room
-        if (miscSave.TryGet("PlacedGraffitis", out Dictionary<string, List<SerializableGraffiti>> placedGraffitis))
+        if (isStory)
         {
-            // Add this graffiti to the dictionary
-            if (!placedGraffitis.ContainsKey(roomId))
+            SlugBaseSaveData progression = SaveDataExtension.GetSlugBaseData(save.progression.miscProgressionData);
+            // Graffitis are indexed by room
+            if (progression.TryGet("StoryPlacedGraffitis", out Dictionary<string, List<SerializableGraffiti>> placedGraffitis))
             {
-                placedGraffitis[roomId] = [];
-            }
-            placedGraffitis[roomId].Add(serializableGraffiti);
+                // Add this graffiti to the dictionary
+                if (!placedGraffitis.ContainsKey(roomId))
+                {
+                    placedGraffitis[roomId] = [];
+                }
+                placedGraffitis[roomId].Add(serializableGraffiti);
 
-            miscSave.Set("PlacedGraffitis", placedGraffitis);
+                progression.Set("StoryPlacedGraffitis", placedGraffitis);
+            }
+            else
+            {
+                // C# magic to create a new dictionary initialized with this graffiti
+                progression.Set("StoryPlacedGraffitis", new Dictionary<string, List<SerializableGraffiti>>() { { roomId, new() { { serializableGraffiti } } } });
+            }
         }
         else
         {
-            // C# magic to create a new dictionary initialized with this graffiti
-            miscSave.Set("PlacedGraffitis", new Dictionary<string, List<SerializableGraffiti>>() { { roomId, new() { { serializableGraffiti } } } });
+            SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(save.miscWorldSaveData);
+            // Graffitis are indexed by room
+            if (miscSave.TryGet("PlacedGraffitis", out Dictionary<string, List<SerializableGraffiti>> placedGraffitis))
+            {
+                // Add this graffiti to the dictionary
+                if (!placedGraffitis.ContainsKey(roomId))
+                {
+                    placedGraffitis[roomId] = [];
+                }
+                placedGraffitis[roomId].Add(serializableGraffiti);
+
+                miscSave.Set("PlacedGraffitis", placedGraffitis);
+            }
+            else
+            {
+                // C# magic to create a new dictionary initialized with this graffiti
+                miscSave.Set("PlacedGraffitis", new Dictionary<string, List<SerializableGraffiti>>() { { roomId, new() { { serializableGraffiti } } } });
+            }
         }
     }
 }
