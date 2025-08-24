@@ -74,14 +74,21 @@ public static class Enums
 
     public static class SlideShowID
     {
-        public static SlideShow.SlideShowID VinkiAltEnd;
+        public static SlideShow.SlideShowID VinkiOEEnd;
     }
 
     public static class MenuSceneID
     {
         public static readonly MenuScene.SceneID GraffitiMap = new(nameof(GraffitiMap), true);
 
-        public static readonly MenuScene.SceneID AltEnd_Vinki_3 = new(nameof(AltEnd_Vinki_3), true);
+        public static readonly MenuScene.SceneID OEEnd_Vinki_Incomplete = new(nameof(OEEnd_Vinki_Incomplete), true);
+        public static readonly MenuScene.SceneID OEEnd_Vinki_Complete = new(nameof(OEEnd_Vinki_Complete), true);
+    }
+
+    public static class EndingID
+    {
+        public const int QuestIncompleteOE = 1;
+        public const int QuestCompleteOE = 2;
     }
 
     public static void RegisterValues()
@@ -97,7 +104,7 @@ public static class Enums
 
         GraffitiUnlockID.Init();
 
-        SlideShowID.VinkiAltEnd = new("altending_vinki", false);
+        SlideShowID.VinkiOEEnd = new("oeending_vinki", false);
 
         trickNames[TrickType.HorizontalBeam] = [ "Frontside", "UFO", "Negative Soul" ];
         trickNames[TrickType.VerticalBeam] = [ "Unity", "Tabernacle", "Full Torque" ];

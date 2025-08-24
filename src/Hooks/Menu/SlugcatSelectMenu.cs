@@ -5,6 +5,8 @@ using SlugBase.SaveData;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
+using UnityEngine;
 
 namespace Vinki;
 
@@ -28,6 +30,8 @@ public static partial class Hooks
 
         On.Menu.SlugcatSelectMenu.SlugcatPage.ctor += SlugcatSelectMenu_SlugcatPage_ctor;
         On.Menu.SlugcatSelectMenu.SlugcatPage.GrafUpdate += SlugcatPage_GrafUpdate;
+
+        On.Menu.SlugcatSelectMenu.SlugcatPage.AddAltEndingImage += SlugcatPage_AddAltEndingImage;
 
         try
         {
@@ -92,6 +96,31 @@ public static partial class Hooks
 
         data.bestCombo.label.alpha = data.bestScore.label.alpha = self.UseAlpha(timeStacker);
         data.bestCombo.label.x = data.bestScore.label.x = self.MidXpos + self.Scroll(timeStacker) * self.ScrollMagnitude - 600f;
+    }
+
+    private static void SlugcatPage_AddAltEndingImage(On.Menu.SlugcatSelectMenu.SlugcatPage.orig_AddAltEndingImage orig, SlugcatSelectMenu.SlugcatPage self)
+    {
+        if (self.slugcatNumber == Enums.vinki)
+        {
+            SlugBaseSaveData miscProgressionSave = SaveDataExtension.GetSlugBaseData(self.menu.manager.rainWorld.progression.miscProgressionData);
+            if (miscProgressionSave.TryGet("VinkiEndingID", out int vinkiEndingID))
+            {
+                switch (vinkiEndingID)
+                {
+                    case Enums.EndingID.QuestIncompleteOE:
+                        self.slugcatImage = new InteractiveMenuScene(self.menu, self, Enums.MenuSceneID.OEEnd_Vinki_Incomplete);
+                        break;
+                    case Enums.EndingID.QuestCompleteOE:
+                        self.slugcatImage = new InteractiveMenuScene(self.menu, self, Enums.MenuSceneID.OEEnd_Vinki_Complete);
+                        break;
+                }
+
+                self.imagePos = new Vector2(683f, 484f);
+                self.subObjects.Add(self.slugcatImage);
+                return;
+            }
+        }
+        orig(self);
     }
 
     private static void SlugcatSelectMenu_StartGame(ILContext il)

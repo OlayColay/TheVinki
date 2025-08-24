@@ -1,0 +1,59 @@
+{
+	"id": "OEEnd_Vinki_Incomplete",
+	"scene_folder": "scenes/oe incomplete quest - vinki",
+	"images": [
+		{
+			"name": "Flat",
+			"pos": [ 0, 100 ],
+			"depth": -1,
+			"flatmode": true
+		},
+		{
+			"name": "Sky",
+			"pos": [ 0, 100 ],
+			"depth": 8,
+			"shader": "Basic"
+		},
+		{
+			"name": "Tree",
+			"pos": [ 0, 100 ],
+			"depth": 4,
+			"shader": "Basic"
+		},
+		{
+			"name": "Fruit",
+			"pos": [ 0, 100 ],
+			"depth": 3.5,
+			"shader": "Basic"
+		},
+		{
+			"name": "Cans",
+			"pos": [ 0, 100 ],
+			"depth": 3,
+			"shader": "Basic"
+		},
+		{
+			"name": "Vinki",
+			"pos": [ 0, 100 ],
+			"depth": 2.8,
+			"shader": "Basic"
+		},
+		{
+			"name": "Low Branches",
+			"pos": [ 0, 100 ],
+			"depth": 2,
+			"shader": "Basic"
+		},
+		{
+			"name": "High Branches",
+			"pos": [ 0, 100 ],
+			"depth": 1.7,
+			"shader": "Basic"
+		}
+	],
+	"idle_depths": [ 2.8 ],
+	"glow_pos": [688, 484],
+	"mark_pos": [689, 583],
+	"select_menu_pos": [0, 0],
+	"slugcat_depth": 2.8
+}

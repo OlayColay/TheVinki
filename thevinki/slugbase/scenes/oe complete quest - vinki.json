@@ -1,0 +1,41 @@
+{
+	"id": "OEEnd_Vinki_Complete",
+	"scene_folder": "scenes/oe completed quest - vinki",
+	"images": [
+		{
+			"name": "Flat",
+			"pos": [ 0, 100 ],
+			"depth": -1,
+			"flatmode": true
+		},
+		{
+			"name": "Background",
+			"pos": [ 0, 100 ],
+			"depth": 3,
+			"shader": "Basic"
+		},
+		{
+			"name": "Vinki",
+			"pos": [ 0, 100 ],
+			"depth": 2.8,
+			"shader": "Basic"
+		},
+		{
+			"name": "High Foliage",
+			"pos": [ 0, 100 ],
+			"depth": 2,
+			"shader": "Basic"
+		},
+		{
+			"name": "Low Foliage",
+			"pos": [ 0, 100 ],
+			"depth": 1.7,
+			"shader": "Basic"
+		}
+	],
+	"idle_depths": [ 2.8 ],
+	"glow_pos": [688, 484],
+	"mark_pos": [689, 583],
+	"select_menu_pos": [0, 0],
+	"slugcat_depth": 2.8
+}

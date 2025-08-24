@@ -11,12 +11,14 @@ public static partial class Hooks
     {
         On.RainWorldGame.ctor += RainWorldGame_ctor;
         On.RainWorldGame.GoToRedsGameOver += RainWorldGame_GoToRedsGameOver;
+        On.RainWorldGame.BeatGameMode += RainWorldGame_BeatGameMode;
     }
 
     private static void RemoveRainWorldGameHooks()
     {
         On.RainWorldGame.ctor -= RainWorldGame_ctor;
         On.RainWorldGame.GoToRedsGameOver -= RainWorldGame_GoToRedsGameOver;
+        On.RainWorldGame.BeatGameMode -= RainWorldGame_BeatGameMode;
     }
 
     private static void RainWorldGame_ctor(On.RainWorldGame.orig_ctor orig, RainWorldGame self, ProcessManager manager)
@@ -51,6 +53,7 @@ public static partial class Hooks
         }
     }
 
+    // OE Endings
     private static void RainWorldGame_GoToRedsGameOver(On.RainWorldGame.orig_GoToRedsGameOver orig, RainWorldGame self)
     {
         if (self.GetStorySession.saveState.saveStateNumber != Enums.vinki)
@@ -63,35 +66,65 @@ public static partial class Hooks
         {
             return;
         }
+
+        SlugBaseSaveData miscWorldSave = SaveDataExtension.GetSlugBaseData(self.GetStorySession.saveState.miscWorldSaveData);
+        SlugBaseSaveData miscProgressionSave = SaveDataExtension.GetSlugBaseData(self.rainWorld.progression.miscProgressionData);
+        if (Plugin.FirstStoryGraffitisDone(miscWorldSave))
+        {
+            miscProgressionSave.Set("VinkiEndingID", Enums.EndingID.QuestCompleteOE);
+            self.manager.nextSlideshow = Enums.SlideShowID.VinkiOEEnd;
+        }
+        else
+        {
+            miscProgressionSave.Set("VinkiEndingID", Enums.EndingID.QuestIncompleteOE);
+            self.manager.nextSlideshow = Enums.SlideShowID.VinkiOEEnd;
+        }
+
         self.manager.musicPlayer?.FadeOutAllSongs(20f);
-        if (self.Players[0].realizedCreature != null && (self.Players[0].realizedCreature as Player).redsIllness != null)
-        {
-            (self.Players[0].realizedCreature as Player).redsIllness.fadeOutSlow = true;
-        }
-        if (self.GetStorySession.saveState.saveStateNumber == SlugcatStats.Name.Red)
-        {
-            self.GetStorySession.saveState.deathPersistentSaveData.redsDeath = true;
-            if (ModManager.CoopAvailable)
-            {
-                int num = 0;
-                using (IEnumerator<Player> enumerator = self.Players.Select((AbstractCreature x) => x.realizedCreature as Player).GetEnumerator())
-                {
-                    while (enumerator.MoveNext())
-                    {
-                        Player player = enumerator.Current;
-                        self.GetStorySession.saveState.AppendCycleToStatistics(player, self.GetStorySession, true, num);
-                        num++;
-                    }
-                    goto IL_15D;
-                }
-            }
-            self.GetStorySession.saveState.AppendCycleToStatistics(self.Players[0].realizedCreature as Player, self.GetStorySession, true, 0);
-        }
-    IL_15D:
         self.manager.rainWorld.progression.SaveWorldStateAndProgression(false);
 
         self.manager.statsAfterCredits = true;
-        self.manager.nextSlideshow = Enums.SlideShowID.VinkiAltEnd;
         self.manager.RequestMainProcessSwitch(ProcessManager.ProcessID.SlideShow);
+    }
+
+    private static void RainWorldGame_BeatGameMode(On.RainWorldGame.orig_BeatGameMode orig, RainWorldGame game, bool standardVoidSea)
+    {
+        if (standardVoidSea || game.StoryCharacter != Enums.vinki)
+        {
+            orig(game, standardVoidSea);
+            return;
+        }
+
+        string newSpawnRoom = "";
+        SlugBaseSaveData miscProgressionSave = SaveDataExtension.GetSlugBaseData(game.rainWorld.progression.miscProgressionData);
+        if (miscProgressionSave.TryGet("VinkiEndingID", out int vinkiEndingID))
+        {
+            switch (vinkiEndingID)
+            {
+                case Enums.EndingID.QuestIncompleteOE:
+                case Enums.EndingID.QuestCompleteOE:
+                    newSpawnRoom = "OE_SEXTRA";
+                    break;
+            }
+            game.GetStorySession.saveState.deathPersistentSaveData.altEnding = true;
+            game.GetStorySession.saveState.deathPersistentSaveData.ascended = false;
+            game.GetStorySession.saveState.deathPersistentSaveData.karma = game.GetStorySession.saveState.deathPersistentSaveData.karmaCap;
+        }
+
+        if (newSpawnRoom != "")
+        {
+            AbstractCreature abstractCreature2 = game.FirstAlivePlayer;
+            abstractCreature2 ??= game.FirstAnyPlayer;
+            SaveState.forcedEndRoomToAllowwSave = abstractCreature2.Room.name;
+            game.GetStorySession.saveState.BringUpToDate(game);
+            SaveState.forcedEndRoomToAllowwSave = "";
+        }
+        game.AppendCycleToStatisticsForPlayers();
+        if (newSpawnRoom == "")
+        {
+            game.GetStorySession.saveState.progression.SaveWorldStateAndProgression(false);
+            return;
+        }
+        RainWorldGame.ForceSaveNewDenLocation(game, newSpawnRoom, false);
     }
 }
