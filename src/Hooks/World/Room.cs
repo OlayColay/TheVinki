@@ -254,7 +254,7 @@ public static partial class Hooks
             return;
         }
 
-        if (self.room.game.GetStorySession.saveStateNumber != Enums.vinki)
+        if (self.room.game.StoryCharacter != Enums.vinki)
         {
             orig(self, eu);
             return;
@@ -386,7 +386,52 @@ public static partial class Hooks
     {
         orig(self, eu);
 
-        if (self.foundPlayer != null && !self.spawnedNPCs && self.room.game.GetStorySession.saveStateNumber == Enums.vinki && self.foundPlayer.firstChunk.pos.x < 4000f)
+        if (self.room.game.StoryCharacter != Enums.vinki)
+        {
+            return;
+        }
+
+        bool flag = false;
+        Player player = null;
+        float num = 0f;
+        for (int i = 0; i < self.room.game.Players.Count; i++)
+        {
+            Player player2 = null;
+            if (self.room.game.Players[i].realizedCreature != null && self.room.game.Players[i].realizedCreature.room == self.room && !self.room.game.Players[i].realizedCreature.dead)
+            {
+                player2 = (self.room.game.Players[i].realizedCreature as Player);
+            }
+            if (player2 != null)
+            {
+                if (player2.firstChunk.pos.x < 4000f)
+                {
+                    flag = true;
+                    if (player2.controller == null)
+                    {
+                        if (!self.room.game.cameras[0].InCutscene)
+                        {
+                            self.room.game.cameras[0].EnterCutsceneMode(player2.abstractCreature, RoomCamera.CameraCutsceneType.EndingOE);
+                            RWCustom.Custom.Log(
+                            [
+                                "Cutscene triggered"
+                            ]);
+                        }
+                        RainWorld.lockGameTimer = true;
+                        player2.controller = new MSCRoomSpecificScript.OE_GourmandEnding.EndingController(self, player2, i);
+                    }
+                }
+                if (player == null || player2.mainBodyChunk.pos.x < num)
+                {
+                    player = player2;
+                    num = player2.mainBodyChunk.pos.x;
+                }
+            }
+        }
+        if (flag && player != null && self.room.game.cameras[0].InCutscene && self.room.game.cameras[0].cutscenePlayer != player.abstractCreature)
+        {
+            self.room.game.cameras[0].EnterCutsceneMode(player.abstractCreature, RoomCamera.CameraCutsceneType.EndingOE);
+        }
+        if (!self.spawnedNPCs && flag)
         {
             for (int i = 0; i < 8; i++)
             {

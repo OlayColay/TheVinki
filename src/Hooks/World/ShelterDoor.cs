@@ -20,7 +20,7 @@ namespace Vinki
 
         private static void ShelterDoor_Close(On.ShelterDoor.orig_Close orig, ShelterDoor self)
         {
-            if (self.IsClosing || self.room.PlayersInRoom.Count < 1 || self.room.game.GetStorySession.saveStateNumber != Enums.vinki)
+            if (self.IsClosing || self.room.PlayersInRoom.Count < 1 || self.room.game.StoryCharacter != Enums.vinki)
             {
                 orig(self);
                 return;

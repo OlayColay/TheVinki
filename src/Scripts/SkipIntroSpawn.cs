@@ -14,7 +14,7 @@ public class SkipIntroSpawn : UpdatableAndDeletable
     public override void Update(bool eu)
     {
         base.Update(eu);
-        if (this.room.game.GetStorySession.saveStateNumber != Enums.vinki)
+        if (this.room.game.StoryCharacter != Enums.vinki)
         {
             return;
         }

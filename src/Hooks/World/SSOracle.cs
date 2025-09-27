@@ -215,7 +215,7 @@ namespace Vinki
         {
             orig(self, eu);
 
-            if (self.oracle.ID != MoreSlugcatsEnums.OracleID.DM || self.oracle.room.game.GetStorySession.saveStateNumber != Enums.vinki)
+            if (self.oracle.ID != MoreSlugcatsEnums.OracleID.DM || self.oracle.room.game.StoryCharacter != Enums.vinki)
             {
                 return;
             }
@@ -460,7 +460,7 @@ namespace Vinki
         {
             orig(self);
 
-            if (self.action != Action.ThrowOut_ThrowOut || self.oracle.room.game.GetStorySession.saveStateNumber != Enums.vinki || !self.oracle.room.game.GetStorySession.saveState.hasRobo)
+            if (self.action != Action.ThrowOut_ThrowOut || self.oracle.room.game.StoryCharacter != Enums.vinki || !self.oracle.room.game.GetStorySession.saveState.hasRobo)
             {
                 return;
             }
