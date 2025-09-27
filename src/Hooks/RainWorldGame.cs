@@ -32,7 +32,7 @@ public static partial class Hooks
             RainWorld_PostModsInit((_) => { }, self.rainWorld);
         }
 
-        if (self.IsStorySession && self.GetStorySession.saveStateNumber == Enums.vinki)
+        if (self.IsStorySession && self.StoryCharacter == Enums.vinki)
         {
             SlugBaseSaveData miscWorldSave = SaveDataExtension.GetSlugBaseData(self.GetStorySession.saveState.miscWorldSaveData);
             miscWorldSave.Set("AutoOpenMap", false);

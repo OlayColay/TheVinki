@@ -161,7 +161,7 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
         float num = Mathf.Lerp(lastGlitch, glitch, timeStacker);
         float num2 = Mathf.Lerp(lastExpand, expand, timeStacker);
         float num3 = Mathf.Lerp(lastPower, power, timeStacker);
-        if (room != null && rCam.room.game.GetStorySession.saveStateNumber != Enums.vinki)
+        if (room != null && rCam.room.game.StoryCharacter != Enums.vinki)
         {
             num = Mathf.Lerp(num, 1f, Random.value);
             num3 *= 0.3f + 0.7f * Random.value;
