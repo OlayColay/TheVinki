@@ -35,7 +35,7 @@ public static partial class Hooks
 
         try
         {
-            //IL.Menu.SlugcatSelectMenu.StartGame += SlugcatSelectMenu_StartGame;
+            IL.Menu.SlugcatSelectMenu.StartGame += SlugcatSelectMenu_StartGame;
         }
         catch (Exception ex)
         {
