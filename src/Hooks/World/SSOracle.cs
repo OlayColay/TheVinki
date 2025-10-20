@@ -558,7 +558,7 @@ namespace Vinki
                         var grasp = player.grasps?.FirstOrDefault(g => g?.grabbed is SprayCan);
                         if (VinkiConfig.CatPebbles.Value && grasp != null && (grasp.grabbed as SprayCan).TryUse())
                         {
-                            _ = SprayGraffiti(player, 4, 1, 1f);
+                            _ = SprayGraffiti(player, 1);
                         }
                         if (intro != null)
                         {

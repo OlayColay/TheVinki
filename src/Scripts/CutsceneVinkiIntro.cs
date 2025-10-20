@@ -182,7 +182,7 @@ namespace Vinki
                     }
                     // Trigger the cutscene
                     Hooks.TriggerSSOracleScene();
-                    _ = Hooks.SprayGraffiti(Plr, 20, 0, 0.5f);
+                    _ = Hooks.SprayGraffiti(Plr, 0);
                 }
 				num2 += array2[6];
 				if (cutsceneTimer >= num2)

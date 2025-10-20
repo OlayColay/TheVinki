@@ -16,7 +16,7 @@ namespace Vinki
 {
     public static partial class Hooks
     {
-        public static async Task SprayGraffiti(Player self, int smokes = 10, int gNum = -1, float alphaPerSmoke = 0.3f)
+        public static async Task SprayGraffiti(Player self, int gNum = -1)
         {
             string slugcat = graffitis.ContainsKey(self.slugcatStats.name.value.ToLowerInvariant()) ? self.slugcatStats.name.value.ToLowerInvariant() : SlugcatStats.Name.White.value.ToLowerInvariant();
             if (gNum < 0)
@@ -84,17 +84,21 @@ namespace Vinki
                 SprayNearIterator(isMoon, SaveDataExtension.GetSlugBaseData(self.room.game.GetStorySession.saveState.miscWorldSaveData), graffitis[slugcat][gNum].imageName);
             }
 
-            Vector2 sprayPos = (slugcat == "Story" && storyGraffitiRoomPositions.ContainsKey(gNum)) ? storyGraffitiRoomPositions[gNum].Value : self.mainBodyChunk.pos;
+            bool hasStoryParams = slugcat == "Story" && storyGraffitiParameters.ContainsKey(gNum);
+            Vector2 sprayPos = hasStoryParams ? storyGraffitiParameters[gNum].position : self.mainBodyChunk.pos;
             Room room = self.room;
 
             room.PlaySound(SoundID.Vulture_Jet_LOOP, self.mainBodyChunk, false, 1f, 2f);
 
+            float alphaPerSmoke = hasStoryParams ? storyGraffitiParameters[gNum].alphaPerSmoke : 0.3f;
             for (int j = 0; j < 4; j++)
             {
                 graffitis[slugcat][gNum].vertices[j, 0] = alphaPerSmoke;
             }
 
-            for (int i = 0; i < smokes; i++)
+            int numSmokes = hasStoryParams ? storyGraffitiParameters[gNum].numSmokes : 10;
+            int replacesGNum = hasStoryParams ? storyGraffitiParameters[gNum].replacesGNum : -1;
+            for (int i = 0; i < numSmokes; i++)
             {
                 PlacedObject graffiti = new(PlacedObject.Type.CustomDecal, graffitis[slugcat][gNum])
                 {
@@ -115,6 +119,21 @@ namespace Vinki
 
                 await Task.Delay(100);
                 room.AddObject(new GraffitiObject(graffiti, room.game.GetStorySession?.saveState, gNum, room.abstractRoom.name, slugcat == "Story"));
+
+                // Remove a layer of a graffiti if this story graffiti is replacing it
+                if (replacesGNum >= 0)
+                {
+                    GraffitiObject removedLayer = room.updateList.OfType<GraffitiObject>().FirstOrDefault(graffiti => graffiti.serializableGraffiti.gNum == replacesGNum);
+                    if (removedLayer != default(GraffitiObject))
+                    {
+                        VLogger.LogInfo("Removing layer of " + graffitis["Story"][removedLayer.serializableGraffiti.gNum].imageName);
+                        room.RemoveObject(removedLayer);
+                    }
+                    else
+                    {
+                        VLogger.LogError("Could not find layer of " + graffitis["Story"][removedLayer.serializableGraffiti.gNum].imageName + " to replace!");
+                    }
+                }
             }
         }
 
@@ -893,7 +912,7 @@ namespace Vinki
 
         private static void SprayGraffitiInGame(Player self)
         {
-            var storyGraffitisInRoom = storyGraffitiRoomPositions.Where(e => e.Value.Key == self.room.abstractRoom.name);
+            var storyGraffitisInRoom = storyGraffitiParameters.Where(e => e.Value.room == self.room.abstractRoom.name);
             bool storyGraffitisExist = false;
             bool hologramsExist = false;
             int gNum = -1;
@@ -912,14 +931,14 @@ namespace Vinki
                     if (graf != null && (!storyGraffitisExist || !sprayedGNums.Contains(storyGraffiti.Key)) && hologramsExist)
                     {
                         Vector2 grafRadius = graf.handles[1] / 2f;
-                        Vector2 grafPos = storyGraffiti.Value.Value;
+                        Vector2 grafPos = storyGraffiti.Value.position;
                         if (self.mainBodyChunk.pos.x >= grafPos.x - grafRadius.x && self.mainBodyChunk.pos.x <= grafPos.x + grafRadius.x &&
                             self.mainBodyChunk.pos.y >= grafPos.y - grafRadius.y && self.mainBodyChunk.pos.y <= grafPos.y + grafRadius.y)
                         {
                             gNum = storyGraffiti.Key;
 
                             // Progress story graffiti tutorial if it's the right room
-                            if (storyGraffiti.Value.Key == "SS_D08")
+                            if (storyGraffiti.Value.room == "SS_D08")
                             { 
                                 miscWorldSave.Set("StoryGraffitiTutorialPhase", (int)StoryGraffitiTutorial.Phase.Explore);
                             }

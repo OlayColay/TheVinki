@@ -164,7 +164,7 @@ namespace Vinki
         {
             graffitiOffsets.Clear();
             graffitis.Clear();
-            storyGraffitiRoomPositions.Clear();
+            storyGraffitiParameters.Clear();
 
             foreach (string scugGraffitiFolder in graffitiFolders)
             {
@@ -181,7 +181,7 @@ namespace Vinki
             //}
         }
 
-        private static void AddGraffiti(string image, string slugcat, KeyValuePair<string, Vector2>? storyGraffitiRoomPos = null, bool spawnInFutureCampaigns = false)
+        private static void AddGraffiti(string image, string slugcat, StoryGraffitiParams storyGraffitiParams = null)
         {
             string imageName = Path.GetFileNameWithoutExtension(image);
 
@@ -205,7 +205,7 @@ namespace Vinki
             }
 
             string filePath;
-            if (storyGraffitiRoomPos.HasValue)
+            if (storyGraffitiParams != null)
             {
                 filePath = AssetManager.ResolveFilePath(storyGraffitiFolder + '/' + Path.GetFileNameWithoutExtension(image) + ".png");
                 // If the image name can't be found, then it should just be in the normal decals folder
@@ -218,9 +218,9 @@ namespace Vinki
                     filePath = AssetManager.ResolveFilePath("decals/" + Path.GetFileNameWithoutExtension(image) + ".png");
                     decal.imageName = Path.GetFileNameWithoutExtension(image);
                 }
-                storyGraffitiRoomPositions.Add(graffitis["Story"].Count, storyGraffitiRoomPos.Value);
+                storyGraffitiParameters.Add(graffitis["Story"].Count, storyGraffitiParams);
 
-                if (!spawnInFutureCampaigns)
+                if (!storyGraffitiParams.spawnInFutureCampaigns)
                 {
                     storyGraffitiNeverSpawningInFutureCampaigns.Add(decal.imageName);
                 }
@@ -239,11 +239,13 @@ namespace Vinki
             byte[] tmpBytes = File.ReadAllBytes(filePath);
             ImageConversion.LoadImage(img, tmpBytes);
 
+            VLogger.LogInfo("Size of " + image + ": " + img.width + ", " + img.height);
+
             // Get average color of image (to use for graffiti spray/smoke color)
             graffitiAvgColors[slugcat].Add(AverageColorFromTexture(img));
 
             // Resize image to look good in game
-            if (!storyGraffitiRoomPos.HasValue)
+            if (storyGraffitiParams == null)
             {
                 int[] newSize = ResizeAndKeepAspectRatio(img.width, img.height, 150f * 150f);
                 img.Resize(newSize[0], newSize[1]);
@@ -266,8 +268,16 @@ namespace Vinki
             {
                 JsonObject obj = objective.AsObject();
                 bool useAltGraffiti = !VinkiConfig.CatPebbles.Value && obj.TryGet("nonCatmaidAltName") != null;
+                bool numSmokesExists = obj.TryGet("numSmokes") != null;
+                bool alphaPerSmokeExists = obj.TryGet("alphaPerSmoke") != null;
                 bool spawnInFutureCampaignsExists = obj.TryGet("spawnInFutureCampaigns") != null;
-                AddGraffiti(obj.GetString(useAltGraffiti ? "nonCatmaidAltName" : "name"), "Story", new(obj.GetString("room"), JsonUtils.ToVector2(obj["position"])), !spawnInFutureCampaignsExists || obj.GetBool("spawnInFutureCampaigns"));
+                bool replacesExists = obj.TryGet("replaces") != null;
+
+                StoryGraffitiParams graffitiParams = new(obj.GetString("room"), JsonUtils.ToVector2(obj["position"]),
+                    numSmokesExists ? obj.GetInt("numSmokes") : 10, alphaPerSmokeExists ? obj.GetFloat("alphaPerSmoke") : 0.3f,
+                    !spawnInFutureCampaignsExists || obj.GetBool("spawnInFutureCampaigns"), replacesExists ? obj.GetString("replaces") : "");
+
+                AddGraffiti(obj.GetString(useAltGraffiti ? "nonCatmaidAltName" : "name"), "Story", graffitiParams);
             }
         }
 

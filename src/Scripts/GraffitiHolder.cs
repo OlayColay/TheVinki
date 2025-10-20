@@ -70,10 +70,10 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
     public Color TokenColor = new(1f, 0.5f, 0f);
     public int gNum;
 
-    public GraffitiHolder(PlacedObject.CustomDecalData graffitiData, KeyValuePair<string, Vector2> graffitiPosition, Room room, int gNum)
+    public GraffitiHolder(PlacedObject.CustomDecalData graffitiData, StoryGraffitiParams graffitiParams, Room room, int gNum)
 	{
         this.room = room;
-        pos = graffitiPosition.Value;
+        pos = graffitiParams.position;
         hoverPos = pos;
         lastPos = pos;
         lines = new Vector2[4, 4];
