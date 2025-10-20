@@ -273,6 +273,7 @@ namespace Vinki
                 bool alphaPerSmokeExists = obj.TryGet("alphaPerSmoke") != null;
                 bool spawnInFutureCampaignsExists = obj.TryGet("spawnInFutureCampaigns") != null;
                 bool anchorToCenterExists = obj.TryGet("anchorToCenter") != null;
+                bool hideHologramExists = obj.TryGet("hideHologram") != null;
                 bool replacesExists = obj.TryGet("replaces") != null;
 
                 StoryGraffitiParams graffitiParams = new(
@@ -282,6 +283,7 @@ namespace Vinki
                     alphaPerSmokeExists ? obj.GetFloat("alphaPerSmoke") : 0.3f,
                     !spawnInFutureCampaignsExists || obj.GetBool("spawnInFutureCampaigns"),
                     anchorToCenterExists && obj.GetBool("anchorToCenter"),
+                    hideHologramExists && obj.GetBool("hideHologram"),
                     replacesExists ? obj.GetString("replaces") : "");
 
                 AddGraffiti(obj.GetString(useAltGraffiti ? "nonCatmaidAltName" : "name"), "Story", graffitiParams);

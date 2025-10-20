@@ -67,10 +67,13 @@ namespace Vinki
                     miscSave.Set("AutoOpenMap", true);
                 }
 
-                (self.room.drawableObjects.Find((x) => x is GraffitiHolder && (x as GraffitiHolder).gNum == gNum) as GraffitiHolder)?.RemoveFromRoom();
+                IEnumerable<GraffitiHolder> roomGraffitiHolders = self.room.drawableObjects.OfType<GraffitiHolder>();
+                roomGraffitiHolders.FirstOrDefault(x => x.gNum == gNum)?.RemoveFromRoom();
+
+                roomGraffitiHolders.FirstOrDefault(x => x.gNum == storyGraffitiParameters[gNum].enableAfterSpray)?.Enable();
 
                 // Spawn triggered creatures if there are any in this room
-                if (self.room.drawableObjects.Count((x) => x is GraffitiHolder) <= 1)
+                if (roomGraffitiHolders.Count() <= 1)
                 {
                     GraffitiCreatureSpawner.TriggerSpawns(self.room.abstractRoom);
                 }
@@ -124,7 +127,7 @@ namespace Vinki
                 if (replacesGNum >= 0)
                 {
                     GraffitiObject removedLayer = room.updateList.OfType<GraffitiObject>().FirstOrDefault(graffiti => graffiti.serializableGraffiti.gNum == replacesGNum);
-                    if (removedLayer != default(GraffitiObject))
+                    if (removedLayer != null)
                     {
                         VLogger.LogInfo("Removing layer of " + graffitis["Story"][removedLayer.serializableGraffiti.gNum].imageName);
                         room.RemoveObject(removedLayer);
@@ -928,10 +931,12 @@ namespace Vinki
                 foreach (var storyGraffiti in storyGraffitisInRoom)
                 {
                     var graf = graffitis["Story"][storyGraffiti.Key];
-                    if (graf != null && (!storyGraffitisExist || !sprayedGNums.Contains(storyGraffiti.Key)) && hologramsExist)
+                    var storyGraffitiParams = storyGraffitiParameters[storyGraffiti.Key];
+                    bool replaceeNeeded = storyGraffitiParams.replacesGNum >= 0 && !sprayedGNums.Contains(storyGraffitiParams.replacesGNum);
+                    if (graf != null && (!storyGraffitisExist || !sprayedGNums.Contains(storyGraffiti.Key)) && hologramsExist && !replaceeNeeded)
                     {
                         Vector2 grafRadius = graf.handles[1] / 2f;
-                        Vector2 grafPos = storyGraffiti.Value.position;
+                        Vector2 grafPos = storyGraffiti.Value.position + (storyGraffitiParams.anchorToCenter ? Vector2.zero : grafRadius);
                         if (self.mainBodyChunk.pos.x >= grafPos.x - grafRadius.x && self.mainBodyChunk.pos.x <= grafPos.x + grafRadius.x &&
                             self.mainBodyChunk.pos.y >= grafPos.y - grafRadius.y && self.mainBodyChunk.pos.y <= grafPos.y + grafRadius.y)
                         {
@@ -953,7 +958,7 @@ namespace Vinki
             bool hasCan = grasp != null && (grasp.grabbed as SprayCan).TryUse();
             if (hasCan || !VinkiConfig.RequireCansGraffiti.Value)
             {
-                _ = SprayGraffiti(self, gNum: gNum);
+                _ = SprayGraffiti(self, gNum);
 
                 if (hasCan && self.IsVinki(out VinkiPlayerData vinki))
                 {

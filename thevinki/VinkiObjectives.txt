@@ -16,7 +16,8 @@
         "numSmokes": 4,
         "alphaPerSmoke": 1.0,
         "spawnInFutureCampaigns": false,
-        "anchorToCenter": true
+        "anchorToCenter": true,
+        "hideHologram": true
     },
     {
         "name": "Caterators",

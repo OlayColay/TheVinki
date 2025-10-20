@@ -44,6 +44,8 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
         }
     }
 
+    private bool enabled = true;
+
     public bool sprayable = true;
     public Vector2 hoverPos;
     public Vector2 pos;
@@ -111,6 +113,11 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
         glitchLoop = new StaticSoundLoop(SoundID.Token_Upset_LOOP, pos, room, 0f, 1f);
 
         this.gNum = gNum;
+
+        if (graffitiParams.replacesGNum >= 0)
+        {
+            Disable();
+        }
     }
 
     public void AddToContainer(RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, FContainer newContatiner)
@@ -162,6 +169,11 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
 
     public void DrawSprites(RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, float timeStacker, Vector2 camPos)
     {
+        if (!enabled)
+        {
+            return;
+        }
+
         Vector2 vector = Vector2.Lerp(lastPos, pos, timeStacker);
         float num = Mathf.Lerp(lastGlitch, glitch, timeStacker);
         float num2 = Mathf.Lerp(lastExpand, expand, timeStacker);
@@ -268,6 +280,11 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
         {
             Destroy();
         }
+        else if (!enabled)
+        {
+            return;
+        }
+
         sinCounter += Random.value * power;
         sinCounter2 += (1f + Mathf.Lerp(-10f, 10f, Random.value) * glitch) * power;
         float num = Mathf.Sin(sinCounter2 / 20f);
@@ -420,5 +437,15 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
             return Color.Lerp(TokenColor, new Color(1f, 1f, 1f), 0.4f + 0.4f * Mathf.Max(contract ? 0.5f : (expand * 0.5f), Mathf.Pow(g, 0.5f)));
         }
         return Color.Lerp(TokenColor, new Color(1f, 1f, 1f), Mathf.Pow(Mathf.InverseLerp(0.5f, 1f, g), 0.5f));
+    }
+
+    public void Enable()
+    {
+        enabled = true;
+    }
+
+    public void Disable()
+    {
+        enabled = false;
     }
 }

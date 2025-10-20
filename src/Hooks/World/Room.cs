@@ -162,7 +162,8 @@ public static partial class Hooks
         {
             foreach (var storyGraffiti in storyGraffitisInRoom)
             {
-                if ((!storyGraffitisHaveBeenSprayed || !sprayedGNums.Contains(storyGraffiti.Key)) && storyGraffiti.Key != 1)
+                if ((!storyGraffitisHaveBeenSprayed || !sprayedGNums.Contains(storyGraffiti.Key)) && 
+                    !Plugin.storyGraffitiParameters[storyGraffiti.Key].hideHologram)
                 {
                     GraffitiHolder graffitiHolder = new(Plugin.graffitis["Story"][storyGraffiti.Key], storyGraffiti.Value, self, storyGraffiti.Key);
                     self.AddObject(graffitiHolder);
