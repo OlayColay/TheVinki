@@ -10,6 +10,8 @@ public class StoryGraffitiParams
 	public Vector2 position = Vector2.zero;
     /// <summary> Number of circular smoke effects to show before graffiti completes. Higher number means longer time to complete </summary>
 	public int numSmokes = 10;
+    /// <summary> Size of each smoke effect </summary>
+    public float smokeSize = 2f;
     /// <summary> Opacity added to graffiti per smoke effect. Note that 1f isn't actually fully opaque in this case </summary>
 	public float alphaPerSmoke = 0.3f;
     /// <summary> After spraying this graffiti as Vinki, show the design in campaigns that take place later in the timeline </summary>
@@ -26,11 +28,13 @@ public class StoryGraffitiParams
 	public int replacesGNum = -1;
     public int enableAfterSpray = -1;
 
-    public StoryGraffitiParams(string room, Vector2 position, int numSmokes, float alphaPerSmoke, bool spawnInFutureCampaigns, bool anchorToCenter, bool hideHologram, string replaces)
+    public StoryGraffitiParams(string room, Vector2 position, int numSmokes, float smokeSize, float alphaPerSmoke,
+        bool spawnInFutureCampaigns, bool anchorToCenter, bool hideHologram, string replaces)
 	{
         this.room = room;
         this.position = position;
         this.numSmokes = numSmokes;
+        this.smokeSize = smokeSize;
         this.alphaPerSmoke = alphaPerSmoke;
         this.spawnInFutureCampaigns = spawnInFutureCampaigns;
         this.anchorToCenter = anchorToCenter;

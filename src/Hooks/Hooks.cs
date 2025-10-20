@@ -270,6 +270,7 @@ namespace Vinki
                 JsonObject obj = objective.AsObject();
                 bool useAltGraffiti = !VinkiConfig.CatPebbles.Value && obj.TryGet("nonCatmaidAltName") != null;
                 bool numSmokesExists = obj.TryGet("numSmokes") != null;
+                bool smokeSizeExists = obj.TryGet("smokeSize") != null;
                 bool alphaPerSmokeExists = obj.TryGet("alphaPerSmoke") != null;
                 bool spawnInFutureCampaignsExists = obj.TryGet("spawnInFutureCampaigns") != null;
                 bool anchorToCenterExists = obj.TryGet("anchorToCenter") != null;
@@ -280,6 +281,7 @@ namespace Vinki
                     obj.GetString("room"),
                     JsonUtils.ToVector2(obj["position"]),
                     numSmokesExists ? obj.GetInt("numSmokes") : 10,
+                    smokeSizeExists ? obj.GetFloat("smokeSize") : 2f,
                     alphaPerSmokeExists ? obj.GetFloat("alphaPerSmoke") : 0.3f,
                     !spawnInFutureCampaignsExists || obj.GetBool("spawnInFutureCampaigns"),
                     anchorToCenterExists && obj.GetBool("anchorToCenter"),

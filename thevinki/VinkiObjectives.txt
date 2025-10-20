@@ -23,6 +23,7 @@
         "name": "Caterators",
         "room": "SS_D08",
         "position": [ 300, 250 ],
+        "smokeSize": 3.0,
         "nonCatmaidAltName": "Tutorial Alt",
         "spawnInFutureCampaigns": false,
         "anchorToCenter": true
@@ -31,6 +32,9 @@
         "name": "True Victory",
         "room": "DM_AI",
         "position": [ 490, 350 ],
+        "numSmokes": 20,
+        "smokeSize": 4.0,
+        "alphaPerSmoke": 0.3,
         "spawnInFutureCampaigns": false,
         "anchorToCenter": true
     },
@@ -68,26 +72,32 @@
         "name": "Qu1a",
         "room": "LF_J01",
         "position": [ 478, 126 ],
+        "smokeSize": 4.0,
         "alphaPerSmoke": 0.5
     },
     {
         "name": "Qu1b",
         "room": "LF_J01",
         "position": [ 382, 117 ],
-        "alphaPerSmoke": 0.5,
+        "numSmokes": 15,
+        "smokeSize": 4.0,
+        "alphaPerSmoke": 0.4,
         "replaces": "Qu1a"
     },
     {
         "name": "Qu1c",
         "room": "LF_J01",
         "position": [ 206, 98 ],
-        "alphaPerSmoke": 0.5,
+        "numSmokes": 20,
+        "smokeSize": 4.0,
+        "alphaPerSmoke": 0.3,
         "replaces": "Qu1b"
     },
     {
         "name": "Qu1d",
         "room": "LF_J01",
         "position": [ 2554, 450 ],
+        "smokeSize": 3.0,
         "alphaPerSmoke": 0.7,
         "anchorToCenter": true
     },

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using Menu;
 using MonoMod.Cil;
 using Mono.Cecil.Cil;
+using System.Xml.Schema;
 
 namespace Vinki
 {
@@ -88,9 +89,22 @@ namespace Vinki
             }
 
             bool hasStoryParams = slugcat == "Story" && storyGraffitiParameters.ContainsKey(gNum);
-            Vector2 sprayPos = hasStoryParams ? storyGraffitiParameters[gNum].position : self.mainBodyChunk.pos;
-            Room room = self.room;
+            Vector2 sprayPos;
+            if (hasStoryParams)
+            {
+                sprayPos = storyGraffitiParameters[gNum].position;
+                // If anchored to bottom-left, adjust sprayPos to be center of graffiti
+                if (!storyGraffitiParameters[gNum].anchorToCenter)
+                {
+                    sprayPos += graffitiRadii["Story"][gNum];
+                }
+            }
+            else
+            {
+                sprayPos = self.mainBodyChunk.pos;
+            }
 
+                Room room = self.room;
             room.PlaySound(SoundID.Vulture_Jet_LOOP, self.mainBodyChunk, false, 1f, 2f);
 
             float alphaPerSmoke = hasStoryParams ? storyGraffitiParameters[gNum].alphaPerSmoke : 0.3f;
@@ -101,17 +115,19 @@ namespace Vinki
 
             int numSmokes = hasStoryParams ? storyGraffitiParameters[gNum].numSmokes : 10;
             int replacesGNum = hasStoryParams ? storyGraffitiParameters[gNum].replacesGNum : -1;
+            float smokeSize = hasStoryParams ? storyGraffitiParameters[gNum].smokeSize : 2f;
             for (int i = 0; i < numSmokes; i++)
             {
                 PlacedObject graffiti = new(PlacedObject.Type.CustomDecal, graffitis[slugcat][gNum])
                 {
-                    pos = sprayPos - ((hasStoryParams && !storyGraffitiParameters[gNum].anchorToCenter) ? Vector2.zero : graffitiRadii[slugcat][gNum])
+                    pos = sprayPos - graffitiRadii[slugcat][gNum]
                 };
 
+                Vector2 shrunkRadius = graffitiRadii[slugcat][gNum] * 0.75f;
                 Vector2 smokePos = new(
-                    sprayPos.x + UnityEngine.Random.Range(-graffitiRadii[slugcat][gNum].x, graffitiRadii[slugcat][gNum].x),
-                    sprayPos.y + UnityEngine.Random.Range(-graffitiRadii[slugcat][gNum].y, graffitiRadii[slugcat][gNum].y));
-                var smoke = new Explosion.ExplosionSmoke(smokePos, Vector2.zero, 2f)
+                    sprayPos.x + UnityEngine.Random.Range(-shrunkRadius.x, shrunkRadius.x),
+                    sprayPos.y + UnityEngine.Random.Range(-shrunkRadius.y, shrunkRadius.y));
+                var smoke = new Explosion.ExplosionSmoke(smokePos, Vector2.zero, smokeSize)
                 {
                     lifeTime = 15f,
                     life = 2f
