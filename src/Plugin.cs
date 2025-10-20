@@ -28,7 +28,7 @@ namespace Vinki
         public static int[] storyGraffitisOnMap = [];
         public static Texture2D TailTexture;
         public static Dictionary<string, List<PlacedObject.CustomDecalData>> graffitis = [];
-        public static Dictionary<string, List<Vector2>> graffitiOffsets = [];
+        public static Dictionary<string, List<Vector2>> graffitiRadii = [];
         public static Dictionary<string, List<Color>> graffitiAvgColors = [];
         public static List<string> shelterItems = [];
         public static Dictionary<int, StoryGraffitiParams> storyGraffitiParameters = [];

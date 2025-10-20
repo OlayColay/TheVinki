@@ -10,28 +10,35 @@ public class StoryGraffitiParams
 	public float alphaPerSmoke = 0.3f;
 	public bool spawnInFutureCampaigns = true;
     public string replaces = "";
+    public bool anchorToCenter = false;
+
 	public int replacesGNum = -1;
 
-    public StoryGraffitiParams(string room, Vector2 position, int numSmokes, float alphaPerSmoke, bool spawnInFutureCampaigns, string replaces)
+    public StoryGraffitiParams(string room, Vector2 position, int numSmokes, float alphaPerSmoke, bool spawnInFutureCampaigns, bool anchorToCenter, string replaces)
 	{
         this.room = room;
         this.position = position;
         this.numSmokes = numSmokes;
         this.alphaPerSmoke = alphaPerSmoke;
         this.spawnInFutureCampaigns = spawnInFutureCampaigns;
+        this.anchorToCenter = anchorToCenter;
 
         if (replaces != "" && Plugin.graffitis.ContainsKey("Story"))
         {
             this.replaces = replaces;
-            this.replacesGNum = Plugin.graffitis["Story"].FindIndex(graffiti =>
-            {
-                if (graffiti.imageName.EndsWith(replaces)) 
-                { 
-                    Plugin.VLogger.LogInfo("Setting " + graffiti.imageName + " as replacement");
-                    return true;
-                }
-                return false;
-            });
+            this.replacesGNum = Plugin.graffitis["Story"].FindIndex(graffiti => graffiti.imageName.EndsWith(replaces));
         }
+
+        Plugin.VLogger.LogInfo("Adding story graffiti with parameters: " + string.Join(", ",
+        [
+            this.room,
+            this.position.ToString(),
+            this.numSmokes,
+            this.alphaPerSmoke,
+            this.spawnInFutureCampaigns,
+            this.anchorToCenter,
+            this.replaces,
+            this.replacesGNum
+        ]));
     }
 }

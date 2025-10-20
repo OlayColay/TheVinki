@@ -162,7 +162,7 @@ namespace Vinki
 
         public static void LoadGraffiti()
         {
-            graffitiOffsets.Clear();
+            graffitiRadii.Clear();
             graffitis.Clear();
             storyGraffitiParameters.Clear();
 
@@ -199,7 +199,7 @@ namespace Vinki
 
             if (!graffitis.ContainsKey(slugcat))
             {
-                graffitiOffsets[slugcat] = [];
+                graffitiRadii[slugcat] = [];
                 graffitis[slugcat] = [];
                 graffitiAvgColors[slugcat] = [];
             }
@@ -239,7 +239,7 @@ namespace Vinki
             byte[] tmpBytes = File.ReadAllBytes(filePath);
             ImageConversion.LoadImage(img, tmpBytes);
 
-            VLogger.LogInfo("Size of " + image + ": " + img.width + ", " + img.height);
+            //VLogger.LogInfo("Size of " + image + ": " + img.width + ", " + img.height);
 
             // Get average color of image (to use for graffiti spray/smoke color)
             graffitiAvgColors[slugcat].Add(AverageColorFromTexture(img));
@@ -251,13 +251,14 @@ namespace Vinki
                 img.Resize(newSize[0], newSize[1]);
             }
 
+            // The handles are like the corners on the DevTools interface for CustomDecals. Here we want the handles to match the img's size
             decal.handles[0] = new Vector2(0f, img.height);
             decal.handles[1] = new Vector2(img.width, img.height);
             decal.handles[2] = new Vector2(img.width, 0f);
 
             float halfWidth = img.width / 2f;
             float halfHeight = img.height / 2f;
-            graffitiOffsets[slugcat].Add(new Vector2(-halfWidth, -halfHeight));
+            graffitiRadii[slugcat].Add(new Vector2(halfWidth, halfHeight));
             graffitis[slugcat].Add(decal);
         }
 
@@ -271,11 +272,17 @@ namespace Vinki
                 bool numSmokesExists = obj.TryGet("numSmokes") != null;
                 bool alphaPerSmokeExists = obj.TryGet("alphaPerSmoke") != null;
                 bool spawnInFutureCampaignsExists = obj.TryGet("spawnInFutureCampaigns") != null;
+                bool anchorToCenterExists = obj.TryGet("anchorToCenter") != null;
                 bool replacesExists = obj.TryGet("replaces") != null;
 
-                StoryGraffitiParams graffitiParams = new(obj.GetString("room"), JsonUtils.ToVector2(obj["position"]),
-                    numSmokesExists ? obj.GetInt("numSmokes") : 10, alphaPerSmokeExists ? obj.GetFloat("alphaPerSmoke") : 0.3f,
-                    !spawnInFutureCampaignsExists || obj.GetBool("spawnInFutureCampaigns"), replacesExists ? obj.GetString("replaces") : "");
+                StoryGraffitiParams graffitiParams = new(
+                    obj.GetString("room"),
+                    JsonUtils.ToVector2(obj["position"]),
+                    numSmokesExists ? obj.GetInt("numSmokes") : 10,
+                    alphaPerSmokeExists ? obj.GetFloat("alphaPerSmoke") : 0.3f,
+                    !spawnInFutureCampaignsExists || obj.GetBool("spawnInFutureCampaigns"),
+                    anchorToCenterExists && obj.GetBool("anchorToCenter"),
+                    replacesExists ? obj.GetString("replaces") : "");
 
                 AddGraffiti(obj.GetString(useAltGraffiti ? "nonCatmaidAltName" : "name"), "Story", graffitiParams);
             }

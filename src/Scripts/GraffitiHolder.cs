@@ -74,6 +74,11 @@ public class GraffitiHolder : UpdatableAndDeletable, IDrawable
 	{
         this.room = room;
         pos = graffitiParams.position;
+        if (!graffitiParams.anchorToCenter)
+        {
+            pos += graffitiData.handles[1] / 2f;
+        }
+
         hoverPos = pos;
         lastPos = pos;
         lines = new Vector2[4, 4];

@@ -209,7 +209,7 @@ public static partial class Hooks
 
         float halfWidth = img.width / 2f;
         float halfHeight = img.height / 2f;
-        Plugin.graffitiOffsets["vinki"].Add(new Vector2(-halfWidth, -halfHeight));
+        Plugin.graffitiRadii["vinki"].Add(new Vector2(halfWidth, halfHeight));
         Plugin.graffitis["vinki"].Add(decal);
     }
 }

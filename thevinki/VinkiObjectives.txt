@@ -6,7 +6,8 @@
         "nonCatmaidAltName": "5P Alt",
         "numSmokes": 20,
         "alphaPerSmoke": 0.5,
-        "spawnInFutureCampaigns": false
+        "spawnInFutureCampaigns": false,
+        "anchorToCenter": true
     },
     {
         "name": "5P_stretched",
@@ -14,20 +15,23 @@
         "position": [ 520, 400 ],
         "numSmokes": 4,
         "alphaPerSmoke": 1.0,
-        "spawnInFutureCampaigns": false
+        "spawnInFutureCampaigns": false,
+        "anchorToCenter": true
     },
     {
         "name": "Caterators",
         "room": "SS_D08",
         "position": [ 300, 250 ],
         "nonCatmaidAltName": "Tutorial Alt",
-        "spawnInFutureCampaigns": false
+        "spawnInFutureCampaigns": false,
+        "anchorToCenter": true
     },
     {
         "name": "True Victory",
         "room": "DM_AI",
         "position": [ 490, 350 ],
-        "spawnInFutureCampaigns": false
+        "spawnInFutureCampaigns": false,
+        "anchorToCenter": true
     },
     {
         "name": "4",
@@ -62,28 +66,29 @@
     {
         "name": "Qu1a",
         "room": "LF_J01",
-        "position": [ 804, 430 ],
-        "alphaPerSmoke": 0.5,
+        "position": [ 478, 126 ],
+        "alphaPerSmoke": 0.5
     },
     {
         "name": "Qu1b",
         "room": "LF_J01",
-        "position": [ 804, 430 ],
+        "position": [ 382, 117 ],
         "alphaPerSmoke": 0.5,
-        "replaces": "Qu1a",
+        "replaces": "Qu1a"
     },
     {
         "name": "Qu1c",
         "room": "LF_J01",
-        "position": [ 804, 430 ],
+        "position": [ 206, 98 ],
         "alphaPerSmoke": 0.5,
-        "replaces": "Qu1b",
+        "replaces": "Qu1b"
     },
     {
         "name": "Qu1d",
         "room": "LF_J01",
         "position": [ 2554, 450 ],
         "alphaPerSmoke": 0.7,
+        "anchorToCenter": true
     },
     {
         "name": "10",

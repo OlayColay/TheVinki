@@ -102,12 +102,12 @@ namespace Vinki
             {
                 PlacedObject graffiti = new(PlacedObject.Type.CustomDecal, graffitis[slugcat][gNum])
                 {
-                    pos = sprayPos + graffitiOffsets[slugcat][gNum]
+                    pos = sprayPos - ((hasStoryParams && !storyGraffitiParameters[gNum].anchorToCenter) ? Vector2.zero : graffitiRadii[slugcat][gNum])
                 };
 
                 Vector2 smokePos = new(
-                    sprayPos.x + UnityEngine.Random.Range(graffitiOffsets[slugcat][gNum].x, -graffitiOffsets[slugcat][gNum].x),
-                    sprayPos.y + UnityEngine.Random.Range(graffitiOffsets[slugcat][gNum].y, -graffitiOffsets[slugcat][gNum].y));
+                    sprayPos.x + UnityEngine.Random.Range(-graffitiRadii[slugcat][gNum].x, graffitiRadii[slugcat][gNum].x),
+                    sprayPos.y + UnityEngine.Random.Range(-graffitiRadii[slugcat][gNum].y, graffitiRadii[slugcat][gNum].y));
                 var smoke = new Explosion.ExplosionSmoke(smokePos, Vector2.zero, 2f)
                 {
                     lifeTime = 15f,
