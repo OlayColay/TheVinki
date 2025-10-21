@@ -1,17 +1,5 @@
 [
     {
-        "name": "NA_19 - Halcyon Memories",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "BM_UW_UNDERHANG",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "RW_94 - Weathered Steps",
-        "millisecondsPerBeat": 0
-    },
-    {
         "name": "RW_1 - Urban Jungle",
         "millisecondsPerBeat": 500
     },
@@ -28,36 +16,8 @@
         "millisecondsPerBeat": 666.7
     },
     {
-        "name": "NA_16 - Drastic FM",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "NA_09 - Interest Pad",
-        "millisecondsPerBeat": 0
-    },
-    {
         "name": "RW_9 - Mud Pits",
         "millisecondsPerBeat": 582.5
-    },
-    {
-        "name": "BM_UW_WALL",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "RW_86 - The Cycle",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "NA_01 - Proxima",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "NA_33 - Else2",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "BM_DS_GATE",
-        "millisecondsPerBeat": 0
     },
     {
         "name": "RW_69 - Ancient",
@@ -68,32 +28,8 @@
         "millisecondsPerBeat": 521.7
     },
     {
-        "name": "NA_08 - Dark Sus",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "NA_29 - Flutter",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "RW_53 - Leviathan Cave",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "MOON_SIREN_MS",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "BM_SL_SHORE",
-        "millisecondsPerBeat": 0
-    },
-    {
         "name": "RW_7 - Rooftops",
         "millisecondsPerBeat": 500
-    },
-    {
-        "name": "RW_53 - Leviathan",
-        "millisecondsPerBeat": 0
     },
     {
         "name": "RW_20 - Polybius",
@@ -104,40 +40,12 @@
         "millisecondsPerBeat": 500
     },
     {
-        "name": "RW_85 - Ascent",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "NA_06 - Past Echoes",
-        "millisecondsPerBeat": 0
-    },
-    {
         "name": "RW_58 - Lantern Mice",
         "millisecondsPerBeat": 392.16
     },
     {
-        "name": "BM_HI_GATE",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "BM_SB_SUBWAY",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "RW_64 - Daze",
-        "millisecondsPerBeat": 0
-    },
-    {
         "name": "RW_19 - Stone Heads",
         "millisecondsPerBeat": 451.1
-    },
-    {
-        "name": "NA_42 - Else8",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "NA_10 - Qanda",
-        "millisecondsPerBeat": 0
     },
     {
         "name": "RW_10 - Noisy",
@@ -148,24 +56,8 @@
         "millisecondsPerBeat": 500
     },
     {
-        "name": "RW_96 - Fragments",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "RW_97 - Open Skies",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "BM_CC_CANOPY",
-        "millisecondsPerBeat": 0
-    },
-    {
         "name": "RW_45 - Deep Energy",
         "millisecondsPerBeat": 600
-    },
-    {
-        "name": "NA_20 - Crystalline",
-        "millisecondsPerBeat": 0
     },
     {
         "name": "RW_66 - Metal Canopy",
@@ -176,36 +68,8 @@
         "millisecondsPerBeat": 500
     },
     {
-        "name": "NA_19x - Halcyon Memories",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "NA_43 - Isolation",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "NA_39 - Cracked Earth",
-        "millisecondsPerBeat": 0
-    },
-    {
         "name": "RW_43 - Bio Engineering",
         "millisecondsPerBeat": 722.9
-    },
-    {
-        "name": "RW_76 - Not Your Rain",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "RW_Outro_Theme_B",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "NA_27 - Silent Construct",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "RW_80 - Frosted Festival",
-        "millisecondsPerBeat": 0
     },
     {
         "name": "RW_26 - Black Moonlight",
@@ -216,20 +80,8 @@
         "millisecondsPerBeat": 600
     },
     {
-        "name": "NA_25 - Demonic Riser",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "TitleRollRain",
-        "millisecondsPerBeat": 0
-    },
-    {
         "name": "RW_47 - Maze of Soil",
         "millisecondsPerBeat": 500
-    },
-    {
-        "name": "RW_67 - Random Fate",
-        "millisecondsPerBeat": 0
     },
     {
         "name": "RW_55 - Sky Sprite",
@@ -240,16 +92,8 @@
         "millisecondsPerBeat": 588.2
     },
     {
-        "name": "NA_07 - Phasing",
-        "millisecondsPerBeat": 0
-    },
-    {
         "name": "RW_49 - Nest in Metal",
         "millisecondsPerBeat": 405.4
-    },
-    {
-        "name": "RW_8 - Sundown",
-        "millisecondsPerBeat": 0
     },
     {
         "name": "RW_27 - Train Tunnels",
@@ -260,80 +104,16 @@
         "millisecondsPerBeat": 517.2
     },
     {
-        "name": "NA_17 - Dripping Time",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "RW_71 - Sparking Pendulum",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "RW_77 - Fragile",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "RW_79 - Overcast",
-        "millisecondsPerBeat": 0
-    },
-    {
         "name": "RW_55 - White Lizard",
         "millisecondsPerBeat": 618.6
-    },
-    {
-        "name": "NA_35 - Else4",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "NA_11 - Digital Sundown",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "NA_21 - New Terra",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "NA_34 - Else3",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "NA_31 - Pulse",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "RW_98 - Frost Reaper",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "RW_38 - The Wet Moist",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "RW_92 - Reclaiming Entropy",
-        "millisecondsPerBeat": 0
     },
     {
         "name": "RW_42 - Kayava",
         "millisecondsPerBeat": 500
     },
     {
-        "name": "NA_40 - Unseen Lands",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "NA_11 - Reminiscence",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "RW_Intro_Theme",
-        "millisecondsPerBeat": 0
-    },
-    {
         "name": "RW_87 - Fading Light",
         "millisecondsPerBeat": 531
-    },
-    {
-        "name": "RW_60 - Bloom",
-        "millisecondsPerBeat": 0
     },
     {
         "name": "RW_50 - Mist Engine",
@@ -352,40 +132,8 @@
         "millisecondsPerBeat": 638.3
     },
     {
-        "name": "RW_95 - Reflection of the Moon",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "RW_73 - Flicker",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "RW_78 - Obverse of the Old Wind",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "RW_37 - Garbage City Shuffle",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "RW_89 - Vast Unlife",
-        "millisecondsPerBeat": 0
-    },
-    {
         "name": "RW_62 - Orange Lizard",
         "millisecondsPerBeat": 631.6
-    },
-    {
-        "name": "BM_UW_UPPERWALL",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "RW_Outro_Theme_B_Short",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "BM_SH_CRYPTS",
-        "millisecondsPerBeat": 0
     },
     {
         "name": "RW_84 - Chilblain Grace",
@@ -396,88 +144,24 @@
         "millisecondsPerBeat": 618.6
     },
     {
-        "name": "NA_38 - Else7",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "RW_54 - Raindeer Ride",
-        "millisecondsPerBeat": 0
-    },
-    {
         "name": "RW_74 - Aquaphobia",
         "millisecondsPerBeat": 535.7
-    },
-    {
-        "name": "Passages",
-        "millisecondsPerBeat": 0
     },
     {
         "name": "RW_68 - Wired",
         "millisecondsPerBeat": 571.4
     },
     {
-        "name": "NA_41 - Random Gods",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "RW_15 - Old Growth",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "NA_26 - Energy Circuit",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "NA_24 - Emotion Thread",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "RW_16 - Shoreline",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "BM_SB_FILTER",
-        "millisecondsPerBeat": 0
-    },
-    {
         "name": "RW_82 - Trusted Component",
         "millisecondsPerBeat": 631.6
-    },
-    {
-        "name": "NA_04 - Silicon",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "NA_05 - Sparkles",
-        "millisecondsPerBeat": 0
     },
     {
         "name": "RW_13 - Action Scene",
         "millisecondsPerBeat": 500
     },
     {
-        "name": "NA_36 - Else5",
-        "millisecondsPerBeat": 0
-    },
-    {
         "name": "RW_75 - Onto A New Dawn",
         "millisecondsPerBeat": 441.2
-    },
-    {
-        "name": "NA_30 - Distance",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "RW_65 - Garden",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "RW_Outro_Theme",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "NA_18 - Glass Arcs",
-        "millisecondsPerBeat": 0
     },
     {
         "name": "RW_63 - Wandering Cut",
@@ -488,28 +172,8 @@
         "millisecondsPerBeat": 750
     },
     {
-        "name": "NA_28 - Stargazer",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "NA_03 - Wormpad",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "NA_22 - They Say",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "RW_59 - Lost City",
-        "millisecondsPerBeat": 0
-    },
-    {
         "name": "RW_46 - Lonesound",
         "millisecondsPerBeat": 571.4
-    },
-    {
-        "name": "NA_23 - Speaking Systems",
-        "millisecondsPerBeat": 0
     },
     {
         "name": "RW_29 - Lovely Arps",
@@ -524,48 +188,108 @@
         "millisecondsPerBeat": 451.1
     },
     {
-        "name": "RW_51 - Swaying Fronds",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "RW_72 - Satellite",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "RW_43 - Albino",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "RW_28 - Ferrous Forest",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "MOON_SIREN",
-        "millisecondsPerBeat": 0
-    },
-    {
-        "name": "NA_02 - Dustcloud",
-        "millisecondsPerBeat": 0
-    },
-    {
         "name": "RW_33 - Weyuon",
         "millisecondsPerBeat": 500
     },
     {
-        "name": "NA_32 - Else1",
-        "millisecondsPerBeat": 0
+        "name": "RW_99 - Air Toxing",
+        "beatsPerMinute": 141
     },
     {
-        "name": "NA_37 - Else6",
-        "millisecondsPerBeat": 0
+        "name": "RW_100 - Lonesound 2",
+        "beatsPerMinute": 120
     },
     {
-        "name": "BM_SS_DOOR",
-        "millisecondsPerBeat": 0
+        "name": "RW_106 - Evening at Peace",
+        "beatsPerMinute": 110
     },
     {
-        "name": "VI_1 - Tutorial",
-        "millisecondsPerBeat": 600
+        "name": "RW_107 - Evil Arp",
+        "beatsPerMinute": 100
+    },
+    {
+        "name": "RW_109 - Freq Shift",
+        "beatsPerMinute": 70
+    },
+    {
+        "name": "RW_113 - Liquid Lead",
+        "beatsPerMinute": 158
+    },
+    {
+        "name": "RW_116 - Passive Flow",
+        "beatsPerMinute": 70
+    },
+    {
+        "name": "RW_119 - Sci Prad",
+        "beatsPerMinute": 80
+    },
+    {
+        "name": "RW_142 - Passerby",
+        "beatsPerMinute": 87
+    },
+    {
+        "name": "RW_143 - Bio Bop",
+        "beatsPerMinute": 90
+    },
+    {
+        "name": "RW_144 - Basilisk Beat",
+        "beatsPerMinute": 108
+    },
+    {
+        "name": "RW_145 - Moon Dog",
+        "beatsPerMinute": 77
+    },
+    {
+        "name": "RW_147 - Afterhours",
+        "beatsPerMinute": 128
+    },
+    {
+        "name": "RW_148 - Ambient Arp",
+        "beatsPerMinute": 80
+    },
+    {
+        "name": "RW_154 - Groovy",
+        "beatsPerMinute": 120
+    },
+    {
+        "name": "RW_158 - Rhythmic Pad",
+        "beatsPerMinute": 80
+    },
+    {
+        "name": "RW_160 - Rubber Bass",
+        "beatsPerMinute": 80
+    },
+    {
+        "name": "RW_163 - Skywhale Ride",
+        "beatsPerMinute": 80
+    },
+    {
+        "name": "RW_164 - Rot Lizard",
+        "beatsPerMinute": 110
+    },
+    {
+        "name": "RW_165 - Drill Crab",
+        "beatsPerMinute": 120
+    },
+    {
+        "name": "RW_166 - Boxworm Firefly",
+        "beatsPerMinute": 63
+    },
+    {
+        "name": "RW_167 - Bone Shakers",
+        "beatsPerMinute": 101
+    },
+    {
+        "name": "RW_168 - Big Moths",
+        "beatsPerMinute": 120
+    },
+    {
+        "name": "RW_169 - Grubs",
+        "beatsPerMinute": 120
+    },
+    {
+        "name": "WMPA_SaltWindRitual",
+        "beatsPerMinute": 90
     },
     {
         "name": "VI_2 - Vertical Grinding",
