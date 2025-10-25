@@ -33,8 +33,8 @@ namespace Vinki
                 return;
             }
 
-            string trackName = self.subTracks[0].trackName;
-            if (Plugin.manualSongMsPerBeat.ContainsKey(trackName.ToLower()))
+            string trackName = self.subTracks[0].trackName.ToLower();
+            if (Plugin.manualSongMsPerBeat.ContainsKey(trackName))
             {
                 // It's a vanilla song, or it was added to the SongTempos list
                 Plugin.curMsPerBeat = Plugin.manualSongMsPerBeat[trackName];
@@ -80,7 +80,7 @@ namespace Vinki
         {
             orig(self, speed);
 
-            if (self.subTracks[0]?.trackName == Plugin.curPlayingSong)
+            if (self.subTracks[0]?.trackName.ToLower() == Plugin.curPlayingSong)
             {
                 Plugin.curMsPerBeat = 0;
             }
