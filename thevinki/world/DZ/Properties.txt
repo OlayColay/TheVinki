@@ -11,3 +11,4 @@ playerGuideOverseerSpawnChance: 0.5
 ghostRelKarmaReq: 4
 Room Setting Templates:
 Subregion: Microbial Digestion Zone
+Room_Attr: DZ_C03: Scavenger-Like,ScavengerElite-Like,ScavengerKing-Like,
