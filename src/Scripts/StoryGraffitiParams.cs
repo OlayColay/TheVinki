@@ -31,7 +31,7 @@ public class StoryGraffitiParams
     public StoryGraffitiParams(string room, Vector2 position, int numSmokes, float smokeSize, float alphaPerSmoke,
         bool spawnInFutureCampaigns, bool anchorToCenter, bool hideHologram, string replaces)
 	{
-        this.room = room;
+        this.room = room.ToLower();
         this.position = position;
         this.numSmokes = numSmokes;
         this.smokeSize = smokeSize;

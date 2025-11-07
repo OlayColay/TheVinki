@@ -931,7 +931,7 @@ namespace Vinki
 
         private static void SprayGraffitiInGame(Player self)
         {
-            var storyGraffitisInRoom = storyGraffitiParameters.Where(e => e.Value.room == self.room.abstractRoom.name);
+            var storyGraffitisInRoom = storyGraffitiParameters.Where(e => e.Value.room == self.room.abstractRoom.name.ToLower());
             bool storyGraffitisExist = false;
             bool hologramsExist = false;
             int gNum = -1;
@@ -959,7 +959,7 @@ namespace Vinki
                             gNum = storyGraffiti.Key;
 
                             // Progress story graffiti tutorial if it's the right room
-                            if (storyGraffiti.Value.room == "SS_D08")
+                            if (storyGraffiti.Value.room == "ss_d08")
                             { 
                                 miscWorldSave.Set("StoryGraffitiTutorialPhase", (int)StoryGraffitiTutorial.Phase.Explore);
                             }

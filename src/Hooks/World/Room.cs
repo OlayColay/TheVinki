@@ -140,19 +140,21 @@ public static partial class Hooks
     private static void Room_Loaded(On.Room.orig_Loaded orig, Room self)
     {
         orig(self);
-        if (self.game == null || self.game.GetStorySession == null || self.game.GetStorySession.saveState == null || self.game.GetStorySession.saveState.saveStateNumber != Enums.vinki)
+        if (self.game == null || self.game.GetStorySession == null || self.game.GetStorySession.saveState == null || 
+            self.game.GetStorySession.saveState.saveStateNumber != Enums.vinki || self.abstractRoom == null)
         {
             return;
         }
 
-        if (self.abstractRoom?.name == "SS_AI" && self.game?.GetStorySession?.saveState?.miscWorldSaveData?.SSaiConversationsHad == 0)
+        string roomNameLower = self.abstractRoom.name.ToLower();
+        if (roomNameLower == "ss_ai" && self.game?.GetStorySession?.saveState?.miscWorldSaveData?.SSaiConversationsHad == 0)
         {
             intro = new CutsceneVinkiIntro(self);
             self.AddObject(intro);
         }
 
         // Create hologram for any story graffiti
-        var storyGraffitisInRoom = Plugin.storyGraffitiParameters.Where(e => e.Value.room == self.abstractRoom.name);
+        var storyGraffitisInRoom = Plugin.storyGraffitiParameters.Where(e => e.Value.room == roomNameLower);
         var miscWorldSave = SaveDataExtension.GetSlugBaseData(self.game.GetStorySession.saveState.miscWorldSaveData);
         bool storyGraffitisHaveBeenSprayed = miscWorldSave.TryGet("StoryGraffitisSprayed", out int[] sprayedGNums);
         sprayedGNums ??= [];

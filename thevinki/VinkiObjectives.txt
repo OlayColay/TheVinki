@@ -51,10 +51,19 @@
         "nonCatmaidAltName": "Tutorial Alt"
     },
     {
-        "name": "6",
-        "room": "GW_TOWER05",
-        "position": [ 669, 217 ],
-        "nonCatmaidAltName": "Tutorial Alt"
+        "name": "Qu7a",
+        "room": "DZ_NOC4",
+        "position": [ 351, 448 ]
+    },
+    {
+        "name": "Qu7b",
+        "room": "DZ_NOC4",
+        "position": [ 366, 233 ]
+    },
+    {
+        "name": "Qu7c",
+        "room": "DZ_NOC4",
+        "position": [ 318, 44 ]
     },
     {
         "name": "7",
