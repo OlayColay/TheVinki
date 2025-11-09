@@ -1,97 +1,107 @@
-DZ_TWR_CROSS: -1956.846><151.9766><-1348.625><102.8105><2><Microbial Digestion Zone><60><39
-DZ_BRDG: -1635.847><153.9769><-1155.625><107.8105><2><Microbial Digestion Zone><148><37
-DZ_C01: -1262.817><69.04787><-776.6245><-58.18957><2><Microbial Digestion Zone><48><108
-DZ_TUBS: -967.8175><-41.95212><-592.6245><-51.18957><2><Microbial Digestion Zone><48><35
-DZ_A01: 1411.183><-316.9521><1152.375><-218.1895><1><Microbial Digestion Zone><48><35
-DZ_VATS: 1062.153><-504.0231><1009.375><-353.1895><1><Microbial Digestion Zone><148><35
-DZ_TWR: 748.1546><-339.5231><866.3755><-338.1895><1><Microbial Digestion Zone><48><78
-DZ_SWR: -1759.817><-180.9521><-1242.624><-183.19><1><Microbial Digestion Zone><48><35
-DZ_D01: -1366.126><-161.8429><-1027.801><-193.5235><1><Microbial Digestion Zone><196><35
-DZ_S01: -1429.817><-47.95212><-970.1765><-54.83758><1><><48><35
-DZ_TWOPIPE: -1221.817><-268.9521><-791.6241><-337.19><0><Microbial Digestion Zone><48><35
-DZ_DRAIN: -1007.817><-524.9521><-793.6241><-465.1895><0><Microbial Digestion Zone><98><35
-DZ_A02: -1184.817><-680.9521><-748.2241><-684.7896><0><Microbial Digestion Zone><48><35
-DZ_A03: -559.8175><-404.9521><-394.2243><-464.7896><0><Microbial Digestion Zone><48><35
-DZ_B01: 138.1826><-395.9521><-101.1765><-462.8376><0><Microbial Digestion Zone><102><35
-DZ_A24: 1603.062><409.31><954.4917><555.7104><2><Microbial Digestion Zone><54><75
-DZ_EDGE03: 2560.316><641.2601><1471.531><543.658><2><Microbial Digestion Zone><198><72
-DZ_stronghold1: 1771.874><448.1571><1093.647><655.829><2><Microbial Digestion Zone><48><35
-DZ_stronghold2: 1879.874><322.1571><1232.647><753.829><2><><48><35
-DZ_stronghold3: 2029.874><448.1571><1291.647><382.8291><2><Microbial Digestion Zone><98><35
-DZ_ADOG1: 395.8735><220.1571><109.6471><416.8291><1><Microbial Digestion Zone><48><35
-DZ_ADOG2: 396.8735><351.1571><100.6471><543.829><2><Microbial Digestion Zone><56><35
-DZ_ADOG3: 89.87351><212.1571><-78.35288><308.829><1><Microbial Digestion Zone><48><35
-DZ_CDOG1: 384.8735><643.1571><100.6471><687.829><2><><48><155
-DZ_DDOG1: -899.1265><-254.8429><-505.3528><-265.171><1><Microbial Digestion Zone><100><78
-DZ_D02: 567.8734><-18.84286><483.6472><114.8291><1><Microbial Digestion Zone><204><35
-DZ_noc1: -488.1265><-275.8429><-220.3529><-211.1709><1><Microbial Digestion Zone><100><35
-DZ_noc2: -145.1265><-266.8429><12.64712><-296.171><1><Microbial Digestion Zone><48><75
-DZ_noc3: 146.8735><-268.8429><313.6472><-311.171><0><Microbial Digestion Zone><48><35
-DZ_noc4: 1040.874><440.1571><1119.647><361.8291><0><Microbial Digestion Zone><48><35
-DZ_noc5: -236.8244><357.9934><-475.9484><566.287><2><Microbial Digestion Zone><256><35
-DZ_noc6: 472.8735><-263.8429><602.6471><-307.171><0><Microbial Digestion Zone><53><35
-DZ_noc7: 145.2428><-28.02123><269.0318><114.55><1><Microbial Digestion Zone><70><35
-DZ_noc8: 1023.284><171.6245><1114.177><151.237><0><Microbial Digestion Zone><54><72
-DZ_B01_PAST: -2191.125><-82.07494><-1748.959><-44.10062><1><Microbial Digestion Zone><110><35
-DZ_B08: 1721.176><-57.00638><1463.056><-1.712669><1><><110><35
-DZ_B09_PAST: -1878.825><-570.0063><-1493.944><-1124.713><0><Microbial Digestion Zone><105><35
-DZ_C04_PAST: 1301.619><-55.53352><1118.598><22.98432><1><Microbial Digestion Zone><160><35
-DZ_C06_PAST: -748.8237><151.9935><-601.9486><373.2881><2><Microbial Digestion Zone><48><120
-DZ_EDGE01: 3102.573><687.5439><1888.41><611.2361><2><><148><35
-DZ_EDGE02: 2529.426><418.6937><1517.125><390.02><2><Microbial Digestion Zone><176><51
-DZ_EDGE05: 2178.27><635.063><1342.146><523.2859><2><Microbial Digestion Zone><48><72
-DZ_pipe02: -1562.027><-554.0226><-1263.417><-1114.7><0><Microbial Digestion Zone><101><35
-DZ_pipe07: -1282.725><-407.8819><-978.099><-610.5948><1><Microbial Digestion Zone><48><72
-DZ_pipe09: -1472.064><-483.3328><-1150.63><-765.0912><1><Microbial Digestion Zone><48><35
-DZ_TOWER01: -1948.293><-18.61337><-1502.834><-58.82087><1><Microbial Digestion Zone><48><72
-DZ_TOWER02: -1957.22><325.8127><-1500.409><159.7922><1><Microbial Digestion Zone><48><72
-DZ_TOWER06: 913.8381><327.341><973.9496><263.5555><0><Microbial Digestion Zone><48><35
-DZ_TOWER09: 943.0975><41.73846><974.8315><52.18603><1><Microbial Digestion Zone><48><72
-DZ_S02: -557.3649><120.2911><-474.5696><437.5321><2><><48><35
-OffScreenDen_DZ: -838.1556><-274.4149><-638.8009><-226.5233><1><><0><0
+DZ_TWR_CROSS: -2111.808><122.5365><-1343.318><72.86181><2><Microbial Digestion Zone><60><39
+DZ_BRDG: -1666.811><130.5368><-1150.318><77.86181><2><Microbial Digestion Zone><148><37
+DZ_C01: -1251.779><35.60791><-771.3177><-88.13824><2><Microbial Digestion Zone><48><108
+DZ_TUBS: -956.7811><-75.39207><-587.3177><-81.13822><2><Microbial Digestion Zone><48><35
+DZ_A01: -1750.779><-193.392><-1187.318><-225.1382><1><Microbial Digestion Zone><48><35
+DZ_VATS: 469.1889><-298.463><538.6818><-356.1382><0><Microbial Digestion Zone><148><35
+DZ_TWR: 966.1904><-242.963><1134.682><-222.1382><0><Microbial Digestion Zone><48><78
+DZ_SWR: -1920.779><-211.3921><-1345.317><-224.1387><1><Microbial Digestion Zone><48><35
+DZ_D01: -1355.088><-195.283><-1022.494><-223.4722><1><Microbial Digestion Zone><196><35
+DZ_S01: -1418.779><-81.39207><-964.8699><-84.78625><1><><48><35
+DZ_TWOPIPE: -86.78007><30.60796><-26.31735><91.86148><2><Microbial Digestion Zone><48><35
+DZ_DRAIN: -941.7811><-374.3919><-788.3174><-495.1382><0><Microbial Digestion Zone><98><35
+DZ_A02: -978.7794><-508.3919><-741.9172><-714.7383><0><Microbial Digestion Zone><48><35
+DZ_A03: -548.7817><-438.392><-388.9178><-494.7383><0><Microbial Digestion Zone><48><35
+DZ_B01: 149.2184><-429.392><-95.86996><-492.7863><0><Microbial Digestion Zone><102><35
+DZ_A24: 1614.1><375.87><959.7985><525.7617><2><Microbial Digestion Zone><54><75
+DZ_EDGE03: 2571.352><607.8201><1476.838><513.7094><2><Microbial Digestion Zone><198><72
+DZ_stronghold1: 1782.912><414.7173><1098.954><625.8803><2><Microbial Digestion Zone><48><35
+DZ_stronghold2: 1890.912><288.7173><1237.954><723.8803><2><><48><35
+DZ_stronghold3: 2040.912><414.7173><1296.954><352.8805><2><Microbial Digestion Zone><98><35
+DZ_C03: 732.0358><280.5601><239.3065><518.0513><2><><156><41
+DZ_EDGE02: 2626.464><366.2538><1537.432><300.0713><2><Microbial Digestion Zone><177><82
+DZ_ADOG1: 406.9094><186.717><114.9537><386.8805><2><Microbial Digestion Zone><48><35
+DZ_ADOG2: 407.9094><317.7173><105.9538><513.8803><2><Microbial Digestion Zone><56><35
+DZ_ADOG3: 100.9095><178.717><-73.04625><278.8803><2><Microbial Digestion Zone><48><35
+DZ_CDOG1: 395.9094><609.717><105.9538><657.8803><2><><48><155
+DZ_DDOG1: -888.0907><-288.2827><-500.0461><-295.1197><1><Microbial Digestion Zone><100><78
+DZ_D02: 578.9091><-52.28281><488.9537><84.88046><1><Microbial Digestion Zone><204><35
+DZ_noc1: -479.0906><-312.2826><-215.0463><-241.1196><1><Microbial Digestion Zone><100><35
+DZ_noc2: -137.0909><-261.2826><17.95373><-326.1197><1><Microbial Digestion Zone><48><75
+DZ_noc3: 157.9093><-302.2827><318.9537><-341.1197><0><Microbial Digestion Zone><48><35
+DZ_noc4: 1051.912><406.7173><1124.954><331.8805><0><Microbial Digestion Zone><48><35
+DZ_noc5: -225.7885><324.5536><-470.6419><536.3383><2><Microbial Digestion Zone><256><35
+DZ_noc6: 791.9096><-358.2827><1036.954><-356.1197><0><Microbial Digestion Zone><53><35
+DZ_noc7: 156.2786><-61.46119><274.3383><84.60135><1><Microbial Digestion Zone><70><35
+DZ_noc8: 1034.321><138.1845><1119.484><121.2883><0><Microbial Digestion Zone><54><72
+DZ_noc10: 1225.903><292.5986><599.8068><525.5898><2><><152><35
+DZ_B01_PAST: -2391.087><-108.5149><-1743.652><-74.04929><1><Microbial Digestion Zone><110><35
+DZ_B08: 1732.214><-90.44633><1468.363><-31.66132><1><><110><35
+DZ_B09_PAST: -1867.787><-603.4462><-1488.637><-1154.661><0><Microbial Digestion Zone><105><35
+DZ_C04_PAST: 1312.657><-88.97349><1123.905><-6.964345><1><Microbial Digestion Zone><160><35
+DZ_C06_PAST: -737.7879><118.5535><-596.6418><343.3394><2><Microbial Digestion Zone><48><120
+DZ_EDGE01: 3113.611><654.1039><1893.717><581.2874><2><><148><35
+DZ_EDGE05: 2189.308><601.6229><1347.453><493.3371><2><Microbial Digestion Zone><48><72
+DZ_pipe02: -1550.989><-587.4628><-1258.11><-1144.648><0><Microbial Digestion Zone><101><35
+DZ_pipe07: -1229.687><-406.3217><-972.7922><-640.5434><0><Microbial Digestion Zone><48><72
+DZ_pipe09: -1469.026><-476.7727><-1145.323><-795.0398><0><Microbial Digestion Zone><48><35
+DZ_TOWER01: -2110.255><-51.05331><-1497.527><-88.76955><1><Microbial Digestion Zone><48><72
+DZ_TOWER02: -2112.182><293.3729><-1495.102><129.8435><1><Microbial Digestion Zone><48><72
+DZ_TOWER06: 924.8739><293.9012><979.2562><233.6068><0><Microbial Digestion Zone><48><35
+DZ_TOWER09: 954.1334><8.298495><980.1384><22.23738><1><Microbial Digestion Zone><48><72
+DZ_S02: -546.329><86.85111><-469.2631><407.5835><2><><48><35
+DZ_S03: 182.1846><-173.7222><351.2408><-81.25925><1><><48><35
+OffScreenDen_DZ: -827.1199><-307.8547><-633.4941><-256.472><1><><0><0
 Connection: DZ_TWR_CROSS,DZ_TOWER02,29,34,33,46,1,0
 Connection: DZ_TWR_CROSS,DZ_BRDG,49,18,10,14,0,2
 Connection: DZ_TWR_CROSS,DZ_TOWER01,29,5,35,60,3,0
 Connection: DZ_BRDG,DZ_C01,138,14,6,91,0,2
 Connection: DZ_C01,DZ_TUBS,45,10,4,15,0,2
-Connection: DZ_TUBS,DZ_C06_PAST,36,30,45,25,1,0
-Connection: DZ_A01,DZ_VATS,45,18,139,30,0,0
-Connection: DZ_VATS,DZ_TWR,5,14,13,66,2,2
+Connection: DZ_TUBS,DZ_C06_PAST,36,30,3,24,1,2
+Connection: DZ_A01,DZ_SWR,3,18,45,24,2,0
+Connection: DZ_A01,DZ_D01,45,18,10,18,0,2
+Connection: DZ_VATS,DZ_noc6,139,30,5,11,0,2
+Connection: DZ_VATS,DZ_noc3,5,14,42,15,2,0
+Connection: DZ_TWR,DZ_noc8,13,66,26,5,2,2
+Connection: DZ_TWR,DZ_noc6,2,9,41,26,2,1
 Connection: DZ_SWR,DZ_TOWER01,7,31,43,34,1,0
-Connection: DZ_SWR,DZ_D01,45,24,10,18,0,2
 Connection: DZ_D01,DZ_S01,102,20,14,9,2,3
 Connection: DZ_D01,DZ_DDOG1,190,20,9,72,0,2
-Connection: DZ_D01,DZ_TWOPIPE,143,10,27,30,3,0
-Connection: DZ_TWOPIPE,DZ_DRAIN,33,12,14,17,3,1
+Connection: DZ_TWOPIPE,DZ_ADOG3,27,30,4,9,0,2
+Connection: DZ_TWOPIPE,DZ_noc7,33,12,12,21,3,2
+Connection: DZ_DRAIN,DZ_pipe07,14,17,42,65,1,0
 Connection: DZ_DRAIN,DZ_A03,94,13,5,11,0,2
-Connection: DZ_DRAIN,DZ_pipe07,77,7,42,65,3,0
+Connection: DZ_DRAIN,DZ_A02,77,7,40,25,3,1
+Connection: DZ_A02,DZ_pipe07,5,11,45,47,2,0
 Connection: DZ_A03,DZ_B01,42,12,5,7,0,2
 Connection: DZ_B01,DZ_noc3,88,21,22,11,1,3
 Connection: DZ_A24,DZ_stronghold1,50,61,5,28,0,2
+Connection: DZ_A24,DZ_noc10,3,30,146,30,2,0
 Connection: DZ_EDGE03,DZ_EDGE01,193,51,3,17,0,2
-Connection: DZ_EDGE03,DZ_EDGE05,4,50,43,53,2,0
-Connection: DZ_EDGE03,DZ_EDGE02,133,11,103,46,3,1
+Connection: DZ_EDGE03,DZ_EDGE02,133,11,104,77,3,1
 Connection: DZ_stronghold1,DZ_stronghold3,42,30,6,19,0,2
 Connection: DZ_stronghold1,DZ_stronghold2,42,10,13,13,0,2
-Connection: DZ_stronghold3,DZ_EDGE02,92,19,6,34,0,1
-Connection: DZ_stronghold3,DZ_EDGE05,92,21,16,14,0,3
+Connection: DZ_stronghold3,DZ_EDGE02,92,19,48,14,0,2
+Connection: DZ_C03,DZ_ADOG2,8,27,42,11,2,0
+Connection: DZ_C03,DZ_noc10,151,17,10,8,0,2
 Connection: DZ_ADOG1,DZ_ADOG2,6,20,33,5,2,3
 Connection: DZ_ADOG1,DZ_ADOG3,25,4,39,30,3,1
 Connection: DZ_ADOG2,DZ_CDOG1,31,31,31,4,1,3
 Connection: DZ_ADOG2,DZ_noc5,3,10,245,8,2,0
-Connection: DZ_ADOG3,DZ_noc7,4,9,12,21,2,2
 Connection: DZ_DDOG1,DZ_noc1,93,62,6,10,0,2
 Connection: DZ_D02,DZ_noc7,5,23,59,29,2,0
+Connection: DZ_D02,DZ_TOWER09,197,16,8,42,0,2
 Connection: DZ_noc1,DZ_noc2,93,10,7,49,0,2
 Connection: DZ_noc2,DZ_noc3,33,34,6,21,0,2
 Connection: DZ_noc2,DZ_noc7,14,12,37,5,2,2
-Connection: DZ_noc3,DZ_noc6,42,15,5,11,0,2
 Connection: DZ_noc4,DZ_noc8,39,7,40,56,3,0
 Connection: DZ_noc5,DZ_C06_PAST,10,7,43,107,2,0
-Connection: DZ_noc6,DZ_noc8,41,26,26,5,1,2
+Connection: DZ_noc7,DZ_S03,57,2,38,24,3,0
+Connection: DZ_noc8,DZ_TOWER06,26,38,38,13,2,3
 Connection: DZ_B01_PAST,DZ_TOWER01,104,16,3,19,0,2
 Connection: DZ_B08,DZ_C04_PAST,4,28,149,27,2,0
 Connection: DZ_B09_PAST,DZ_pipe02,98,15,9,14,0,2
+Connection: DZ_C04_PAST,DZ_TOWER09,4,29,46,13,2,0
 Connection: DZ_C06_PAST,DZ_S02,45,58,18,18,0,2
 Connection: DZ_pipe02,DZ_pipe09,85,23,31,9,1,3
 Connection: DZ_pipe07,DZ_pipe09,4,20,43,27,2,0
