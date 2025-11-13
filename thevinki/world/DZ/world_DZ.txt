@@ -76,7 +76,7 @@ DZ_pipe07 : 4-BigSpider-2, 4-SpitterSpider-1
 DZ_pipe09 : 2-Centipede-1, 2-Small Centipede-2
 DZ_pipe02 : 3-Leech-6, 4-Snail-3
 DZ_B09_PAST : 2-Leech-10, 4-Snail-2
-DZ_noc6 : 3-Snail-2, 3-PoleMimic-1
+DZ_noc6 : 3-Snail-2
 DZ_noc8 : 8-CicadaA-1, 8-CicadaB-2, 9-Centipede-1, 3-Small Centipede-3
 DZ_noc4 : 1-Small Centipede-1
 DZ_TOWER06 : 4-CicadaB-2
