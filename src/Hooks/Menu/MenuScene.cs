@@ -111,19 +111,15 @@ public static partial class Hooks
         {
             //Plugin.VLogger.LogInfo("Building Graffiti Map Scene!\n" + StackTraceUtility.ExtractStackTrace());
             self.sceneFolder = "Scenes" + Path.DirectorySeparatorChar.ToString() + "Graffiti Map";
-            self.AddIllustration(new MenuDepthIllustration(self.menu, self, self.sceneFolder, "graffiti_map", new Vector2(0f, 0f), 5f, MenuDepthIllustration.MenuShader.Basic));
-            self.AddIllustration(GraffitiQuestDialog.cloud = new MenuDepthIllustration(self.menu, self, self.sceneFolder, "cloud", new Vector2(680f, 324f), 5f, MenuDepthIllustration.MenuShader.Basic));
-            self.AddIllustration(new MenuDepthIllustration(self.menu, self, self.sceneFolder, "wip_black", new Vector2(762f, -64f), 3f, MenuDepthIllustration.MenuShader.Basic));
-            self.AddIllustration(new MenuDepthIllustration(self.menu, self, self.sceneFolder, "wip_overseer", new Vector2(-50f, -64f), 2f, MenuDepthIllustration.MenuShader.Basic));
+            self.AddIllustration(new MenuDepthIllustration(self.menu, self, self.sceneFolder, "graffiti_map", new Vector2(0f, -50f), 5f, MenuDepthIllustration.MenuShader.Basic));
 
             GraffitiQuestDialog.graffitiSpots =
             [
-                new MenuDepthIllustration(self.menu, self, self.sceneFolder, VinkiConfig.CatPebbles.Value ? "graffiti_ss" : "graffiti_ss_alt", new Vector2(826, 569), 4f, MenuDepthIllustration.MenuShader.Basic),
-                new MenuDepthIllustration(self.menu, self, self.sceneFolder, VinkiConfig.CatPebbles.Value ? "graffiti_ss" : "graffiti_ss_alt", new Vector2(826, 569), 4.5f, MenuDepthIllustration.MenuShader.Basic),
+                new MenuDepthIllustration(self.menu, self, self.sceneFolder, VinkiConfig.CatPebbles.Value ? "graffiti_ss" : "graffiti_ss_alt", new Vector2(826, 569), 6f, MenuDepthIllustration.MenuShader.Basic),
                 new MenuDepthIllustration(self.menu, self, self.sceneFolder, VinkiConfig.CatPebbles.Value ? "graffiti_test" : "graffiti_test_alt", new Vector2(706, 632), 6f, MenuDepthIllustration.MenuShader.Basic),
                 new MenuDepthIllustration(self.menu, self, self.sceneFolder, "true_victory", new Vector2(1163, 454), 6f, MenuDepthIllustration.MenuShader.Basic),
-                new MenuDepthIllustration(self.menu, self, self.sceneFolder, VinkiConfig.CatPebbles.Value ? "graffiti_test" : "graffiti_test_alt", new Vector2(861, 419), 6f, MenuDepthIllustration.MenuShader.Basic),
-                new MenuDepthIllustration(self.menu, self, self.sceneFolder, VinkiConfig.CatPebbles.Value ? "graffiti_test" : "graffiti_test_alt", new Vector2(1131, 587), 6f, MenuDepthIllustration.MenuShader.Basic),
+                new MenuDepthIllustration(self.menu, self, self.sceneFolder, "graffiti_dz", new Vector2(851, 269), 6f, MenuDepthIllustration.MenuShader.Basic),
+                new MenuDepthIllustration(self.menu, self, self.sceneFolder, "graffiti_lf", new Vector2(263, 136), 6f, MenuDepthIllustration.MenuShader.Basic),
                 new MenuDepthIllustration(self.menu, self, self.sceneFolder, VinkiConfig.CatPebbles.Value ? "graffiti_test" : "graffiti_test_alt", new Vector2(868, 190), 6f, MenuDepthIllustration.MenuShader.Basic),
                 new MenuDepthIllustration(self.menu, self, self.sceneFolder, VinkiConfig.CatPebbles.Value ? "graffiti_test" : "graffiti_test_alt", new Vector2(719, 230), 6f, MenuDepthIllustration.MenuShader.Basic),
                 new MenuDepthIllustration(self.menu, self, self.sceneFolder, VinkiConfig.CatPebbles.Value ? "graffiti_test" : "graffiti_test_alt", new Vector2(508, 186), 6f, MenuDepthIllustration.MenuShader.Basic),
@@ -136,7 +132,6 @@ public static partial class Hooks
             {
                 illustration.sprite.SetAnchor(0.5f, 0.5f);
             }
-            GraffitiQuestDialog.cloud.sprite.SetAnchor(0.5f, 0.5f);
 
             // Save that we sprayed self story graffiti
             SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(self.menu.manager.rainWorld.progression.currentSaveState.miscWorldSaveData);
@@ -144,34 +139,42 @@ public static partial class Hooks
             miscSave.TryGet("StoryGraffitisOnMap", out int[] onMap);
             sprd ??= [];
             onMap ??= [];
-            //RWCustom.Custom.Log("Sprayed: " + string.Join(", ", sprd) + "\nOn Map: " + string.Join(", ", onMap) + "\nDied last cycle: " + Plugin.diedLastCycle.ToString());
+            RWCustom.Custom.Log("Sprayed: " + string.Join(", ", sprd) + "\nOn Map: " + string.Join(", ", onMap) + "\nDied last cycle: " + Plugin.diedLastCycle.ToString());
             if (!Plugin.diedLastCycle)
             {
-                for (int i = 0; i < sprd.Length && i < GraffitiQuestDialog.graffitiSpots.Length; i++)
-                {
-                    // We don't care about the Monroe graffiti (the second story graffiti)
-                    if (sprd[i] < GraffitiQuestDialog.graffitiSpots.Length && sprd[i] != 1)
-                    {
-                        GraffitiQuestDialog.graffitiSpots[i].alpha = onMap.Contains(sprd[i]) ? 1f : 0f;
-                        if (!onMap.Contains(sprd[i]))
-                        {
-                            GraffitiQuestDialog.graffitiSlapping[sprd[i]] = (int)GraffitiQuestDialog.slapLength;
-                            GraffitiQuestDialog.graffitiSpots[sprd[i]].sprite.scale = 0.001f;
-                            onMap = [.. onMap, sprd[i]];
-                        }
-                    }
-                }
+                if (sprd.Contains(0)) PrepareGraffitiMapAnimation(self, 0, ref onMap);
+                if (sprd.Contains(2)) PrepareGraffitiMapAnimation(self, 1, ref onMap);
+                if (sprd.Contains(3)) PrepareGraffitiMapAnimation(self, 2, ref onMap);
+                if (sprd.Contains(6) && sprd.Contains(7) && sprd.Contains(8)) PrepareGraffitiMapAnimation(self, 3, ref onMap);
+                if (sprd.Contains(13)) PrepareGraffitiMapAnimation(self, 4, ref onMap);
             }
-            //RWCustom.Custom.Log("Setting map to: ", $"[{string.Join(", ", onMap)}]");
+            RWCustom.Custom.Log("Setting map to: ", $"[{string.Join(", ", onMap)}]");
             Plugin.storyGraffitisOnMap = onMap;
 
-            for (int i = 0; i < sprd.Length; i++)
-            {
-                if (sprd[i] < GraffitiQuestDialog.graffitiSpots.Length && sprd[i] != 1 && onMap.Contains(sprd[i]))
-                {
-                    self.AddIllustration(GraffitiQuestDialog.graffitiSpots[sprd[i]]);
-                }
-            }
+            //for (int i = 0; i < sprd.Length; i++)
+            //{
+            //    if (sprd[i] < GraffitiQuestDialog.graffitiSpots.Length && sprd[i] != 1 && onMap.Contains(sprd[i]))
+            //    {
+            //        self.AddIllustration(GraffitiQuestDialog.graffitiSpots[sprd[i]]);
+            //    }
+            //}
+
+            self.AddIllustration(GraffitiQuestDialog.cloud = new MenuDepthIllustration(self.menu, self, self.sceneFolder, "cloud", new Vector2(680f, 324f), 5f, MenuDepthIllustration.MenuShader.Basic));
+            self.AddIllustration(new MenuDepthIllustration(self.menu, self, self.sceneFolder, "wip_black", new Vector2(762f, -64f), 3f, MenuDepthIllustration.MenuShader.Basic));
+            self.AddIllustration(new MenuDepthIllustration(self.menu, self, self.sceneFolder, "wip_overseer", new Vector2(-50f, -64f), 2f, MenuDepthIllustration.MenuShader.Basic));
+            GraffitiQuestDialog.cloud.sprite.SetAnchor(0.5f, 0.5f);
+        }
+    }
+
+    private static void PrepareGraffitiMapAnimation(MenuScene self, int graffitiSpot, ref int[] onMap)
+    {
+        GraffitiQuestDialog.graffitiSpots[graffitiSpot].alpha = onMap.Contains(graffitiSpot) ? 1f : 0f;
+        if (!onMap.Contains(graffitiSpot))
+        {
+            onMap = [.. onMap, graffitiSpot];
+            GraffitiQuestDialog.graffitiSlapping[graffitiSpot] = (int)GraffitiQuestDialog.slapLength;
+            GraffitiQuestDialog.graffitiSpots[graffitiSpot].sprite.scale = 0.001f;
+            self.AddIllustration(GraffitiQuestDialog.graffitiSpots[graffitiSpot]);
         }
     }
 
