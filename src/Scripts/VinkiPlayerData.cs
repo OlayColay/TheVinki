@@ -108,10 +108,10 @@ public class VinkiPlayerData(Player player)
 
     public void SetupColors(PlayerGraphics pg)
     {
-        BodyColor = pg.GetColor(Enums.Color.Body) ?? Custom.hexToColor("d2701d");
+        BodyColor = pg.GetColor(Enums.Color.Body) ?? Custom.hexToColor("DB7C2E");
         EyesColor = pg.GetColor(Enums.Color.Eyes) ?? Custom.hexToColor("0E0202");
-        StripesColor = pg.GetColor(Enums.Color.TailStripes) ?? Custom.hexToColor("494ed3");
-        ShoesColor = pg.GetColor(Enums.Color.Shoes) ?? Custom.hexToColor("494ed3");
+        StripesColor = pg.GetColor(Enums.Color.TailStripes) ?? Custom.hexToColor("5C5DEA");
+        ShoesColor = pg.GetColor(Enums.Color.Shoes) ?? Custom.hexToColor("5C5DEA");
         RainPodsColor = pg.GetColor(Enums.Color.RainPods) ?? Custom.hexToColor("FFFFFF");
         GlassesColor = pg.GetColor(Enums.Color.Glasses) ?? Custom.hexToColor("0E0202");
     }

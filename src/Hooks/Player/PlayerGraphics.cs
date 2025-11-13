@@ -296,10 +296,10 @@ namespace Vinki
             {
                 foreach (int i in new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 12 })
                 {
-                    sLeaser.sprites[i].color = Custom.hexToColor("494ed3");
+                    sLeaser.sprites[i].color = Custom.hexToColor("5C5DEA");
                 }
-                sLeaser.sprites[vinki.shoesSprite].color = Custom.hexToColor("d2701d");
-                sLeaser.sprites[vinki.stripesSprite].color = Custom.hexToColor("d2701d");
+                sLeaser.sprites[vinki.shoesSprite].color = Custom.hexToColor("DB7C2E");
+                sLeaser.sprites[vinki.stripesSprite].color = Custom.hexToColor("DB7C2E");
             }
         }
 

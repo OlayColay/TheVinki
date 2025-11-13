@@ -8,11 +8,11 @@
         "like": 0.5
       }
     },
-    "color": "d2701d",
+    "color": "DB7C2E",
     "custom_colors": [
       {
         "name": "Body",
-        "story": "d2701d",
+        "story": "DB7C2E",
         "arena": [ "FFFFFF", "ffca61", "e790a2", "403d6b" ]
       },
       {
@@ -22,7 +22,7 @@
       },
       {
         "name": "Tail Stripes",
-        "story": "494ed3",
+        "story": "5C5DEA",
         "arena": [ "9ed5ff", "8cbf24", "cd288a", "FFFFFF" ]
       },
       {
@@ -32,7 +32,7 @@
       },
       {
         "name": "Shoes",
-        "story": "494ed3",
+        "story": "5C5DEA",
         "arena": [ "9ed5ff", "8cbf24", "cd288a", "FFFFFF" ]
       },
       {
