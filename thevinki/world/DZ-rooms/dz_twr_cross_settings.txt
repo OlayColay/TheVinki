@@ -3,5 +3,5 @@ Palette: 3007
 EffectColorA: 0
 EffectColorB: 8
 Effects: ReplaceEffectColorB-0-20-20-Color-0-1-0.8768115, 
-AmbientSounds: OMNI><am_ind-factory04.ogg><724.8051><507.2052><0.5><1, 
+AmbientSounds: OMNI><am_ind-factory04.ogg><125.8051><536.2052><0.5><1, SPOT><AM_ENV-Outside.ogg><729.8204><498.4121><0.5><1><587.8204><686.4121><-35.35534><-35.35534><0><0.1, SPOT><AM_ENV-WinterTrees.ogg><734.6882><387.8098><0.5><1><587.6882><685.8098><-35.35534><-35.35534><0><0.1, 
 FadePalette: 16, 0.1000905

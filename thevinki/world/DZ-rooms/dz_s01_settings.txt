@@ -2,4 +2,5 @@ Clouds: 0.5326087
 Palette: 3008
 EffectColorA: 2
 EffectColorB: 6
+AmbientSounds: OMNI><AM_IND-Factory01.ogg><69.83148><534.5673><0.3913043><1, SPOT><AM_IND-Warehouse01.ogg><577.6634><438.3197><0.5><1><664.6633><398.3198><-167.3553><-51.35535><0><0.1, OMNI><RWTW_AmbSubBubble.ogg><755.643><278.669><0.1195652><1, 
 FadePalette: 17, 0.1413043
