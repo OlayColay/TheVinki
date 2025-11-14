@@ -45,6 +45,7 @@
     "select_menu_scene": "Slugcat_Vinki",
     "sleep_scene": "Sleep_Vinki",
     "select_menu_scene_ascended": "Ghost_Vinki",
+    "story_regions": ["SS", "UW", "LM", "DM", "DZ", "HI", "SU", "LF", "SB", "OE", "CC", "LC"],
     "the_mark": true,
     "world_state": [ "vinki", "Spear", "Red" ],
 

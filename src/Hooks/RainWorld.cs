@@ -221,6 +221,7 @@ public static partial class Hooks
                 ext.regionGraffitiTokens[fileName].Add(new Enums.GraffitiUnlockID("Pop Pop Snails"));
                 break;
             case "gw":
+            case "dz":
                 ext.regionGraffitiTokens[fileName].Add(new Enums.GraffitiUnlockID("Garbage Alarm"));
                 ext.regionGraffitiTokens[fileName].Add(new Enums.GraffitiUnlockID("Acid Bath"));
                 break;
