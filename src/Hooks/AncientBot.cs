@@ -137,7 +137,8 @@ namespace Vinki
         private static void AncientBot_Draw_Sprites(On.MoreSlugcats.AncientBot.orig_DrawSprites orig, AncientBot self, RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, float timeStacker, Vector2 camPos)
         {
             orig(self, sLeaser, rCam, timeStacker, camPos);
-            if (self.room.game.IsStorySession && self.room.game.StoryCharacter != Enums.vinki)
+            if (self.room == null || self.room.game == null || 
+                (self.room.game.IsStorySession && self.room.game.StoryCharacter != Enums.vinki))
             {
                 return;
             }
