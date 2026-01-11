@@ -1,0 +1,4 @@
+[FIND]Filter><1067.55><2356.255><-34~-11~96~-338~White|Red|Artificer|Spear|Gourmand,
+[REPLACE]Filter><1067.55><2356.255><-34~-11~96~-338~White|Red|Artificer|Spear|Gourmand|vinki,
+[FIND]Filter><1233.082><2322.358><7~-29~-72~-161~White|Red|Artificer|Spear|Gourmand,
+[REPLACE]Filter><1233.082><2322.358><7~-29~-72~-161~White|Red|Artificer|Spear|Gourmand|vinki,

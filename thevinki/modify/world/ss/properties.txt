@@ -1,2 +1,29 @@
-[FINDLINE] Subregion: Five Pebbles
-[ADD]Subregion: Five Pebbles (Research and Development)
+[MERGE]
+Room_Attr: SS_E04_PREROT: Inspector-Forbidden
+Room_Attr: SS_B04_PREROT: Inspector-Forbidden
+Room_Attr: SS_A13_PREROT: Inspector-Like
+Room_Attr: SS_F03_PREROT: Inspector-Like
+Room_Attr: SS_A18_PREROT: Inspector-Forbidden
+Room_Attr: SS_D06_PREROT: Inspector-Like
+Room_Attr: SS_D05_PREROT: Inspector-Forbidden
+Room_Attr: SS_E05_PREROT: Inspector-Like
+Room_Attr: SS_E03_PREROT: Inspector-Like
+Room_Attr: SS_D02_PREROT: Inspector-Like
+Room_Attr: SS_A17_PREROT: Inspector-Forbidden
+Room_Attr: SS_LAB1_PREROT: Inspector-Avoid
+Room_Attr: SS_LAB2_PREROT: Inspector-Avoid
+Room_Attr: SS_LAB3_PREROT: Inspector-Avoid
+Room_Attr: SS_LAB4_PREROT: Inspector-Avoid
+Room_Attr: SS_LAB5_PREROT: Inspector-Avoid
+Room_Attr: SS_LAB6_PREROT: Inspector-Avoid
+Room_Attr: SS_LAB7_PREROT: Inspector-Avoid
+Room_Attr: SS_LAB8_PREROT: Inspector-Avoid
+Room_Attr: SS_LAB9_PREROT: Inspector-Avoid
+Room_Attr: SS_LAB10_PREROT: Inspector-Avoid
+Room_Attr: SS_LAB11_PREROT: Inspector-Avoid
+Room_Attr: SS_LAB12_PREROT: Inspector-Avoid
+Room_Attr: SS_LAB13_PREROT: Inspector-Avoid
+Room_Attr: SS_LAB14_PREROT: Inspector-Avoid
+Room_Attr: SS_A01_PREROT: Inspector-Avoid
+Room_Attr: SS_A14_PREROT: Inspector-Avoid
+[ENDMERGE]

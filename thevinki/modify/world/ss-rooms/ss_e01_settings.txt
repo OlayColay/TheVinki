@@ -1,0 +1,8 @@
+[FIND]Filter><2559.866><152.4127><-55~62~19~7~White|Red|Artificer|Spear|Gourmand,
+[REPLACE]Filter><2559.866><152.4127><-55~62~19~7~White|Red|Artificer|Spear|Gourmand|vinki,
+[FIND]Filter><4861.101><516.4227><-25~25~0~0~White|Red|Artificer|Spear|Gourmand,
+[REPLACE]Filter><4861.101><516.4227><-25~25~0~0~White|Red|Artificer|Spear|Gourmand|vinki,
+[FIND]Filter><2371.872><97.40369><-6~59~152~-123~White|Red|Artificer|Spear|Gourmand,
+[REPLACE]Filter><2371.872><97.40369><-6~59~152~-123~White|Red|Artificer|Spear|Gourmand|vinki,
+[FIND]Filter><4805.878><193.1532><-21~28~0~0~White|Red|Artificer|Spear|Gourmand,
+[REPLACE]Filter><4805.878><193.1532><-21~28~0~0~White|Red|Artificer|Spear|Gourmand|vinki,
