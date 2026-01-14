@@ -1,0 +1,8 @@
+Template: NONE
+DangerType: Flood
+Grime: 0.2608696
+BkgDroneVolume: 0
+Palette: 9
+EffectColorA: 13
+PlacedObjects: BrokenShelterWaterLevel><463.8011><407.2717><, LightSource><512.7319><530.9492><0.1195652~EffectColor1~0~100~-248~-455.3975~0~1~None~0~0, LightSource><555.631><555.5892><0.08695652~EffectColor1~0~100~-436~-14.39746~0~1~None~0~0, LightSource><469.5992><568.8813><0.1195652~EffectColor1~0~100~145~-79.39746~0~1~None~0~0, 
+FadePalette: 10, 0.7065217
