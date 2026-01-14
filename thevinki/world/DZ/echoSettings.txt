@@ -1,0 +1,8 @@
+priming : true
+size : 1
+minkarma : -1
+minkarmacap : 1
+radius : 4
+echosong : UW
+room : dz_cdog1
+defaultflip : 0
