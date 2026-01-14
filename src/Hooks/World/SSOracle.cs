@@ -1128,6 +1128,43 @@ namespace Vinki
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("I remember that my city had a company that offered a drink that had almost exactly the same ingredients. Nevertheless, a fierce debate erupted amongst our creators about which drink was better."), 0);
                     oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Several of our creators moved their families to Five Pebbles purely because of their favorite drink. Many of them had silly vices like this, ironically."), 0);
                     break;
+                case "VinkiGraffiti/vinki/garliclover46 - DUEL":
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Two Noodleflies are fighting each other."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("They may look harmless at first glance, but I would advise giving them a wide berth, little creture. They are fiercely territorial, especially of their offspring."), 0);
+                    break;
+                case "VinkiGraffiti/vinki/garliclover46 - Gamerboy Superstructure":
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("You have put ears on the entirety of Five Pebbles' structure..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Although I am impressed that you know that the superstructure is our true bodies, I have nothing to say about the ears."), 0);
+                    break;
+                case "VinkiGraffiti/vinki/Mr Duckman - Devious Little Critter":
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("It is you with a mischevious, evil grin on your face. What are you about to do?"), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("It almost seems like a full stare into your twisted perspective would make most simply go insane."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("...Or am I imagining things?"), 0);
+                    break;
+                case "VinkiGraffiti/vinki/North - Rules Schmules":
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("It is you with your tongue sticking out rudely."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("I hope I did not do anything to offend you little creature! I apologize once again that need to remove your work from my chamber."), 0);
+                    break;
+                case "VinkiGraffiti/vinki/quarter - John Pebbles":
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Five Pebbles is on... what is that device, little creature?"), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("It is not one that I recognize. Is it something from where you are from?"), 0);
+                    break;
+                case "VinkiGraffiti/vinki/quarter - Vinkube":
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("It is you in a cube-like shape. How do you think of ideas like this, little creature?"), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Your creativity is admirable. With the state of the world as it is, creativity in this world is key to survival."), 0);
+                    break;
+                case "VinkiGraffiti/vinki/Salami_Hunter - Undead Head":
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("Now let me take a look..."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("What is this creature? It is pretty cute~ Although it looks to be in dire straits."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("I do not know of any creatures that have a neck bone in that shape."), 0);
+                    oracleBehavior.dialogBox.NewMessage(oracleBehavior.Translate("...Am I overthinking this?"), 0);
+                    break;
             }
         }
 
