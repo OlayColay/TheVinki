@@ -556,7 +556,7 @@ namespace Vinki
         {
             if (ID == Enums.FullscreenVideo)
             {
-                self.currentMainLoop = new FullscreenVideo(self);
+                self.currentMainLoop = new FullscreenVideo(self, "videos/VinkiIntro.mp4", ProcessManager.ProcessID.Game);
             }
             orig(self, ID);
         }

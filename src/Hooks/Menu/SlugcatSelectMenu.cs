@@ -47,10 +47,10 @@ public static partial class Hooks
     {
         orig(self, nextProcess);
 
-        if (nextProcess.ID == Enums.FullscreenVideo)
-        {
-            (nextProcess as FullscreenVideo).StartVideo("videos/VinkiIntro.mp4", ProcessManager.ProcessID.Game);
-        }
+        //if (nextProcess.ID == Enums.FullscreenVideo)
+        //{
+        //    (nextProcess as FullscreenVideo).StartVideo("videos/VinkiIntro.mp4", ProcessManager.ProcessID.Game);
+        //}
     }
 
     private static void SlugcatSelectMenu_SlugcatPage_ctor(On.Menu.SlugcatSelectMenu.SlugcatPage.orig_ctor orig, SlugcatSelectMenu.SlugcatPage self, Menu.Menu menu, MenuObject owner, int pageIndex, SlugcatStats.Name slugcatNumber)
@@ -149,6 +149,10 @@ public static partial class Hooks
                     if (!VinkiConfig.SkipIntro.Value)
                     {
                         self.manager.RequestMainProcessSwitch(Enums.FullscreenVideo);
+                        if (self.manager.musicPlayer != null && self.manager.musicPlayer.song != null)
+                        {
+                            self.manager.musicPlayer.song.FadeOut(20f);
+                        }
                         return true;
                     }
                 }

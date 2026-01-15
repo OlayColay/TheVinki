@@ -4,12 +4,13 @@ using UnityEngine.UI;
 using UnityEngine.Video;
 using Vinki;
 
-public class FullscreenVideo(ProcessManager manager) : MainLoopProcess(manager, Enums.FullscreenVideo)
+public class FullscreenVideo : MainLoopProcess
 {
     public ProcessManager.ProcessID nextProcess;
     public VideoPlayer videoPlayer;
 
-    public void StartVideo(string videoFileName, ProcessManager.ProcessID nextProcess)
+    public FullscreenVideo(ProcessManager manager, string videoFilePath, ProcessManager.ProcessID nextProcess) 
+        : base(manager, Enums.FullscreenVideo)
     {
         this.nextProcess = nextProcess;
 
@@ -37,7 +38,7 @@ public class FullscreenVideo(ProcessManager manager) : MainLoopProcess(manager, 
         videoPlayer.playOnAwake = false;
         videoPlayer.renderMode = VideoRenderMode.RenderTexture;
         videoPlayer.targetTexture = renderTexture;
-        videoPlayer.url = AssetManager.ResolveFilePath(videoFileName);
+        videoPlayer.url = AssetManager.ResolveFilePath(videoFilePath);
         videoPlayer.isLooping = false;
 
         // Play the video
@@ -49,6 +50,7 @@ public class FullscreenVideo(ProcessManager manager) : MainLoopProcess(manager, 
     private void PrepareCompleted(VideoPlayer source)
     {
         RWCustom.Custom.Log("Playing video of length " + source.length.ToString());
+        source.SetDirectAudioVolume(0, manager.rainWorld.options.musicVolume);
         source.Play();
         source.loopPointReached += VideoFinished;
     }
@@ -64,7 +66,7 @@ public class FullscreenVideo(ProcessManager manager) : MainLoopProcess(manager, 
     {
         base.Update();
 
-        if (RWInput.CheckPauseButton(0))
+        if (RWInput.CheckPauseButton(0) && videoPlayer != null)
         {
             videoPlayer.Stop();
             VideoFinished(videoPlayer);
