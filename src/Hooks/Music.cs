@@ -40,7 +40,7 @@ namespace Vinki
                 Plugin.curMsPerBeat = Plugin.manualSongMsPerBeat[trackName];
                 Plugin.curAudioSource = self.subTracks[0].source;
                 Plugin.curPlayingSong = trackName;
-                Plugin.VLogger.LogInfo("Playing \"" + trackName + "\" with manual ms/beat " + Plugin.curMsPerBeat);
+                //Plugin.VLogger.LogInfo("Playing \"" + trackName + "\" with manual ms/beat " + Plugin.curMsPerBeat);
                 return;
             }
 
@@ -73,7 +73,7 @@ namespace Vinki
                 Plugin.curMsPerBeat *= 2;
             }
 
-            Plugin.VLogger.LogInfo("Playing \"" + Path.GetFileNameWithoutExtension(path) + "\" with automatic ms/beat " + Plugin.curMsPerBeat);
+            //Plugin.VLogger.LogInfo("Playing \"" + Path.GetFileNameWithoutExtension(path) + "\" with automatic ms/beat " + Plugin.curMsPerBeat);
         }
 
         private static void Song_FadeOut(On.Music.Song.orig_FadeOut orig, Song self, float speed)

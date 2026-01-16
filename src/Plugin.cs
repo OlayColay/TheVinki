@@ -16,7 +16,7 @@ namespace Vinki
     [BepInDependency("dressmyslugcat", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("improved-input-config", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("pushtomeow", BepInDependency.DependencyFlags.SoftDependency)]
-    [BepInPlugin(MOD_ID, "The Vinki", "0.13.7")]
+    [BepInPlugin(MOD_ID, "The Vinki", "0.13.7.1")]
     class Plugin : BaseUnityPlugin
     {
         public const string MOD_ID = "olaycolay.thevinki";
@@ -64,7 +64,7 @@ namespace Vinki
         public static AudioSource curAudioSource;
         public static string curPlayingSong;
 
-        public static List<string> catMaidGraffitis = ["Beep - 5P or QT", "Tsuno - Loud Pebbles"];
+        public static List<string> catMaidGraffitis = ["Beep - 5P or QT", "Tsuno - Loud Pebbles", "garliclover46 - Gamerboy Superstructure"];
 
         public static readonly PlayerFeature<bool> CanGrind = SlugBase.Features.FeatureTypes.PlayerBool("can_grind");
         public static readonly PlayerFeature<bool> CanTrickJump = SlugBase.Features.FeatureTypes.PlayerBool("can_trick_jump");

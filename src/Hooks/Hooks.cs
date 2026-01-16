@@ -302,12 +302,12 @@ namespace Vinki
                 string nameLowerCase = obj.GetString("name").ToLower();
                 if (obj.TryGet("millisecondsPerBeat") == null)
                 {
-                    VLogger.LogInfo("Adding " + nameLowerCase + " with BPM " + obj.GetFloat("beatsPerMinute"));
+                    //VLogger.LogInfo("Adding " + nameLowerCase + " with BPM " + obj.GetFloat("beatsPerMinute"));
                     manualSongMsPerBeat.Add(nameLowerCase, 60000f / obj.GetFloat("beatsPerMinute"));
                 }
                 else
                 {
-                    VLogger.LogInfo("Adding " + nameLowerCase + " with ms/beat " + obj.GetFloat("millisecondsPerBeat"));
+                    //VLogger.LogInfo("Adding " + nameLowerCase + " with ms/beat " + obj.GetFloat("millisecondsPerBeat"));
                     manualSongMsPerBeat.Add(nameLowerCase, obj.GetFloat("millisecondsPerBeat"));
                 }
             }

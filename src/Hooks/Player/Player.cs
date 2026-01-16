@@ -145,7 +145,7 @@ namespace Vinki
                     GraffitiObject removedLayer = room.updateList.OfType<GraffitiObject>().FirstOrDefault(graffiti => graffiti.serializableGraffiti.gNum == replacesGNum);
                     if (removedLayer != null)
                     {
-                        VLogger.LogInfo("Removing layer of " + graffitis["Story"][removedLayer.serializableGraffiti.gNum].imageName);
+                        //VLogger.LogInfo("Removing layer of " + graffitis["Story"][removedLayer.serializableGraffiti.gNum].imageName);
                         room.RemoveObject(removedLayer);
                     }
                     else

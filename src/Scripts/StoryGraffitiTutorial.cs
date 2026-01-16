@@ -25,7 +25,7 @@ public class StoryGraffitiTutorial : UpdatableAndDeletable
         this.room = room;
         miscSave = SlugBase.SaveData.SaveDataExtension.GetSlugBaseData(room.game.GetStorySession.saveState.miscWorldSaveData);
         miscSave.TryGet("StoryGraffitiTutorialPhase", out int nextPhaseInt);  // If there's nothing in the save, it should give 0
-        Plugin.VLogger.LogInfo("StoryGraffitiTutorialPhase: " + (Phase)nextPhaseInt);
+        //Plugin.VLogger.LogInfo("StoryGraffitiTutorialPhase: " + (Phase)nextPhaseInt);
         if (nextPhaseInt == 0)
         {
             miscSave.TryGet("StoryGraffitiSprayed", out List<int> sprd);

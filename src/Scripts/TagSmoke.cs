@@ -102,7 +102,7 @@ public class TagSmoke : PositionedSmokeEmitter
             if (age == 15)
             {
                 targetCrit.AddMud(100, 5000, color);
-                Plugin.VLogger.LogInfo("Adding mud.\tCreature mud: " + targetCrit.muddy);
+                //Plugin.VLogger.LogInfo("Adding mud.\tCreature mud: " + targetCrit.muddy);
             }
         }
 
