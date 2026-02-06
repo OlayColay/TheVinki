@@ -20,7 +20,18 @@ sealed class SprayCanAbstract : AbstractPhysicalObject
         this.uses = uses;
         scaleX = 0.6f;
         scaleY = 0.6f;
-        if (uses <= 9000)
+
+        // Prevent spawning can with invalid number of uses through DevConsole, etc.
+        if (uses > 5 && uses <= 9000)
+        {
+            uses = 5;
+        }
+        else if (uses < 0)
+        {
+            uses = 0;
+        }
+
+        if (uses <= 5)
         {
             Color.RGBToHSV(CanColors[uses], out hue, out saturation, out _);
         }
