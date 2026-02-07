@@ -1,0 +1,21 @@
+Template: NONE
+CeilingDrips: 0
+RainIntensity: 0
+RumbleIntensity: 0.01086957
+WaveSpeed: 0.5
+WaveLength: 1
+WaveAmplitude: 0
+SecondWaveLength: 0.1666667
+SecondWaveAmplitude: 0
+Clouds: 0
+Grime: 0.2391304
+BkgDroneVolume: 0
+Palette: 35
+EffectColorA: 12
+EffectColorB: 0
+Effects: RoofTopView-1-20-20, Contrast-0-270-20, Desaturation-0-272-76, LightBurn-0.1086956-18-76, DayNight-0.3043478-18-133, PixelShift-0.5-30-30, 
+PlacedObjects: NoSpearStickZone><-33.07202><280.8413><-138~97, DayNightSettings><4597.614><447.7497><5~8.660254~33~10, InsectGroup><5538.294><404.4451><-656~273~4~118~Moth~0.3586957, SeedCob><1260.914><283.8196><3~-96~7~10, SeedCob><5059.924><290.8152><0~0~7~10, SeedCob><5438.802><276.9715><0~0~7~10, DeadSeedCob><4415.2><291.5055><, DeadSeedCob><1379.801><322.5171><, DeadSeedCob><4361.884><317.3313><, DeadSeedCob><5010.879><255.6597><, DeadSeedCob><5332.199><264.4788><, DeadSeedCob><5563.047><310.6945><, 
+AmbientSounds: SPOT><AM_ENV-WallHum.ogg><44.60425><480.4207><0.3152174><1><57.60425><26.42065><-213.3553><272.6447><0><0.7630436, OMNI><AM_ENV-WallHum.ogg><872.3621><493.4156><0.1413043><1, OMNI><AM_IND-SuperStructure.ogg><869.2739><569.1986><0.09782609><1, OMNI><AM_ENV-LightWind.ogg><869.4103><639.8804><0.3695652><1, SPOT><AM_IND-DeepHum.ogg><881.7806><372.3024><0.3369565><1><6169.781><649.3024><-385.3553><-185.3553><0><1, SPOT><AM_WIN-StrongWnd2.ogg><853.6302><239.0898><0.2934783><1><-87.36975><459.0898><301.6447><-226.3553><0><0.5130436, SPOT><AM_WIN-HowlingWnd.ogg><851.2418><112.9498><0.173913><1><-157.7582><416.9498><398.6447><-243.3553><0><0.6978262, SPOT><SO_IND-FlourLight.ogg><694.6052><599.6121><0.2826087><0.4326087><773.6052><377.6121><-161.3553><-255.3553><0><0.4260871, 
+Triggers: Spot<tA>event<tB>MusicEvent<eA>songName<eB>RW_78 - Obverse of the Old Wind<eA>vol<eB>0.3<eA>prio<eB>0.9347826<eA>mxThrt<eB>1<eA>loop<eB>0<eA>droneTol<eB>0<eA>rooms<eB>-1<eA>rest<eB>5<eA>fadeIn<eB>19.56522<eA>oneSongPerCycle<eB>0<eA>stopAtDeath<eB>0<eA>stopAtGate<eB>0<tA>multiUse<tB>0<tA>toCycle<tB>-1<tA>fromCycle<tB>0<tA>delay<tB>0<tA>panPos<tB>678.9163<tB>440.3611<tA>fireChance<tB>1<tA>entrance<tB>1<tA>karma<tB>0<tA>slugcats<tB><tA>pos<tB>5754.917<tB>196.3611<tA>handlePos<tB>-244.3553<tB>-13.35535, Spot<tA>event<tB>MusicEvent<eA>songName<eB>RW_78 - Obverse of the Old Wind<eA>vol<eB>0.3<eA>prio<eB>0.9347826<eA>mxThrt<eB>1<eA>loop<eB>0<eA>droneTol<eB>0<eA>rooms<eB>-1<eA>rest<eB>5<eA>fadeIn<eB>19.56522<eA>oneSongPerCycle<eB>0<eA>stopAtDeath<eB>0<eA>stopAtGate<eB>0<tA>multiUse<tB>0<tA>toCycle<tB>-1<tA>fromCycle<tB>0<tA>delay<tB>0<tA>panPos<tB>936.6909<tB>439.4402<tA>fireChance<tB>1<tA>entrance<tB>0<tA>karma<tB>0<tA>slugcats<tB><tA>pos<tB>1390.691<tB>328.4402<tA>handlePos<tB>-170.3553<tB>-265.3553, 
+FadePalette: 42, 0.1086956, 0.2173913, 0.2173913, 0.2065217, 0.2065217, 0.2065217, 0.3695652
+WetTerrain: OFF

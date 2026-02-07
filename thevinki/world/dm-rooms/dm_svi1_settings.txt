@@ -1,0 +1,15 @@
+Template: NONE
+RainIntensity: 0
+RumbleIntensity: 1
+WaveSpeed: 0.5
+WaveLength: 0.75
+WaveAmplitude: 0.04788044
+SecondWaveLength: 0.1666667
+SecondWaveAmplitude: 0
+Grime: 0.1304348
+Palette: 8
+EffectColorA: 18
+Effects: ElectricDeath-0.07608695-20-20, Darkness-0.4782609-19-63, SuperStructureProjector-0.1304348-29-115, 
+PlacedObjects: LightSource><403.4189><319.3171><0.7826087~EffectColor1~-188~123~-59~133.6025~0~0~None~0~0, SuperStructureFuses><227.4583><356.1956><304~74, SuperStructureFuses><233.113><71.91501><301~72, 
+AmbientSounds: OMNI><AM_IND-Factory01.ogg><775.3565><222.0807><0.2065217><0.9021739, 
+FadePalette: 10, 0.4891304

@@ -1,0 +1,8 @@
+Template: NONE
+Clouds: 0
+Grime: 0.1086956
+Palette: 74
+Effects: Darkness-0.2282609-288-20, DayNight-0.3369565-282-78, LightBurn-0.02173913-281-134, Fog-0-25-18, AboveCloudsView-0.4565217-26-67, 
+PlacedObjects: DayNightSettings><518.2557><1020.05><5~8.660254~33~10, DevToken><219.1557><353.6255><23~-83~0~0~0~~~0~0~0~1~0~0~0~1~0~0~0~1~0~0~0~1, ReliableSpear><579.1379><27.8949><, 
+AmbientSounds: OMNI><AM_WIN-StrongWnd2.ogg><663.7339><573.0507><0.2608694><1, SPOT><AM_WIN_Hilltop.ogg><730.8574><455.3598><0.4130435><1><-155.1426><-72.64023><404.6447><624.6447><0><1, DIR><AM_ENV-WallHum.ogg><758.5502><301.0092><0.4782609><1><104.2887><0, 
+FadePalette: 42, 0.06521739, 0.07608695
