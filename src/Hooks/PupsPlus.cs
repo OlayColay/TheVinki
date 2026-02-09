@@ -22,6 +22,10 @@ public static partial class Hooks
     private static ILHook GetSlugpupVariant, RegisterSpawnPupCommand;
     public static void ApplyPupsPlusHooks()
     {
+        On.SlugcatStats.HiddenOrUnplayableSlugcat += (orig, i) => i == Enums.Swaggypup || orig(i);
+
+        On.Player.NPCStats.ctor += NPCStats_ctor;
+
         new Hook(typeof(SlugpupStuff.SlugpupStuff).GetProperty(nameof(aquaticChance), System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static).GetGetMethod(), SlugpupStuff_get_aquaticChance);
 
         new Hook(typeof(SlugpupStuffRemix).GetMethod(nameof(SlugpupStuffRemix.Initialize)), SlugpupStuffRemix_Initialize);
@@ -49,6 +53,23 @@ public static partial class Hooks
                 Plugin.VLogger.LogError("Could not apply RegisterSpawnPupCommand IL Hook\n" + e.Message + '\n' + e.StackTrace);
             }
         }
+        new Hook(typeof(PupsPlusModCompat).GetMethod(nameof(PupsPlusModCompat.ValidPupNames)), PupsPlusModCompat_ValidPupNames);
+    }
+
+    private static void NPCStats_ctor(On.Player.NPCStats.orig_ctor orig, Player.NPCStats self, Player player)
+    {
+        orig(self, player);
+        if (!player.IsVinki())
+        {
+            return;
+        }
+
+        UnityEngine.Random.State state = UnityEngine.Random.state;
+        UnityEngine.Random.InitState(player.abstractCreature.ID.RandomSeed);
+        self.H = UnityEngine.Random.Range(0f, 1f);
+        self.Dark = (UnityEngine.Random.Range(0f, 1f) <= 0.1f + self.Stealth * 0.15f);
+        self.L = Mathf.Pow(UnityEngine.Random.Range(self.Dark ? 0.85f : 0.75f, 1f), 1.5f - self.Stealth);
+        UnityEngine.Random.state = state;
     }
 
     public static float SlugpupStuff_get_aquaticChance(Func<float> orig)
@@ -205,18 +226,23 @@ public static partial class Hooks
             // Check if we should return swaggyPup before the other variants
             c.EmitDelegate<Func<string[],string[]>>(variants =>
             {
-                Plugin.VLogger.LogInfo("RegisterSpawnPupCommand before: " + string.Join(", ", variants));
                 Array.Resize(ref variants, variants.Length + 1);
                 variants[variants.Length-1] = "Swaggy";
                 Plugin.VLogger.LogInfo("RegisterSpawnPupCommand after: " + string.Join(", ", variants));
                 return variants;
             });
-            Plugin.VLogger.LogInfo("Finished applying RegisterSpawnPupCommand ILHook\n" + il);
         }
         catch (Exception e)
         {
             Plugin.VLogger.LogError("Could not complete RegisterSpawnPupCommand IL Hook\n" + e.Message + '\n' + e.StackTrace);
         }
+    }
+
+    public static List<string> PupsPlusModCompat_ValidPupNames(Func<List<string>> orig)
+    {
+        List<string> list = orig();
+        list.Add("Swaggypup");
+        return list;
     }
 
     public static bool isSwaggypup(this Player self)

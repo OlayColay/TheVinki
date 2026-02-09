@@ -322,6 +322,13 @@ namespace Vinki
                 shoesColor = GetCustomVinkiArenaColor(vinki, self.player.JollyOption.playerNumber % 4, vinki.shoesSprite);
                 rainPodsColor = GetCustomVinkiArenaColor(vinki, self.player.JollyOption.playerNumber % 4, vinki.rainPodsSprite);
             }
+            else if (self.player.slugcatStats.name == Enums.Swaggypup)
+            {
+                // Pups+ colors
+                glassesColor = sLeaser.sprites[9].color;
+                shoesColor = sLeaser.sprites[vinki.stripesSprite].color;
+                rainPodsColor = (sLeaser.sprites[0].color == Color.white) ? new Color(0.62f, 0.835f, 1f) : Color.white;
+            }
             else
             {
                 glassesColor = GetCustomVinkiColor(self.player.JollyOption.playerNumber, 5);

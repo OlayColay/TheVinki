@@ -1,4 +1,5 @@
 ﻿using ImprovedInput;
+using JollyCoop;
 using MoreSlugcats;
 using RWCustom;
 using SlugBase.DataTypes;
@@ -114,6 +115,27 @@ public class VinkiPlayerData(Player player)
         ShoesColor = pg.GetColor(Enums.Color.Shoes) ?? Custom.hexToColor("5C5DEA");
         RainPodsColor = pg.GetColor(Enums.Color.RainPods) ?? Custom.hexToColor("FFFFFF");
         GlassesColor = pg.GetColor(Enums.Color.Glasses) ?? Custom.hexToColor("0E0202");
+
+        if (pg.player.slugcatStats.name == Enums.Swaggypup)
+        {
+            StripesColor = (BodyColor == Color.white) ? new Color(0.62f, 0.835f, 1f) : GenerateTrueComplementaryColor(pg.player.ShortCutColor());
+            Plugin.VLogger.LogInfo("Body color: " + pg.player.ShortCutColor().ToString() + "\tTail Stripes color: " + StripesColor.ToString());
+        }
+    }
+
+    public static Color GenerateTrueComplementaryColor(Color colorBase)
+    {
+        return GenerateTrueComplementaryColor(JollyCustom.RGB2HSL(colorBase));
+    }
+    public static Color GenerateTrueComplementaryColor(HSLColor colorBase)
+    {
+        float randomShift = UnityEngine.Random.Range(-0.1f, 0.1f);
+        Vector3 vector = new(
+            (colorBase.hue + 0.5f + randomShift) % 1f,
+            Mathf.Clamp(colorBase.saturation, 0.35f, 0.75f),
+            Mathf.Clamp(colorBase.lightness, 0.4f, 0.6f)
+        );
+        return Custom.HSL2RGB(vector.x, vector.y, vector.z);
     }
 
     public void AddCombo()
