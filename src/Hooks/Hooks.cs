@@ -382,6 +382,13 @@ namespace Vinki
                 {
                     SetupDMSSprites();
                 }
+
+                // Pups+ hooks
+                pupsPlus = ModManager.ActiveMods.Exists((mod) => mod.id == "iwantbread.slugpupstuff");
+                if (pupsPlus)
+                {
+                    ApplyPupsPlusHooks();
+                }
             }
             catch (Exception ex)
             {

@@ -55,6 +55,7 @@ namespace Vinki
         public static readonly int Grind = 0, ToggleGrind = 1, Graffiti = 2, Spray = 3, Craft = 4, Tag = 5;
 
         public static bool dressMySlugcat;
+        public static bool pupsPlus;
 
         public static int[] queuedGNums = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
         public static bool[] repeatGraffiti = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];

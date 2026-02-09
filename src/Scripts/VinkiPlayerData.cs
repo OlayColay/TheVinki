@@ -20,7 +20,7 @@ public class VinkiPlayerData(Player player)
         public float damagePerTick = totalDamage / timeLeft / creature.Template.baseDamageResistance;
     }
 
-    public readonly bool IsVinki = player.slugcatStats.name == Enums.vinki;
+    public readonly bool IsVinki = player.slugcatStats.name == Enums.vinki || player.slugcatStats.name == Enums.Swaggypup;
 
     public FAtlas TailAtlas;
 

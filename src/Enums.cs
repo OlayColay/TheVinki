@@ -8,6 +8,7 @@ namespace Vinki;
 public static class Enums
 {
     public static readonly SlugcatStats.Name vinki = new(nameof(vinki), false);
+    public static readonly SlugcatStats.Name Swaggypup = new(nameof(Swaggypup), false);
     public static readonly ProcessManager.ProcessID FullscreenVideo = new(nameof(FullscreenVideo), true);
     public static readonly string vinkiStr = nameof(vinki);
 

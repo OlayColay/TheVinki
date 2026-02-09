@@ -1,37 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<TargetFramework>net48</TargetFramework>
-		<AssemblyName>vinki</AssemblyName>
-		<Description></Description>
-		<Version>1.0.0</Version>
-		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<LangVersion>preview</LangVersion>
-	</PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net481</TargetFramework>
+    <LangVersion>preview</LangVersion>
+  </PropertyGroup>
 
-	<PropertyGroup>
-		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-		<Authors>OlayColay</Authors>
-		<Company>OlayColay</Company>
-	</PropertyGroup>
+  <PropertyGroup>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <BaseOutputPath>..\thevinki\newest\plugins</BaseOutputPath>
+  </PropertyGroup>
 
-	<ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
-		<PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" />
-	</ItemGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <OutputPath>..\thevinki\newest\plugins</OutputPath>
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-		<OutputPath>..\thevinki\plugins</OutputPath>
-		<DebugType>portable</DebugType>
-	</PropertyGroup>
+  <ItemGroup>
+    <Reference Include="..\lib\*.dll">
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-		<DebugType>portable</DebugType>
-	</PropertyGroup>
-
-	<ItemGroup>
-		<Reference Include="..\lib\*.dll">
-		  <Private>false</Private>
-		</Reference>
-	</ItemGroup>
-    
 </Project>
