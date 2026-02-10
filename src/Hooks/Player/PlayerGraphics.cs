@@ -210,9 +210,9 @@ namespace Vinki
             self.AddToContainer(sLeaser, rCam, null);
         }
 
-        private static void PlayerGraphics_AddToContainer(On.PlayerGraphics.orig_AddToContainer orig, PlayerGraphics self, RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, FContainer newContatiner)
+        private static void PlayerGraphics_AddToContainer(On.PlayerGraphics.orig_AddToContainer orig, PlayerGraphics self, RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, FContainer newContainer)
         {
-            orig(self, sLeaser, rCam, newContatiner);
+            orig(self, sLeaser, rCam, newContainer);
 
             if (!self.player.IsVinki(out var vinki))
             {
@@ -227,7 +227,7 @@ namespace Vinki
                 //    VLogger.LogInfo("Sprite " + i + ": " + sLeaser.sprites[i].element.name);
                 //}
 
-                var midgroundContainer = rCam.ReturnFContainer("Midground");
+                newContainer ??= rCam.ReturnFContainer("Midground");
 
                 //-- TagIcon goes above face
                 sLeaser.sprites[vinki.tagIconSprite].RemoveFromContainer();
@@ -239,7 +239,7 @@ namespace Vinki
                 sLeaser.sprites[vinki.glassesSprite].RemoveFromContainer();
                 if (!dressMySlugcat || VinkiConfig.GlassesOverDMS.Value)
                 {
-                    midgroundContainer.AddChild(sLeaser.sprites[vinki.glassesSprite]);
+                    newContainer.AddChild(sLeaser.sprites[vinki.glassesSprite]);
                     sLeaser.sprites[vinki.glassesSprite].MoveInFrontOfOtherNode(sLeaser.sprites[9]);
                 }
 
@@ -247,12 +247,12 @@ namespace Vinki
                 {
                     //-- RainPods go behind glasses
                     sLeaser.sprites[vinki.rainPodsSprite].RemoveFromContainer();
-                    midgroundContainer.AddChild(sLeaser.sprites[vinki.rainPodsSprite]);
+                    newContainer.AddChild(sLeaser.sprites[vinki.rainPodsSprite]);
                     sLeaser.sprites[vinki.rainPodsSprite].MoveBehindOtherNode(sLeaser.sprites[vinki.glassesSprite]);
 
                     // Shoes go in front of legs
                     sLeaser.sprites[vinki.shoesSprite].RemoveFromContainer();
-                    midgroundContainer.AddChild(sLeaser.sprites[vinki.shoesSprite]);
+                    newContainer.AddChild(sLeaser.sprites[vinki.shoesSprite]);
                     sLeaser.sprites[vinki.shoesSprite].MoveInFrontOfOtherNode(sLeaser.sprites[4]);
                 }
 
@@ -261,7 +261,7 @@ namespace Vinki
                 {
                     sLeaser.sprites[2].MoveBehindOtherNode(sLeaser.sprites[1]);
                     sLeaser.sprites[vinki.stripesSprite].MoveBehindOtherNode(sLeaser.sprites[1]);
-                    midgroundContainer.AddChild(sLeaser.sprites[vinki.stripesSprite]);
+                    newContainer.AddChild(sLeaser.sprites[vinki.stripesSprite]);
                 }
             }
         }
