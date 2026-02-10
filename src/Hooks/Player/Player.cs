@@ -6,12 +6,10 @@ using SprayCans;
 using static Vinki.Plugin;
 using System.Threading.Tasks;
 using SlugBase.SaveData;
-using Smoke;
 using System.Collections.Generic;
 using Menu;
 using MonoMod.Cil;
 using Mono.Cecil.Cil;
-using System.Xml.Schema;
 
 namespace Vinki
 {
@@ -239,7 +237,7 @@ namespace Vinki
 
             orig(self);
 
-            if (!CanTrickJump.TryGet(self, out bool canTrickJump) || !canTrickJump)
+            if ((!CanTrickJump.TryGet(self, out bool canTrickJump) || !canTrickJump) && (!pupsPlus || !self.isSwaggypup()))
             {
                 return;
             }
@@ -320,7 +318,7 @@ namespace Vinki
         {
             orig(self, eu);
 
-            if (!CanGrind.TryGet(self, out bool canGrind) || !canGrind)
+            if ((!CanGrind.TryGet(self, out bool canGrind) || !canGrind) && (!pupsPlus || !self.isSwaggypup()))
             {
                 return;
             }
@@ -412,6 +410,7 @@ namespace Vinki
             }
 
             // If player isn't holding Grind, no need to do other stuff
+            //VLogger.LogInfo("Player grind check " + self.SlugCatClass.ToString() + " Grind Toggle: " + v.grindToggle);
             if (!self.IsPressed(Grind) && !v.grindToggle)
             {
                 v.isGrindingH = v.isGrindingV = v.isGrindingNoGrav = v.isGrindingVineNoGrav = false;
@@ -607,7 +606,7 @@ namespace Vinki
                 }
 
                 // Resume the combo timer if the direction is switched on a new beam/vine
-                Plugin.VLogger.LogInfo($"{v.isGrindingVine} {v.lastIsGrindingVine} {switchX}");
+                //Plugin.VLogger.LogInfo($"{v.isGrindingVine} {v.lastIsGrindingVine} {switchX}");
                 if (isVinki && v.isGrindingV && (!v.lastIsGrindingV || switchY))
                 {
                     Room.Tile beamTile = self.room.GetTile(self.mainBodyChunk.pos);
@@ -623,14 +622,31 @@ namespace Vinki
             }
 
             // Catch beam with feet if not holding down
-            if (self.bodyMode == Player.BodyModeIndex.Default &&
-                self.input[0].y >= 0 && self.room.GetTile(self.bodyChunks[1].pos).horizontalBeam &&
-                self.bodyChunks[0].vel.y < 0f)
+            Vector2 forgiveness = new(0f, 10f);
+            Room.Tile beamNearFeet = self.room.GetTile(self.bodyChunks[1].pos);
+            if (!beamNearFeet.horizontalBeam)
+            {
+                beamNearFeet = self.room.GetTile(self.bodyChunks[1].pos + forgiveness);
+                if (!beamNearFeet.horizontalBeam)
+                {
+                    beamNearFeet = self.room.GetTile(self.bodyChunks[1].pos - forgiveness);
+                    if (!beamNearFeet.horizontalBeam)
+                    {
+                        beamNearFeet = null;
+                    }
+                }
+            }
+            if (self.isSwaggypup())
+            {
+                VLogger.LogInfo("Check for slugpup catching rail\t" + self.bodyMode.ToString() + "\t" + self.input[0].y + "\t" + beamNearFeet != null);
+            }
+            if (!v.isGrinding && self.bodyMode == Player.BodyModeIndex.Default && self.input[0].y >= 0 && beamNearFeet != null && self.bodyChunks[0].vel.y < 0f)
             {
                 self.room.PlaySound(SoundID.Spear_Bounce_Off_Creauture_Shell, self.mainBodyChunk, false, 0.75f, 1f);
                 self.noGrabCounter = 15;
                 self.animation = Player.AnimationIndex.StandOnBeam;
-                self.bodyChunks[1].pos.y = self.room.MiddleOfTile(self.bodyChunks[1].pos).y + 5f;
+                self.bodyChunks[1].pos.y = self.room.MiddleOfTile(beamNearFeet.X, beamNearFeet.Y).y + 5f;
+                self.bodyChunks[0].pos.y = Mathf.Max(self.bodyChunks[0].pos.y, self.bodyChunks[1].pos.y + 5f);
                 self.bodyChunks[1].vel.y = 0f;
                 self.bodyChunks[0].vel.y = 0f;
             }
@@ -649,6 +665,8 @@ namespace Vinki
             {
                 // Don't swallow/spitup while grinding
                 self.swallowAndRegurgitateCounter = 0;
+                self.slugOnBack?.counter = 0;
+                self.spearOnBack?.counter = 0;
 
                 v.currentTrickScore++;
                 v.comboTotalScore += v.comboSize;
