@@ -5,12 +5,15 @@ using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using MonoMod.RuntimeDetour;
 using MoreSlugcats;
+using RWCustom;
 using SlugpupStuff;
 using SlugpupStuff.PupsPlusCustom;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using static SlugpupStuff.SlugpupStuff;
 
@@ -23,10 +26,16 @@ public static partial class Hooks
     public static void ApplyPupsPlusHooks()
     {
         On.SlugcatStats.HiddenOrUnplayableSlugcat += (orig, i) => i == Enums.Swaggypup || orig(i);
+        On.SlugcatStats.SlugcatFoodMeter += (orig, slugcat) => slugcat == Enums.Swaggypup ? new IntVector2(3, 3) : orig(slugcat);
 
         On.Player.NPCStats.ctor += NPCStats_ctor;
 
-        new Hook(typeof(SlugpupStuff.SlugpupStuff).GetProperty(nameof(aquaticChance), System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static).GetGetMethod(), SlugpupStuff_get_aquaticChance);
+        On.MoreSlugcats.PlayerNPCState.ToString += PlayerNPCState_ToString;
+        On.MoreSlugcats.PlayerNPCState.LoadFromString += PlayerNPCState_LoadFromString;
+
+        On.MoreSlugcats.SlugNPCAI.Move += SlugNPCAI_Move;
+
+        new Hook(typeof(SlugpupStuff.SlugpupStuff).GetProperty(nameof(aquaticChance), BindingFlags.Public | BindingFlags.Static).GetGetMethod(), (Func<float> orig) => orig() + swaggyChance);
 
         new Hook(typeof(SlugpupStuffRemix).GetMethod(nameof(SlugpupStuffRemix.Initialize)), SlugpupStuffRemix_Initialize);
         new Hook(typeof(SlugpupStuffRemix).GetMethod(nameof(SlugpupStuffRemix.Update)), SlugpupStuffRemix_Update);
@@ -72,9 +81,78 @@ public static partial class Hooks
         UnityEngine.Random.state = state;
     }
 
-    public static float SlugpupStuff_get_aquaticChance(Func<float> orig)
+    private static string PlayerNPCState_ToString(On.MoreSlugcats.PlayerNPCState.orig_ToString orig, PlayerNPCState self)
     {
-        return orig() + swaggyChance;
+        string text = orig(self);
+        if (self.player.realizedCreature is Player pup && pup.playerState.TryGetPupState(out var pupNPCState) && pup.isSwaggypup())
+        {
+            string tailStripesColor = ColorUtility.ToHtmlStringRGB(pup.Vinki().StripesColor);
+            Plugin.VLogger.LogInfo("Saving pup tail stripes color: " + tailStripesColor);
+            text += "TailStripesColor<cC>" + tailStripesColor + "<cB>";
+        }
+        return text;
+    }
+
+    private static void PlayerNPCState_LoadFromString(On.MoreSlugcats.PlayerNPCState.orig_LoadFromString orig, PlayerNPCState self, string[] s)
+    {
+        orig(self, s);
+
+        if (self.TryGetPupState(out var pupNPCState) && pupNPCState.Variant == null)
+        {
+            for (int i = 0; i < s.Length - 1; i++)
+            {
+                string[] array = Regex.Split(s[i], "<cC>");
+                if (array[0] == "Variant" && array[1] == "Swaggypup")
+                {
+                    Plugin.VLogger.LogInfo("Retreiving Swaggypup from save");
+                    pupNPCState.Variant = Enums.Swaggypup;
+                }
+            }
+        }
+    }
+
+    private static void SlugNPCAI_Move(On.MoreSlugcats.SlugNPCAI.orig_Move orig, SlugNPCAI self)
+    {
+        orig(self);
+
+        if (!self.isSwaggypup() || self.creature.controlled)
+        {
+            return;
+        }
+        
+        VinkiPlayerData v = self.cat.Vinki();
+        if (self.behaviorType == SlugNPCAI.BehaviorType.OnHead)
+        {
+            v.grindToggle = false;
+            return;
+        }
+
+        Player grabberPlayer = (self.behaviorType == SlugNPCAI.BehaviorType.BeingHeld) ? self.cat.grabbedBy[0].grabber as Player : null;
+        if (grabberPlayer != null)
+        {
+            if (grabberPlayer.IsVinki(out VinkiPlayerData vinki) && (vinki.grindToggle || grabberPlayer.IsPressed(Plugin.Grind)))
+            {
+                v.grindToggle = true;
+            }
+            else
+            {
+                v.grindToggle = false;
+            }
+            return;
+        }
+
+        MovementConnection movementConnection = (self.pathFinder as StandardPather).FollowPath(self.creature.pos, true);
+        //Plugin.VLogger.LogInfo("SlugNPC_Move " + movementConnection.ToString() + " " + self.behaviorType.ToString());
+        bool tryLandOnBeam = movementConnection.type <= MovementConnection.MovementType.SemiDiagonalReach && movementConnection.type >= MovementConnection.MovementType.LizardTurn && 
+            self.catchDelay == 0 && self.cat.room.GetTile(movementConnection.destinationCoord).horizontalBeam && !self.OnHorizontalBeam();
+        if (((self.OnAnyBeam() && self.cat.input[0].AnyDirectionalInput) || self.catchPoles || tryLandOnBeam) && grabberPlayer == null)
+        {
+            v.grindToggle = true;
+        }
+        else
+        {
+            v.grindToggle = false;
+        }
     }
 
     public static void SlugpupStuffRemix_Initialize(Action<SlugpupStuffRemix> orig, SlugpupStuffRemix self)

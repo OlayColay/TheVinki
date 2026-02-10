@@ -5,6 +5,7 @@ using RWCustom;
 using SlugBase.DataTypes;
 using Smoke;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -118,7 +119,17 @@ public class VinkiPlayerData(Player player)
 
         if (pg.player.slugcatStats.name == Enums.Swaggypup)
         {
-            StripesColor = (BodyColor == Color.white) ? new Color(0.62f, 0.835f, 1f) : GenerateTrueComplementaryColor(pg.player.ShortCutColor());
+            if (pg.player.playerState is PlayerNPCState npcState
+                && npcState.unrecognizedSaveStrings.TryGetValue("TailStripesColor", out string colorHex)
+                && ColorUtility.TryParseHtmlString("#" + colorHex, out StripesColor))
+            {
+                Plugin.VLogger.LogInfo("Found tail stripes color from save: " + colorHex);
+                npcState.unrecognizedSaveStrings.Remove("TailStripesColor");
+            }
+            else
+            {
+                StripesColor = (BodyColor == Color.white) ? new Color(0.62f, 0.835f, 1f) : GenerateTrueComplementaryColor(pg.player.ShortCutColor());
+            }
             Plugin.VLogger.LogInfo("Body color: " + pg.player.ShortCutColor().ToString() + "\tTail Stripes color: " + StripesColor.ToString());
         }
     }
