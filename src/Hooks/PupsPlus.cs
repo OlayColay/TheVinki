@@ -79,12 +79,15 @@ public static partial class Hooks
         self.Dark = (UnityEngine.Random.Range(0f, 1f) <= 0.1f + self.Stealth * 0.15f);
         self.L = Mathf.Pow(UnityEngine.Random.Range(self.Dark ? 0.85f : 0.75f, 1f), 1.5f - self.Stealth);
         UnityEngine.Random.state = state;
+        player.abstractCreature.creatureTemplate = new(player.Template);
+        player.Template.pathingPreferencesTiles[(int)AItile.Accessibility.Climb].resistance = 0.5f;
+        player.Template.pathingPreferencesTiles[(int)AItile.Accessibility.Corridor].resistance = 2f;
     }
 
     private static string PlayerNPCState_ToString(On.MoreSlugcats.PlayerNPCState.orig_ToString orig, PlayerNPCState self)
     {
         string text = orig(self);
-        if (self.player.realizedCreature is Player pup && pup.playerState.TryGetPupState(out var pupNPCState) && pup.isSwaggypup())
+        if (self.player.realizedCreature is Player pup && pup.playerState.TryGetPupState(out _) && pup.isSwaggypup())
         {
             string tailStripesColor = ColorUtility.ToHtmlStringRGB(pup.Vinki().StripesColor);
             Plugin.VLogger.LogInfo("Saving pup tail stripes color: " + tailStripesColor);
