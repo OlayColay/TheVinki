@@ -646,7 +646,11 @@ namespace Vinki
                 self.noGrabCounter = 15;
                 self.animation = Player.AnimationIndex.StandOnBeam;
                 self.bodyChunks[1].pos.y = self.room.MiddleOfTile(beamNearFeet.X, beamNearFeet.Y).y + 5f;
-                self.bodyChunks[0].pos.y = Mathf.Max(self.bodyChunks[0].pos.y, self.bodyChunks[1].pos.y + 5f);
+                if (self.bodyChunks[0].vel.y < -3f || self.animation != Player.AnimationIndex.Flip)
+                {
+                    // Stabilize head if we were falling fast
+                    self.bodyChunks[0].pos.y = Mathf.Max(self.bodyChunks[0].pos.y, self.bodyChunks[1].pos.y + 5f);
+                }
                 self.bodyChunks[1].vel.y = 0f;
                 self.bodyChunks[0].vel.y = 0f;
             }
