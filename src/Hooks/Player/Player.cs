@@ -893,7 +893,7 @@ namespace Vinki
         {
             if (player.slugcatStats.name == Enums.Swaggypup)
             {
-                if (a == null || a.grabbed == null)
+                if (a == null || a.grabbed == null || AbstractPhysicalObject.IsObjectImportant(a.grabbed.abstractPhysicalObject, player.room.world))
                 {
                     return 0;
                 }
@@ -1083,9 +1083,9 @@ namespace Vinki
             List<BodyChunk> taggableBodyChunks = [];
             foreach (var creature in self.room.abstractRoom.creatures.Select((absCreature) => absCreature.realizedCreature).Where((c) => c != null))
             {
-                if (creature is Spider || !creature.canBeHitByWeapons || creature.dead || creature == self || (creature is Lizard && (creature as Lizard).AI.friendTracker.friend != null) ||
-                    creature is Fly || (creature is Centipede && (creature as Centipede).Small) || creature is Hazer || creature is VultureGrub || creature is SmallNeedleWorm ||
-                    (creature is Player && (creature as Player).abstractCreature.abstractAI != null) || creature is Leech || creature is TubeWorm)
+                if (creature is Spider || !creature.canBeHitByWeapons || creature.dead || creature == self || (creature is Lizard liz && liz.AI.friendTracker.friend != null) ||
+                    creature is Fly || (creature is Centipede centipede && centipede.Small) || creature is Hazer || creature is VultureGrub || creature is SmallNeedleWorm ||
+                    (creature is Player player && (self.slugcatStats.name == Enums.Swaggypup || player.abstractCreature.abstractAI != null)) || creature is Leech || creature is TubeWorm)
                 {
                     continue;
                 }
@@ -1125,7 +1125,7 @@ namespace Vinki
         private static void TagCreature(Player self)
         {
             VinkiPlayerData v = self.Vinki();
-            if (v.tagLag > 0)
+            if (v.tagLag > 0 || v.tagableBodyChunk == null || v.tagableBodyChunk.owner is not Creature)
             {
                 return;
             }

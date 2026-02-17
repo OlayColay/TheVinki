@@ -8,6 +8,7 @@ using MoreSlugcats;
 using RWCustom;
 using SlugpupStuff;
 using SlugpupStuff.PupsPlusCustom;
+using SprayCans;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +35,7 @@ public static partial class Hooks
         On.MoreSlugcats.PlayerNPCState.LoadFromString += PlayerNPCState_LoadFromString;
 
         On.MoreSlugcats.SlugNPCAI.Move += SlugNPCAI_Move;
+        On.MoreSlugcats.SlugNPCAI.LethalWeaponScore += SlugNPCAI_LethalWeaponScore;
 
         new Hook(typeof(SlugpupStuff.SlugpupStuff).GetProperty(nameof(aquaticChance), BindingFlags.Public | BindingFlags.Static).GetGetMethod(), (Func<float> orig) => orig() + swaggyChance);
 
@@ -122,8 +124,21 @@ public static partial class Hooks
         {
             return;
         }
-        
+
         VinkiPlayerData v = self.cat.Vinki();
+        Plugin.VLogger.LogInfo("Should tag? " + self.behaviorType?.ToString() + '\t' + 
+            self.threatTracker?.mostThreateningCreature?.representedCreature?.realizedCreature?.ToString() + '\t' +
+            v?.tagableCreature?.ToString());
+        if ((self.behaviorType == SlugNPCAI.BehaviorType.Attacking || self.cat.input[0].thrw) && self.cat.grasps[0]?.grabbed is SprayCan can && can.Abstr.uses > 0)
+        {
+            self.cat.input[0].thrw = false;
+            if (
+                self.threatTracker.mostThreateningCreature.representedCreature.realizedCreature == v.tagableCreature)
+            {
+                TagCreature(self.cat);
+            }
+        }
+        
         if (self.behaviorType == SlugNPCAI.BehaviorType.OnHead)
         {
             v.grindToggle = false;
@@ -156,6 +171,31 @@ public static partial class Hooks
         {
             v.grindToggle = false;
         }
+    }
+
+    private static float SlugNPCAI_LethalWeaponScore(On.MoreSlugcats.SlugNPCAI.orig_LethalWeaponScore orig, SlugNPCAI self, PhysicalObject obj, Creature target)
+    {
+        if (obj is SprayCan can && self.isSwaggypup())
+        {
+            if (can.Abstr.uses > 9000)
+            {
+                return 7f;
+            }
+            else if (can.Abstr.uses > 0)
+            {
+                return 5f;
+            }
+            else
+            {
+                if (!self.WantsToEatThis(target))
+                {
+                    return 0.3f;
+                }
+                return 10f;
+            }
+        }
+
+        return orig(self, obj, target);
     }
 
     public static void SlugpupStuffRemix_Initialize(Action<SlugpupStuffRemix> orig, SlugpupStuffRemix self)

@@ -190,7 +190,7 @@ public class VinkiPlayerData(Player player)
         string roomName = room.abstractRoom.name;
         if (beamsInCombo.ContainsKey(roomName))
         {
-            if (beamsInCombo[roomName].Any((IEnumerable<Room.Tile> oldBeam) => oldBeam.First() == beam.First() && oldBeam.Last() == beam.Last()))
+            if (beamsInCombo[roomName].Any(oldBeam => oldBeam.First() == beam.First() && oldBeam.Last() == beam.Last()))
             {
                 return false;
             }

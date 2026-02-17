@@ -160,7 +160,7 @@ namespace Vinki
             }
             else
             {
-                string faceSprite = "";
+                string faceSprite;
                 try
                 {
                     faceSprite = GetDMSFaceSprite(self.player);
