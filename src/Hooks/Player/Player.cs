@@ -1122,7 +1122,7 @@ namespace Vinki
             }
         }
 
-        private static void TagCreature(Player self)
+        public static void TagCreature(Player self)
         {
             VinkiPlayerData v = self.Vinki();
             if (v.tagLag > 0 || v.tagableBodyChunk == null || v.tagableBodyChunk.owner is not Creature)

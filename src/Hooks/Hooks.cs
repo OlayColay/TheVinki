@@ -382,13 +382,6 @@ namespace Vinki
                 {
                     SetupDMSSprites();
                 }
-
-                // Pups+ hooks
-                pupsPlus = ModManager.ActiveMods.Exists((mod) => mod.id == "iwantbread.slugpupstuff");
-                if (pupsPlus)
-                {
-                    ApplyPupsPlusHooks();
-                }
             }
             catch (Exception ex)
             {
@@ -401,11 +394,10 @@ namespace Vinki
                 return;
             }
 
-            improvedInputVersion = Int32.Parse(ModManager.ActiveMods.First((mod) => mod.id == "improved-input-config").version.Substring(0, 1));
+            improvedInputVersion = int.Parse(ModManager.ActiveMods.First((mod) => mod.id == "improved-input-config").version.Substring(0, 1));
 
             try
             {
-
                 if (ModManager.ActiveMods.Exists((mod) => mod.id == "pushtomeow"))
                 {
                     try
@@ -415,6 +407,27 @@ namespace Vinki
                     catch
                     {
                         throw new Exception("Push to Meow enabled but also not enabled???");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                VLogger.LogError(ex.Message);
+            }
+            
+            try
+            {
+                // Pups+ hooks
+                pupsPlus = ModManager.ActiveMods.Exists((mod) => mod.id == "iwantbread.slugpupstuff");
+                if (pupsPlus)
+                {
+                    try
+                    {
+                        PupsPlusHooks.ApplyPupsPlusHooks();
+                    }
+                    catch
+                    {
+                        throw new Exception("Pups+ enabled but also not enabled???");
                     }
                 }
             }

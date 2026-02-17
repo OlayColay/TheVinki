@@ -21,7 +21,7 @@ using static SlugpupStuff.SlugpupStuff;
 namespace Vinki;
 
 [BepInDependency("iwantbread.slugpupstuff", BepInDependency.DependencyFlags.SoftDependency)]
-public static partial class Hooks
+public static class PupsPlusHooks
 {
     private static ILHook GetSlugpupVariant, RegisterSpawnPupCommand;
     public static void ApplyPupsPlusHooks()
@@ -135,7 +135,7 @@ public static partial class Hooks
             if (
                 self.threatTracker.mostThreateningCreature.representedCreature.realizedCreature == v.tagableCreature)
             {
-                TagCreature(self.cat);
+                Hooks.TagCreature(self.cat);
             }
         }
         
@@ -175,24 +175,24 @@ public static partial class Hooks
 
     private static float SlugNPCAI_LethalWeaponScore(On.MoreSlugcats.SlugNPCAI.orig_LethalWeaponScore orig, SlugNPCAI self, PhysicalObject obj, Creature target)
     {
-        if (obj is SprayCan can && self.isSwaggypup())
+        if (obj is SprayCan can)
         {
-            if (can.Abstr.uses > 9000)
+            if (self.isSwaggypup())
             {
-                return 7f;
-            }
-            else if (can.Abstr.uses > 0)
-            {
-                return 5f;
-            }
-            else
-            {
-                if (!self.WantsToEatThis(target))
+                if (can.Abstr.uses > 9000)
                 {
-                    return 0.3f;
+                    return 7f;
                 }
-                return 10f;
+                else if (can.Abstr.uses > 0)
+                {
+                    return 5f;
+                }
             }
+            if (!self.WantsToEatThis(target))
+            {
+                return 0.3f;
+            }
+            return 10f;
         }
 
         return orig(self, obj, target);
