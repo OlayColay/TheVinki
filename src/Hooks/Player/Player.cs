@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Menu;
 using MonoMod.Cil;
 using Mono.Cecil.Cil;
+using MoreSlugcats;
 
 namespace Vinki
 {
@@ -731,7 +732,7 @@ namespace Vinki
             // Spray a random graffiti, or tag a creature if there's one to tag
             if (IsPressingGraffiti(self) || !improvedInput)
             {
-                if (self.JustPressed(Tag) && self.SlugCatClass == Enums.vinki && self.Vinki().tagableBodyChunk != null)
+                if (self.JustPressed(Tag) && self.IsVinki(out VinkiPlayerData vinki) && vinki.tagableBodyChunk != null)
                 {
                     if (!improvedInput)
                     {
@@ -751,11 +752,11 @@ namespace Vinki
 
             orig(self, eu);
 
-            if (self.SlugCatClass != Enums.vinki)
+            if (!self.IsVinki(out VinkiPlayerData v))
             {
                 return;
             }
-            VinkiPlayerData v = self.Vinki();
+            VLogger.LogInfo("Slugcat class: " + self.slugcatStats.name.ToString());
 
             // Update grindToggle if needed
             if (self.JustPressed(ToggleGrind) && (!IsPressingGraffiti(self) || !VinkiConfig.UseGraffitiButton.Value))
@@ -764,19 +765,22 @@ namespace Vinki
             }
 
             // Craft SprayCan
-            else if (self.IsPressed(Craft) && IsPressingGraffiti(self))
+            else if (self.slugcatStats.name == Enums.Swaggypup || (self.IsPressed(Craft) && IsPressingGraffiti(self)))
             {
-                int sprayCount = CanCraftSprayCan(self.grasps[0], self.grasps[1]);
-                //VLogger.LogInfo("Crafted spray count: " + sprayCount);
+                int sprayCount = CanCraftSprayCan(self.grasps[0], self.grasps[1], self);
+                VLogger.LogInfo("Crafted spray count: " + sprayCount);
                 if (sprayCount > 0)
                 {
                     v.craftCounter++;
 
                     if (v.craftCounter > 30)
                     {
-                        for (int num13 = 0; num13 < 2; num13++)
+                        for (int graspNum = 0; graspNum < self.grasps.Length; graspNum++)
                         {
-                            self.bodyChunks[0].pos += Custom.DirVec(self.grasps[num13].grabbed.firstChunk.pos, self.bodyChunks[0].pos) * 2f;
+                            if (self.grasps[graspNum]?.grabbed != null)
+                            {
+                                self.bodyChunks[0].pos += Custom.DirVec(self.grasps[graspNum].grabbed.firstChunk.pos, self.bodyChunks[0].pos) * 2f;
+                            }
                             (self.graphicsModule as PlayerGraphics).swallowing = 20;
                         }
 
@@ -796,24 +800,27 @@ namespace Vinki
                         // Remove grabbed objects used for crafting
                         for (int j = 0; j < self.grasps.Length; j++)
                         {
-                            AbstractPhysicalObject apo = self.grasps[j].grabbed.abstractPhysicalObject;
-                            if (self.room.game.session is StoryGameSession)
+                            if (self.grasps[j]?.grabbed != null)
                             {
-                                (self.room.game.session as StoryGameSession).RemovePersistentTracker(apo);
-                            }
-                            self.ReleaseGrasp(j);
-                            for (int k = apo.stuckObjects.Count - 1; k >= 0; k--)
-                            {
-                                if (apo.stuckObjects[k] is AbstractPhysicalObject.AbstractSpearStick && 
-                                    apo.stuckObjects[k].A.type == AbstractPhysicalObject.AbstractObjectType.Spear && 
-                                    apo.stuckObjects[k].A.realizedObject != null)
+                                AbstractPhysicalObject apo = self.grasps[j].grabbed.abstractPhysicalObject;
+                                if (self.room.game.session is StoryGameSession)
                                 {
-                                    (apo.stuckObjects[k].A.realizedObject as Spear).ChangeMode(Weapon.Mode.Free);
+                                    (self.room.game.session as StoryGameSession).RemovePersistentTracker(apo);
                                 }
+                                self.ReleaseGrasp(j);
+                                for (int k = apo.stuckObjects.Count - 1; k >= 0; k--)
+                                {
+                                    if (apo.stuckObjects[k] is AbstractPhysicalObject.AbstractSpearStick &&
+                                        apo.stuckObjects[k].A.type == AbstractPhysicalObject.AbstractObjectType.Spear &&
+                                        apo.stuckObjects[k].A.realizedObject != null)
+                                    {
+                                        (apo.stuckObjects[k].A.realizedObject as Spear).ChangeMode(Weapon.Mode.Free);
+                                    }
+                                }
+                                apo.LoseAllStuckObjects();
+                                apo.realizedObject.RemoveFromRoom();
+                                self.room.abstractRoom.RemoveEntity(apo);
                             }
-                            apo.LoseAllStuckObjects();
-                            apo.realizedObject.RemoveFromRoom();
-                            self.room.abstractRoom.RemoveEntity(apo);
                         }
 
                         self.SlugcatGrab(abstr.realizedObject, self.FreeHand());
@@ -882,8 +889,25 @@ namespace Vinki
             }
         }
 
-        private static int CanCraftSprayCan(Creature.Grasp a, Creature.Grasp b)
+        private static int CanCraftSprayCan(Creature.Grasp a, Creature.Grasp b, Player player)
         {
+            if (player.slugcatStats.name == Enums.Swaggypup)
+            {
+                if (a == null || a.grabbed == null)
+                {
+                    return 0;
+                }
+                AbstractPhysicalObject.AbstractObjectType abstractObjectType = a.grabbed.abstractPhysicalObject.type;
+
+                VLogger.LogInfo("Try pup crafting: " + player.AI.GetFoodType(a.grabbed).ToString() + '\t' + player.FoodInStomach + '/' + player.MaxFoodInStomach);
+                if (colorfulItems.ContainsKey(abstractObjectType) && 
+                    (player.AI.GetFoodType(a.grabbed) == SlugNPCAI.Food.NotCounted || player.FoodInStomach >= player.MaxFoodInStomach))
+                {
+                    return colorfulItems[abstractObjectType];
+                }
+                return 0;
+            }
+
             //VLogger.LogInfo("CRAFTING: " + (a == null ? "nothing" : a.grabbed.abstractPhysicalObject.type.ToString()) + " + " + (b == null ? "nothing" : b.grabbed.abstractPhysicalObject.type.ToString()));
             // You can craft while moving
             if (a == null || a.grabbed == null || b == null || b.grabbed == null)
@@ -948,7 +972,8 @@ namespace Vinki
 
         private static bool IsPressingGraffiti(Player self)
         {
-            return self.IsPressed(Graffiti) || (VinkiConfig.UpGraffiti.Value && self.input[0].y > 0f) || !VinkiConfig.UseGraffitiButton.Value;
+            return self.IsPressed(Graffiti) || (VinkiConfig.UpGraffiti.Value && self.input[0].y > 0f) || 
+                !VinkiConfig.UseGraffitiButton.Value || self.slugcatStats.name == Enums.Swaggypup;
         }
 
         private static void SprayGraffitiInGame(Player self)

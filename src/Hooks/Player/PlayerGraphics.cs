@@ -449,11 +449,10 @@ namespace Vinki
         {
             orig(self);
 
-            if (self.player.SlugCatClass != Enums.vinki)
+            if (!self.player.IsVinki(out VinkiPlayerData v))
             {
                 return;
             }
-            VinkiPlayerData v = self.player.Vinki();
 
             if (v.craftCounter > 0)
             {

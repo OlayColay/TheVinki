@@ -147,7 +147,7 @@ public static partial class Hooks
         MovementConnection movementConnection = (self.pathFinder as StandardPather).FollowPath(self.creature.pos, true);
         //Plugin.VLogger.LogInfo("SlugNPC_Move " + movementConnection.ToString() + " " + self.behaviorType.ToString());
         bool tryLandOnBeam = movementConnection.type <= MovementConnection.MovementType.SemiDiagonalReach && movementConnection.type >= MovementConnection.MovementType.LizardTurn && 
-            self.catchDelay == 0 && self.cat.room.GetTile(movementConnection.destinationCoord).horizontalBeam && !self.OnHorizontalBeam();
+            self.catchDelay == 0 && !self.OnHorizontalBeam();
         if (((self.OnAnyBeam() && self.cat.input[0].AnyDirectionalInput) || self.catchPoles || tryLandOnBeam) && grabberPlayer == null)
         {
             v.grindToggle = true;
