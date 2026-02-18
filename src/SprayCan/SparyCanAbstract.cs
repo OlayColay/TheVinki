@@ -17,7 +17,6 @@ sealed class SprayCanAbstract : AbstractPhysicalObject
 
     public SprayCanAbstract(World world, WorldCoordinate pos, EntityID ID, int uses = 3) : base(world, SprayCanFisob.SprayCan, null, pos, ID)
     {
-        this.uses = uses;
         scaleX = 0.6f;
         scaleY = 0.6f;
 
@@ -30,6 +29,7 @@ sealed class SprayCanAbstract : AbstractPhysicalObject
         {
             uses = 0;
         }
+        this.uses = uses;
 
         if (uses <= 5)
         {
