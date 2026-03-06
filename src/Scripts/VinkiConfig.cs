@@ -16,7 +16,6 @@ namespace Vinki
         public static Configurable<int> GraffitiFadeTime;
         public static Configurable<bool> DeleteGraffiti;
         public static Configurable<bool> RestoreGraffitiOnUpdate;
-        public static Configurable<bool> GlassesOverDMS;
         public static Configurable<bool> TagDamageJolly;
         public static Configurable<bool> UseGraffitiButton;
         public static Configurable<bool> TokensInEveryCampaign;
@@ -64,10 +63,6 @@ namespace Vinki
             CatPebbles = config.Bind("catPebbles", true, new ConfigurableInfo("RESTART FOR CHANGES TO TAKE EFFECT! Show art containing depictions of iterators as catmaids. Disable if you think that's weird.", tags:
             [
                 "Catmaid Iterators"
-            ]));
-            GlassesOverDMS = config.Bind("glassesOverDMS", true, new ConfigurableInfo("Wear Vinki's glasses on top of the current DMS skin for Vinki. Only works if you have DMS enabled.", tags:
-            [
-                "Wear Glasses Over DMS Skin"
             ]));
             GraffitiFadeTime = config.Bind("graffitiFadeTime", 5, new ConfigurableInfo("How many cycles sprayed graffiti should last (excludes story-related graffiti). Use -1 for infinite cycles.", new ConfigAcceptableRange<int>(-1, 999), tags:
             [
@@ -121,12 +116,11 @@ namespace Vinki
             AddCheckbox(SkipIntro, 330f);
             AddTitle(0, "Visuals", 290f);
             AddCheckbox(CatPebbles, 260f);
-            AddCheckbox(GlassesOverDMS, 230f);
-            AddIntBox(GraffitiFadeTime, 200f);
-            AddCheckbox(DeleteGraffiti, 170f);
-            AddCheckbox(ComboHUD, 140f);
-            AddTitle(0, "Graffiti Files", 100f);
-            AddCheckbox(RestoreGraffitiOnUpdate, 80f);
+            AddIntBox(GraffitiFadeTime, 230f);
+            AddCheckbox(DeleteGraffiti, 200f);
+            AddCheckbox(ComboHUD, 170f);
+            AddTitle(0, "Graffiti Files", 130f);
+            AddCheckbox(RestoreGraffitiOnUpdate, 110f);
             AddButton(
                 "Open Graffiti Folder",
                 "Click to open the Graffiti Folder in your file explorer for easily adding custom graffiti",
@@ -159,12 +153,6 @@ namespace Vinki
             {
                 UseGraffitiButton.BoundUIconfig.Hide();
                 UpGraffiti.BoundUIconfig.Hide();
-            }
-
-            // Hide DMS option if there is no DMS
-            if (!Plugin.dressMySlugcat)
-            {
-                GlassesOverDMS.BoundUIconfig.Hide();
             }
 
             // Vinki Graffiti tab

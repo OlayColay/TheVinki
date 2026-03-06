@@ -1,21 +1,23 @@
-﻿using System;
-using UnityEngine;
-using System.Collections.Generic;
-using System.Linq;
-using System.IO;
-using SprayCans;
-using Fisobs.Core;
-using MoreSlugcats;
-using static Vinki.Plugin;
-using MonoMod.Cil;
-using Mono.Cecil.Cil;
-using SlugBase;
-using BepInEx;
-using DressMySlugcat;
-using SlugBase.SaveData;
-using MonoMod.RuntimeDetour;
-using PushToMeowMod;
+﻿using BepInEx;
 using BepInEx.Logging;
+using DressMySlugcat;
+using Fisobs.Core;
+using Mono.Cecil.Cil;
+using MonoMod.Cil;
+using MonoMod.RuntimeDetour;
+using MoreSlugcats;
+using PushToMeowMod;
+using SlugBase;
+using SlugBase.SaveData;
+using SlugpupStuff.PupsPlusCustom;
+using SprayCans;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using UnityEngine;
+using static Vinki.Plugin;
 
 namespace Vinki
 {
@@ -440,29 +442,74 @@ namespace Vinki
         private static void SetupDMSSprites()
         {
             //-- The ID of the spritesheet we will be using as the default sprites for our slugcat
-            var sheetID = "olaycolay.thevinki";
+            //var sheetID = "olaycolay.thevinki";
+
+            List<SpriteDefinitions.AvailableSprite> vinkiSprites = [
+                new() {
+                    Name = "GLASSES",
+                    Description = "Glasses",
+                    GallerySprite = "GlassesA0",
+                    RequiredSprites = [
+                        "GlassesA0", "GlassesA1", "GlassesA2", "GlassesA3", "GlassesA4", "GlassesA5", "GlassesA6", "GlassesA7", "GlassesA8",
+                        "GlassesB0", "GlassesB1", "GlassesB2", "GlassesB3", "GlassesB4", "GlassesB5", "GlassesB6", "GlassesB7", "GlassesB8",
+                        "GlassesDead", "GlassesStunned"
+                    ],
+                    Slugcats = [Enums.vinkiStr, Enums.Swaggypup.ToString()]
+                },
+                //new() {
+                //    Name = "TAIL STRIPES",
+                //    Description = "Tail Stripes",
+                //    GallerySprite = "VinkiTail",
+                //    RequiredSprites = ["VinkiTail"],
+                //    Slugcats = [Enums.vinkiStr, Enums.Swaggypup.ToString()]
+                //},
+                new() {
+                    Name = "RAIN PODS",
+                    Description = "Rain Pods",
+                    GallerySprite = "RainPodsA0",
+                    RequiredSprites = [
+                        "RainPodsA0", "RainPodsA1", "RainPodsA2", "RainPodsA3", "RainPodsA4", "RainPodsA5", "RainPodsA6", "RainPodsA7", "RainPodsA8", "RainPodsA9",
+                        "RainPodsA10", "RainPodsA11", "RainPodsA12", "RainPodsA13", "RainPodsA14", "RainPodsA15", "RainPodsA16", "RainPodsA17"
+                    ],
+                    Slugcats = [Enums.vinkiStr, Enums.Swaggypup.ToString()]
+                },
+                new() {
+                    Name = "SHOES",
+                    Description = "Shoes",
+                    GallerySprite = "ShoesA0",
+                    RequiredSprites = [
+                        "ShoesA0", "ShoesA1", "ShoesA2", "ShoesA3", "ShoesA4", "ShoesA5", "ShoesA6",
+                        "ShoesAClimbing0", "ShoesAClimbing1", "ShoesAClimbing2", "ShoesAClimbing3", "ShoesAClimbing4", "ShoesAClimbing5", "ShoesAClimbing6",
+                        "ShoesACrawling0", "ShoesACrawling1", "ShoesACrawling2", "ShoesACrawling3", "ShoesACrawling4", "ShoesACrawling5",
+                        "ShoesAOnPole0", "ShoesAOnPole1", "ShoesAOnPole2", "ShoesAOnPole3", "ShoesAOnPole4", "ShoesAOnPole5", "ShoesAOnPole6",
+                        "ShoesAAir0", "ShoesAAir1", "ShoesAPole", "ShoesAVerticalPole", "ShoesAWall",
+                    ],
+                    Slugcats = [Enums.vinkiStr, Enums.Swaggypup.ToString()]
+                },
+            ];
+            SpriteDefinitions.AvailableSprites = [.. SpriteDefinitions.AvailableSprites, .. vinkiSprites];
 
             //-- Each player slot (0, 1, 2, 3) can be customized individually
-            for (int i = 0; i < 4; i++)
-            {
-                SpriteDefinitions.AddSlugcatDefault(new Customization()
-                {
-                    //-- Make sure to use the same ID as the one used for our slugcat
-                    Slugcat = Enums.vinki.ToString(),
-                    PlayerNumber = i,
-                    CustomSprites =
-                    [
-                        //-- You can customize which spritesheet and color each body part will use
-                        new() { Sprite = "HEAD", SpriteSheetID = sheetID + i },
-                        //new CustomSprite() { Sprite = "FACE", SpriteSheetID = sheetID + i },
-                        new() { Sprite = "BODY", SpriteSheetID = sheetID + i },
-                        new() { Sprite = "ARMS", SpriteSheetID = sheetID + i },
-                        new() { Sprite = "HIPS", SpriteSheetID = sheetID + i },
-                        new() { Sprite = "LEGS", SpriteSheetID = sheetID + i },
-                        new() { Sprite = "TAIL", SpriteSheetID = sheetID + i }
-                    ],
-                });
-            }
+            //for (int i = 0; i < 4; i++)
+            //{
+            //    SpriteDefinitions.AddSlugcatDefault(new Customization()
+            //    {
+            //        //-- Make sure to use the same ID as the one used for our slugcat
+            //        Slugcat = Enums.vinkiStr,
+            //        PlayerNumber = i,
+            //        CustomSprites =
+            //        [
+            //            //-- You can customize which spritesheet and color each body part will use
+            //            new() { Sprite = "HEAD", SpriteSheetID = sheetID + i },
+            //            //new() { Sprite = "FACE", SpriteSheetID = sheetID + i },
+            //            new() { Sprite = "BODY", SpriteSheetID = sheetID + i },
+            //            new() { Sprite = "ARMS", SpriteSheetID = sheetID + i },
+            //            new() { Sprite = "HIPS", SpriteSheetID = sheetID + i },
+            //            new() { Sprite = "LEGS", SpriteSheetID = sheetID + i },
+            //            new() { Sprite = "TAIL", SpriteSheetID = sheetID + i }
+            //        ],
+            //    });
+            //}
         }
 
         public static void SetPushToMeow()

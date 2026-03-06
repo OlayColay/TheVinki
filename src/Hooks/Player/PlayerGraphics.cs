@@ -1,4 +1,6 @@
-﻿using JollyCoop;
+﻿using BepInEx;
+using DressMySlugcat.Hooks;
+using JollyCoop;
 using RWCustom;
 using SprayCans;
 using System;
@@ -143,47 +145,16 @@ namespace Vinki
             vinki.shoesSprite = vinki.rainPodsSprite + 1;
             self.Tag().affectedSprites = [];
 
-            Array.Resize(ref sLeaser.sprites, sLeaser.sprites.Length + 1);
+            Array.Resize(ref sLeaser.sprites, sLeaser.sprites.Length + 5);
             sLeaser.sprites[vinki.tagIconSprite] = new FSprite("TagIcon")
             {
                 isVisible = false
             };
 
-            if (!dressMySlugcat)
-            {
-                Array.Resize(ref sLeaser.sprites, sLeaser.sprites.Length + 4);
-
-                sLeaser.sprites[vinki.stripesSprite] = new TriangleMesh("Futile_White", (sLeaser.sprites[2] as TriangleMesh).triangles, false);
-                sLeaser.sprites[vinki.shoesSprite] = new FSprite("ShoesA0");
-                sLeaser.sprites[vinki.rainPodsSprite] = new FSprite("RainPodsA0");
-                sLeaser.sprites[vinki.glassesSprite] = new FSprite("GlassesA0");
-            }
-            else
-            {
-                string faceSprite;
-                try
-                {
-                    faceSprite = GetDMSFaceSprite(self.player);
-                }
-                catch (Exception e)
-                {
-                    throw new Exception("Somehow DMS is active yet it isn't? " + e.Message);
-                }
-                switch (faceSprite)
-                {
-                    case "olaycolay.thevinki0":
-                    case "olaycolay.thevinki1":
-                    case "olaycolay.thevinki2":
-                    case "olaycolay.thevinki3":
-                    case "olaycolay.thevinki4":
-                    case "olaycolay.thevinki5":
-                        break;
-                    default:
-                        Array.Resize(ref sLeaser.sprites, sLeaser.sprites.Length + 1);
-                        sLeaser.sprites[vinki.glassesSprite] = new FSprite("GlassesA0");
-                        break;
-                }
-            }
+            sLeaser.sprites[vinki.stripesSprite] = new TriangleMesh("Futile_White", (sLeaser.sprites[2] as TriangleMesh).triangles, false);
+            sLeaser.sprites[vinki.shoesSprite] = new FSprite("ShoesA0");
+            sLeaser.sprites[vinki.rainPodsSprite] = new FSprite("RainPodsA0");
+            sLeaser.sprites[vinki.glassesSprite] = new FSprite("GlassesA0");
 
             if (sLeaser.sprites.Length > vinki.stripesSprite && sLeaser.sprites[vinki.stripesSprite] is TriangleMesh tail && vinki.TailAtlas.elements != null && vinki.TailAtlas.elements.Count > 0)
             {
@@ -237,11 +208,8 @@ namespace Vinki
 
                 //-- Glasses go in front of face
                 sLeaser.sprites[vinki.glassesSprite].RemoveFromContainer();
-                if (!dressMySlugcat || VinkiConfig.GlassesOverDMS.Value)
-                {
-                    newContainer.AddChild(sLeaser.sprites[vinki.glassesSprite]);
-                    sLeaser.sprites[vinki.glassesSprite].MoveInFrontOfOtherNode(sLeaser.sprites[9]);
-                }
+                newContainer.AddChild(sLeaser.sprites[vinki.glassesSprite]);
+                sLeaser.sprites[vinki.glassesSprite].MoveInFrontOfOtherNode(sLeaser.sprites[9]);
 
                 if (sLeaser.sprites.Length > vinki.shoesSprite)
                 {
@@ -277,18 +245,6 @@ namespace Vinki
             if (sLeaser.sprites.Length > vinki.stripesSprite)
             {
                 sLeaser.sprites[vinki.stripesSprite].color = vinki.StripesColor;
-            }
-
-            // Set color to white if DMS is on (so that skins show the correct color)
-            if (dressMySlugcat)
-            {
-                for (int i = 0; i < sLeaser.sprites.Length; i++)
-                {
-                    if (i != 11)
-                    {
-                        sLeaser.sprites[i].color = Color.white;
-                    }
-                }
             }
 
             // Moon blue easter egg
@@ -350,8 +306,21 @@ namespace Vinki
                 sLeaser.sprites[vinki.rainPodsSprite].anchorY = sLeaser.sprites[3].anchorY;
                 sLeaser.sprites[vinki.rainPodsSprite].x = rainPodsPos.x;
                 sLeaser.sprites[vinki.rainPodsSprite].y = rainPodsPos.y;
-                sLeaser.sprites[vinki.rainPodsSprite].element = Futile.atlasManager.GetElementWithName("RainPodsA" + headSpriteNumber);
                 sLeaser.sprites[vinki.rainPodsSprite].color = rainPodsColor;
+
+                if (dressMySlugcat)
+                {
+                    string spriteNamePrefix = EquippedSpriteSheetDMS(self, vinki.rainPodsSprite);
+                    sLeaser.sprites[vinki.rainPodsSprite].element = Futile.atlasManager.GetElementWithName(
+                        spriteNamePrefix.EndsWith("emptyatlas") 
+                        ? spriteNamePrefix 
+                        : spriteNamePrefix + "RainPodsA" + headSpriteNumber
+                    );
+                }
+                else
+                {
+                    sLeaser.sprites[vinki.rainPodsSprite].element = Futile.atlasManager.GetElementWithName("RainPodsA" + headSpriteNumber);
+                }
             }
 
             // Shoes
@@ -368,8 +337,21 @@ namespace Vinki
                 sLeaser.sprites[vinki.shoesSprite].anchorY = sLeaser.sprites[4].anchorY;
                 sLeaser.sprites[vinki.shoesSprite].x = shoesPos.x;
                 sLeaser.sprites[vinki.shoesSprite].y = shoesPos.y;
-                sLeaser.sprites[vinki.shoesSprite].element = Futile.atlasManager.GetElementWithName("ShoesA" + legsSpriteNumber);
                 sLeaser.sprites[vinki.shoesSprite].color = shoesColor;
+
+                if (dressMySlugcat)
+                {
+                    string spriteNamePrefix = EquippedSpriteSheetDMS(self, vinki.shoesSprite);
+                    sLeaser.sprites[vinki.shoesSprite].element = Futile.atlasManager.GetElementWithName(
+                        spriteNamePrefix.EndsWith("emptyatlas") 
+                        ? spriteNamePrefix 
+                        : spriteNamePrefix + "ShoesA" + legsSpriteNumber
+                    );
+                }
+                else
+                {
+                    sLeaser.sprites[vinki.shoesSprite].element = Futile.atlasManager.GetElementWithName("ShoesA" + legsSpriteNumber);
+                }
             }
 
             // Glasses
@@ -386,8 +368,21 @@ namespace Vinki
                 sLeaser.sprites[vinki.glassesSprite].anchorY = sLeaser.sprites[9].anchorY;
                 sLeaser.sprites[vinki.glassesSprite].x = glassesPos.x;
                 sLeaser.sprites[vinki.glassesSprite].y = glassesPos.y;
-                sLeaser.sprites[vinki.glassesSprite].element = Futile.atlasManager.GetElementWithName("Glasses" + faceSpriteNumber);
                 sLeaser.sprites[vinki.glassesSprite].color = glassesColor;
+
+                if (dressMySlugcat)
+                {
+                    string spriteNamePrefix = EquippedSpriteSheetDMS(self, vinki.glassesSprite);
+                    sLeaser.sprites[vinki.glassesSprite].element = Futile.atlasManager.GetElementWithName(
+                        spriteNamePrefix.EndsWith("emptyatlas") 
+                        ? spriteNamePrefix 
+                        : spriteNamePrefix + "Glasses" + faceSpriteNumber
+                    );
+                }
+                else
+                {
+                    sLeaser.sprites[vinki.glassesSprite].element = Futile.atlasManager.GetElementWithName("Glasses" + faceSpriteNumber);
+                }
             }
 
             // TagIcon
@@ -588,6 +583,24 @@ namespace Vinki
                 Plugin.VLogger.LogError("Invalid bodyPartIndex!\n" + StackTraceUtility.ExtractStackTrace());
                 return Color.white;
             }
+        }
+
+        private static string EquippedSpriteSheetDMS(PlayerGraphics playerGraphics, int spriteIndex)
+        {
+            if (PlayerGraphicsHooks.PlayerGraphicsData.TryGetValue(playerGraphics, out var playerGraphicsEx) &&
+                playerGraphicsEx.SpriteNames.Length > spriteIndex && !playerGraphicsEx.SpriteNames[spriteIndex].IsNullOrWhiteSpace() &&
+                playerGraphicsEx.SpriteNames[spriteIndex].StartsWith(DressMySlugcat.Plugin.BaseName))
+            {
+                string spriteName = playerGraphicsEx.SpriteNames[spriteIndex];
+                // Example: dressmyslugcat_olaycolay.vinkioldglasses_
+                string spriteNamePrefix = spriteName.EndsWith("__emptyatlas")
+                    ? spriteName
+                    : spriteName.Substring(0, spriteName.LastIndexOf('_') + 1);
+                VLogger.LogInfo("Found DMS sprite sheet " + spriteIndex + ": " + spriteNamePrefix);
+                return spriteNamePrefix;
+            }
+
+            return "";
         }
     }
 }
