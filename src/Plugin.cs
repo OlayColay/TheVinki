@@ -26,7 +26,6 @@ namespace Vinki
         
         public static bool introPlayed = false;
         public static int[] storyGraffitisOnMap = [];
-        public static Texture2D TailTexture;
         public static Dictionary<string, List<PlacedObject.CustomDecalData>> graffitis = [];
         public static Dictionary<string, List<Vector2>> graffitiRadii = [];
         public static Dictionary<string, List<Color>> graffitiAvgColors = [];

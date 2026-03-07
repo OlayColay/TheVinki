@@ -119,7 +119,6 @@ namespace Vinki
             }
 
             vinki.SetupColors(self);
-            vinki.LoadTailAtlas();
         }
 
         private static void PlayerGraphics_InitiateSprites(On.PlayerGraphics.orig_InitiateSprites orig, PlayerGraphics self, RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam)
@@ -151,14 +150,13 @@ namespace Vinki
                 isVisible = false
             };
 
-            sLeaser.sprites[vinki.stripesSprite] = new TriangleMesh("Futile_White", (sLeaser.sprites[2] as TriangleMesh).triangles, false);
+            sLeaser.sprites[vinki.stripesSprite] = new TriangleMesh("VinkiTailA", (sLeaser.sprites[2] as TriangleMesh).triangles, true, true);
             sLeaser.sprites[vinki.shoesSprite] = new FSprite("ShoesA0");
             sLeaser.sprites[vinki.rainPodsSprite] = new FSprite("RainPodsA0");
             sLeaser.sprites[vinki.glassesSprite] = new FSprite("GlassesA0");
 
-            if (sLeaser.sprites.Length > vinki.stripesSprite && sLeaser.sprites[vinki.stripesSprite] is TriangleMesh tail && vinki.TailAtlas.elements != null && vinki.TailAtlas.elements.Count > 0)
+            if (sLeaser.sprites.Length > vinki.stripesSprite && sLeaser.sprites[vinki.stripesSprite] is TriangleMesh tail /*&& vinki.TailAtlas.elements != null && vinki.TailAtlas.elements.Count > 0*/)
             {
-                tail.element = vinki.TailAtlas.elements[0];
                 for (var i = tail.vertices.Length - 1; i >= 0; i--)
                 {
                     var perc = i / 2 / (float)(tail.vertices.Length / 2);

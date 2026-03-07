@@ -131,15 +131,8 @@ namespace Vinki
             Futile.atlasManager.LoadAtlas("atlases/TagIcon");
             Futile.atlasManager.LoadAtlas("atlases/vinki_expedition");
             Futile.atlasManager.LoadImage("atlases/icon_SprayCan");
+            Futile.atlasManager.LoadAtlas("atlases/VinkiTail");
             Futile.atlasManager.LoadImage("decals/QUESTIONMARK");
-
-            TailTexture = new Texture2D(150, 75, TextureFormat.ARGB32, false);
-            var tailTextureFile = AssetManager.ResolveFilePath("textures/VinkiTail.png");
-            if (File.Exists(tailTextureFile))
-            {
-                var rawData = File.ReadAllBytes(tailTextureFile);
-                TailTexture.LoadImage(rawData);
-            }
 
             // Populate the colorfulItems List for crafting Spray Cans
             InitColorfulItems();
@@ -456,13 +449,13 @@ namespace Vinki
                     ],
                     Slugcats = [Enums.vinkiStr, Enums.Swaggypup.ToString()]
                 },
-                //new() {
-                //    Name = "TAIL STRIPES",
-                //    Description = "Tail Stripes",
-                //    GallerySprite = "VinkiTail",
-                //    RequiredSprites = ["VinkiTail"],
-                //    Slugcats = [Enums.vinkiStr, Enums.Swaggypup.ToString()]
-                //},
+                new() {
+                    Name = "TAIL STRIPES",
+                    Description = "Tail Stripes",
+                    GallerySprite = "VinkiTailA",
+                    RequiredSprites = ["VinkiTailA"],
+                    Slugcats = [Enums.vinkiStr, Enums.Swaggypup.ToString()]
+                },
                 new() {
                     Name = "RAIN PODS",
                     Description = "Rain Pods",
@@ -488,28 +481,6 @@ namespace Vinki
                 },
             ];
             SpriteDefinitions.AvailableSprites = [.. SpriteDefinitions.AvailableSprites, .. vinkiSprites];
-
-            //-- Each player slot (0, 1, 2, 3) can be customized individually
-            //for (int i = 0; i < 4; i++)
-            //{
-            //    SpriteDefinitions.AddSlugcatDefault(new Customization()
-            //    {
-            //        //-- Make sure to use the same ID as the one used for our slugcat
-            //        Slugcat = Enums.vinkiStr,
-            //        PlayerNumber = i,
-            //        CustomSprites =
-            //        [
-            //            //-- You can customize which spritesheet and color each body part will use
-            //            new() { Sprite = "HEAD", SpriteSheetID = sheetID + i },
-            //            //new() { Sprite = "FACE", SpriteSheetID = sheetID + i },
-            //            new() { Sprite = "BODY", SpriteSheetID = sheetID + i },
-            //            new() { Sprite = "ARMS", SpriteSheetID = sheetID + i },
-            //            new() { Sprite = "HIPS", SpriteSheetID = sheetID + i },
-            //            new() { Sprite = "LEGS", SpriteSheetID = sheetID + i },
-            //            new() { Sprite = "TAIL", SpriteSheetID = sheetID + i }
-            //        ],
-            //    });
-            //}
         }
 
         public static void SetPushToMeow()

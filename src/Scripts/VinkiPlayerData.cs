@@ -95,19 +95,6 @@ public class VinkiPlayerData(Player player)
 
     public int lastGraffitiSprayed = -1;
 
-    public void LoadTailAtlas()
-    {
-        var tailTexture = new Texture2D(Plugin.TailTexture.width, Plugin.TailTexture.height, TextureFormat.ARGB32, false);
-        Graphics.CopyTexture(Plugin.TailTexture, tailTexture);
-
-        Plugin.MapTextureColor(tailTexture, 255, StripesColor, false);
-
-        if (playerRef.TryGetTarget(out var player))
-        {
-            TailAtlas = Futile.atlasManager.LoadAtlasFromTexture("vinkitailtexture_" + player.playerState.playerNumber + Time.time + UnityEngine.Random.value, tailTexture, false);
-        }
-    }
-
     public void SetupColors(PlayerGraphics pg)
     {
         BodyColor = pg.GetColor(Enums.Color.Body) ?? Custom.hexToColor("DB7C2E");

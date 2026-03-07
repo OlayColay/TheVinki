@@ -64,7 +64,26 @@ public static class PupsPlusHooks
                 Plugin.VLogger.LogError("Could not apply RegisterSpawnPupCommand IL Hook\n" + e.Message + '\n' + e.StackTrace);
             }
         }
-        new Hook(typeof(PupsPlusModCompat).GetMethod(nameof(PupsPlusModCompat.ValidPupNames)), PupsPlusModCompat_ValidPupNames);
+
+        if (Plugin.dressMySlugcat)
+        {
+            try
+            {
+                ApplyDMSAndPupsPlusHook();
+            } 
+            catch (Exception e)
+            {
+                Plugin.VLogger.LogError("DMS not enabled to hook to ValidSlugpupNames\n" + e.Message + '\n' + e.StackTrace);
+            }
+        }
+    }
+
+    private static void ApplyDMSAndPupsPlusHook()
+    {
+        new Hook(
+            typeof(DressMySlugcat.Utils).GetProperty(nameof(DressMySlugcat.Utils.ValidSlugcatNames), BindingFlags.Public | BindingFlags.Static).GetGetMethod(),
+            (Func<List<string>> orig) => orig().Concat(["Swaggypup"]).ToList()
+        );
     }
 
     private static void NPCStats_ctor(On.Player.NPCStats.orig_ctor orig, Player.NPCStats self, Player player)
