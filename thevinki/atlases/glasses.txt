@@ -159,6 +159,78 @@
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":46,"h":48},
 	"sourceSize": {"w":46,"h":48}
+},
+"GlassesE0.png":
+{
+	"frame": {"x":2,"y":2,"w":46,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":46,"h":48},
+	"sourceSize": {"w":46,"h":48}
+},
+"GlassesE1.png":
+{
+	"frame": {"x":50,"y":2,"w":46,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":46,"h":48},
+	"sourceSize": {"w":46,"h":48}
+},
+"GlassesE2.png":
+{
+	"frame": {"x":98,"y":2,"w":46,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":46,"h":48},
+	"sourceSize": {"w":46,"h":48}
+},
+"GlassesE3.png":
+{
+	"frame": {"x":146,"y":2,"w":46,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":46,"h":48},
+	"sourceSize": {"w":46,"h":48}
+},
+"GlassesE4.png":
+{
+	"frame": {"x":194,"y":2,"w":46,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":46,"h":48},
+	"sourceSize": {"w":46,"h":48}
+},
+"GlassesE5.png":
+{
+	"frame": {"x":2,"y":52,"w":46,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":46,"h":48},
+	"sourceSize": {"w":46,"h":48}
+},
+"GlassesE6.png":
+{
+	"frame": {"x":50,"y":52,"w":46,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":46,"h":48},
+	"sourceSize": {"w":46,"h":48}
+},
+"GlassesE7.png":
+{
+	"frame": {"x":98,"y":52,"w":46,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":46,"h":48},
+	"sourceSize": {"w":46,"h":48}
+},
+"GlassesE8.png":
+{
+	"frame": {"x":146,"y":52,"w":46,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":46,"h":48},
+	"sourceSize": {"w":46,"h":48}
 }},
 "meta": {
 	"app": "https://www.codeandweb.com/texturepacker",
