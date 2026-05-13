@@ -222,11 +222,19 @@ namespace Vinki
                     sLeaser.sprites[vinki.shoesSprite].MoveInFrontOfOtherNode(sLeaser.sprites[4]);
                 }
 
-                //-- Tail goes behind hips
+                //-- Tail and tail stripes go behind hips (behind legs with DMS)
                 if (sLeaser.sprites.Length > vinki.stripesSprite)
                 {
-                    sLeaser.sprites[2].MoveBehindOtherNode(sLeaser.sprites[1]);
-                    sLeaser.sprites[vinki.stripesSprite].MoveBehindOtherNode(sLeaser.sprites[1]);
+                    if (dressMySlugcat)
+                    {
+                        sLeaser.sprites[2].MoveBehindOtherNode(sLeaser.sprites[4]);
+                        sLeaser.sprites[vinki.stripesSprite].MoveBehindOtherNode(sLeaser.sprites[4]);
+                    }
+                    else
+                    {
+                        sLeaser.sprites[2].MoveBehindOtherNode(sLeaser.sprites[1]);
+                        sLeaser.sprites[vinki.stripesSprite].MoveBehindOtherNode(sLeaser.sprites[1]);
+                    }
                     newContainer.AddChild(sLeaser.sprites[vinki.stripesSprite]);
                 }
             }
