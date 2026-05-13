@@ -637,7 +637,7 @@ namespace Vinki
                     }
                 }
             }
-            if (self.isSwaggypup())
+            if (pupsPlus && self.isSwaggypup())
             {
                 VLogger.LogInfo("Check for slugpup catching rail\t" + self.bodyMode.ToString() + "\t" + self.input[0].y + "\t" + beamNearFeet != null);
             }
@@ -756,7 +756,7 @@ namespace Vinki
             {
                 return;
             }
-            VLogger.LogInfo("Slugcat class: " + self.slugcatStats.name.ToString());
+            //VLogger.LogInfo("Slugcat class: " + self.slugcatStats.name.ToString());
 
             // Update grindToggle if needed
             if (self.JustPressed(ToggleGrind) && (!IsPressingGraffiti(self) || !VinkiConfig.UseGraffitiButton.Value))
