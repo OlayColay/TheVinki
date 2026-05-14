@@ -78,10 +78,35 @@
         "nonCatmaidAltName": "Tutorial Alt"
     },
     {
-        "name": "8",
+        "name": "Qu2a",
         "room": "SU_B04",
-        "position": [ 727, 596 ],
-	"nonCatmaidAltName": "Tutorial Alt"
+        "position": [ 419, 18.5 ],
+        "smokeSize": 3.0,
+        "alphaPerSmoke": 0.5
+    },
+    {
+        "name": "Qu2b",
+        "room": "SU_B04",
+        "position": [ 419, 18.5 ],
+        "smokeSize": 3.0,
+        "alphaPerSmoke": 0.5,
+        "replaces": "Qu2a"
+    },
+    {
+        "name": "Qu2c",
+        "room": "SU_B04",
+        "position": [ 419, 18.5 ],
+        "smokeSize": 3.0,
+        "alphaPerSmoke": 0.5,
+        "replaces": "Qu2b"
+    },
+    {
+        "name": "Qu2d",
+        "room": "SU_B04",
+        "position": [ 419, 18.5 ],
+        "smokeSize": 3.0,
+        "alphaPerSmoke": 0.5,
+        "replaces": "Qu2c"
     },
     {
         "name": "Qu1a",
