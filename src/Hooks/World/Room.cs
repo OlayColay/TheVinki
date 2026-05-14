@@ -43,46 +43,62 @@ public static partial class Hooks
             return;
         }
 
-        // Can show sprayed Story Graffitis if the timeline point is at or after Vinki
-        SlugcatStats.Timeline vinkiTimelinePoint = SlugcatStats.SlugcatToTimeline(Enums.vinki);
-        if (!SlugcatStats.AtOrAfterTimeline(game.TimelinePoint, vinkiTimelinePoint))
+        // Only Vinki should see sprayed normal graffiti, but can show sprayed Story Graffitis if the timeline point is after Vinki
+        if (game.StoryCharacter != Enums.vinki)
         {
-            return;
-        }
-        bool timelineIsVinki = game.TimelinePoint == vinkiTimelinePoint;
-
-        SlugBaseSaveData progSave = SaveDataExtension.GetSlugBaseData(world.game.rainWorld.progression.miscProgressionData);
-        if (progSave.TryGet("StoryPlacedGraffitis", out Dictionary<string, List<GraffitiObject.SerializableGraffiti>> placedStoryGraffitis) && placedStoryGraffitis.ContainsKey(self.name))
-        {
-            for (int i = 0; i < placedStoryGraffitis[self.name].Count; i++)
+            SlugcatStats.Timeline vinkiTimelinePoint = SlugcatStats.SlugcatToTimeline(Enums.vinki);
+            if (SlugcatStats.AtOrBeforeTimeline(game.TimelinePoint, vinkiTimelinePoint))
             {
-                // Remove graffiti that are in Moon's chamber or the Five Pebbles region
-                if (!self.name.StartsWith("SS_") && self.name != "DM_AI")
+                return;
+            }
+
+            SlugBaseSaveData progSave = SaveDataExtension.GetSlugBaseData(world.game.rainWorld.progression.miscProgressionData);
+            if (progSave.TryGet("StoryPlacedGraffitis", out Dictionary<string, List<GraffitiObject.SerializableGraffiti>> progPlacedStoryGraffitis) && progPlacedStoryGraffitis.ContainsKey(self.name))
+            {
+                List<GraffitiObject.SerializableGraffiti> storyGraffitiInRoom = progPlacedStoryGraffitis[self.name];
+                for (int i = 0; i < storyGraffitiInRoom.Count; i++)
                 {
                     PlacedObject.CustomDecalData decalData = new(null);
-                    decalData.FromString(placedStoryGraffitis[self.name][i].data);
+                    decalData.FromString(storyGraffitiInRoom[i].data);
 
                     // Don't spawn after Vinki's timeline point if the story graffiti shouldn't spawn then
-                    if (timelineIsVinki || !Plugin.storyGraffitiNeverSpawningInFutureCampaigns.Contains(decalData.imageName))
+                    if (!Plugin.storyGraffitiNeverSpawningInFutureCampaigns.Contains(decalData.imageName))
                     {
                         // Spawn the graffiti
                         PlacedObject placedObject = new(PlacedObject.Type.CustomDecal, decalData)
                         {
-                            pos = new Vector2(placedStoryGraffitis[self.name][i].x, placedStoryGraffitis[self.name][i].y)
+                            pos = new Vector2(storyGraffitiInRoom[i].x, storyGraffitiInRoom[i].y)
                         };
                         self.realizedRoom.AddObject(new CustomDecal(placedObject));
                     }
                 }
             }
-        }
-
-        // Only Vinki should see placed normal graffiti
-        if (game.StoryCharacter != Enums.vinki)
-        {
             return;
         }
 
+        // Spawn already-sprayed Story Graffitis in Vinki's campaign
         SlugBaseSaveData miscSave = SaveDataExtension.GetSlugBaseData(world.game.GetStorySession.saveState.miscWorldSaveData);
+        if (miscSave.TryGet("StoryPlacedGraffitis", out Dictionary<string, List<GraffitiObject.SerializableGraffiti>> placedStoryGraffitis) && placedStoryGraffitis.ContainsKey(self.name))
+        {
+            List<GraffitiObject.SerializableGraffiti> storyGraffitiInRoom = placedStoryGraffitis[self.name];
+            for (int i = 0; i < storyGraffitiInRoom.Count; i++)
+            {
+                PlacedObject.CustomDecalData decalData = new(null);
+                decalData.FromString(storyGraffitiInRoom[i].data);
+
+                // Remove graffiti that are in Moon's chamber or the Five Pebbles region
+                if (!self.name.StartsWith("SS_") && self.name != "DM_AI")
+                {
+                    // Spawn the graffiti
+                    PlacedObject placedObject = new(PlacedObject.Type.CustomDecal, decalData)
+                    {
+                        pos = new Vector2(storyGraffitiInRoom[i].x, storyGraffitiInRoom[i].y)
+                    };
+                    self.realizedRoom.AddObject(new CustomDecal(placedObject));
+                }
+            }
+        }
+
         if (!miscSave.TryGet("PlacedGraffitis", out Dictionary<string, List<GraffitiObject.SerializableGraffiti>> placedGraffitis) || !placedGraffitis.ContainsKey(self.name))
         {
             return;

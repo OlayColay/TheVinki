@@ -51,6 +51,12 @@ namespace Vinki
                     }
                 }
             }
+
+            // Save story graffitis so that future campaigns can see them
+            if (SaveDataExtension.GetSlugBaseData(self.room.game.GetStorySession.saveState.miscWorldSaveData).TryGet("StoryPlacedGraffitis", out Dictionary<string, List<GraffitiObject.SerializableGraffiti>> storyPlacedGraffitis))
+            {
+                SaveDataExtension.GetSlugBaseData(self.room.game.GetStorySession.saveState.progression.miscProgressionData).Set("StoryPlacedGraffitis", storyPlacedGraffitis);
+            }
         }
     }
 }
