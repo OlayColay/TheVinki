@@ -378,7 +378,7 @@ namespace Vinki
                 {
                     try
                     {
-                        SetupDMSSprites();
+                        DMSHooks.SetupDMSSprites();
                         DMSHooks.ApplyDMSHooks();
                     }
                     catch (Exception ex)
@@ -439,68 +439,6 @@ namespace Vinki
             {
                 VLogger.LogError(ex.Message);
             }
-        }
-
-        private static void SetupDMSSprites()
-        {
-            //-- The ID of the spritesheet we will be using as the default sprites for our slugcat
-            //var sheetID = "olaycolay.thevinki";
-
-            List<SpriteDefinitions.AvailableSprite> vinkiSprites = [
-                new() {
-                    Name = "GLASSES",
-                    Description = "Glasses",
-                    GallerySprite = "GlassesA0",
-                    RequiredSprites = [
-                        "GlassesA0", "GlassesA1", "GlassesA2", "GlassesA3", "GlassesA4", "GlassesA5", "GlassesA6", "GlassesA7", "GlassesA8",
-                        "GlassesB0", "GlassesB1", "GlassesB2", "GlassesB3", "GlassesB4", "GlassesB5", "GlassesB6", "GlassesB7", "GlassesB8",
-                        "GlassesDead", "GlassesStunned"
-                    ],
-                    Slugcats = [Enums.vinkiStr, Enums.Swaggypup.ToString()]
-                },
-                new() {
-                    Name = "TAIL STRIPES",
-                    Description = "Tail Stripes",
-                    GallerySprite = "VinkiTailA",
-                    RequiredSprites = ["VinkiTailA"],
-                    Slugcats = [Enums.vinkiStr, Enums.Swaggypup.ToString()]
-                },
-                new() {
-                    Name = "RAIN PODS",
-                    Description = "Rain Pods",
-                    GallerySprite = "RainPodsA0",
-                    RequiredSprites = [
-                        "RainPodsA0", "RainPodsA1", "RainPodsA2", "RainPodsA3", "RainPodsA4", "RainPodsA5", "RainPodsA6", "RainPodsA7", "RainPodsA8", "RainPodsA9",
-                        "RainPodsA10", "RainPodsA11", "RainPodsA12", "RainPodsA13", "RainPodsA14", "RainPodsA15", "RainPodsA16", "RainPodsA17"
-                    ],
-                    Slugcats = [Enums.vinkiStr, Enums.Swaggypup.ToString()]
-                },
-                new() {
-                    Name = "SHOES",
-                    Description = "Shoes",
-                    GallerySprite = "ShoesA0",
-                    RequiredSprites = [
-                        "ShoesA0", "ShoesA1", "ShoesA2", "ShoesA3", "ShoesA4", "ShoesA5", "ShoesA6",
-                        "ShoesAClimbing0", "ShoesAClimbing1", "ShoesAClimbing2", "ShoesAClimbing3", "ShoesAClimbing4", "ShoesAClimbing5", "ShoesAClimbing6",
-                        "ShoesACrawling0", "ShoesACrawling1", "ShoesACrawling2", "ShoesACrawling3", "ShoesACrawling4", "ShoesACrawling5",
-                        "ShoesAOnPole0", "ShoesAOnPole1", "ShoesAOnPole2", "ShoesAOnPole3", "ShoesAOnPole4", "ShoesAOnPole5", "ShoesAOnPole6",
-                        "ShoesAAir0", "ShoesAAir1", "ShoesAPole", "ShoesAVerticalPole", "ShoesAWall",
-                    ],
-                    Slugcats = [Enums.vinkiStr, Enums.Swaggypup.ToString()]
-                },
-                new() {
-                    Name = "SHINE",
-                    Description = "Glasses' Shine",
-                    GallerySprite = "ShineA0",
-                    RequiredSprites = [
-                        "ShineA0", "ShineA1", "ShineA2", "ShineA3", "ShineA4", "ShineA5", "ShineA6", "ShineA7", "ShineA8",
-                        "ShineB0", "ShineB1", "ShineB2", "ShineB3", "ShineB4", "ShineB5", "ShineB6", "ShineB7", "ShineB8",
-                        "ShineDead", "ShineStunned"
-                    ],
-                    Slugcats = [Enums.vinkiStr, Enums.Swaggypup.ToString()]
-                },
-            ];
-            SpriteDefinitions.AvailableSprites = [.. SpriteDefinitions.AvailableSprites, .. vinkiSprites];
         }
 
         public static void SetPushToMeow()

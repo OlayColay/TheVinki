@@ -1,7 +1,9 @@
 ﻿using BepInEx;
 using DressMySlugcat;
 using MonoMod.RuntimeDetour;
+using RWCustom;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 
@@ -12,11 +14,72 @@ public static class DMSHooks
 {
     public static int GlassesSprite, RainPodsSprite, ShoesSprite, ShineSprite;
 
+    public static void SetupDMSSprites()
+    {
+        List<SpriteDefinitions.AvailableSprite> vinkiSprites = [
+            new() {
+                Name = "GLASSES",
+                Description = "Glasses",
+                GallerySprite = "GlassesA0",
+                RequiredSprites = [
+                    "GlassesA0", "GlassesA1", "GlassesA2", "GlassesA3", "GlassesA4", "GlassesA5", "GlassesA6", "GlassesA7", "GlassesA8",
+                    "GlassesB0", "GlassesB1", "GlassesB2", "GlassesB3", "GlassesB4", "GlassesB5", "GlassesB6", "GlassesB7", "GlassesB8",
+                    "GlassesDead", "GlassesStunned"
+                ],
+                Slugcats = [Enums.vinkiStr, Enums.Swaggypup.ToString()]
+            },
+            new() {
+                Name = "TAIL STRIPES",
+                Description = "Tail Stripes",
+                GallerySprite = "VinkiTailA",
+                RequiredSprites = ["VinkiTailA"],
+                Slugcats = [Enums.vinkiStr, Enums.Swaggypup.ToString()]
+            },
+            new() {
+                Name = "RAIN PODS",
+                Description = "Rain Pods",
+                GallerySprite = "RainPodsA0",
+                RequiredSprites = [
+                    "RainPodsA0", "RainPodsA1", "RainPodsA2", "RainPodsA3", "RainPodsA4", "RainPodsA5", "RainPodsA6", "RainPodsA7", "RainPodsA8", "RainPodsA9",
+                    "RainPodsA10", "RainPodsA11", "RainPodsA12", "RainPodsA13", "RainPodsA14", "RainPodsA15", "RainPodsA16", "RainPodsA17"
+                ],
+                Slugcats = [Enums.vinkiStr, Enums.Swaggypup.ToString()]
+            },
+            new() {
+                Name = "SHOES",
+                Description = "Shoes",
+                GallerySprite = "ShoesA0",
+                RequiredSprites = [
+                    "ShoesA0", "ShoesA1", "ShoesA2", "ShoesA3", "ShoesA4", "ShoesA5", "ShoesA6",
+                    "ShoesAClimbing0", "ShoesAClimbing1", "ShoesAClimbing2", "ShoesAClimbing3", "ShoesAClimbing4", "ShoesAClimbing5", "ShoesAClimbing6",
+                    "ShoesACrawling0", "ShoesACrawling1", "ShoesACrawling2", "ShoesACrawling3", "ShoesACrawling4", "ShoesACrawling5",
+                    "ShoesAOnPole0", "ShoesAOnPole1", "ShoesAOnPole2", "ShoesAOnPole3", "ShoesAOnPole4", "ShoesAOnPole5", "ShoesAOnPole6",
+                    "ShoesAAir0", "ShoesAAir1", "ShoesAPole", "ShoesAVerticalPole", "ShoesAWall",
+                ],
+                Slugcats = [Enums.vinkiStr, Enums.Swaggypup.ToString()]
+            },
+            new() {
+                Name = "SHINE",
+                Description = "Glasses' Shine",
+                GallerySprite = "ShineA0",
+                RequiredSprites = [
+                    "ShineA0", "ShineA1", "ShineA2", "ShineA3", "ShineA4", "ShineA5", "ShineA6", "ShineA7", "ShineA8",
+                    "ShineB0", "ShineB1", "ShineB2", "ShineB3", "ShineB4", "ShineB5", "ShineB6", "ShineB7", "ShineB8",
+                    "ShineDead", "ShineStunned"
+                ],
+                Slugcats = [Enums.vinkiStr, Enums.Swaggypup.ToString()]
+            },
+        ];
+        SpriteDefinitions.AvailableSprites = [.. SpriteDefinitions.AvailableSprites, .. vinkiSprites];
+    }
+
     public static void ApplyDMSHooks()
     {
         new Hook(typeof(PlayerGraphicsDummy).GetConstructor([typeof(FancyMenu)]), PlayerGraphicsDummy_Constructor);
         new Hook(typeof(PlayerGraphicsDummy).GetMethod(nameof(PlayerGraphicsDummy.UpdateSpritePositions)), PlayerGraphicsDummy_UpdateSpritePositions);
         new Hook(typeof(PlayerGraphicsDummy).GetMethod(nameof(PlayerGraphicsDummy.UpdateSprites), System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic), PlayerGraphicsDummy_UpdateSprites);
+
+        new Hook(typeof(Utils).GetMethod(nameof(Utils.DefaultColorForSprite)), Utils_DefaultColorForSprite);
     }
 
     public static void PlayerGraphicsDummy_Constructor(Action<PlayerGraphicsDummy, FancyMenu> orig, PlayerGraphicsDummy self, FancyMenu owner)
@@ -134,6 +197,24 @@ public static class DMSHooks
             self.Sprites[ShineSprite].element = Futile.atlasManager.GetElementWithName("ShineA0");
         }
         self.Sprites[ShineSprite].color = customSprite?.Color != default && customSprite?.Color.a != 0 ? customSprite.Color : Utils.DefaultColorForSprite(self.owner.selectedSlugcat, "SHINE");
+    }
+
+    public static Color Utils_DefaultColorForSprite(Func<string, string, Color> orig, string slugcat, string sprite)
+    {
+        if (slugcat == Enums.vinkiStr)
+        {
+            return sprite switch
+            {
+                "GLASSES" => Custom.hexToColor("0E0202"),
+                "TAIL STRIPES" => Custom.hexToColor("5C5DEA"),
+                "RAIN PODS" => Color.white,
+                "SHOES" => Custom.hexToColor("5C5DEA"),
+                "SHINE" => Color.white,
+                _ => orig(slugcat, sprite),
+            };
+        }
+
+        return orig(slugcat, sprite);
     }
 
     public static bool ToggleVinkiSprites(PlayerGraphicsDummy self)
