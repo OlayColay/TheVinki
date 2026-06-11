@@ -376,7 +376,15 @@ namespace Vinki
                 dressMySlugcat = ModManager.ActiveMods.Exists((mod) => mod.id == "dressmyslugcat");
                 if (dressMySlugcat)
                 {
-                    SetupDMSSprites();
+                    try
+                    {
+                        SetupDMSSprites();
+                        DMSHooks.ApplyDMSHooks();
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception("DMS enabled but also not enabled???\n" + ex.ToString());
+                    }
                 }
             }
             catch (Exception ex)
