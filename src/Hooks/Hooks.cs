@@ -128,6 +128,7 @@ namespace Vinki
             Futile.atlasManager.LoadAtlas("atlases/glasses");
             Futile.atlasManager.LoadAtlas("atlases/rainpods");
             Futile.atlasManager.LoadAtlas("atlases/shoes");
+            Futile.atlasManager.LoadAtlas("atlases/shine");
             Futile.atlasManager.LoadAtlas("atlases/TagIcon");
             Futile.atlasManager.LoadAtlas("atlases/vinki_expedition");
             Futile.atlasManager.LoadImage("atlases/icon_SprayCan");
@@ -476,6 +477,17 @@ namespace Vinki
                         "ShoesACrawling0", "ShoesACrawling1", "ShoesACrawling2", "ShoesACrawling3", "ShoesACrawling4", "ShoesACrawling5",
                         "ShoesAOnPole0", "ShoesAOnPole1", "ShoesAOnPole2", "ShoesAOnPole3", "ShoesAOnPole4", "ShoesAOnPole5", "ShoesAOnPole6",
                         "ShoesAAir0", "ShoesAAir1", "ShoesAPole", "ShoesAVerticalPole", "ShoesAWall",
+                    ],
+                    Slugcats = [Enums.vinkiStr, Enums.Swaggypup.ToString()]
+                },
+                new() {
+                    Name = "SHINE",
+                    Description = "Glasses' Shine",
+                    GallerySprite = "ShineA0",
+                    RequiredSprites = [
+                        "ShineA0", "ShineA1", "ShineA2", "ShineA3", "ShineA4", "ShineA5", "ShineA6", "ShineA7", "ShineA8",
+                        "ShineB0", "ShineB1", "ShineB2", "ShineB3", "ShineB4", "ShineB5", "ShineB6", "ShineB7", "ShineB8",
+                        "ShineDead", "ShineStunned"
                     ],
                     Slugcats = [Enums.vinkiStr, Enums.Swaggypup.ToString()]
                 },

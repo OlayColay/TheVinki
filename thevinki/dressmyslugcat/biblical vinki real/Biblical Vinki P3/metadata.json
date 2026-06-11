@@ -1,0 +1,43 @@
+{
+  "id": "dressmyslugcat.RASPBERRY_graffitARTIST",
+  "name": "(BV) Vinki P3",
+  "author": "Auro",
+    "defaults": {
+        "HEAD": {
+            "Color": "#FCFCFC"
+        },
+        "ARMS": {
+            "Color": "#FCFCFC"
+        },
+        "BODY": {
+            "Color": "#FCFCFC"
+        },
+        "HIPS": {
+            "Color": "#FCFCFC"
+        },
+        "LEGS": {
+            "Color": "#FCFCFC"
+        },
+        "TAIL": {
+            "Color": "#FCFCFC"
+        },
+        "FACE": {
+            "Color": "#FCFCFC"
+        },
+        "GLASSES": {
+            "Color": "#FCFCFC"
+        },
+        "TAIL STRIPES": {
+            "Color": "#FCFCFC"
+        },
+        "RAIN PODS": {
+            "Color": "#FCFCFC"
+        },
+        "SHOES": {
+            "Color": "#FCFCFC"
+        },
+        "SHINE": {
+            "Color": "#FCFCFC"
+        }
+    }
+}

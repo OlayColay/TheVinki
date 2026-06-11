@@ -31,6 +31,10 @@ public class VinkiPlayerData(Player player)
     public int glassesSprite;
     public int tagIconSprite;
     public int stripesSprite;
+
+    // DMS-exclusive sprites
+    public int shineSprite;
+
     public int tagLag = 0;
     public float tagIconSize = 0f;
 

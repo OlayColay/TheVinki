@@ -176,6 +176,13 @@ namespace Vinki
                 }
             }
 
+            if (dressMySlugcat)
+            {
+                vinki.shineSprite = vinki.shoesSprite + 1;
+                Array.Resize(ref sLeaser.sprites, sLeaser.sprites.Length + 1);
+                sLeaser.sprites[vinki.shineSprite] = new FSprite("ShineA0");
+            }
+
             self.AddToContainer(sLeaser, rCam, null);
         }
 
@@ -211,10 +218,10 @@ namespace Vinki
 
                 if (sLeaser.sprites.Length > vinki.shoesSprite)
                 {
-                    //-- RainPods go behind glasses
+                    //-- RainPods go behind face
                     sLeaser.sprites[vinki.rainPodsSprite].RemoveFromContainer();
                     newContainer.AddChild(sLeaser.sprites[vinki.rainPodsSprite]);
-                    sLeaser.sprites[vinki.rainPodsSprite].MoveBehindOtherNode(sLeaser.sprites[vinki.glassesSprite]);
+                    sLeaser.sprites[vinki.rainPodsSprite].MoveBehindOtherNode(sLeaser.sprites[9]);
 
                     // Shoes go in front of legs
                     sLeaser.sprites[vinki.shoesSprite].RemoveFromContainer();
@@ -222,20 +229,19 @@ namespace Vinki
                     sLeaser.sprites[vinki.shoesSprite].MoveInFrontOfOtherNode(sLeaser.sprites[4]);
                 }
 
-                //-- Tail and tail stripes go behind hips (behind legs with DMS)
+                //-- Tail and tail stripes go behind body
                 if (sLeaser.sprites.Length > vinki.stripesSprite)
                 {
-                    if (dressMySlugcat)
-                    {
-                        sLeaser.sprites[2].MoveBehindOtherNode(sLeaser.sprites[4]);
-                        sLeaser.sprites[vinki.stripesSprite].MoveBehindOtherNode(sLeaser.sprites[4]);
-                    }
-                    else
-                    {
-                        sLeaser.sprites[2].MoveBehindOtherNode(sLeaser.sprites[1]);
-                        sLeaser.sprites[vinki.stripesSprite].MoveBehindOtherNode(sLeaser.sprites[1]);
-                    }
+                    sLeaser.sprites[2].MoveBehindOtherNode(sLeaser.sprites[0]);
+                    sLeaser.sprites[vinki.stripesSprite].MoveBehindOtherNode(sLeaser.sprites[0]);
                     newContainer.AddChild(sLeaser.sprites[vinki.stripesSprite]);
+                }
+
+                if (dressMySlugcat && sLeaser.sprites.Length > vinki.shineSprite)
+                {
+                    sLeaser.sprites[vinki.shineSprite].RemoveFromContainer();
+                    newContainer.AddChild(sLeaser.sprites[vinki.shineSprite]);
+                    sLeaser.sprites[vinki.shineSprite].MoveInFrontOfOtherNode(sLeaser.sprites[vinki.glassesSprite]);
                 }
             }
         }
@@ -384,6 +390,25 @@ namespace Vinki
                         ? spriteNamePrefix 
                         : spriteNamePrefix + "Glasses" + faceSpriteNumber
                     );
+
+                    // Glasses' Shine
+                    if (sLeaser.sprites.Length > vinki.shineSprite)
+                    {
+                        sLeaser.sprites[vinki.shineSprite].scaleX = sLeaser.sprites[9].scaleX;
+                        sLeaser.sprites[vinki.shineSprite].scaleY = sLeaser.sprites[9].scaleY;
+                        sLeaser.sprites[vinki.shineSprite].rotation = sLeaser.sprites[9].rotation;
+                        sLeaser.sprites[vinki.shineSprite].anchorX = sLeaser.sprites[9].anchorX;
+                        sLeaser.sprites[vinki.shineSprite].anchorY = sLeaser.sprites[9].anchorY;
+                        sLeaser.sprites[vinki.shineSprite].x = glassesPos.x;
+                        sLeaser.sprites[vinki.shineSprite].y = glassesPos.y;
+                        sLeaser.sprites[vinki.shineSprite].color = glassesColor;
+                        spriteNamePrefix = EquippedSpriteSheetDMS(self, vinki.shineSprite);
+                        sLeaser.sprites[vinki.shineSprite].element = Futile.atlasManager.GetElementWithName(
+                            spriteNamePrefix.EndsWith("emptyatlas")
+                            ? spriteNamePrefix
+                            : spriteNamePrefix + "Shine" + faceSpriteNumber
+                        );
+                    }
                 }
                 else
                 {
