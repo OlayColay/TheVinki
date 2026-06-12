@@ -1,0 +1,28 @@
+{
+  "id": "auro.vinkicostumep3",
+  "name": "Vinki Costume P3",
+  "author": "Auro",
+    "defaults": {
+        "HEAD": {
+            "Color": "#FCFCFC"
+        },
+        "ARMS": {
+            "Color": "#FCFCFC"
+        },
+        "BODY": {
+            "Color": "#FCFCFC"
+        },
+        "HIPS": {
+            "Color": "#FCFCFC"
+        },
+        "LEGS": {
+            "Color": "#FCFCFC"
+        },
+        "TAIL": {
+            "Color": "#FCFCFC"
+        },
+        "FACE": {
+            "Color": "#FCFCFC"
+        }
+    }
+}
